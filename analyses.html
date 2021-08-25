@@ -1,0 +1,3006 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Who Needs Privacy? Exploring the relationship between personality and need for privacy</title>
+
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="proposal.html">Proposal</a>
+</li>
+<li>
+  <a href="analyses.html">Analyses</a>
+</li>
+<li>
+  <a href="items.html">Items</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="proposal.pdf">
+    <span class="fa fa-file"></span>
+     
+    PDF
+  </a>
+</li>
+<li>
+  <a href="https://github.com/tdienlin/who_needs_privacy_rr">
+    <span class="fa fa-lg fa-github"></span>
+     
+    Source Code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Who Needs Privacy? Exploring the relationship between personality and need for privacy</h1>
+<h3 class="subtitle">Analyses</h3>
+
+</div>
+
+
+<div id="items" class="section level1">
+<h1>Items</h1>
+<p>All items were answered on a 7-point scale with the following options:</p>
+<p>“To what extent do you agree or disagree with the following statements?”</p>
+<p>(-3) Strongly Disagree, (-2) Disagree, (-1) Slightly Disagree, (0) Neutral, (1) Slightly Agree (2) Agree, (3) Strongly Agree</p>
+<div id="personality" class="section level2">
+<h2>Personality</h2>
+<div id="honesty-humility" class="section level3">
+<h3>Honesty Humility</h3>
+<div id="sincerity" class="section level4">
+<h4>Sincerity</h4>
+<ul>
+<li>If I want something from a person I dislike, I will act very nicely toward that person in order to get it.</li>
+<li>I wouldn’t use flattery to get a raise or promotion at work, even if I thought it would succeed.</li>
+<li>If I want something from someone, I will laugh at that person’s worst jokes.</li>
+<li>I wouldn’t pretend to like someone just to get that person to do favors for me.</li>
+</ul>
+</div>
+<div id="fairness" class="section level4">
+<h4>Fairness</h4>
+<ul>
+<li>If I knew that I could never get caught, I would be willing to steal a million dollars.</li>
+<li>I would be tempted to buy stolen property if I were financially tight.</li>
+<li>I would never accept a bribe, even if it were very large.</li>
+<li>I’d be tempted to use counterfeit money, if I were sure I could get away with it.</li>
+</ul>
+</div>
+<div id="greed-avoidance" class="section level4">
+<h4>Greed Avoidance</h4>
+<ul>
+<li>Having a lot of money is not especially important to me.</li>
+<li>I would like to live in a very expensive, high-class neighborhood.</li>
+<li>I would like to be seen driving around in a very expensive car.</li>
+<li>I would get a lot of pleasure from owning expensive luxury goods.</li>
+</ul>
+</div>
+<div id="modesty" class="section level4">
+<h4>Modesty</h4>
+<ul>
+<li>I am an ordinary person who is no better than others.</li>
+<li>I wouldn’t want people to treat me as though I were superior to them.</li>
+<li>I think that I am entitled to more respect than the average person is.</li>
+<li>I want people to know that I am an important person of high status.</li>
+</ul>
+</div>
+</div>
+<div id="emotionality" class="section level3">
+<h3>Emotionality</h3>
+<div id="fearfulness" class="section level4">
+<h4>Fearfulness</h4>
+<ul>
+<li>I would feel afraid if I had to travel in bad weather conditions.</li>
+<li>I don’t mind doing jobs that involve dangerous work.</li>
+<li>When it comes to physical danger, I am very fearful.</li>
+<li>Even in an emergency I wouldn’t feel like panicking.</li>
+</ul>
+</div>
+<div id="anxiety" class="section level4">
+<h4>Anxiety</h4>
+<ul>
+<li>I sometimes can’t help worrying about little things.</li>
+<li>I worry a lot less than most people do.</li>
+<li>I rarely, if ever, have trouble sleeping due to stress or anxiety.</li>
+<li>I get very anxious when waiting to hear about an important decision.</li>
+</ul>
+</div>
+<div id="dependence" class="section level4">
+<h4>Dependence</h4>
+<ul>
+<li>When I suffer from a painful experience, I need someone to make me feel comfortable.</li>
+<li>I can handle difficult situations without needing emotional support from anyone else.</li>
+<li>Whenever I feel worried about something, I want to share my concern with another person.</li>
+<li>I rarely discuss my problems with other people.</li>
+</ul>
+</div>
+<div id="sentimentality" class="section level4">
+<h4>Sentimentality</h4>
+<ul>
+<li>I feel like crying when I see other people crying.</li>
+<li>When someone I know well is unhappy, I can almost feel that person’s pain myself.</li>
+<li>I feel strong emotions when someone close to me is going away for a long time.</li>
+<li>I remain unemotional even in situations where most people get very sentimental.</li>
+</ul>
+</div>
+</div>
+<div id="extraversion" class="section level3">
+<h3>Extraversion</h3>
+<div id="social-self-esteem" class="section level4">
+<h4>Social Self-Esteem</h4>
+<ul>
+<li>I feel reasonably satisfied with myself overall.</li>
+<li>I think that most people like some aspects of my personality.</li>
+<li>I feel that I am an unpopular person.</li>
+<li>Even in an emergency I wouldn’t feel like panicking.</li>
+</ul>
+</div>
+<div id="social-boldness" class="section level4">
+<h4>Social Boldness</h4>
+<ul>
+<li>I rarely express my opinions in group meetings.</li>
+<li>In social situations, I’m usually the one who makes the first move.</li>
+<li>When I’m in a group of people, I’m often the one who speaks on behalf of the group.</li>
+<li>I tend to feel quite self-conscious when speaking in front of a group of people.</li>
+</ul>
+</div>
+<div id="sociability" class="section level4">
+<h4>Sociability</h4>
+<ul>
+<li>I avoid making “small talk” with people.</li>
+<li>I enjoy having lots of people around to talk with.</li>
+<li>I prefer jobs that involve active social interaction to those that involve working alone.</li>
+<li>The first thing that I always do in a new place is to make friends.</li>
+</ul>
+</div>
+<div id="liveliness" class="section level4">
+<h4>Liveliness</h4>
+<ul>
+<li>I am energetic nearly all the time.</li>
+<li>On most days, I feel cheerful and optimistic.</li>
+<li>People often tell me that I should try to cheer up.</li>
+<li>Most people are more upbeat and dynamic than I generally am.</li>
+</ul>
+</div>
+</div>
+<div id="agreeableness" class="section level3">
+<h3>Agreeableness</h3>
+<div id="forgiveness" class="section level4">
+<h4>Forgiveness</h4>
+<ul>
+<li>I rarely hold a grudge, even against people who have badly wronged me.</li>
+<li>My attitude toward people who have treated me badly is “forgive and forget.”</li>
+<li>If someone has cheated me once, I will always feel suspicious of that person.</li>
+<li>I find it hard to fully forgive someone who has done something mean to me.</li>
+</ul>
+</div>
+<div id="gentleness" class="section level4">
+<h4>Gentleness</h4>
+<ul>
+<li>People sometimes tell me that I am too critical of others.</li>
+<li>I generally accept people’s faults without complaining about them.</li>
+<li>I tend to be lenient in judging other people.</li>
+<li>Even when people make a lot of mistakes, I rarely say anything negative.</li>
+</ul>
+</div>
+<div id="flexibility" class="section level4">
+<h4>Flexibility</h4>
+<ul>
+<li>People sometimes tell me that I’m too stubborn.</li>
+<li>I am usually quite flexible in my opinions when people disagree with me.</li>
+<li>When people tell me that I’m wrong, my first reaction is to argue with them.</li>
+<li>I find it hard to compromise with people when I really think I’m right.</li>
+</ul>
+</div>
+<div id="patience" class="section level4">
+<h4>Patience</h4>
+<ul>
+<li>People think of me as someone who has a quick temper.</li>
+<li>I rarely feel anger, even when people treat me quite badly.</li>
+<li>Most people tend to get angry more quickly than I do.</li>
+<li>I find it hard to keep my temper when people insult me.</li>
+</ul>
+</div>
+</div>
+<div id="conscientiousness" class="section level3">
+<h3>Conscientiousness</h3>
+<div id="organization" class="section level4">
+<h4>Organization</h4>
+<ul>
+<li>I clean my office or home quite frequently.</li>
+<li>I plan ahead and organize things, to avoid scrambling at the last minute.</li>
+<li>People often joke with me about the messiness of my room or desk.</li>
+<li>When working, I sometimes have difficulties due to being disorganized.</li>
+</ul>
+</div>
+<div id="diligence" class="section level4">
+<h4>Diligence</h4>
+<ul>
+<li>When working, I often set ambitious goals for myself.</li>
+<li>I often push myself very hard when trying to achieve a goal.</li>
+<li>Often when I set a goal, I end up quitting without having reached it.</li>
+<li>I do only the minimum amount of work needed to get by.</li>
+</ul>
+</div>
+<div id="perfectionism" class="section level4">
+<h4>Perfectionism</h4>
+<ul>
+<li>I often check my work over repeatedly to find any mistakes.</li>
+<li>When working on something, I don’t pay much attention to small details.</li>
+<li>I always try to be accurate in my work, even at the expense of time.</li>
+<li>People often call me a perfectionist.</li>
+</ul>
+</div>
+<div id="prudence" class="section level4">
+<h4>Prudence</h4>
+<ul>
+<li>I make decisions based on the feeling of the moment rather than on careful thought.</li>
+<li>I make a lot of mistakes because I don’t think before I act.</li>
+<li>I don’t allow my impulses to govern my behavior.</li>
+<li>I prefer to do whatever comes to mind, rather than stick to a plan.</li>
+</ul>
+</div>
+</div>
+<div id="openness" class="section level3">
+<h3>Openness</h3>
+<div id="aesthetic-appreciation" class="section level4">
+<h4>Aesthetic Appreciation</h4>
+<ul>
+<li>I would be quite bored by a visit to an art gallery.</li>
+<li>I wouldn’t spend my time reading a book of poetry.</li>
+<li>If I had the opportunity, I would like to attend a classical music concert.</li>
+<li>Sometimes I like to just watch the wind as it blows through the trees.</li>
+</ul>
+</div>
+<div id="inquisitiveness" class="section level4">
+<h4>Inquisitiveness</h4>
+<ul>
+<li>I’m interested in learning about the history and politics of other countries.</li>
+<li>I enjoy looking at maps of different places.</li>
+<li>I would be very bored by a book about the history of science and technology.</li>
+<li>I’ve never really enjoyed looking through an encyclopedia.</li>
+</ul>
+</div>
+<div id="creativeness" class="section level4">
+<h4>Creativeness</h4>
+<ul>
+<li>I would like a job that requires following a routine rather than being creative.</li>
+<li>I would enjoy creating a work of art, such as a novel, a song, or a painting.</li>
+<li>People have often told me that I have a good imagination.</li>
+<li>I don’t think of myself as the artistic or creative type.</li>
+</ul>
+</div>
+<div id="unconventionality" class="section level4">
+<h4>Unconventionality</h4>
+<ul>
+<li>I think that paying attention to radical ideas is a waste of time.</li>
+<li>I like people who have unconventional views.</li>
+<li>I think of myself as a somewhat eccentric person.</li>
+<li>I find it boring to discuss philosophy.</li>
+</ul>
+</div>
+</div>
+<div id="altruism" class="section level3">
+<h3>Altruism</h3>
+<ul>
+<li>I have sympathy for people who are less fortunate than I am.</li>
+<li>I try to give generously to those in need.</li>
+<li>It wouldn’t bother me to harm someone I didn’t like.</li>
+<li>People see me as a hard-hearted person.</li>
+</ul>
+</div>
+</div>
+<div id="need-for-privacy" class="section level2">
+<h2>Need for privacy</h2>
+<div id="informational" class="section level3">
+<h3>Informational</h3>
+<ul>
+<li>I would prefer that little is known about me.</li>
+<li>In general, I prefer to remain incognito.</li>
+<li>I don’t want my personal data to be publicly accessible.</li>
+<li>Not everyone has to know everything about me.</li>
+</ul>
+</div>
+<div id="psychological" class="section level3">
+<h3>Psychological</h3>
+<ul>
+<li>I don’t like to talk about personal issues unless others do it first.</li>
+<li>There are a lot of things about me that I don’t like to talk about with others.</li>
+<li>I feel uncomfortable when others tell me private things about their lives.</li>
+<li>It is hard for me to talk about my feelings and inner thoughts.</li>
+</ul>
+</div>
+<div id="physiological" class="section level3">
+<h3>Physiological</h3>
+<ul>
+<li>I don’t like it when strangers come too close to me.</li>
+<li>I feel uncomfortable when others enter my flat or room unannounced.</li>
+<li>I don’t like to stand in a dense crowd of people.</li>
+<li>I don’t like to sit next to a stranger on the tram or bus.</li>
+</ul>
+</div>
+<div id="privacy-from-other-people" class="section level3">
+<h3>Privacy from other People</h3>
+<ul>
+<li>My need for privacy is so strong that it prevents me from using social media actively.</li>
+<li>I don’t feel I need to tell my friends all my secrets.</li>
+<li>I feel I need to protect my privacy from other people.</li>
+<li>I prefer it when others don’t know much about me.</li>
+</ul>
+<div id="validation" class="section level4">
+<h4>Validation</h4>
+</div>
+</div>
+<div id="privacy-from-government" class="section level3">
+<h3>Privacy from Government</h3>
+<ul>
+<li>I need government agencies to respect my privacy, even if that makes catching criminals harder.,</li>
+<li>I don’t want the government to gather data about me, even if that makes it harder to spend tax income efficiently.,</li>
+<li>I don’t want government agencies to monitor my communication, even if that prevents terrorist attacks.,</li>
+<li>I feel I need to protect my privacy from government agencies.</li>
+</ul>
+<div id="validation-1" class="section level4">
+<h4>Validation</h4>
+</div>
+</div>
+<div id="privacy-need-anonymity" class="section level3">
+<h3>Privacy need anonymity</h3>
+<ul>
+<li>I need to be able to use a fake account on social network sites to preserve my privacy.</li>
+<li>I feel I need to avoid places with video surveillance.</li>
+<li>I prefer not to carry my drivers license or ID with me all the time to preserve my privacy.</li>
+<li>I need to be able to surf the Internet anonymously. (new)</li>
+</ul>
+<div id="validation-2" class="section level4">
+<h4>Validation</h4>
+</div>
+</div>
+<div id="privacy-from-companies" class="section level3">
+<h3>Privacy from Companies</h3>
+<ul>
+<li>I’m willing to pay more for products or services so that companies don’t have to sell my data.</li>
+<li>I’m happy to give up a little bit of privacy, so that I can use certain apps or services for free.</li>
+<li>I don’t want companies to gather information about me, even if that reduces the quality of their services.</li>
+<li>I feel I need to protect my privacy from companies.</li>
+</ul>
+<div id="validation-3" class="section level4">
+<h4>Validation</h4>
+</div>
+</div>
+<div id="general-need-for-privacy" class="section level3">
+<h3>General Need for privacy</h3>
+<ul>
+<li>I need a lot of privacy.</li>
+<li>Privacy is very important to me.</li>
+<li>I think a lot about how I can protect my privacy.</li>
+<li>I need a lot of time for myself.</li>
+</ul>
+<div id="validation-4" class="section level4">
+<h4>Validation</h4>
+</div>
+</div>
+</div>
+</div>
+<div id="power-analyses" class="section level1">
+<h1>Power Analyses</h1>
+<p>To estimate sample size, we conducted a rudimentary power analysis. That is, we planned for a two-sided correlation of r = .1. We adopted a balanced alpha and beta error approach. Because we were in exploration mode, we aimed for a high statistical power and relaxed alpha. Ideally, we would have wanted to set an error rate of 5%; however, this was outside of our budget. Instead, we opted for an error rate of 10%.</p>
+<pre><code>## 
+##      approximate correlation power calculation (arctangh transformation) 
+## 
+##               n = 1293
+##               r = 0.1
+##       sig.level = 0.05
+##           power = 0.95
+##     alternative = two.sided</code></pre>
+<p>A 5% error rate would imply collecting 1.293 participants, which was outside of our budget.</p>
+<pre><code>## 
+##      approximate correlation power calculation (arctangh transformation) 
+## 
+##               n = 853
+##               r = 0.1
+##       sig.level = 0.1
+##           power = 0.9
+##     alternative = two.sided</code></pre>
+<p>A 10% error rate would imply collecting 853 participants, which was within our budget.</p>
+<pre><code>## 
+##      approximate correlation power calculation (arctangh transformation) 
+## 
+##               n = 782
+##               r = 0.1
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = two.sided</code></pre>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<div id="facets" class="section level2">
+<h2>Facets</h2>
+<pre><code>## lavaan 0.6-9 did NOT end normally after 6823 iterations
+## ** WARNING ** Estimates below are most likely unreliable
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                      1148
+##                                                       
+##   Number of observations                           607
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                    NA
+##   Degrees of freedom                                NA
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Latent Variables:
+##                    Estimate   Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_HOH_SIN =~                                                         
+##     HEX_HOH_SIN_01     1.000                               0.270    0.135
+##     HEX_HOH_SIN_02     1.061       NA                      0.287    0.145
+##     HEX_HOH_SIN_03     2.263       NA                      0.612    0.298
+##     HEX_HOH_SIN_04    -0.056       NA                     -0.015   -0.008
+##   HEX_HOH_FAI =~                                                         
+##     HEX_HOH_FAI_01     1.000                               0.186    0.096
+##     HEX_HOH_FAI_02    -1.170       NA                     -0.217   -0.109
+##     HEX_HOH_FAI_03     2.934       NA                      0.545    0.273
+##     HEX_HOH_FAI_04     0.524       NA                      0.097    0.049
+##   HEX_HOH_GRE =~                                                         
+##     HEX_HOH_GRE_01     1.000                                  NA       NA
+##     HEX_HOH_GRE_02     1.070       NA                         NA       NA
+##     HEX_HOH_GRE_03    -2.452       NA                         NA       NA
+##     HEX_HOH_GRE_04     0.950       NA                         NA       NA
+##   HEX_HOH_MOD =~                                                         
+##     HEX_HOH_MOD_01     1.000                                  NA       NA
+##     HEX_HOH_MOD_02   122.073       NA                         NA       NA
+##     HEX_HOH_MOD_03  1028.822       NA                         NA       NA
+##     HEX_HOH_MOD_04  -367.916       NA                         NA       NA
+##   HEX_EMO_FEA =~                                                         
+##     HEX_EMO_FEA_01     1.000                               0.001    0.001
+##     HEX_EMO_FEA_02  -603.079       NA                     -0.660   -0.331
+##     HEX_EMO_FEA_03  -146.978       NA                     -0.161   -0.080
+##     HEX_EMO_FEA_04   116.638       NA                      0.128    0.065
+##   HEX_EMO_ANX =~                                                         
+##     HEX_EMO_ANX_01     1.000                                  NA       NA
+##     HEX_EMO_ANX_02     1.525       NA                         NA       NA
+##     HEX_EMO_ANX_03     0.644       NA                         NA       NA
+##     HEX_EMO_ANX_04     0.838       NA                         NA       NA
+##   HEX_EMO_DEP =~                                                         
+##     HEX_EMO_DEP_01     1.000                               0.000    0.000
+##     HEX_EMO_DEP_02   767.317       NA                      0.302    0.155
+##     HEX_EMO_DEP_03   409.966       NA                      0.161    0.081
+##     HEX_EMO_DEP_04  -408.356       NA                     -0.161   -0.080
+##   HEX_EMO_SEN =~                                                         
+##     HEX_EMO_SEN_01     1.000                               0.030    0.015
+##     HEX_EMO_SEN_02    -1.782       NA                     -0.053   -0.027
+##     HEX_EMO_SEN_03     1.793       NA                      0.054    0.027
+##     HEX_EMO_SEN_04     1.580       NA                      0.047    0.024
+##   HEX_EXT_SSE =~                                                         
+##     HEX_EXT_SSE_01     1.000                                  NA       NA
+##     HEX_EXT_SSE_02     0.206       NA                         NA       NA
+##     HEX_EXT_SSE_03     1.621       NA                         NA       NA
+##     HEX_EXT_SSE_04     0.405       NA                         NA       NA
+##   HEX_EXT_BOL =~                                                         
+##     HEX_EXT_BOL_01     1.000                               0.211    0.105
+##     HEX_EXT_BOL_02    -0.970       NA                     -0.205   -0.101
+##     HEX_EXT_BOL_03    -0.176       NA                     -0.037   -0.018
+##     HEX_EXT_BOL_04    -0.807       NA                     -0.170   -0.083
+##   HEX_EXT_SOC =~                                                         
+##     HEX_EXT_SOC_01     1.000                               0.167    0.082
+##     HEX_EXT_SOC_02    -0.718       NA                     -0.120   -0.058
+##     HEX_EXT_SOC_03     0.720       NA                      0.120    0.061
+##     HEX_EXT_SOC_04     2.502       NA                      0.417    0.211
+##   HEX_EXT_LIV =~                                                         
+##     HEX_EXT_LIV_01     1.000                               0.203    0.101
+##     HEX_EXT_LIV_02    -1.644       NA                     -0.334   -0.166
+##     HEX_EXT_LIV_03     0.278       NA                      0.056    0.028
+##     HEX_EXT_LIV_04    -1.323       NA                     -0.268   -0.135
+##   HEX_AGR_FOR =~                                                         
+##     HEX_AGR_FOR_01     1.000                                  NA       NA
+##     HEX_AGR_FOR_02   509.825       NA                         NA       NA
+##     HEX_AGR_FOR_03   560.905       NA                         NA       NA
+##     HEX_AGR_FOR_04   248.698       NA                         NA       NA
+##   HEX_AGR_GEN =~                                                         
+##     HEX_AGR_GEN_01     1.000                               0.207    0.103
+##     HEX_AGR_GEN_02     2.453       NA                      0.509    0.255
+##     HEX_AGR_GEN_03     1.712       NA                      0.355    0.175
+##     HEX_AGR_GEN_04    -2.444       NA                     -0.507   -0.258
+##   HEX_AGR_FLX =~                                                         
+##     HEX_AGR_FLX_01     1.000                                  NA       NA
+##     HEX_AGR_FLX_02  1129.620       NA                         NA       NA
+##     HEX_AGR_FLX_03    -0.775       NA                         NA       NA
+##     HEX_AGR_FLX_04    -0.079       NA                         NA       NA
+##   HEX_AGR_PAT =~                                                         
+##     HEX_AGR_PAT_01     1.000                               0.884    0.436
+##     HEX_AGR_PAT_02     0.357       NA                      0.316    0.154
+##     HEX_AGR_PAT_03     0.281       NA                      0.248    0.122
+##     HEX_AGR_PAT_04     0.176       NA                      0.155    0.076
+##   HEX_CNS_ORG =~                                                         
+##     HEX_CNS_ORG_01     1.000                               0.000    0.000
+##     HEX_CNS_ORG_02 -1157.111       NA                     -0.147   -0.073
+##     HEX_CNS_ORG_03  -868.754       NA                     -0.110   -0.054
+##     HEX_CNS_ORG_04   -28.299       NA                     -0.004   -0.002
+##   HEX_CNS_DIL =~                                                         
+##     HEX_CNS_DIL_01     1.000                                  NA       NA
+##     HEX_CNS_DIL_02    -0.814       NA                         NA       NA
+##     HEX_CNS_DIL_03     3.142       NA                         NA       NA
+##     HEX_CNS_DIL_04    -1.662       NA                         NA       NA
+##   HEX_CNS_PER =~                                                         
+##     HEX_CNS_PER_01     1.000                                  NA       NA
+##     HEX_CNS_PER_02    10.887       NA                         NA       NA
+##     HEX_CNS_PER_03  -476.941       NA                         NA       NA
+##     HEX_CNS_PER_04  1143.201       NA                         NA       NA
+##   HEX_CNS_PRU =~                                                         
+##     HEX_CNS_PRU_01     1.000                               0.269    0.136
+##     HEX_CNS_PRU_02     0.210       NA                      0.056    0.030
+##     HEX_CNS_PRU_03     0.474       NA                      0.128    0.064
+##     HEX_CNS_PRU_04     0.034       NA                      0.009    0.005
+##   HEX_OPN_AES =~                                                         
+##     HEX_OPN_AES_01     1.000                               0.001    0.000
+##     HEX_OPN_AES_02   858.631       NA                      0.633    0.321
+##     HEX_OPN_AES_03   686.620       NA                      0.506    0.248
+##     HEX_OPN_AES_04   441.854       NA                      0.326    0.160
+##   HEX_OPN_INQ =~                                                         
+##     HEX_OPN_INQ_01     1.000                               0.308    0.154
+##     HEX_OPN_INQ_02    -0.659       NA                     -0.203   -0.102
+##     HEX_OPN_INQ_03     0.980       NA                      0.301    0.152
+##     HEX_OPN_INQ_04    -0.857       NA                     -0.264   -0.132
+##   HEX_OPN_CRE =~                                                         
+##     HEX_OPN_CRE_01     1.000                               0.314    0.156
+##     HEX_OPN_CRE_02     0.222       NA                      0.070    0.036
+##     HEX_OPN_CRE_03     0.388       NA                      0.122    0.060
+##     HEX_OPN_CRE_04    -0.017       NA                     -0.005   -0.003
+##   HEX_OPN_UNC =~                                                         
+##     HEX_OPN_UNC_01     1.000                               0.390    0.189
+##     HEX_OPN_UNC_02    -1.045       NA                     -0.407   -0.204
+##     HEX_OPN_UNC_03    -0.619       NA                     -0.241   -0.122
+##     HEX_OPN_UNC_04    -0.256       NA                     -0.100   -0.049
+##   HEX_ALT =~                                                             
+##     HEX_ALT_01         1.000                               0.001    0.001
+##     HEX_ALT_02       419.447       NA                      0.422    0.216
+##     HEX_ALT_03        49.054       NA                      0.049    0.025
+##     HEX_ALT_04      -697.608       NA                     -0.701   -0.346
+##   NFP_INF =~                                                             
+##     NFP_INF_01         1.000                               0.413    0.209
+##     NFP_INF_02         1.170       NA                      0.483    0.238
+##     NFP_INF_03         1.804       NA                      0.745    0.372
+##     NFP_INF_04         1.132       NA                      0.467    0.232
+##   NFP_PSY =~                                                             
+##     NFP_PSY_01         1.000                              27.300   14.226
+##     NFP_PSY_02        -0.000       NA                     -0.008   -0.004
+##     NFP_PSY_03         0.000       NA                      0.012    0.006
+##     NFP_PSY_04        -0.000       NA                     -0.010   -0.005
+##   NFP_PHY =~                                                             
+##     NFP_PHY_01         1.000                               0.215    0.106
+##     NFP_PHY_02         1.166       NA                      0.251    0.124
+##     NFP_PHY_03        -1.143       NA                     -0.246   -0.124
+##     NFP_PHY_04        -1.934       NA                     -0.417   -0.207
+##   NFP_CNC =~                                                             
+##     NFP_CNC_01         1.000                                  NA       NA
+##     NFP_CNC_02        -0.638       NA                         NA       NA
+##     NFP_CNC_03         2.024       NA                         NA       NA
+##     NFP_CNC_04        -0.742       NA                         NA       NA
+##   NFP_SPA =~                                                             
+##     NFP_SPA_01         1.000                               0.022    0.010
+##     NFP_SPA_02         0.355       NA                      0.008    0.004
+##     NFP_SPA_03         0.276       NA                      0.006    0.003
+##     NFP_SPA_04       829.334       NA                     18.022    8.874
+##   NFP_GOV =~                                                             
+##     NFP_GOV_01         1.000                                  NA       NA
+##     NFP_GOV_02         1.202       NA                         NA       NA
+##     NFP_GOV_03         0.738       NA                         NA       NA
+##     NFP_GOV_04        -0.434       NA                         NA       NA
+##   NFP_INT =~                                                             
+##     NFP_INT_01         1.000                               0.001    0.000
+##     NFP_INT_02        88.840       NA                      0.062    0.031
+##     NFP_INT_03       360.163       NA                      0.251    0.128
+##     NFP_INT_04      1128.287       NA                      0.786    0.389
+##   NFP_ANO =~                                                             
+##     NFP_ANO_01         1.000                               0.153    0.075
+##     NFP_ANO_02         1.455       NA                      0.222    0.108
+##     NFP_ANO_03         0.555       NA                      0.085    0.042
+##     NFP_ANO_04        -1.296       NA                     -0.198   -0.100
+##   NFP_COM =~                                                             
+##     NFP_COM_01         1.000                              24.532   12.618
+##     NFP_COM_02        -0.001       NA                     -0.013   -0.006
+##     NFP_COM_03         0.000       NA                      0.001    0.000
+##     NFP_COM_04         0.000       NA                      0.003    0.002
+##   NFP_GEN =~                                                             
+##     NFP_GEN_01         1.000                                  NA       NA
+##     NFP_GEN_02        -0.209       NA                         NA       NA
+##     NFP_GEN_03         1.062       NA                         NA       NA
+##     NFP_GEN_04         0.692       NA                         NA       NA
+##   age =~                                                                 
+##     AGE                1.000                               1.705    1.000
+##   gender =~                                                              
+##     GEN                1.000                               0.814    1.000
+##   ethnicity =~                                                           
+##     ETH                1.000                               0.498    1.000
+##   relationship =~                                                        
+##     REL_               1.000                               0.500    1.000
+##   college =~                                                             
+##     COL_               1.000                               0.500    1.000
+##   income =~                                                              
+##     INC                1.000                               0.836    1.000
+##   conservatism =~                                                        
+##     CON                1.000                               2.011    1.000
+## 
+## Covariances:
+##                    Estimate   Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_HOH_SIN ~~                                                         
+##     HEX_HOH_FAI       -0.034       NA                     -0.669   -0.669
+##     HEX_HOH_GRE       -0.022       NA                     -0.468   -0.468
+##     HEX_HOH_MOD        0.000       NA                      0.017    0.017
+##     HEX_EMO_FEA       -0.000       NA                     -0.422   -0.422
+##     HEX_EMO_ANX        0.040       NA                      0.572    0.572
+##     HEX_EMO_DEP        0.000       NA                      0.162    0.162
+##     HEX_EMO_SEN       -0.015       NA                     -1.879   -1.879
+##     HEX_EXT_SSE       -0.002       NA                     -0.042   -0.042
+##     HEX_EXT_BOL       -0.048       NA                     -0.847   -0.847
+##     HEX_EXT_SOC       -0.008       NA                     -0.169   -0.169
+##     HEX_EXT_LIV       -0.040       NA                     -0.721   -0.721
+##     HEX_AGR_FOR        0.000       NA                      0.226    0.226
+##     HEX_AGR_GEN        0.046       NA                      0.823    0.823
+##     HEX_AGR_FLX       -0.000       NA                     -0.011   -0.011
+##     HEX_AGR_PAT        0.025       NA                      0.106    0.106
+##     HEX_CNS_ORG        0.000       NA                      1.918    1.918
+##     HEX_CNS_DIL        0.023       NA                      0.918    0.918
+##     HEX_CNS_PER        0.000       NA                      0.684    0.684
+##     HEX_CNS_PRU        0.008       NA                      0.116    0.116
+##     HEX_OPN_AES        0.000       NA                      0.463    0.463
+##     HEX_OPN_INQ        0.019       NA                      0.227    0.227
+##     HEX_OPN_CRE        0.001       NA                      0.013    0.013
+##     HEX_OPN_UNC       -0.003       NA                     -0.025   -0.025
+##     HEX_ALT           -0.000       NA                     -0.118   -0.118
+##     NFP_INF            0.008       NA                      0.071    0.071
+##     NFP_PSY            0.047       NA                      0.006    0.006
+##     NFP_PHY            0.011       NA                      0.189    0.189
+##     NFP_CNC            0.017       NA                      0.241    0.241
+##     NFP_SPA           -0.000       NA                     -0.019   -0.019
+##     NFP_GOV           -0.070       NA                     -0.721   -0.721
+##     NFP_INT           -0.000       NA                     -0.537   -0.537
+##     NFP_ANO            0.007       NA                      0.167    0.167
+##     NFP_COM            0.176       NA                      0.026    0.026
+##     NFP_GEN           -0.074       NA                     -0.911   -0.911
+##     age                0.069       NA                      0.151    0.151
+##     gender            -0.043       NA                     -0.196   -0.196
+##     ethnicity          0.010       NA                      0.074    0.074
+##     relationship       0.023       NA                      0.172    0.172
+##     college           -0.016       NA                     -0.116   -0.116
+##     income            -0.003       NA                     -0.013   -0.013
+##     conservatism       0.052       NA                      0.096    0.096
+##   HEX_HOH_FAI ~~                                                         
+##     HEX_HOH_GRE       -0.015       NA                     -0.463   -0.463
+##     HEX_HOH_MOD        0.000       NA                      0.182    0.182
+##     HEX_EMO_FEA       -0.000       NA                     -0.707   -0.707
+##     HEX_EMO_ANX        0.061       NA                      1.258    1.258
+##     HEX_EMO_DEP       -0.000       NA                     -0.110   -0.110
+##     HEX_EMO_SEN       -0.013       NA                     -2.392   -2.392
+##     HEX_EXT_SSE        0.014       NA                      0.449    0.449
+##     HEX_EXT_BOL       -0.071       NA                     -1.813   -1.813
+##     HEX_EXT_SOC       -0.022       NA                     -0.703   -0.703
+##     HEX_EXT_LIV        0.038       NA                      1.016    1.016
+##     HEX_AGR_FOR        0.000       NA                      0.063    0.063
+##     HEX_AGR_GEN        0.008       NA                      0.199    0.199
+##     HEX_AGR_FLX        0.000       NA                      0.019    0.019
+##     HEX_AGR_PAT       -0.069       NA                     -0.423   -0.423
+##     HEX_CNS_ORG        0.000       NA                      2.335    2.335
+##     HEX_CNS_DIL       -0.016       NA                     -0.927   -0.927
+##     HEX_CNS_PER       -0.000       NA                     -0.264   -0.264
+##     HEX_CNS_PRU       -0.063       NA                     -1.258   -1.258
+##     HEX_OPN_AES        0.000       NA                      0.555    0.555
+##     HEX_OPN_INQ        0.005       NA                      0.085    0.085
+##     HEX_OPN_CRE       -0.024       NA                     -0.406   -0.406
+##     HEX_OPN_UNC       -0.003       NA                     -0.036   -0.036
+##     HEX_ALT            0.000       NA                      0.338    0.338
+##     NFP_INF            0.025       NA                      0.328    0.328
+##     NFP_PSY            0.051       NA                      0.010    0.010
+##     NFP_PHY           -0.003       NA                     -0.074   -0.074
+##     NFP_CNC           -0.022       NA                     -0.454   -0.454
+##     NFP_SPA           -0.000       NA                     -0.028   -0.028
+##     NFP_GOV            0.059       NA                      0.890    0.890
+##     NFP_INT           -0.000       NA                     -0.025   -0.025
+##     NFP_ANO            0.051       NA                      1.811    1.811
+##     NFP_COM           -0.087       NA                     -0.019   -0.019
+##     NFP_GEN           -0.044       NA                     -0.794   -0.794
+##     age               -0.026       NA                     -0.082   -0.082
+##     gender            -0.038       NA                     -0.253   -0.253
+##     ethnicity          0.028       NA                      0.307    0.307
+##     relationship       0.006       NA                      0.060    0.060
+##     college           -0.000       NA                     -0.001   -0.001
+##     income             0.002       NA                      0.016    0.016
+##     conservatism      -0.011       NA                     -0.030   -0.030
+##   HEX_HOH_GRE ~~                                                         
+##     HEX_HOH_MOD       -0.000       NA                     -0.379   -0.379
+##     HEX_EMO_FEA       -0.000       NA                     -0.925   -0.925
+##     HEX_EMO_ANX       -0.049       NA                     -1.078   -1.078
+##     HEX_EMO_DEP       -0.000       NA                     -1.577   -1.577
+##     HEX_EMO_SEN       -0.005       NA                     -1.029   -1.029
+##     HEX_EXT_SSE        0.038       NA                      1.258    1.258
+##     HEX_EXT_BOL       -0.021       NA                     -0.576   -0.576
+##     HEX_EXT_SOC       -0.010       NA                     -0.353   -0.353
+##     HEX_EXT_LIV       -0.026       NA                     -0.740   -0.740
+##     HEX_AGR_FOR        0.000       NA                      0.777    0.777
+##     HEX_AGR_GEN       -0.012       NA                     -0.339   -0.339
+##     HEX_AGR_FLX        0.000       NA                      0.002    0.002
+##     HEX_AGR_PAT       -0.060       NA                     -0.392   -0.392
+##     HEX_CNS_ORG       -0.000       NA                     -0.950   -0.950
+##     HEX_CNS_DIL        0.000       NA                      0.008    0.008
+##     HEX_CNS_PER        0.000       NA                      0.075    0.075
+##     HEX_CNS_PRU       -0.081       NA                     -1.733   -1.733
+##     HEX_OPN_AES        0.000       NA                      0.999    0.999
+##     HEX_OPN_INQ       -0.003       NA                     -0.063   -0.063
+##     HEX_OPN_CRE        0.039       NA                      0.706    0.706
+##     HEX_OPN_UNC        0.004       NA                      0.053    0.053
+##     HEX_ALT            0.000       NA                      0.201    0.201
+##     NFP_INF            0.046       NA                      0.643    0.643
+##     NFP_PSY           -0.045       NA                     -0.010   -0.010
+##     NFP_PHY           -0.028       NA                     -0.739   -0.739
+##     NFP_CNC           -0.034       NA                     -0.753   -0.753
+##     NFP_SPA           -0.000       NA                     -0.025   -0.025
+##     NFP_GOV           -0.066       NA                     -1.054   -1.054
+##     NFP_INT           -0.000       NA                     -0.459   -0.459
+##     NFP_ANO           -0.030       NA                     -1.115   -1.115
+##     NFP_COM            0.016       NA                      0.004    0.004
+##     NFP_GEN           -0.035       NA                     -0.675   -0.675
+##     age                0.052       NA                      0.174    0.174
+##     gender            -0.000       NA                     -0.002   -0.002
+##     ethnicity          0.013       NA                      0.149    0.149
+##     relationship       0.004       NA                      0.044    0.044
+##     college            0.006       NA                      0.064    0.064
+##     income             0.003       NA                      0.021    0.021
+##     conservatism       0.018       NA                      0.053    0.053
+##   HEX_HOH_MOD ~~                                                         
+##     HEX_EMO_FEA       -0.000       NA                     -0.041   -0.041
+##     HEX_EMO_ANX        0.000       NA                      0.785    0.785
+##     HEX_EMO_DEP       -0.000       NA                     -1.358   -1.358
+##     HEX_EMO_SEN        0.000       NA                      1.601    1.601
+##     HEX_EXT_SSE       -0.000       NA                     -2.937   -2.937
+##     HEX_EXT_BOL       -0.000       NA                     -3.187   -3.187
+##     HEX_EXT_SOC       -0.000       NA                     -0.893   -0.893
+##     HEX_EXT_LIV       -0.000       NA                     -2.012   -2.012
+##     HEX_AGR_FOR       -0.000       NA                     -0.369   -0.369
+##     HEX_AGR_GEN        0.000       NA                      0.408    0.408
+##     HEX_AGR_FLX        0.000       NA                      0.029    0.029
+##     HEX_AGR_PAT        0.000       NA                      0.194    0.194
+##     HEX_CNS_ORG       -0.000       NA                     -0.310   -0.310
+##     HEX_CNS_DIL       -0.000       NA                     -2.017   -2.017
+##     HEX_CNS_PER       -0.000       NA                     -0.512   -0.512
+##     HEX_CNS_PRU       -0.000       NA                     -1.882   -1.882
+##     HEX_OPN_AES       -0.000       NA                     -1.013   -1.013
+##     HEX_OPN_INQ       -0.000       NA                     -0.416   -0.416
+##     HEX_OPN_CRE        0.000       NA                      1.727    1.727
+##     HEX_OPN_UNC        0.000       NA                      1.153    1.153
+##     HEX_ALT           -0.000       NA                     -0.210   -0.210
+##     NFP_INF            0.000       NA                      0.404    0.404
+##     NFP_PSY           -0.000       NA                     -0.007   -0.007
+##     NFP_PHY           -0.000       NA                     -0.356   -0.356
+##     NFP_CNC            0.000       NA                      1.444    1.444
+##     NFP_SPA            0.000       NA                      0.018    0.018
+##     NFP_GOV            0.000       NA                      0.671    0.671
+##     NFP_INT           -0.000       NA                     -0.618   -0.618
+##     NFP_ANO            0.000       NA                      1.521    1.521
+##     NFP_COM           -0.000       NA                     -0.032   -0.032
+##     NFP_GEN            0.000       NA                      0.425    0.425
+##     age                0.000       NA                      0.022    0.022
+##     gender             0.000       NA                      0.107    0.107
+##     ethnicity         -0.000       NA                     -0.012   -0.012
+##     relationship      -0.000       NA                     -0.001   -0.001
+##     college           -0.000       NA                     -0.287   -0.287
+##     income             0.000       NA                      0.166    0.166
+##     conservatism      -0.000       NA                     -0.132   -0.132
+##   HEX_EMO_FEA ~~                                                         
+##     HEX_EMO_ANX        0.000       NA                      0.507    0.507
+##     HEX_EMO_DEP        0.000       NA                      0.302    0.302
+##     HEX_EMO_SEN        0.000       NA                      8.223    8.223
+##     HEX_EXT_SSE        0.000       NA                      0.144    0.144
+##     HEX_EXT_BOL        0.000       NA                      0.398    0.398
+##     HEX_EXT_SOC        0.000       NA                      0.671    0.671
+##     HEX_EXT_LIV       -0.000       NA                     -1.053   -1.053
+##     HEX_AGR_FOR        0.000       NA                      0.430    0.430
+##     HEX_AGR_GEN        0.000       NA                      0.311    0.311
+##     HEX_AGR_FLX       -0.000       NA                     -0.020   -0.020
+##     HEX_AGR_PAT        0.000       NA                      0.390    0.390
+##     HEX_CNS_ORG       -0.000       NA                     -2.698   -2.698
+##     HEX_CNS_DIL        0.000       NA                      1.640    1.640
+##     HEX_CNS_PER       -0.000       NA                     -0.233   -0.233
+##     HEX_CNS_PRU       -0.000       NA                     -0.734   -0.734
+##     HEX_OPN_AES        0.000       NA                      0.474    0.474
+##     HEX_OPN_INQ       -0.000       NA                     -0.357   -0.357
+##     HEX_OPN_CRE       -0.000       NA                     -0.096   -0.096
+##     HEX_OPN_UNC        0.001       NA                      1.581    1.581
+##     HEX_ALT           -0.000       NA                     -0.054   -0.054
+##     NFP_INF           -0.000       NA                     -0.604   -0.604
+##     NFP_PSY           -0.000       NA                     -0.001   -0.001
+##     NFP_PHY           -0.000       NA                     -0.083   -0.083
+##     NFP_CNC            0.000       NA                      0.524    0.524
+##     NFP_SPA            0.000       NA                      0.010    0.010
+##     NFP_GOV           -0.000       NA                     -0.903   -0.903
+##     NFP_INT           -0.000       NA                     -0.265   -0.265
+##     NFP_ANO           -0.000       NA                     -0.648   -0.648
+##     NFP_COM           -0.000       NA                     -0.010   -0.010
+##     NFP_GEN           -0.000       NA                     -0.143   -0.143
+##     age               -0.000       NA                     -0.021   -0.021
+##     gender             0.000       NA                      0.137    0.137
+##     ethnicity         -0.000       NA                     -0.118   -0.118
+##     relationship      -0.000       NA                     -0.252   -0.252
+##     college           -0.000       NA                     -0.057   -0.057
+##     income            -0.000       NA                     -0.011   -0.011
+##     conservatism      -0.000       NA                     -0.083   -0.083
+##   HEX_EMO_ANX ~~                                                         
+##     HEX_EMO_DEP        0.000       NA                      0.172    0.172
+##     HEX_EMO_SEN        0.038       NA                      4.813    4.813
+##     HEX_EXT_SSE        0.076       NA                      1.699    1.699
+##     HEX_EXT_BOL        0.010       NA                      0.178    0.178
+##     HEX_EXT_SOC       -0.061       NA                     -1.401   -1.401
+##     HEX_EXT_LIV       -0.046       NA                     -0.867   -0.867
+##     HEX_AGR_FOR       -0.000       NA                     -1.136   -1.136
+##     HEX_AGR_GEN       -0.004       NA                     -0.068   -0.068
+##     HEX_AGR_FLX       -0.000       NA                     -0.005   -0.005
+##     HEX_AGR_PAT       -0.001       NA                     -0.006   -0.006
+##     HEX_CNS_ORG       -0.000       NA                     -2.394   -2.394
+##     HEX_CNS_DIL       -0.025       NA                     -1.038   -1.038
+##     HEX_CNS_PER        0.000       NA                      0.051    0.051
+##     HEX_CNS_PRU       -0.124       NA                     -1.762   -1.762
+##     HEX_OPN_AES       -0.000       NA                     -0.985   -0.985
+##     HEX_OPN_INQ        0.138       NA                      1.718    1.718
+##     HEX_OPN_CRE        0.098       NA                      1.198    1.198
+##     HEX_OPN_UNC        0.022       NA                      0.221    0.221
+##     HEX_ALT            0.000       NA                      0.087    0.087
+##     NFP_INF            0.012       NA                      0.108    0.108
+##     NFP_PSY            0.277       NA                      0.039    0.039
+##     NFP_PHY           -0.055       NA                     -0.983   -0.983
+##     NFP_CNC           -0.048       NA                     -0.703   -0.703
+##     NFP_SPA            0.000       NA                      0.013    0.013
+##     NFP_GOV            0.029       NA                      0.311    0.311
+##     NFP_INT            0.000       NA                      0.019    0.019
+##     NFP_ANO           -0.023       NA                     -0.572   -0.572
+##     NFP_COM            0.023       NA                      0.004    0.004
+##     NFP_GEN           -0.060       NA                     -0.762   -0.762
+##     age               -0.085       NA                     -0.192   -0.192
+##     gender            -0.019       NA                     -0.088   -0.088
+##     ethnicity         -0.019       NA                     -0.145   -0.145
+##     relationship      -0.016       NA                     -0.120   -0.120
+##     college           -0.009       NA                     -0.068   -0.068
+##     income            -0.005       NA                     -0.023   -0.023
+##     conservatism       0.132       NA                      0.253    0.253
+##   HEX_EMO_DEP ~~                                                         
+##     HEX_EMO_SEN       -0.000       NA                     -2.179   -2.179
+##     HEX_EXT_SSE       -0.000       NA                     -1.546   -1.546
+##     HEX_EXT_BOL       -0.000       NA                     -0.750   -0.750
+##     HEX_EXT_SOC       -0.000       NA                     -0.958   -0.958
+##     HEX_EXT_LIV       -0.000       NA                     -0.873   -0.873
+##     HEX_AGR_FOR        0.000       NA                      0.233    0.233
+##     HEX_AGR_GEN        0.000       NA                      0.695    0.695
+##     HEX_AGR_FLX       -0.000       NA                     -0.031   -0.031
+##     HEX_AGR_PAT       -0.000       NA                     -0.222   -0.222
+##     HEX_CNS_ORG        0.000       NA                      0.918    0.918
+##     HEX_CNS_DIL       -0.000       NA                     -1.472   -1.472
+##     HEX_CNS_PER        0.000       NA                      1.956    1.956
+##     HEX_CNS_PRU       -0.000       NA                     -3.463   -3.463
+##     HEX_OPN_AES        0.000       NA                      1.324    1.324
+##     HEX_OPN_INQ        0.000       NA                      0.602    0.602
+##     HEX_OPN_CRE       -0.000       NA                     -2.200   -2.200
+##     HEX_OPN_UNC        0.000       NA                      1.742    1.742
+##     HEX_ALT           -0.000       NA                     -0.643   -0.643
+##     NFP_INF            0.000       NA                      0.592    0.592
+##     NFP_PSY           -0.000       NA                     -0.037   -0.037
+##     NFP_PHY           -0.000       NA                     -0.796   -0.796
+##     NFP_CNC           -0.000       NA                     -0.340   -0.340
+##     NFP_SPA            0.000       NA                      0.013    0.013
+##     NFP_GOV           -0.000       NA                     -0.700   -0.700
+##     NFP_INT           -0.000       NA                     -0.113   -0.113
+##     NFP_ANO           -0.000       NA                     -0.675   -0.675
+##     NFP_COM            0.000       NA                      0.002    0.002
+##     NFP_GEN            0.000       NA                      2.321    2.321
+##     age               -0.000       NA                     -0.026   -0.026
+##     gender            -0.000       NA                     -0.243   -0.243
+##     ethnicity         -0.000       NA                     -0.011   -0.011
+##     relationship      -0.000       NA                     -0.312   -0.312
+##     college           -0.000       NA                     -0.314   -0.314
+##     income             0.000       NA                      0.094    0.094
+##     conservatism       0.000       NA                      0.243    0.243
+##   HEX_EMO_SEN ~~                                                         
+##     HEX_EXT_SSE        0.016       NA                      3.072    3.072
+##     HEX_EXT_BOL       -0.005       NA                     -0.822   -0.822
+##     HEX_EXT_SOC        0.031       NA                      6.183    6.183
+##     HEX_EXT_LIV       -0.045       NA                     -7.376   -7.376
+##     HEX_AGR_FOR        0.000       NA                      0.806    0.806
+##     HEX_AGR_GEN       -0.022       NA                     -3.600   -3.600
+##     HEX_AGR_FLX        0.000       NA                      0.073    0.073
+##     HEX_AGR_PAT        0.106       NA                      4.010    4.010
+##     HEX_CNS_ORG        0.000       NA                      0.302    0.302
+##     HEX_CNS_DIL        0.010       NA                      3.643    3.643
+##     HEX_CNS_PER       -0.000       NA                     -3.958   -3.958
+##     HEX_CNS_PRU       -0.038       NA                     -4.647   -4.647
+##     HEX_OPN_AES        0.000       NA                      4.440    4.440
+##     HEX_OPN_INQ       -0.055       NA                     -5.929   -5.929
+##     HEX_OPN_CRE        0.048       NA                      5.108    5.108
+##     HEX_OPN_UNC        0.007       NA                      0.584    0.584
+##     HEX_ALT           -0.000       NA                     -4.548   -4.548
+##     NFP_INF            0.011       NA                      0.878    0.878
+##     NFP_PSY            0.077       NA                      0.095    0.095
+##     NFP_PHY           -0.049       NA                     -7.639   -7.639
+##     NFP_CNC           -0.033       NA                     -4.206   -4.206
+##     NFP_SPA            0.000       NA                      0.143    0.143
+##     NFP_GOV           -0.002       NA                     -0.193   -0.193
+##     NFP_INT           -0.000       NA                     -1.673   -1.673
+##     NFP_ANO           -0.015       NA                     -3.319   -3.319
+##     NFP_COM            0.023       NA                      0.031    0.031
+##     NFP_GEN            0.030       NA                      3.283    3.283
+##     age               -0.035       NA                     -0.689   -0.689
+##     gender            -0.013       NA                     -0.529   -0.529
+##     ethnicity         -0.018       NA                     -1.199   -1.199
+##     relationship      -0.031       NA                     -2.091   -2.091
+##     college            0.015       NA                      0.997    0.997
+##     income            -0.025       NA                     -0.989   -0.989
+##     conservatism       0.057       NA                      0.950    0.950
+##   HEX_EXT_SSE ~~                                                         
+##     HEX_EXT_BOL       -0.018       NA                     -0.485   -0.485
+##     HEX_EXT_SOC       -0.118       NA                     -4.105   -4.105
+##     HEX_EXT_LIV        0.086       NA                      2.471    2.471
+##     HEX_AGR_FOR        0.000       NA                      1.464    1.464
+##     HEX_AGR_GEN        0.012       NA                      0.343    0.343
+##     HEX_AGR_FLX       -0.000       NA                     -0.012   -0.012
+##     HEX_AGR_PAT       -0.236       NA                     -1.552   -1.552
+##     HEX_CNS_ORG        0.000       NA                      0.336    0.336
+##     HEX_CNS_DIL        0.013       NA                      0.808    0.808
+##     HEX_CNS_PER       -0.000       NA                     -0.468   -0.468
+##     HEX_CNS_PRU       -0.044       NA                     -0.941   -0.941
+##     HEX_OPN_AES        0.000       NA                      0.549    0.549
+##     HEX_OPN_INQ       -0.110       NA                     -2.086   -2.086
+##     HEX_OPN_CRE        0.023       NA                      0.418    0.418
+##     HEX_OPN_UNC       -0.040       NA                     -0.600   -0.600
+##     HEX_ALT           -0.000       NA                     -0.115   -0.115
+##     NFP_INF           -0.029       NA                     -0.408   -0.408
+##     NFP_PSY            0.008       NA                      0.002    0.002
+##     NFP_PHY            0.005       NA                      0.139    0.139
+##     NFP_CNC           -0.062       NA                     -1.381   -1.381
+##     NFP_SPA            0.000       NA                      0.055    0.055
+##     NFP_GOV            0.062       NA                      1.008    1.008
+##     NFP_INT            0.000       NA                      0.024    0.024
+##     NFP_ANO           -0.002       NA                     -0.065   -0.065
+##     NFP_COM            0.116       NA                      0.027    0.027
+##     NFP_GEN           -0.080       NA                     -1.543   -1.543
+##     age               -0.087       NA                     -0.296   -0.296
+##     gender             0.033       NA                      0.239    0.239
+##     ethnicity         -0.037       NA                     -0.426   -0.426
+##     relationship       0.032       NA                      0.373    0.373
+##     college            0.003       NA                      0.040    0.040
+##     income             0.087       NA                      0.602    0.602
+##     conservatism       0.137       NA                      0.397    0.397
+##   HEX_EXT_BOL ~~                                                         
+##     HEX_EXT_SOC       -0.002       NA                     -0.065   -0.065
+##     HEX_EXT_LIV       -0.037       NA                     -0.855   -0.855
+##     HEX_AGR_FOR        0.000       NA                      1.400    1.400
+##     HEX_AGR_GEN        0.046       NA                      1.040    1.040
+##     HEX_AGR_FLX       -0.000       NA                     -0.008   -0.008
+##     HEX_AGR_PAT        0.050       NA                      0.268    0.268
+##     HEX_CNS_ORG       -0.000       NA                     -0.043   -0.043
+##     HEX_CNS_DIL       -0.074       NA                     -3.772   -3.772
+##     HEX_CNS_PER       -0.000       NA                     -0.537   -0.537
+##     HEX_CNS_PRU       -0.151       NA                     -2.649   -2.649
+##     HEX_OPN_AES       -0.000       NA                     -0.015   -0.015
+##     HEX_OPN_INQ       -0.053       NA                     -0.820   -0.820
+##     HEX_OPN_CRE       -0.098       NA                     -1.477   -1.477
+##     HEX_OPN_UNC       -0.059       NA                     -0.716   -0.716
+##     HEX_ALT            0.000       NA                      0.546    0.546
+##     NFP_INF           -0.017       NA                     -0.199   -0.199
+##     NFP_PSY            0.081       NA                      0.014    0.014
+##     NFP_PHY            0.002       NA                      0.043    0.043
+##     NFP_CNC            0.026       NA                      0.471    0.471
+##     NFP_SPA            0.000       NA                      0.019    0.019
+##     NFP_GOV            0.010       NA                      0.130    0.130
+##     NFP_INT           -0.000       NA                     -0.548   -0.548
+##     NFP_ANO           -0.105       NA                     -3.259   -3.259
+##     NFP_COM            0.023       NA                      0.004    0.004
+##     NFP_GEN           -0.002       NA                     -0.030   -0.030
+##     age               -0.021       NA                     -0.058   -0.058
+##     gender            -0.045       NA                     -0.261   -0.261
+##     ethnicity         -0.072       NA                     -0.689   -0.689
+##     relationship       0.018       NA                      0.166    0.166
+##     college           -0.002       NA                     -0.022   -0.022
+##     income            -0.069       NA                     -0.393   -0.393
+##     conservatism       0.113       NA                      0.265    0.265
+##   HEX_EXT_SOC ~~                                                         
+##     HEX_EXT_LIV       -0.055       NA                     -1.637   -1.637
+##     HEX_AGR_FOR       -0.000       NA                     -0.201   -0.201
+##     HEX_AGR_GEN        0.019       NA                      0.557    0.557
+##     HEX_AGR_FLX       -0.000       NA                     -0.018   -0.018
+##     HEX_AGR_PAT        0.024       NA                      0.161    0.161
+##     HEX_CNS_ORG        0.000       NA                      1.015    1.015
+##     HEX_CNS_DIL       -0.045       NA                     -2.901   -2.901
+##     HEX_CNS_PER       -0.000       NA                     -0.085   -0.085
+##     HEX_CNS_PRU       -0.025       NA                     -0.564   -0.564
+##     HEX_OPN_AES       -0.000       NA                     -0.166   -0.166
+##     HEX_OPN_INQ        0.001       NA                      0.015    0.015
+##     HEX_OPN_CRE       -0.053       NA                     -1.020   -1.020
+##     HEX_OPN_UNC        0.010       NA                      0.147    0.147
+##     HEX_ALT            0.000       NA                      0.098    0.098
+##     NFP_INF            0.027       NA                      0.397    0.397
+##     NFP_PSY           -0.023       NA                     -0.005   -0.005
+##     NFP_PHY            0.037       NA                      1.020    1.020
+##     NFP_CNC            0.065       NA                      1.501    1.501
+##     NFP_SPA            0.000       NA                      0.043    0.043
+##     NFP_GOV           -0.043       NA                     -0.725   -0.725
+##     NFP_INT           -0.000       NA                     -0.801   -0.801
+##     NFP_ANO            0.017       NA                      0.673    0.673
+##     NFP_COM            0.022       NA                      0.005    0.005
+##     NFP_GEN            0.033       NA                      0.665    0.665
+##     age                0.069       NA                      0.244    0.244
+##     gender            -0.039       NA                     -0.290   -0.290
+##     ethnicity          0.012       NA                      0.147    0.147
+##     relationship      -0.008       NA                     -0.093   -0.093
+##     college            0.008       NA                      0.090    0.090
+##     income            -0.048       NA                     -0.343   -0.343
+##     conservatism       0.006       NA                      0.017    0.017
+##   HEX_EXT_LIV ~~                                                         
+##     HEX_AGR_FOR        0.000       NA                      0.661    0.661
+##     HEX_AGR_GEN       -0.034       NA                     -0.801   -0.801
+##     HEX_AGR_FLX       -0.000       NA                     -0.040   -0.040
+##     HEX_AGR_PAT        0.022       NA                      0.124    0.124
+##     HEX_CNS_ORG        0.000       NA                      4.388    4.388
+##     HEX_CNS_DIL       -0.008       NA                     -0.448   -0.448
+##     HEX_CNS_PER       -0.000       NA                     -0.008   -0.008
+##     HEX_CNS_PRU        0.080       NA                      1.459    1.459
+##     HEX_OPN_AES        0.000       NA                      0.329    0.329
+##     HEX_OPN_INQ       -0.098       NA                     -1.563   -1.563
+##     HEX_OPN_CRE        0.145       NA                      2.273    2.273
+##     HEX_OPN_UNC        0.035       NA                      0.442    0.442
+##     HEX_ALT           -0.000       NA                     -0.142   -0.142
+##     NFP_INF            0.083       NA                      0.986    0.986
+##     NFP_PSY            0.042       NA                      0.008    0.008
+##     NFP_PHY            0.014       NA                      0.317    0.317
+##     NFP_CNC           -0.043       NA                     -0.810   -0.810
+##     NFP_SPA           -0.000       NA                     -0.030   -0.030
+##     NFP_GOV           -0.025       NA                     -0.348   -0.348
+##     NFP_INT           -0.000       NA                     -0.200   -0.200
+##     NFP_ANO           -0.009       NA                     -0.292   -0.292
+##     NFP_COM            0.147       NA                      0.029    0.029
+##     NFP_GEN            0.002       NA                      0.037    0.037
+##     age               -0.091       NA                     -0.264   -0.264
+##     gender            -0.038       NA                     -0.232   -0.232
+##     ethnicity         -0.014       NA                     -0.139   -0.139
+##     relationship       0.003       NA                      0.029    0.029
+##     college            0.002       NA                      0.020    0.020
+##     income             0.017       NA                      0.099    0.099
+##     conservatism      -0.052       NA                     -0.126   -0.126
+##   HEX_AGR_FOR ~~                                                         
+##     HEX_AGR_GEN       -0.000       NA                     -0.737   -0.737
+##     HEX_AGR_FLX        0.000       NA                      0.005    0.005
+##     HEX_AGR_PAT       -0.000       NA                     -0.329   -0.329
+##     HEX_CNS_ORG       -0.000       NA                     -2.823   -2.823
+##     HEX_CNS_DIL       -0.000       NA                     -2.543   -2.543
+##     HEX_CNS_PER       -0.000       NA                     -0.411   -0.411
+##     HEX_CNS_PRU        0.000       NA                      0.978    0.978
+##     HEX_OPN_AES        0.000       NA                      0.242    0.242
+##     HEX_OPN_INQ        0.000       NA                      1.009    1.009
+##     HEX_OPN_CRE        0.000       NA                      0.871    0.871
+##     HEX_OPN_UNC        0.000       NA                      0.945    0.945
+##     HEX_ALT            0.000       NA                      1.181    1.181
+##     NFP_INF           -0.000       NA                     -0.347   -0.347
+##     NFP_PSY            0.000       NA                      0.022    0.022
+##     NFP_PHY           -0.000       NA                     -0.501   -0.501
+##     NFP_CNC            0.000       NA                      1.255    1.255
+##     NFP_SPA            0.000       NA                      0.021    0.021
+##     NFP_GOV            0.000       NA                      0.333    0.333
+##     NFP_INT            0.000       NA                      0.287    0.287
+##     NFP_ANO            0.000       NA                      2.152    2.152
+##     NFP_COM           -0.000       NA                     -0.006   -0.006
+##     NFP_GEN           -0.000       NA                     -0.590   -0.590
+##     age                0.000       NA                      0.164    0.164
+##     gender             0.000       NA                      0.025    0.025
+##     ethnicity         -0.000       NA                     -0.020   -0.020
+##     relationship       0.000       NA                      0.196    0.196
+##     college           -0.000       NA                     -0.030   -0.030
+##     income            -0.000       NA                     -0.391   -0.391
+##     conservatism       0.000       NA                      0.059    0.059
+##   HEX_AGR_GEN ~~                                                         
+##     HEX_AGR_FLX       -0.000       NA                     -0.006   -0.006
+##     HEX_AGR_PAT       -0.071       NA                     -0.387   -0.387
+##     HEX_CNS_ORG        0.000       NA                      2.527    2.527
+##     HEX_CNS_DIL       -0.004       NA                     -0.234   -0.234
+##     HEX_CNS_PER       -0.000       NA                     -0.395   -0.395
+##     HEX_CNS_PRU        0.068       NA                      1.214    1.214
+##     HEX_OPN_AES       -0.000       NA                     -0.672   -0.672
+##     HEX_OPN_INQ        0.020       NA                      0.318    0.318
+##     HEX_OPN_CRE        0.023       NA                      0.352    0.352
+##     HEX_OPN_UNC        0.012       NA                      0.150    0.150
+##     HEX_ALT            0.000       NA                      0.025    0.025
+##     NFP_INF            0.001       NA                      0.014    0.014
+##     NFP_PSY           -0.051       NA                     -0.009   -0.009
+##     NFP_PHY            0.008       NA                      0.182    0.182
+##     NFP_CNC            0.014       NA                      0.255    0.255
+##     NFP_SPA           -0.000       NA                     -0.024   -0.024
+##     NFP_GOV           -0.032       NA                     -0.427   -0.427
+##     NFP_INT           -0.000       NA                     -0.399   -0.399
+##     NFP_ANO            0.022       NA                      0.689    0.689
+##     NFP_COM            0.063       NA                      0.012    0.012
+##     NFP_GEN           -0.028       NA                     -0.443   -0.443
+##     age                0.012       NA                      0.034    0.034
+##     gender            -0.017       NA                     -0.101   -0.101
+##     ethnicity          0.016       NA                      0.151    0.151
+##     relationship       0.020       NA                      0.194    0.194
+##     college           -0.013       NA                     -0.126   -0.126
+##     income             0.015       NA                      0.086    0.086
+##     conservatism       0.096       NA                      0.229    0.229
+##   HEX_AGR_FLX ~~                                                         
+##     HEX_AGR_PAT       -0.000       NA                     -0.013   -0.013
+##     HEX_CNS_ORG       -0.000       NA                     -0.079   -0.079
+##     HEX_CNS_DIL       -0.000       NA                     -0.023   -0.023
+##     HEX_CNS_PER        0.000       NA                      0.009    0.009
+##     HEX_CNS_PRU        0.000       NA                      0.012    0.012
+##     HEX_OPN_AES       -0.000       NA                     -0.003   -0.003
+##     HEX_OPN_INQ       -0.000       NA                     -0.008   -0.008
+##     HEX_OPN_CRE        0.000       NA                      0.003    0.003
+##     HEX_OPN_UNC       -0.000       NA                     -0.014   -0.014
+##     HEX_ALT           -0.000       NA                     -0.009   -0.009
+##     NFP_INF            0.000       NA                      0.006    0.006
+##     NFP_PSY            0.000       NA                      0.000    0.000
+##     NFP_PHY           -0.000       NA                     -0.000   -0.000
+##     NFP_CNC           -0.000       NA                     -0.027   -0.027
+##     NFP_SPA           -0.000       NA                     -0.000   -0.000
+##     NFP_GOV            0.000       NA                      0.023    0.023
+##     NFP_INT            0.000       NA                      0.001    0.001
+##     NFP_ANO            0.000       NA                      0.032    0.032
+##     NFP_COM           -0.000       NA                     -0.000   -0.000
+##     NFP_GEN            0.000       NA                      0.041    0.041
+##     age                0.000       NA                      0.001    0.001
+##     gender            -0.000       NA                     -0.001   -0.001
+##     ethnicity         -0.000       NA                     -0.010   -0.010
+##     relationship       0.000       NA                      0.000    0.000
+##     college            0.000       NA                      0.003    0.003
+##     income             0.000       NA                      0.006    0.006
+##     conservatism       0.000       NA                      0.004    0.004
+##   HEX_AGR_PAT ~~                                                         
+##     HEX_CNS_ORG        0.000       NA                      0.466    0.466
+##     HEX_CNS_DIL        0.049       NA                      0.594    0.594
+##     HEX_CNS_PER       -0.000       NA                     -0.783   -0.783
+##     HEX_CNS_PRU       -0.339       NA                     -1.426   -1.426
+##     HEX_OPN_AES        0.000       NA                      0.041    0.041
+##     HEX_OPN_INQ        0.107       NA                      0.394    0.394
+##     HEX_OPN_CRE       -0.233       NA                     -0.838   -0.838
+##     HEX_OPN_UNC       -0.157       NA                     -0.454   -0.454
+##     HEX_ALT            0.000       NA                      0.236    0.236
+##     NFP_INF            0.102       NA                      0.279    0.279
+##     NFP_PSY           -0.011       NA                     -0.000   -0.000
+##     NFP_PHY            0.024       NA                      0.125    0.125
+##     NFP_CNC            0.059       NA                      0.259    0.259
+##     NFP_SPA           -0.000       NA                     -0.004   -0.004
+##     NFP_GOV           -0.061       NA                     -0.191   -0.191
+##     NFP_INT           -0.000       NA                     -0.096   -0.096
+##     NFP_ANO           -0.082       NA                     -0.607   -0.607
+##     NFP_COM            0.030       NA                      0.001    0.001
+##     NFP_GEN           -0.247       NA                     -0.928   -0.928
+##     age               -0.183       NA                     -0.122   -0.122
+##     gender            -0.063       NA                     -0.087   -0.087
+##     ethnicity         -0.008       NA                     -0.018   -0.018
+##     relationship      -0.083       NA                     -0.188   -0.188
+##     college            0.014       NA                      0.032    0.032
+##     income             0.029       NA                      0.040    0.040
+##     conservatism      -0.256       NA                     -0.144   -0.144
+##   HEX_CNS_ORG ~~                                                         
+##     HEX_CNS_DIL        0.000       NA                      3.687    3.687
+##     HEX_CNS_PER        0.000       NA                      0.077    0.077
+##     HEX_CNS_PRU       -0.000       NA                     -5.660   -5.660
+##     HEX_OPN_AES       -0.000       NA                     -0.492   -0.492
+##     HEX_OPN_INQ        0.000       NA                      0.459    0.459
+##     HEX_OPN_CRE       -0.000       NA                     -0.622   -0.622
+##     HEX_OPN_UNC        0.000       NA                      3.134    3.134
+##     HEX_ALT           -0.000       NA                     -2.234   -2.234
+##     NFP_INF           -0.000       NA                     -1.137   -1.137
+##     NFP_PSY            0.000       NA                      0.001    0.001
+##     NFP_PHY            0.000       NA                      1.182    1.182
+##     NFP_CNC            0.000       NA                      1.711    1.711
+##     NFP_SPA            0.000       NA                      0.069    0.069
+##     NFP_GOV           -0.000       NA                     -2.092   -2.092
+##     NFP_INT           -0.000       NA                     -0.095   -0.095
+##     NFP_ANO           -0.000       NA                     -1.680   -1.680
+##     NFP_COM            0.000       NA                      0.041    0.041
+##     NFP_GEN           -0.000       NA                     -2.181   -2.181
+##     age               -0.000       NA                     -0.533   -0.533
+##     gender             0.000       NA                      0.207    0.207
+##     ethnicity         -0.000       NA                     -0.064   -0.064
+##     relationship       0.000       NA                      0.441    0.441
+##     college           -0.000       NA                     -0.707   -0.707
+##     income            -0.000       NA                     -0.153   -0.153
+##     conservatism       0.000       NA                      0.387    0.387
+##   HEX_CNS_DIL ~~                                                         
+##     HEX_CNS_PER       -0.000       NA                     -0.358   -0.358
+##     HEX_CNS_PRU        0.050       NA                      2.004    2.004
+##     HEX_OPN_AES       -0.000       NA                     -0.623   -0.623
+##     HEX_OPN_INQ        0.009       NA                      0.334    0.334
+##     HEX_OPN_CRE        0.077       NA                      2.641    2.641
+##     HEX_OPN_UNC       -0.018       NA                     -0.503   -0.503
+##     HEX_ALT            0.000       NA                      0.234    0.234
+##     NFP_INF            0.048       NA                      1.252    1.252
+##     NFP_PSY            0.015       NA                      0.006    0.006
+##     NFP_PHY           -0.009       NA                     -0.446   -0.446
+##     NFP_CNC            0.026       NA                      1.099    1.099
+##     NFP_SPA            0.000       NA                      0.024    0.024
+##     NFP_GOV            0.005       NA                      0.145    0.145
+##     NFP_INT           -0.000       NA                     -0.109   -0.109
+##     NFP_ANO            0.006       NA                      0.403    0.403
+##     NFP_COM           -0.098       NA                     -0.043   -0.043
+##     NFP_GEN            0.007       NA                      0.262    0.262
+##     age                0.035       NA                      0.221    0.221
+##     gender            -0.009       NA                     -0.118   -0.118
+##     ethnicity          0.009       NA                      0.200    0.200
+##     relationship      -0.007       NA                     -0.156   -0.156
+##     college            0.001       NA                      0.028    0.028
+##     income            -0.027       NA                     -0.348   -0.348
+##     conservatism      -0.049       NA                     -0.262   -0.262
+##   HEX_CNS_PER ~~                                                         
+##     HEX_CNS_PRU       -0.000       NA                     -0.646   -0.646
+##     HEX_OPN_AES        0.000       NA                      0.393    0.393
+##     HEX_OPN_INQ       -0.000       NA                     -0.002   -0.002
+##     HEX_OPN_CRE        0.000       NA                      0.350    0.350
+##     HEX_OPN_UNC        0.000       NA                      0.558    0.558
+##     HEX_ALT           -0.000       NA                     -0.658   -0.658
+##     NFP_INF            0.000       NA                      0.196    0.196
+##     NFP_PSY           -0.000       NA                     -0.000   -0.000
+##     NFP_PHY           -0.000       NA                     -0.142   -0.142
+##     NFP_CNC           -0.000       NA                     -0.017   -0.017
+##     NFP_SPA            0.000       NA                      0.007    0.007
+##     NFP_GOV            0.000       NA                      0.630    0.630
+##     NFP_INT           -0.000       NA                     -0.381   -0.381
+##     NFP_ANO           -0.000       NA                     -0.533   -0.533
+##     NFP_COM            0.000       NA                      0.030    0.030
+##     NFP_GEN            0.000       NA                      0.289    0.289
+##     age                0.000       NA                      0.033    0.033
+##     gender             0.000       NA                      0.114    0.114
+##     ethnicity         -0.000       NA                     -0.296   -0.296
+##     relationship       0.000       NA                      0.128    0.128
+##     college           -0.000       NA                     -0.073   -0.073
+##     income            -0.000       NA                     -0.160   -0.160
+##     conservatism      -0.000       NA                     -0.052   -0.052
+##   HEX_CNS_PRU ~~                                                         
+##     HEX_OPN_AES       -0.000       NA                     -0.099   -0.099
+##     HEX_OPN_INQ        0.055       NA                      0.661    0.661
+##     HEX_OPN_CRE       -0.258       NA                     -3.056   -3.056
+##     HEX_OPN_UNC       -0.329       NA                     -3.136   -3.136
+##     HEX_ALT            0.000       NA                      1.145    1.145
+##     NFP_INF           -0.122       NA                     -1.102   -1.102
+##     NFP_PSY           -0.145       NA                     -0.020   -0.020
+##     NFP_PHY            0.091       NA                      1.577    1.577
+##     NFP_CNC            0.046       NA                      0.662    0.662
+##     NFP_SPA           -0.000       NA                     -0.052   -0.052
+##     NFP_GOV           -0.155       NA                     -1.601   -1.601
+##     NFP_INT           -0.000       NA                     -0.422   -0.422
+##     NFP_ANO           -0.088       NA                     -2.145   -2.145
+##     NFP_COM           -0.059       NA                     -0.009   -0.009
+##     NFP_GEN            0.133       NA                      1.645    1.645
+##     age               -0.005       NA                     -0.011   -0.011
+##     gender            -0.036       NA                     -0.165   -0.165
+##     ethnicity         -0.038       NA                     -0.285   -0.285
+##     relationship       0.005       NA                      0.034    0.034
+##     college           -0.002       NA                     -0.012   -0.012
+##     income            -0.137       NA                     -0.610   -0.610
+##     conservatism      -0.049       NA                     -0.091   -0.091
+##   HEX_OPN_AES ~~                                                         
+##     HEX_OPN_INQ       -0.000       NA                     -0.466   -0.466
+##     HEX_OPN_CRE       -0.000       NA                     -0.423   -0.423
+##     HEX_OPN_UNC        0.000       NA                      0.010    0.010
+##     HEX_ALT            0.000       NA                      0.322    0.322
+##     NFP_INF           -0.000       NA                     -0.140   -0.140
+##     NFP_PSY           -0.000       NA                     -0.001   -0.001
+##     NFP_PHY           -0.000       NA                     -0.290   -0.290
+##     NFP_CNC           -0.000       NA                     -0.240   -0.240
+##     NFP_SPA           -0.000       NA                     -0.016   -0.016
+##     NFP_GOV            0.000       NA                      0.072    0.072
+##     NFP_INT           -0.000       NA                     -0.966   -0.966
+##     NFP_ANO           -0.000       NA                     -0.976   -0.976
+##     NFP_COM           -0.000       NA                     -0.002   -0.002
+##     NFP_GEN           -0.000       NA                     -0.685   -0.685
+##     age               -0.000       NA                     -0.071   -0.071
+##     gender             0.000       NA                      0.098    0.098
+##     ethnicity         -0.000       NA                     -0.033   -0.033
+##     relationship      -0.000       NA                     -0.031   -0.031
+##     college           -0.000       NA                     -0.046   -0.046
+##     income            -0.000       NA                     -0.170   -0.170
+##     conservatism      -0.000       NA                     -0.122   -0.122
+##   HEX_OPN_INQ ~~                                                         
+##     HEX_OPN_CRE        0.179       NA                      1.857    1.857
+##     HEX_OPN_UNC        0.098       NA                      0.816    0.816
+##     HEX_ALT            0.000       NA                      0.864    0.864
+##     NFP_INF            0.010       NA                      0.080    0.080
+##     NFP_PSY           -0.151       NA                     -0.018   -0.018
+##     NFP_PHY           -0.072       NA                     -1.090   -1.090
+##     NFP_CNC           -0.015       NA                     -0.192   -0.192
+##     NFP_SPA           -0.000       NA                     -0.015   -0.015
+##     NFP_GOV           -0.030       NA                     -0.268   -0.268
+##     NFP_INT           -0.000       NA                     -0.431   -0.431
+##     NFP_ANO            0.019       NA                      0.406    0.406
+##     NFP_COM            0.110       NA                      0.015    0.015
+##     NFP_GEN           -0.008       NA                     -0.090   -0.090
+##     age               -0.027       NA                     -0.052   -0.052
+##     gender            -0.045       NA                     -0.178   -0.178
+##     ethnicity          0.067       NA                      0.437    0.437
+##     relationship       0.012       NA                      0.080    0.080
+##     college           -0.015       NA                     -0.095   -0.095
+##     income            -0.007       NA                     -0.027   -0.027
+##     conservatism       0.027       NA                      0.044    0.044
+##   HEX_OPN_CRE ~~                                                         
+##     HEX_OPN_UNC       -0.019       NA                     -0.156   -0.156
+##     HEX_ALT           -0.000       NA                     -0.013   -0.013
+##     NFP_INF            0.082       NA                      0.630    0.630
+##     NFP_PSY           -0.010       NA                     -0.001   -0.001
+##     NFP_PHY            0.034       NA                      0.506    0.506
+##     NFP_CNC           -0.037       NA                     -0.458   -0.458
+##     NFP_SPA            0.000       NA                      0.017    0.017
+##     NFP_GOV            0.089       NA                      0.788    0.788
+##     NFP_INT           -0.000       NA                     -0.035   -0.035
+##     NFP_ANO            0.069       NA                      1.433    1.433
+##     NFP_COM           -0.424       NA                     -0.055   -0.055
+##     NFP_GEN           -0.057       NA                     -0.606   -0.606
+##     age               -0.098       NA                     -0.183   -0.183
+##     gender             0.151       NA                      0.592    0.592
+##     ethnicity          0.008       NA                      0.053    0.053
+##     relationship       0.064       NA                      0.406    0.406
+##     college            0.065       NA                      0.412    0.412
+##     income             0.101       NA                      0.386    0.386
+##     conservatism       0.271       NA                      0.429    0.429
+##   HEX_OPN_UNC ~~                                                         
+##     HEX_ALT           -0.000       NA                     -1.168   -1.168
+##     NFP_INF            0.020       NA                      0.124    0.124
+##     NFP_PSY           -0.066       NA                     -0.006   -0.006
+##     NFP_PHY           -0.035       NA                     -0.414   -0.414
+##     NFP_CNC            0.050       NA                      0.496    0.496
+##     NFP_SPA           -0.000       NA                     -0.022   -0.022
+##     NFP_GOV            0.002       NA                      0.014    0.014
+##     NFP_INT           -0.000       NA                     -0.154   -0.154
+##     NFP_ANO            0.064       NA                      1.079    1.079
+##     NFP_COM            0.082       NA                      0.009    0.009
+##     NFP_GEN           -0.021       NA                     -0.177   -0.177
+##     age                0.086       NA                      0.130    0.130
+##     gender             0.010       NA                      0.031    0.031
+##     ethnicity         -0.009       NA                     -0.048   -0.048
+##     relationship      -0.005       NA                     -0.024   -0.024
+##     college           -0.014       NA                     -0.073   -0.073
+##     income             0.042       NA                      0.130    0.130
+##     conservatism       0.005       NA                      0.006    0.006
+##   HEX_ALT ~~                                                             
+##     NFP_INF           -0.000       NA                     -0.375   -0.375
+##     NFP_PSY            0.000       NA                      0.001    0.001
+##     NFP_PHY           -0.000       NA                     -0.839   -0.839
+##     NFP_CNC            0.000       NA                      0.701    0.701
+##     NFP_SPA            0.000       NA                      0.004    0.004
+##     NFP_GOV            0.000       NA                      0.482    0.482
+##     NFP_INT           -0.000       NA                     -0.251   -0.251
+##     NFP_ANO            0.000       NA                      0.193    0.193
+##     NFP_COM           -0.000       NA                     -0.012   -0.012
+##     NFP_GEN           -0.000       NA                     -0.202   -0.202
+##     age                0.000       NA                      0.117    0.117
+##     gender             0.000       NA                      0.024    0.024
+##     ethnicity          0.000       NA                      0.150    0.150
+##     relationship       0.000       NA                      0.046    0.046
+##     college            0.000       NA                      0.079    0.079
+##     income            -0.000       NA                     -0.034   -0.034
+##     conservatism      -0.000       NA                     -0.121   -0.121
+##   NFP_INF ~~                                                             
+##     NFP_PSY           -0.033       NA                     -0.003   -0.003
+##     NFP_PHY            0.016       NA                      0.182    0.182
+##     NFP_CNC           -0.002       NA                     -0.015   -0.015
+##     NFP_SPA           -0.000       NA                     -0.007   -0.007
+##     NFP_GOV           -0.029       NA                     -0.193   -0.193
+##     NFP_INT            0.000       NA                      0.068    0.068
+##     NFP_ANO            0.013       NA                      0.209    0.209
+##     NFP_COM            0.016       NA                      0.002    0.002
+##     NFP_GEN           -0.028       NA                     -0.222   -0.222
+##     age               -0.036       NA                     -0.051   -0.051
+##     gender            -0.003       NA                     -0.008   -0.008
+##     ethnicity         -0.004       NA                     -0.018   -0.018
+##     relationship      -0.006       NA                     -0.028   -0.028
+##     college            0.006       NA                      0.031    0.031
+##     income            -0.035       NA                     -0.100   -0.100
+##     conservatism      -0.021       NA                     -0.025   -0.025
+##   NFP_PSY ~~                                                             
+##     NFP_PHY            0.062       NA                      0.011    0.011
+##     NFP_CNC           -0.033       NA                     -0.005   -0.005
+##     NFP_SPA            0.000       NA                      0.000    0.000
+##     NFP_GOV           -0.082       NA                     -0.008   -0.008
+##     NFP_INT            0.000       NA                      0.007    0.007
+##     NFP_ANO            0.179       NA                      0.043    0.043
+##     NFP_COM            0.264       NA                      0.000    0.000
+##     NFP_GEN            0.031       NA                      0.004    0.004
+##     age                0.205       NA                      0.004    0.004
+##     gender             0.003       NA                      0.000    0.000
+##     ethnicity          0.036       NA                      0.003    0.003
+##     relationship      -0.006       NA                     -0.000   -0.000
+##     college            0.026       NA                      0.002    0.002
+##     income            -0.030       NA                     -0.001   -0.001
+##     conservatism       0.035       NA                      0.001    0.001
+##   NFP_PHY ~~                                                             
+##     NFP_CNC            0.014       NA                      0.259    0.259
+##     NFP_SPA            0.000       NA                      0.012    0.012
+##     NFP_GOV           -0.030       NA                     -0.384   -0.384
+##     NFP_INT           -0.000       NA                     -0.047   -0.047
+##     NFP_ANO            0.113       NA                      3.443    3.443
+##     NFP_COM            0.058       NA                      0.011    0.011
+##     NFP_GEN           -0.007       NA                     -0.100   -0.100
+##     age               -0.024       NA                     -0.066   -0.066
+##     gender             0.039       NA                      0.220    0.220
+##     ethnicity          0.018       NA                      0.172    0.172
+##     relationship       0.028       NA                      0.258    0.258
+##     college           -0.005       NA                     -0.042   -0.042
+##     income            -0.007       NA                     -0.038   -0.038
+##     conservatism      -0.093       NA                     -0.214   -0.214
+##   NFP_CNC ~~                                                             
+##     NFP_SPA           -0.000       NA                     -0.032   -0.032
+##     NFP_GOV           -0.012       NA                     -0.128   -0.128
+##     NFP_INT            0.000       NA                      0.093    0.093
+##     NFP_ANO            0.027       NA                      0.669    0.669
+##     NFP_COM            0.055       NA                      0.009    0.009
+##     NFP_GEN            0.001       NA                      0.009    0.009
+##     age                0.148       NA                      0.335    0.335
+##     gender            -0.036       NA                     -0.171   -0.171
+##     ethnicity         -0.002       NA                     -0.017   -0.017
+##     relationship      -0.001       NA                     -0.007   -0.007
+##     college           -0.003       NA                     -0.025   -0.025
+##     income             0.026       NA                      0.122    0.122
+##     conservatism      -0.049       NA                     -0.094   -0.094
+##   NFP_SPA ~~                                                             
+##     NFP_GOV           -0.000       NA                     -0.016   -0.016
+##     NFP_INT            0.000       NA                      0.030    0.030
+##     NFP_ANO           -0.000       NA                     -0.029   -0.029
+##     NFP_COM            0.000       NA                      0.000    0.000
+##     NFP_GEN           -0.000       NA                     -0.010   -0.010
+##     age                0.000       NA                      0.002    0.002
+##     gender             0.000       NA                      0.003    0.003
+##     ethnicity         -0.000       NA                     -0.004   -0.004
+##     relationship      -0.000       NA                     -0.006   -0.006
+##     college            0.000       NA                      0.006    0.006
+##     income            -0.000       NA                     -0.010   -0.010
+##     conservatism       0.000       NA                      0.004    0.004
+##   NFP_GOV ~~                                                             
+##     NFP_INT            0.000       NA                      0.294    0.294
+##     NFP_ANO            0.007       NA                      0.121    0.121
+##     NFP_COM           -0.184       NA                     -0.021   -0.021
+##     NFP_GEN           -0.122       NA                     -1.124   -1.124
+##     age               -0.091       NA                     -0.149   -0.149
+##     gender            -0.015       NA                     -0.053   -0.053
+##     ethnicity          0.015       NA                      0.084    0.084
+##     relationship      -0.005       NA                     -0.027   -0.027
+##     college           -0.063       NA                     -0.353   -0.353
+##     income             0.053       NA                      0.178    0.178
+##     conservatism       0.012       NA                      0.016    0.016
+##   NFP_INT ~~                                                             
+##     NFP_ANO            0.000       NA                      0.924    0.924
+##     NFP_COM            0.000       NA                      0.002    0.002
+##     NFP_GEN           -0.000       NA                     -0.318   -0.318
+##     age                0.000       NA                      0.008    0.008
+##     gender            -0.000       NA                     -0.043   -0.043
+##     ethnicity         -0.000       NA                     -0.035   -0.035
+##     relationship      -0.000       NA                     -0.005   -0.005
+##     college           -0.000       NA                     -0.115   -0.115
+##     income             0.000       NA                      0.082    0.082
+##     conservatism       0.000       NA                      0.308    0.308
+##   NFP_ANO ~~                                                             
+##     NFP_COM           -0.076       NA                     -0.020   -0.020
+##     NFP_GEN            0.091       NA                      1.968    1.968
+##     age                0.069       NA                      0.263    0.263
+##     gender            -0.028       NA                     -0.222   -0.222
+##     ethnicity         -0.005       NA                     -0.061   -0.061
+##     relationship      -0.000       NA                     -0.005   -0.005
+##     college           -0.016       NA                     -0.215   -0.215
+##     income            -0.019       NA                     -0.146   -0.146
+##     conservatism       0.061       NA                      0.200    0.200
+##   NFP_COM ~~                                                             
+##     NFP_GEN           -0.152       NA                     -0.021   -0.021
+##     age                0.179       NA                      0.004    0.004
+##     gender            -0.149       NA                     -0.007   -0.007
+##     ethnicity         -0.056       NA                     -0.005   -0.005
+##     relationship       0.010       NA                      0.001    0.001
+##     college           -0.043       NA                     -0.004   -0.004
+##     income            -0.054       NA                     -0.003   -0.003
+##     conservatism       0.142       NA                      0.003    0.003
+##   NFP_GEN ~~                                                             
+##     age                0.028       NA                      0.055    0.055
+##     gender            -0.035       NA                     -0.143   -0.143
+##     ethnicity         -0.045       NA                     -0.297   -0.297
+##     relationship      -0.021       NA                     -0.137   -0.137
+##     college           -0.041       NA                     -0.276   -0.276
+##     income            -0.005       NA                     -0.022   -0.022
+##     conservatism       0.076       NA                      0.126    0.126
+##   age ~~                                                                 
+##     gender             0.080       NA                      0.058    0.058
+##     ethnicity         -0.001       NA                     -0.001   -0.001
+##     relationship       0.001       NA                      0.001    0.001
+##     college            0.007       NA                      0.008    0.008
+##     income            -0.036       NA                     -0.026   -0.026
+##     conservatism       0.140       NA                      0.041    0.041
+##   gender ~~                                                              
+##     ethnicity         -0.014       NA                     -0.034   -0.034
+##     relationship       0.004       NA                      0.010    0.010
+##     college            0.016       NA                      0.038    0.038
+##     income             0.035       NA                      0.052    0.052
+##     conservatism       0.011       NA                      0.007    0.007
+##   ethnicity ~~                                                           
+##     relationship      -0.004       NA                     -0.016   -0.016
+##     college           -0.008       NA                     -0.032   -0.032
+##     income            -0.007       NA                     -0.018   -0.018
+##     conservatism      -0.040       NA                     -0.040   -0.040
+##   relationship ~~                                                        
+##     college           -0.014       NA                     -0.058   -0.058
+##     income             0.012       NA                      0.029    0.029
+##     conservatism       0.003       NA                      0.003    0.003
+##   college ~~                                                             
+##     income            -0.011       NA                     -0.026   -0.026
+##     conservatism      -0.065       NA                     -0.065   -0.065
+##   income ~~                                                              
+##     conservatism       0.034       NA                      0.020    0.020
+## 
+## Variances:
+##                    Estimate   Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_HOH_SIN_01     3.922       NA                      3.922    0.982
+##    .HEX_HOH_SIN_02     3.819       NA                      3.819    0.979
+##    .HEX_HOH_SIN_03     3.837       NA                      3.837    0.911
+##    .HEX_HOH_SIN_04     3.886       NA                      3.886    1.000
+##    .HEX_HOH_FAI_01     3.728       NA                      3.728    0.991
+##    .HEX_HOH_FAI_02     3.937       NA                      3.937    0.988
+##    .HEX_HOH_FAI_03     3.672       NA                      3.672    0.925
+##    .HEX_HOH_FAI_04     3.924       NA                      3.924    0.998
+##    .HEX_HOH_GRE_01     3.941       NA                      3.941    1.008
+##    .HEX_HOH_GRE_02     3.853       NA                      3.853    1.009
+##    .HEX_HOH_GRE_03     4.164       NA                      4.164    1.046
+##    .HEX_HOH_GRE_04     4.091       NA                      4.091    1.007
+##    .HEX_HOH_MOD_01     3.962       NA                      3.962    1.000
+##    .HEX_HOH_MOD_02     3.958       NA                      3.958    1.001
+##    .HEX_HOH_MOD_03     4.108       NA                      4.108    1.038
+##    .HEX_HOH_MOD_04     4.002       NA                      4.002    1.005
+##    .HEX_EMO_FEA_01     4.153       NA                      4.153    1.000
+##    .HEX_EMO_FEA_02     3.553       NA                      3.553    0.891
+##    .HEX_EMO_FEA_03     4.023       NA                      4.023    0.994
+##    .HEX_EMO_FEA_04     3.807       NA                      3.807    0.996
+##    .HEX_EMO_ANX_01     4.083       NA                      4.083    1.017
+##    .HEX_EMO_ANX_02     4.274       NA                      4.274    1.038
+##    .HEX_EMO_ANX_03     3.971       NA                      3.971    1.007
+##    .HEX_EMO_ANX_04     4.131       NA                      4.131    1.012
+##    .HEX_EMO_DEP_01     4.001       NA                      4.001    1.000
+##    .HEX_EMO_DEP_02     3.699       NA                      3.699    0.976
+##    .HEX_EMO_DEP_03     3.946       NA                      3.946    0.993
+##    .HEX_EMO_DEP_04     4.051       NA                      4.051    0.994
+##    .HEX_EMO_SEN_01     3.867       NA                      3.867    1.000
+##    .HEX_EMO_SEN_02     4.000       NA                      4.000    0.999
+##    .HEX_EMO_SEN_03     3.848       NA                      3.848    0.999
+##    .HEX_EMO_SEN_04     3.816       NA                      3.816    0.999
+##    .HEX_EXT_SSE_01     3.906       NA                      3.906    1.008
+##    .HEX_EXT_SSE_02     4.082       NA                      4.082    1.000
+##    .HEX_EXT_SSE_03     4.438       NA                      4.438    1.018
+##    .HEX_EXT_SSE_04     3.959       NA                      3.959    1.001
+##    .HEX_EXT_BOL_01     3.971       NA                      3.971    0.989
+##    .HEX_EXT_BOL_02     4.086       NA                      4.086    0.990
+##    .HEX_EXT_BOL_03     4.065       NA                      4.065    1.000
+##    .HEX_EXT_BOL_04     4.199       NA                      4.199    0.993
+##    .HEX_EXT_SOC_01     4.096       NA                      4.096    0.993
+##    .HEX_EXT_SOC_02     4.176       NA                      4.176    0.997
+##    .HEX_EXT_SOC_03     3.918       NA                      3.918    0.996
+##    .HEX_EXT_SOC_04     3.727       NA                      3.727    0.955
+##    .HEX_EXT_LIV_01     3.970       NA                      3.970    0.990
+##    .HEX_EXT_LIV_02     3.925       NA                      3.925    0.972
+##    .HEX_EXT_LIV_03     3.970       NA                      3.970    0.999
+##    .HEX_EXT_LIV_04     3.911       NA                      3.911    0.982
+##    .HEX_AGR_FOR_01     3.766       NA                      3.766    1.000
+##    .HEX_AGR_FOR_02     4.081       NA                      4.081    1.019
+##    .HEX_AGR_FOR_03     4.266       NA                      4.266    1.022
+##    .HEX_AGR_FOR_04     3.774       NA                      3.774    1.005
+##    .HEX_AGR_GEN_01     4.042       NA                      4.042    0.989
+##    .HEX_AGR_GEN_02     3.727       NA                      3.727    0.935
+##    .HEX_AGR_GEN_03     3.975       NA                      3.975    0.969
+##    .HEX_AGR_GEN_04     3.611       NA                      3.611    0.934
+##    .HEX_AGR_FLX_01     3.764       NA                      3.764    1.000
+##    .HEX_AGR_FLX_02   365.214       NA                    365.214   91.787
+##    .HEX_AGR_FLX_03     3.872       NA                      3.872    1.000
+##    .HEX_AGR_FLX_04     4.077       NA                      4.077    1.000
+##    .HEX_AGR_PAT_01     3.331       NA                      3.331    0.810
+##    .HEX_AGR_PAT_02     4.079       NA                      4.079    0.976
+##    .HEX_AGR_PAT_03     4.071       NA                      4.071    0.985
+##    .HEX_AGR_PAT_04     4.113       NA                      4.113    0.994
+##    .HEX_CNS_ORG_01     3.806       NA                      3.806    1.000
+##    .HEX_CNS_ORG_02     3.972       NA                      3.972    0.995
+##    .HEX_CNS_ORG_03     4.110       NA                      4.110    0.997
+##    .HEX_CNS_ORG_04     4.152       NA                      4.152    1.000
+##    .HEX_CNS_DIL_01     4.124       NA                      4.124    1.002
+##    .HEX_CNS_DIL_02     4.073       NA                      4.073    1.001
+##    .HEX_CNS_DIL_03     3.942       NA                      3.942    1.022
+##    .HEX_CNS_DIL_04     4.147       NA                      4.147    1.006
+##    .HEX_CNS_PER_01     4.110       NA                      4.110    1.000
+##    .HEX_CNS_PER_02     3.804       NA                      3.804    1.000
+##    .HEX_CNS_PER_03     4.091       NA                      4.091    1.013
+##    .HEX_CNS_PER_04     4.209       NA                      4.209    1.079
+##    .HEX_CNS_PRU_01     3.852       NA                      3.852    0.982
+##    .HEX_CNS_PRU_02     3.624       NA                      3.624    0.999
+##    .HEX_CNS_PRU_03     3.967       NA                      3.967    0.996
+##    .HEX_CNS_PRU_04     4.028       NA                      4.028    1.000
+##    .HEX_OPN_AES_01     3.829       NA                      3.829    1.000
+##    .HEX_OPN_AES_02     3.497       NA                      3.497    0.897
+##    .HEX_OPN_AES_03     3.896       NA                      3.896    0.938
+##    .HEX_OPN_AES_04     4.043       NA                      4.043    0.974
+##    .HEX_OPN_INQ_01     3.871       NA                      3.871    0.976
+##    .HEX_OPN_INQ_02     3.915       NA                      3.915    0.990
+##    .HEX_OPN_INQ_03     3.822       NA                      3.822    0.977
+##    .HEX_OPN_INQ_04     3.905       NA                      3.905    0.983
+##    .HEX_OPN_CRE_01     3.973       NA                      3.973    0.976
+##    .HEX_OPN_CRE_02     3.832       NA                      3.832    0.999
+##    .HEX_OPN_CRE_03     4.084       NA                      4.084    0.996
+##    .HEX_OPN_CRE_04     3.883       NA                      3.883    1.000
+##    .HEX_OPN_UNC_01     4.121       NA                      4.121    0.964
+##    .HEX_OPN_UNC_02     3.817       NA                      3.817    0.958
+##    .HEX_OPN_UNC_03     3.878       NA                      3.878    0.985
+##    .HEX_OPN_UNC_04     4.061       NA                      4.061    0.998
+##    .HEX_ALT_01         3.912       NA                      3.912    1.000
+##    .HEX_ALT_02         3.620       NA                      3.620    0.953
+##    .HEX_ALT_03         3.831       NA                      3.831    0.999
+##    .HEX_ALT_04         3.617       NA                      3.617    0.880
+##    .NFP_INF_01         3.737       NA                      3.737    0.956
+##    .NFP_INF_02         3.877       NA                      3.877    0.943
+##    .NFP_INF_03         3.460       NA                      3.460    0.862
+##    .NFP_INF_04         3.819       NA                      3.819    0.946
+##    .NFP_PSY_01      -741.629       NA                   -741.629 -201.373
+##    .NFP_PSY_02         3.929       NA                      3.929    1.000
+##    .NFP_PSY_03         3.867       NA                      3.867    1.000
+##    .NFP_PSY_04         3.856       NA                      3.856    1.000
+##    .NFP_PHY_01         4.069       NA                      4.069    0.989
+##    .NFP_PHY_02         4.065       NA                      4.065    0.985
+##    .NFP_PHY_03         3.861       NA                      3.861    0.985
+##    .NFP_PHY_04         3.869       NA                      3.869    0.957
+##    .NFP_CNC_01         3.926       NA                      3.926    1.017
+##    .NFP_CNC_02         4.192       NA                      4.192    1.007
+##    .NFP_CNC_03         4.394       NA                      4.394    1.067
+##    .NFP_CNC_04         4.119       NA                      4.119    1.009
+##    .NFP_SPA_01         4.330       NA                      4.330    1.000
+##    .NFP_SPA_02         3.942       NA                      3.942    1.000
+##    .NFP_SPA_03         3.635       NA                      3.635    1.000
+##    .NFP_SPA_04      -320.664       NA                   -320.664  -77.756
+##    .NFP_GOV_01         4.000       NA                      4.000    1.033
+##    .NFP_GOV_02         4.207       NA                      4.207    1.046
+##    .NFP_GOV_03         4.218       NA                      4.218    1.017
+##    .NFP_GOV_04         4.171       NA                      4.171    1.006
+##    .NFP_INT_01         4.025       NA                      4.025    1.000
+##    .NFP_INT_02         3.981       NA                      3.981    0.999
+##    .NFP_INT_03         3.760       NA                      3.760    0.984
+##    .NFP_INT_04         3.464       NA                      3.464    0.849
+##    .NFP_ANO_01         4.143       NA                      4.143    0.994
+##    .NFP_ANO_02         4.194       NA                      4.194    0.988
+##    .NFP_ANO_03         3.994       NA                      3.994    0.998
+##    .NFP_ANO_04         3.901       NA                      3.901    0.990
+##    .NFP_COM_01      -598.059       NA                   -598.059 -158.215
+##    .NFP_COM_02         4.166       NA                      4.166    1.000
+##    .NFP_COM_03         4.170       NA                      4.170    1.000
+##    .NFP_COM_04         3.638       NA                      3.638    1.000
+##    .NFP_GEN_01         4.262       NA                      4.262    1.022
+##    .NFP_GEN_02         3.982       NA                      3.982    1.001
+##    .NFP_GEN_03         3.938       NA                      3.938    1.027
+##    .NFP_GEN_04         4.023       NA                      4.023    1.011
+##    .AGE                0.000                               0.000    0.000
+##    .GEN                0.000                               0.000    0.000
+##    .ETH                0.000                               0.000    0.000
+##    .REL_               0.000                               0.000    0.000
+##    .COL_               0.000                               0.000    0.000
+##    .INC                0.000                               0.000    0.000
+##    .CON                0.000                               0.000    0.000
+##     HEX_HOH_SIN        0.073       NA                      1.000    1.000
+##     HEX_HOH_FAI        0.034       NA                      1.000    1.000
+##     HEX_HOH_GRE       -0.030       NA                         NA       NA
+##     HEX_HOH_MOD       -0.000       NA                         NA       NA
+##     HEX_EMO_FEA        0.000       NA                      1.000    1.000
+##     HEX_EMO_ANX       -0.068       NA                         NA       NA
+##     HEX_EMO_DEP        0.000       NA                      1.000    1.000
+##     HEX_EMO_SEN        0.001       NA                      1.000    1.000
+##     HEX_EXT_SSE       -0.030       NA                         NA       NA
+##     HEX_EXT_BOL        0.045       NA                      1.000    1.000
+##     HEX_EXT_SOC        0.028       NA                      1.000    1.000
+##     HEX_EXT_LIV        0.041       NA                      1.000    1.000
+##     HEX_AGR_FOR       -0.000       NA                         NA       NA
+##     HEX_AGR_GEN        0.043       NA                      1.000    1.000
+##     HEX_AGR_FLX       -0.000       NA                         NA       NA
+##     HEX_AGR_PAT        0.782       NA                      1.000    1.000
+##     HEX_CNS_ORG        0.000       NA                      1.000    1.000
+##     HEX_CNS_DIL       -0.009       NA                         NA       NA
+##     HEX_CNS_PER       -0.000       NA                         NA       NA
+##     HEX_CNS_PRU        0.072       NA                      1.000    1.000
+##     HEX_OPN_AES        0.000       NA                      1.000    1.000
+##     HEX_OPN_INQ        0.095       NA                      1.000    1.000
+##     HEX_OPN_CRE        0.098       NA                      1.000    1.000
+##     HEX_OPN_UNC        0.152       NA                      1.000    1.000
+##     HEX_ALT            0.000       NA                      1.000    1.000
+##     NFP_INF            0.170       NA                      1.000    1.000
+##     NFP_PSY          745.312       NA                      1.000    1.000
+##     NFP_PHY            0.046       NA                      1.000    1.000
+##     NFP_CNC           -0.067       NA                         NA       NA
+##     NFP_SPA            0.000       NA                      1.000    1.000
+##     NFP_GOV           -0.129       NA                         NA       NA
+##     NFP_INT            0.000       NA                      1.000    1.000
+##     NFP_ANO            0.023       NA                      1.000    1.000
+##     NFP_COM          601.839       NA                      1.000    1.000
+##     NFP_GEN           -0.091       NA                         NA       NA
+##     age                2.906       NA                      1.000    1.000
+##     gender             0.663       NA                      1.000    1.000
+##     ethnicity          0.248       NA                      1.000    1.000
+##     relationship       0.250       NA                      1.000    1.000
+##     college            0.250       NA                      1.000    1.000
+##     income             0.699       NA                      1.000    1.000
+##     conservatism       4.043       NA                      1.000    1.000</code></pre>
+<pre><code>## Error in JAC %*% OUT : requires numeric/complex matrix/vector arguments</code></pre>
+</div>
+<div id="factors" class="section level2">
+<h2>Factors</h2>
+<p>Factor or dimensions.</p>
+<pre><code>## lavaan 0.6-9 did NOT end normally after 3363 iterations
+## ** WARNING ** Estimates below are most likely unreliable
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                       416
+##                                                       
+##   Number of observations                           607
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                    NA
+##   Degrees of freedom                                NA
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_HOH =~                                                            
+##     HEX_HOH_SIN       1.000                                  NA       NA
+##     HEX_HOH_FAI      -0.002       NA                         NA       NA
+##     HEX_HOH_GRE       0.146       NA                         NA       NA
+##     HEX_HOH_MOD       0.628       NA                         NA       NA
+##   HEX_HOH_SIN =~                                                        
+##     HEX_HOH_SIN_01    1.000                                  NA       NA
+##     HEX_HOH_SIN_02   -0.006       NA                         NA       NA
+##     HEX_HOH_SIN_03   -0.005       NA                         NA       NA
+##     HEX_HOH_SIN_04    0.008       NA                         NA       NA
+##   HEX_HOH_FAI =~                                                        
+##     HEX_HOH_FAI_01    1.000                                  NA       NA
+##     HEX_HOH_FAI_02  172.028       NA                         NA       NA
+##     HEX_HOH_FAI_03  308.099       NA                         NA       NA
+##     HEX_HOH_FAI_04 -235.799       NA                         NA       NA
+##   HEX_HOH_GRE =~                                                        
+##     HEX_HOH_GRE_01    1.000                               0.132    0.067
+##     HEX_HOH_GRE_02    2.351       NA                      0.310    0.158
+##     HEX_HOH_GRE_03   -0.941       NA                     -0.124   -0.062
+##     HEX_HOH_GRE_04   -7.269       NA                     -0.957   -0.475
+##   HEX_HOH_MOD =~                                                        
+##     HEX_HOH_MOD_01    1.000                                  NA       NA
+##     HEX_HOH_MOD_02   -0.798       NA                         NA       NA
+##     HEX_HOH_MOD_03    1.657       NA                         NA       NA
+##     HEX_HOH_MOD_04   -1.601       NA                         NA       NA
+##   HEX_EMO =~                                                            
+##     HEX_EMO_FEA       1.000                               1.106    1.106
+##     HEX_EMO_ANX       0.955       NA                      0.598    0.598
+##     HEX_EMO_DEP    -133.776       NA                     -0.026   -0.026
+##     HEX_EMO_SEN      -1.299       NA                         NA       NA
+##   HEX_EMO_FEA =~                                                        
+##     HEX_EMO_FEA_01    1.000                               0.001    0.001
+##     HEX_EMO_FEA_02  717.301       NA                      0.819    0.410
+##     HEX_EMO_FEA_03   51.028       NA                      0.058    0.029
+##     HEX_EMO_FEA_04 -131.742       NA                     -0.150   -0.077
+##   HEX_EMO_ANX =~                                                        
+##     HEX_EMO_ANX_01    1.000                               0.002    0.001
+##     HEX_EMO_ANX_02 -320.908       NA                     -0.647   -0.319
+##     HEX_EMO_ANX_03  189.174       NA                      0.381    0.192
+##     HEX_EMO_ANX_04 -126.319       NA                     -0.255   -0.126
+##   HEX_EMO_DEP =~                                                        
+##     HEX_EMO_DEP_01    1.000                               6.497    3.248
+##     HEX_EMO_DEP_02    0.005       NA                      0.033    0.017
+##     HEX_EMO_DEP_03    0.001       NA                      0.006    0.003
+##     HEX_EMO_DEP_04    0.004       NA                      0.024    0.012
+##   HEX_EMO_SEN =~                                                        
+##     HEX_EMO_SEN_01    1.000                                  NA       NA
+##     HEX_EMO_SEN_02 -245.779       NA                         NA       NA
+##     HEX_EMO_SEN_03  304.764       NA                         NA       NA
+##     HEX_EMO_SEN_04   -3.709       NA                         NA       NA
+##   HEX_EXT =~                                                            
+##     HEX_EXT_SSE       1.000                                  NA       NA
+##     HEX_EXT_BOL     -82.776       NA                         NA       NA
+##     HEX_EXT_SOC    -207.777       NA                         NA       NA
+##     HEX_EXT_LIV    -441.683       NA                         NA       NA
+##   HEX_EXT_SSE =~                                                        
+##     HEX_EXT_SSE_01    1.000                                  NA       NA
+##     HEX_EXT_SSE_02  -51.400       NA                         NA       NA
+##     HEX_EXT_SSE_03  107.835       NA                         NA       NA
+##     HEX_EXT_SSE_04  170.442       NA                         NA       NA
+##   HEX_EXT_BOL =~                                                        
+##     HEX_EXT_BOL_01    1.000                               0.432    0.216
+##     HEX_EXT_BOL_02    0.097       NA                      0.042    0.021
+##     HEX_EXT_BOL_03    0.015       NA                      0.006    0.003
+##     HEX_EXT_BOL_04   -0.840       NA                     -0.363   -0.177
+##   HEX_EXT_SOC =~                                                        
+##     HEX_EXT_SOC_01    1.000                                  NA       NA
+##     HEX_EXT_SOC_02    0.237       NA                         NA       NA
+##     HEX_EXT_SOC_03    0.501       NA                         NA       NA
+##     HEX_EXT_SOC_04    0.505       NA                         NA       NA
+##   HEX_EXT_LIV =~                                                        
+##     HEX_EXT_LIV_01    1.000                               0.171    0.085
+##     HEX_EXT_LIV_02   -1.355       NA                     -0.231   -0.115
+##     HEX_EXT_LIV_03    0.479       NA                      0.082    0.041
+##     HEX_EXT_LIV_04   -1.504       NA                     -0.256   -0.129
+##   HEX_AGR =~                                                            
+##     HEX_AGR_FOR       1.000                               0.997    0.997
+##     HEX_AGR_GEN      -4.315       NA                     -0.014   -0.014
+##     HEX_AGR_FLX      -0.031       NA                     -0.037   -0.037
+##     HEX_AGR_PAT      -7.912       NA                     -0.472   -0.472
+##   HEX_AGR_FOR =~                                                        
+##     HEX_AGR_FOR_01    1.000                               0.059    0.030
+##     HEX_AGR_FOR_02    4.481       NA                      0.263    0.131
+##     HEX_AGR_FOR_03    2.877       NA                      0.169    0.083
+##     HEX_AGR_FOR_04   -6.068       NA                     -0.356   -0.184
+##   HEX_AGR_GEN =~                                                        
+##     HEX_AGR_GEN_01    1.000                              18.101    8.948
+##     HEX_AGR_GEN_02    0.001       NA                      0.026    0.013
+##     HEX_AGR_GEN_03   -0.001       NA                     -0.019   -0.009
+##     HEX_AGR_GEN_04   -0.001       NA                     -0.021   -0.011
+##   HEX_AGR_FLX =~                                                        
+##     HEX_AGR_FLX_01    1.000                               0.049    0.025
+##     HEX_AGR_FLX_02 -162.327       NA                     -7.928   -3.969
+##     HEX_AGR_FLX_03   -0.638       NA                     -0.031   -0.016
+##     HEX_AGR_FLX_04   -0.214       NA                     -0.010   -0.005
+##   HEX_AGR_PAT =~                                                        
+##     HEX_AGR_PAT_01    1.000                               0.980    0.483
+##     HEX_AGR_PAT_02    0.148       NA                      0.145    0.071
+##     HEX_AGR_PAT_03    0.339       NA                      0.332    0.163
+##     HEX_AGR_PAT_04    0.192       NA                      0.188    0.092
+##   HEX_CNS =~                                                            
+##     HEX_CNS_ORG       1.000                                  NA       NA
+##     HEX_CNS_DIL     -56.457       NA                         NA       NA
+##     HEX_CNS_PER    -121.498       NA                         NA       NA
+##     HEX_CNS_PRU     136.350       NA                         NA       NA
+##   HEX_CNS_ORG =~                                                        
+##     HEX_CNS_ORG_01    1.000                               0.004    0.002
+##     HEX_CNS_ORG_02  -66.203       NA                     -0.245   -0.123
+##     HEX_CNS_ORG_03 -106.362       NA                     -0.393   -0.194
+##     HEX_CNS_ORG_04   22.609       NA                      0.084    0.041
+##   HEX_CNS_DIL =~                                                        
+##     HEX_CNS_DIL_01    1.000                                  NA       NA
+##     HEX_CNS_DIL_02   -1.830       NA                         NA       NA
+##     HEX_CNS_DIL_03    3.055       NA                         NA       NA
+##     HEX_CNS_DIL_04   -0.998       NA                         NA       NA
+##   HEX_CNS_PER =~                                                        
+##     HEX_CNS_PER_01    1.000                                  NA       NA
+##     HEX_CNS_PER_02    0.497       NA                         NA       NA
+##     HEX_CNS_PER_03   -0.957       NA                         NA       NA
+##     HEX_CNS_PER_04   -0.071       NA                         NA       NA
+##   HEX_CNS_PRU =~                                                        
+##     HEX_CNS_PRU_01    1.000                               0.239    0.121
+##     HEX_CNS_PRU_02    0.508       NA                      0.122    0.064
+##     HEX_CNS_PRU_03    0.739       NA                      0.177    0.089
+##     HEX_CNS_PRU_04    0.464       NA                      0.111    0.055
+##   HEX_OPN =~                                                            
+##     HEX_OPN_AES       1.000                                  NA       NA
+##     HEX_OPN_INQ       2.099       NA                         NA       NA
+##     HEX_OPN_CRE      -3.342       NA                         NA       NA
+##     HEX_OPN_UNC      -0.021       NA                         NA       NA
+##   HEX_OPN_AES =~                                                        
+##     HEX_OPN_AES_01    1.000                               0.564    0.288
+##     HEX_OPN_AES_02    0.150       NA                      0.084    0.043
+##     HEX_OPN_AES_03    0.491       NA                      0.277    0.136
+##     HEX_OPN_AES_04    1.345       NA                      0.758    0.372
+##   HEX_OPN_INQ =~                                                        
+##     HEX_OPN_INQ_01    1.000                               0.318    0.160
+##     HEX_OPN_INQ_02   -0.098       NA                     -0.031   -0.016
+##     HEX_OPN_INQ_03    1.093       NA                      0.347    0.176
+##     HEX_OPN_INQ_04   -1.654       NA                     -0.526   -0.264
+##   HEX_OPN_CRE =~                                                        
+##     HEX_OPN_CRE_01    1.000                               0.119    0.059
+##     HEX_OPN_CRE_02    0.546       NA                      0.065    0.033
+##     HEX_OPN_CRE_03    0.446       NA                      0.053    0.026
+##     HEX_OPN_CRE_04   -0.239       NA                     -0.028   -0.014
+##   HEX_OPN_UNC =~                                                        
+##     HEX_OPN_UNC_01    1.000                               0.036    0.017
+##     HEX_OPN_UNC_02 -116.618       NA                     -4.146   -2.078
+##     HEX_OPN_UNC_03   -0.426       NA                     -0.015   -0.008
+##     HEX_OPN_UNC_04   -0.658       NA                     -0.023   -0.012
+##   NFP_INF =~                                                            
+##     NFP_INF_01        1.000                               0.355    0.179
+##     NFP_INF_02        1.173       NA                      0.416    0.205
+##     NFP_INF_03        2.461       NA                      0.873    0.436
+##     NFP_INF_04        1.402       NA                      0.498    0.248
+##   NFP_PSY =~                                                            
+##     NFP_PSY_01        1.000                               0.046    0.024
+##     NFP_PSY_02       -0.008       NA                     -0.000   -0.000
+##     NFP_PSY_03      136.627       NA                      6.345    3.226
+##     NFP_PSY_04       -0.730       NA                     -0.034   -0.017
+##   NFP_PHY =~                                                            
+##     NFP_PHY_01        1.000                               0.427    0.210
+##     NFP_PHY_02        0.279       NA                      0.119    0.059
+##     NFP_PHY_03       -0.464       NA                     -0.198   -0.100
+##     NFP_PHY_04       -1.401       NA                     -0.598   -0.298
+##   NFP_CNC =~                                                            
+##     NFP_CNC_01        1.000                               0.039    0.020
+##     NFP_CNC_02        1.056       NA                      0.041    0.020
+##     NFP_CNC_03        0.326       NA                      0.013    0.006
+##     NFP_CNC_04        0.730       NA                      0.028    0.014
+##   NFP_SPA =~                                                            
+##     NFP_SPA_01        1.000                               0.990    0.476
+##     NFP_SPA_02        0.152       NA                      0.150    0.076
+##     NFP_SPA_03       -0.263       NA                     -0.260   -0.136
+##     NFP_SPA_04        0.217       NA                      0.214    0.106
+##   NFP_GOV =~                                                            
+##     NFP_GOV_01        1.000                                  NA       NA
+##     NFP_GOV_02        0.951       NA                         NA       NA
+##     NFP_GOV_03        1.140       NA                         NA       NA
+##     NFP_GOV_04       -0.159       NA                         NA       NA
+##   NFP_INT =~                                                            
+##     NFP_INT_01        1.000                               0.015    0.008
+##     NFP_INT_02        0.807       NA                      0.012    0.006
+##     NFP_INT_03        1.733       NA                      0.027    0.014
+##     NFP_INT_04      525.441       NA                      8.091    4.002
+##   NFP_ANO =~                                                            
+##     NFP_ANO_01        1.000                               0.095    0.047
+##     NFP_ANO_02        2.147       NA                      0.205    0.099
+##     NFP_ANO_03        0.997       NA                      0.095    0.048
+##     NFP_ANO_04       -0.470       NA                     -0.045   -0.023
+##   NFP_COM =~                                                            
+##     NFP_COM_01        1.000                                  NA       NA
+##     NFP_COM_02        1.127       NA                         NA       NA
+##     NFP_COM_03        0.688       NA                         NA       NA
+##     NFP_COM_04       -0.174       NA                         NA       NA
+##   NFP_GEN =~                                                            
+##     NFP_GEN_01        1.000                               0.002    0.001
+##     NFP_GEN_02     -290.639       NA                     -0.568   -0.285
+##     NFP_GEN_03     -103.003       NA                     -0.201   -0.103
+##     NFP_GEN_04       -5.020       NA                     -0.010   -0.005
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_HOH ~~                                                            
+##     HEX_EMO           0.000       NA                      0.209    0.209
+##     HEX_EXT           0.000       NA                      0.664    0.664
+##     HEX_AGR          -0.011       NA                     -0.574   -0.574
+##     HEX_CNS           0.000       NA                      0.024    0.024
+##     HEX_OPN          -0.006       NA                     -0.151   -0.151
+##     NFP_INF           0.011       NA                      0.098    0.098
+##     NFP_PSY           0.001       NA                      0.061    0.061
+##     NFP_PHY          -0.011       NA                     -0.078   -0.078
+##     NFP_CNC           0.015       NA                      1.188    1.188
+##     NFP_SPA          -0.106       NA                     -0.326   -0.326
+##     NFP_GOV           0.063       NA                      0.487    0.487
+##     NFP_INT          -0.000       NA                     -0.045   -0.045
+##     NFP_ANO           0.014       NA                      0.450    0.450
+##     NFP_COM          -0.037       NA                     -0.278   -0.278
+##     NFP_GEN          -0.001       NA                     -1.342   -1.342
+##   HEX_EMO ~~                                                            
+##     HEX_EXT          -0.000       NA                     -0.521   -0.521
+##     HEX_AGR           0.000       NA                      0.549    0.549
+##     HEX_CNS           0.000       NA                      0.443    0.443
+##     HEX_OPN           0.000       NA                      0.306    0.306
+##     NFP_INF           0.000       NA                      0.212    0.212
+##     NFP_PSY          -0.000       NA                     -0.009   -0.009
+##     NFP_PHY           0.000       NA                      0.164    0.164
+##     NFP_CNC          -0.000       NA                     -4.279   -4.279
+##     NFP_SPA           0.000       NA                      0.036    0.036
+##     NFP_GOV           0.000       NA                      0.307    0.307
+##     NFP_INT           0.000       NA                      0.025    0.025
+##     NFP_ANO           0.000       NA                      0.903    0.903
+##     NFP_COM           0.000       NA                      0.373    0.373
+##     NFP_GEN          -0.000       NA                     -0.081   -0.081
+##   HEX_EXT ~~                                                            
+##     HEX_AGR           0.000       NA                      0.431    0.431
+##     HEX_CNS          -0.000       NA                     -0.315   -0.315
+##     HEX_OPN           0.000       NA                      0.885    0.885
+##     NFP_INF          -0.000       NA                     -0.535   -0.535
+##     NFP_PSY          -0.000       NA                     -0.034   -0.034
+##     NFP_PHY          -0.000       NA                     -0.272   -0.272
+##     NFP_CNC           0.000       NA                      4.570    4.570
+##     NFP_SPA          -0.000       NA                     -0.362   -0.362
+##     NFP_GOV           0.000       NA                      0.256    0.256
+##     NFP_INT           0.000       NA                      0.013    0.013
+##     NFP_ANO           0.000       NA                      0.044    0.044
+##     NFP_COM          -0.000       NA                     -0.257   -0.257
+##     NFP_GEN           0.000       NA                      0.245    0.245
+##   HEX_AGR ~~                                                            
+##     HEX_CNS           0.000       NA                      0.282    0.282
+##     HEX_OPN          -0.006       NA                     -0.812   -0.812
+##     NFP_INF          -0.009       NA                     -0.445   -0.445
+##     NFP_PSY          -0.000       NA                     -0.010   -0.010
+##     NFP_PHY           0.009       NA                      0.362    0.362
+##     NFP_CNC           0.020       NA                      8.698    8.698
+##     NFP_SPA          -0.010       NA                     -0.177   -0.177
+##     NFP_GOV           0.011       NA                      0.487    0.487
+##     NFP_INT           0.000       NA                      0.026    0.026
+##     NFP_ANO           0.014       NA                      2.448    2.448
+##     NFP_COM           0.008       NA                      0.358    0.358
+##     NFP_GEN          -0.000       NA                     -0.003   -0.003
+##   HEX_CNS ~~                                                            
+##     HEX_OPN           0.000       NA                      0.263    0.263
+##     NFP_INF          -0.000       NA                     -0.381   -0.381
+##     NFP_PSY          -0.000       NA                     -0.037   -0.037
+##     NFP_PHY           0.000       NA                      0.220    0.220
+##     NFP_CNC           0.000       NA                      1.700    1.700
+##     NFP_SPA           0.000       NA                      0.030    0.030
+##     NFP_GOV          -0.000       NA                     -0.349   -0.349
+##     NFP_INT          -0.000       NA                     -0.004   -0.004
+##     NFP_ANO          -0.000       NA                     -0.737   -0.737
+##     NFP_COM          -0.000       NA                     -0.211   -0.211
+##     NFP_GEN          -0.000       NA                     -0.331   -0.331
+##   HEX_OPN ~~                                                            
+##     NFP_INF          -0.011       NA                     -0.268   -0.268
+##     NFP_PSY           0.000       NA                      0.004    0.004
+##     NFP_PHY          -0.025       NA                     -0.501   -0.501
+##     NFP_CNC           0.036       NA                      7.844    7.844
+##     NFP_SPA          -0.044       NA                     -0.377   -0.377
+##     NFP_GOV          -0.014       NA                     -0.312   -0.312
+##     NFP_INT          -0.000       NA                     -0.029   -0.029
+##     NFP_ANO          -0.010       NA                     -0.930   -0.930
+##     NFP_COM           0.042       NA                      0.875    0.875
+##     NFP_GEN          -0.000       NA                     -0.301   -0.301
+##   NFP_INF ~~                                                            
+##     NFP_PSY           0.001       NA                      0.031    0.031
+##     NFP_PHY           0.046       NA                      0.300    0.300
+##     NFP_CNC          -0.018       NA                     -1.281   -1.281
+##     NFP_SPA           0.072       NA                      0.205    0.205
+##     NFP_GOV          -0.024       NA                     -0.175   -0.175
+##     NFP_INT          -0.000       NA                     -0.001   -0.001
+##     NFP_ANO           0.006       NA                      0.170    0.170
+##     NFP_COM          -0.016       NA                     -0.109   -0.109
+##     NFP_GEN           0.000       NA                      0.273    0.273
+##   NFP_PSY ~~                                                            
+##     NFP_PHY           0.000       NA                      0.010    0.010
+##     NFP_CNC          -0.000       NA                     -0.108   -0.108
+##     NFP_SPA          -0.001       NA                     -0.012   -0.012
+##     NFP_GOV          -0.001       NA                     -0.055   -0.055
+##     NFP_INT           0.000       NA                      0.000    0.000
+##     NFP_ANO          -0.001       NA                     -0.327   -0.327
+##     NFP_COM           0.003       NA                      0.140    0.140
+##     NFP_GEN          -0.000       NA                     -0.056   -0.056
+##   NFP_PHY ~~                                                            
+##     NFP_CNC           0.062       NA                      3.747    3.747
+##     NFP_SPA           0.227       NA                      0.536    0.536
+##     NFP_GOV          -0.033       NA                     -0.198   -0.198
+##     NFP_INT          -0.000       NA                     -0.014   -0.014
+##     NFP_ANO           0.150       NA                      3.676    3.676
+##     NFP_COM           0.119       NA                      0.690    0.690
+##     NFP_GEN           0.000       NA                      0.191    0.191
+##   NFP_CNC ~~                                                            
+##     NFP_SPA          -0.340       NA                     -8.923   -8.923
+##     NFP_GOV           0.002       NA                      0.143    0.143
+##     NFP_INT          -0.000       NA                     -0.219   -0.219
+##     NFP_ANO           0.061       NA                     16.557   16.557
+##     NFP_COM           0.101       NA                      6.513    6.513
+##     NFP_GEN           0.001       NA                     11.230   11.230
+##   NFP_SPA ~~                                                            
+##     NFP_GOV          -0.327       NA                     -0.840   -0.840
+##     NFP_INT          -0.000       NA                     -0.008   -0.008
+##     NFP_ANO           0.097       NA                      1.033    1.033
+##     NFP_COM          -0.134       NA                     -0.336   -0.336
+##     NFP_GEN          -0.001       NA                     -0.487   -0.487
+##   NFP_GOV ~~                                                            
+##     NFP_INT           0.000       NA                      0.027    0.027
+##     NFP_ANO           0.012       NA                      0.332    0.332
+##     NFP_COM          -0.035       NA                     -0.223   -0.223
+##     NFP_GEN          -0.000       NA                     -0.130   -0.130
+##   NFP_INT ~~                                                            
+##     NFP_ANO           0.000       NA                      0.197    0.197
+##     NFP_COM           0.000       NA                      0.018    0.018
+##     NFP_GEN           0.000       NA                      0.034    0.034
+##   NFP_ANO ~~                                                            
+##     NFP_COM          -0.075       NA                     -1.940   -1.940
+##     NFP_GEN          -0.000       NA                     -1.417   -1.417
+##   NFP_COM ~~                                                            
+##     NFP_GEN           0.000       NA                      0.589    0.589
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_HOH_SIN_01   32.573       NA                     32.573    8.154
+##    .HEX_HOH_SIN_02    3.903       NA                      3.903    1.000
+##    .HEX_HOH_SIN_03    4.212       NA                      4.212    1.000
+##    .HEX_HOH_SIN_04    3.888       NA                      3.888    1.000
+##    .HEX_HOH_FAI_01    3.763       NA                      3.763    1.000
+##    .HEX_HOH_FAI_02    4.048       NA                      4.048    1.016
+##    .HEX_HOH_FAI_03    4.174       NA                      4.174    1.052
+##    .HEX_HOH_FAI_04    4.055       NA                      4.055    1.031
+##    .HEX_HOH_GRE_01    3.893       NA                      3.893    0.996
+##    .HEX_HOH_GRE_02    3.722       NA                      3.722    0.975
+##    .HEX_HOH_GRE_03    3.966       NA                      3.966    0.996
+##    .HEX_HOH_GRE_04    3.147       NA                      3.147    0.774
+##    .HEX_HOH_MOD_01    4.010       NA                      4.010    1.012
+##    .HEX_HOH_MOD_02    3.986       NA                      3.986    1.008
+##    .HEX_HOH_MOD_03    4.089       NA                      4.089    1.034
+##    .HEX_HOH_MOD_04    4.108       NA                      4.108    1.031
+##    .HEX_EMO_FEA_01    4.153       NA                      4.153    1.000
+##    .HEX_EMO_FEA_02    3.318       NA                      3.318    0.832
+##    .HEX_EMO_FEA_03    4.045       NA                      4.045    0.999
+##    .HEX_EMO_FEA_04    3.800       NA                      3.800    0.994
+##    .HEX_EMO_ANX_01    4.015       NA                      4.015    1.000
+##    .HEX_EMO_ANX_02    3.696       NA                      3.696    0.898
+##    .HEX_EMO_ANX_03    3.798       NA                      3.798    0.963
+##    .HEX_EMO_ANX_04    4.018       NA                      4.018    0.984
+##    .HEX_EMO_DEP_01  -38.215       NA                    -38.215   -9.550
+##    .HEX_EMO_DEP_02    3.789       NA                      3.789    1.000
+##    .HEX_EMO_DEP_03    3.972       NA                      3.972    1.000
+##    .HEX_EMO_DEP_04    4.076       NA                      4.076    1.000
+##    .HEX_EMO_SEN_01    3.868       NA                      3.868    1.000
+##    .HEX_EMO_SEN_02    4.089       NA                      4.089    1.022
+##    .HEX_EMO_SEN_03    3.989       NA                      3.989    1.035
+##    .HEX_EMO_SEN_04    3.818       NA                      3.818    1.000
+##    .HEX_EXT_SSE_01    3.876       NA                      3.876    1.000
+##    .HEX_EXT_SSE_02    4.125       NA                      4.125    1.011
+##    .HEX_EXT_SSE_03    4.554       NA                      4.554    1.045
+##    .HEX_EXT_SSE_04    4.442       NA                      4.442    1.123
+##    .HEX_EXT_BOL_01    3.828       NA                      3.828    0.953
+##    .HEX_EXT_BOL_02    4.126       NA                      4.126    1.000
+##    .HEX_EXT_BOL_03    4.066       NA                      4.066    1.000
+##    .HEX_EXT_BOL_04    4.096       NA                      4.096    0.969
+##    .HEX_EXT_SOC_01    4.140       NA                      4.140    1.003
+##    .HEX_EXT_SOC_02    4.191       NA                      4.191    1.000
+##    .HEX_EXT_SOC_03    3.936       NA                      3.936    1.001
+##    .HEX_EXT_SOC_04    3.904       NA                      3.904    1.001
+##    .HEX_EXT_LIV_01    3.979       NA                      3.979    0.993
+##    .HEX_EXT_LIV_02    3.983       NA                      3.983    0.987
+##    .HEX_EXT_LIV_03    3.967       NA                      3.967    0.998
+##    .HEX_EXT_LIV_04    3.917       NA                      3.917    0.983
+##    .HEX_AGR_FOR_01    3.763       NA                      3.763    0.999
+##    .HEX_AGR_FOR_02    3.936       NA                      3.936    0.983
+##    .HEX_AGR_FOR_03    4.143       NA                      4.143    0.993
+##    .HEX_AGR_FOR_04    3.629       NA                      3.629    0.966
+##    .HEX_AGR_GEN_01 -323.538       NA                   -323.538  -79.067
+##    .HEX_AGR_GEN_02    3.986       NA                      3.986    1.000
+##    .HEX_AGR_GEN_03    4.101       NA                      4.101    1.000
+##    .HEX_AGR_GEN_04    3.867       NA                      3.867    1.000
+##    .HEX_AGR_FLX_01    3.762       NA                      3.762    0.999
+##    .HEX_AGR_FLX_02  -58.867       NA                    -58.867  -14.750
+##    .HEX_AGR_FLX_03    3.871       NA                      3.871    1.000
+##    .HEX_AGR_FLX_04    4.077       NA                      4.077    1.000
+##    .HEX_AGR_PAT_01    3.153       NA                      3.153    0.767
+##    .HEX_AGR_PAT_02    4.158       NA                      4.158    0.995
+##    .HEX_AGR_PAT_03    4.022       NA                      4.022    0.973
+##    .HEX_AGR_PAT_04    4.102       NA                      4.102    0.991
+##    .HEX_CNS_ORG_01    3.807       NA                      3.807    1.000
+##    .HEX_CNS_ORG_02    3.934       NA                      3.934    0.985
+##    .HEX_CNS_ORG_03    3.966       NA                      3.966    0.962
+##    .HEX_CNS_ORG_04    4.145       NA                      4.145    0.998
+##    .HEX_CNS_DIL_01    4.122       NA                      4.122    1.001
+##    .HEX_CNS_DIL_02    4.087       NA                      4.087    1.005
+##    .HEX_CNS_DIL_03    3.912       NA                      3.912    1.014
+##    .HEX_CNS_DIL_04    4.129       NA                      4.129    1.001
+##    .HEX_CNS_PER_01    4.140       NA                      4.140    1.007
+##    .HEX_CNS_PER_02    3.811       NA                      3.811    1.002
+##    .HEX_CNS_PER_03    4.065       NA                      4.065    1.007
+##    .HEX_CNS_PER_04    3.902       NA                      3.902    1.000
+##    .HEX_CNS_PRU_01    3.867       NA                      3.867    0.985
+##    .HEX_CNS_PRU_02    3.612       NA                      3.612    0.996
+##    .HEX_CNS_PRU_03    3.952       NA                      3.952    0.992
+##    .HEX_CNS_PRU_04    4.015       NA                      4.015    0.997
+##    .HEX_OPN_AES_01    3.511       NA                      3.511    0.917
+##    .HEX_OPN_AES_02    3.891       NA                      3.891    0.998
+##    .HEX_OPN_AES_03    4.075       NA                      4.075    0.982
+##    .HEX_OPN_AES_04    3.575       NA                      3.575    0.861
+##    .HEX_OPN_INQ_01    3.864       NA                      3.864    0.975
+##    .HEX_OPN_INQ_02    3.955       NA                      3.955    1.000
+##    .HEX_OPN_INQ_03    3.792       NA                      3.792    0.969
+##    .HEX_OPN_INQ_04    3.698       NA                      3.698    0.930
+##    .HEX_OPN_CRE_01    4.058       NA                      4.058    0.997
+##    .HEX_OPN_CRE_02    3.832       NA                      3.832    0.999
+##    .HEX_OPN_CRE_03    4.096       NA                      4.096    0.999
+##    .HEX_OPN_CRE_04    3.882       NA                      3.882    1.000
+##    .HEX_OPN_UNC_01    4.271       NA                      4.271    1.000
+##    .HEX_OPN_UNC_02  -13.207       NA                    -13.207   -3.317
+##    .HEX_OPN_UNC_03    3.936       NA                      3.936    1.000
+##    .HEX_OPN_UNC_04    4.070       NA                      4.070    1.000
+##    .NFP_INF_01        3.782       NA                      3.782    0.968
+##    .NFP_INF_02        3.937       NA                      3.937    0.958
+##    .NFP_INF_03        3.253       NA                      3.253    0.810
+##    .NFP_INF_04        3.790       NA                      3.790    0.939
+##    .NFP_PSY_01        3.671       NA                      3.671    0.999
+##    .NFP_PSY_02        3.929       NA                      3.929    1.000
+##    .NFP_PSY_03      -36.388       NA                    -36.388   -9.409
+##    .NFP_PSY_04        3.854       NA                      3.854    1.000
+##    .NFP_PHY_01        3.933       NA                      3.933    0.956
+##    .NFP_PHY_02        4.114       NA                      4.114    0.997
+##    .NFP_PHY_03        3.883       NA                      3.883    0.990
+##    .NFP_PHY_04        3.685       NA                      3.685    0.911
+##    .NFP_CNC_01        3.857       NA                      3.857    1.000
+##    .NFP_CNC_02        4.163       NA                      4.163    1.000
+##    .NFP_CNC_03        4.119       NA                      4.119    1.000
+##    .NFP_CNC_04        4.081       NA                      4.081    1.000
+##    .NFP_SPA_01        3.350       NA                      3.350    0.774
+##    .NFP_SPA_02        3.919       NA                      3.919    0.994
+##    .NFP_SPA_03        3.568       NA                      3.568    0.981
+##    .NFP_SPA_04        4.069       NA                      4.069    0.989
+##    .NFP_GOV_01        4.025       NA                      4.025    1.040
+##    .NFP_GOV_02        4.160       NA                      4.160    1.035
+##    .NFP_GOV_03        4.348       NA                      4.348    1.048
+##    .NFP_GOV_04        4.151       NA                      4.151    1.001
+##    .NFP_INT_01        4.026       NA                      4.026    1.000
+##    .NFP_INT_02        3.985       NA                      3.985    1.000
+##    .NFP_INT_03        3.822       NA                      3.822    1.000
+##    .NFP_INT_04      -61.381       NA                    -61.381  -15.015
+##    .NFP_ANO_01        4.157       NA                      4.157    0.998
+##    .NFP_ANO_02        4.202       NA                      4.202    0.990
+##    .NFP_ANO_03        3.992       NA                      3.992    0.998
+##    .NFP_ANO_04        3.938       NA                      3.938    0.999
+##    .NFP_COM_01        3.937       NA                      3.937    1.043
+##    .NFP_COM_02        4.373       NA                      4.373    1.050
+##    .NFP_COM_03        4.247       NA                      4.247    1.019
+##    .NFP_COM_04        3.643       NA                      3.643    1.001
+##    .NFP_GEN_01        4.171       NA                      4.171    1.000
+##    .NFP_GEN_02        3.657       NA                      3.657    0.919
+##    .NFP_GEN_03        3.795       NA                      3.795    0.989
+##    .NFP_GEN_04        3.980       NA                      3.980    1.000
+##     HEX_HOH          -0.109       NA                         NA       NA
+##    .HEX_HOH_SIN     -28.469       NA                         NA       NA
+##    .HEX_HOH_FAI      -0.000       NA                         NA       NA
+##    .HEX_HOH_GRE       0.020       NA                      1.134    1.134
+##    .HEX_HOH_MOD      -0.006       NA                         NA       NA
+##     HEX_EMO           0.000       NA                      1.000    1.000
+##    .HEX_EMO_FEA      -0.000       NA                     -0.223   -0.223
+##    .HEX_EMO_ANX       0.000       NA                      0.642    0.642
+##    .HEX_EMO_DEP      42.187       NA                      0.999    0.999
+##    .HEX_EMO_SEN      -0.000       NA                         NA       NA
+##     HEX_EXT          -0.000       NA                         NA       NA
+##    .HEX_EXT_SSE      -0.000       NA                         NA       NA
+##    .HEX_EXT_BOL       0.192       NA                      1.027    1.027
+##    .HEX_EXT_SOC       0.018       NA                         NA       NA
+##    .HEX_EXT_LIV       0.175       NA                      6.021    6.021
+##     HEX_AGR           0.003       NA                      1.000    1.000
+##    .HEX_AGR_FOR       0.000       NA                      0.007    0.007
+##    .HEX_AGR_GEN     327.567       NA                      1.000    1.000
+##    .HEX_AGR_FLX       0.002       NA                      0.999    0.999
+##    .HEX_AGR_PAT       0.746       NA                      0.777    0.777
+##     HEX_CNS          -0.000       NA                         NA       NA
+##    .HEX_CNS_ORG       0.000       NA                      1.749    1.749
+##    .HEX_CNS_DIL       0.027       NA                         NA       NA
+##    .HEX_CNS_PER       0.122       NA                         NA       NA
+##    .HEX_CNS_PRU       0.248       NA                      4.330    4.330
+##     HEX_OPN          -0.014       NA                         NA       NA
+##    .HEX_OPN_AES       0.331       NA                      1.044    1.044
+##    .HEX_OPN_INQ       0.162       NA                      1.605    1.605
+##    .HEX_OPN_CRE       0.169       NA                     11.934   11.934
+##    .HEX_OPN_UNC       0.001       NA                      1.005    1.005
+##     NFP_INF           0.126       NA                      1.000    1.000
+##     NFP_PSY           0.002       NA                      1.000    1.000
+##     NFP_PHY           0.182       NA                      1.000    1.000
+##     NFP_CNC           0.001       NA                      1.000    1.000
+##     NFP_SPA           0.979       NA                      1.000    1.000
+##     NFP_GOV          -0.155       NA                         NA       NA
+##     NFP_INT           0.000       NA                      1.000    1.000
+##     NFP_ANO           0.009       NA                      1.000    1.000
+##     NFP_COM          -0.163       NA                         NA       NA
+##     NFP_GEN           0.000       NA                      1.000    1.000</code></pre>
+<pre><code>## Error in JAC %*% OUT : requires numeric/complex matrix/vector arguments</code></pre>
+</div>
+<div id="ses" class="section level2">
+<h2>SES</h2>
+<pre><code>## lavaan 0.6-9 did NOT end normally after 7563 iterations
+## ** WARNING ** Estimates below are most likely unreliable
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                       223
+##                                                       
+##   Number of observations                           607
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                    NA
+##   Degrees of freedom                                NA
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Latent Variables:
+##                    Estimate   Std.Err  z-value  P(&gt;|z|)   Std.lv   Std.all 
+##   age =~                                                                   
+##     AGE                1.000                                1.705     1.000
+##   gender =~                                                                
+##     GEN                1.000                                0.814     1.000
+##   ethnicity =~                                                             
+##     ETH                1.000                                0.498     1.000
+##   relationship =~                                                          
+##     REL_               1.000                                0.500     1.000
+##   college =~                                                               
+##     COL_               1.000                                0.500     1.000
+##   income =~                                                                
+##     INC                1.000                                0.836     1.000
+##   conservatism =~                                                          
+##     CON                1.000                                2.011     1.000
+##   NFP_INF =~                                                               
+##     NFP_INF_01         1.000                                0.000     0.000
+##     NFP_INF_02      1148.436       NA                       0.097     0.048
+##     NFP_INF_03      2366.995       NA                       0.200     0.100
+##     NFP_INF_04     32272.863       NA                       2.726     1.356
+##   NFP_PSY =~                                                               
+##     NFP_PSY_01         1.000                                0.004     0.002
+##     NFP_PSY_02        -0.067       NA                      -0.000    -0.000
+##     NFP_PSY_03     19916.814       NA                      69.928    35.564
+##     NFP_PSY_04        -1.036       NA                      -0.004    -0.002
+##   NFP_PHY =~                                                               
+##     NFP_PHY_01         1.000                                0.253     0.125
+##     NFP_PHY_02        -0.294       NA                      -0.074    -0.037
+##     NFP_PHY_03        -1.220       NA                      -0.309    -0.156
+##     NFP_PHY_04        -1.052       NA                      -0.266    -0.133
+##   NFP_CNC =~                                                               
+##     NFP_CNC_01         1.000                                0.144     0.073
+##     NFP_CNC_02         0.637       NA                       0.092     0.045
+##     NFP_CNC_03         0.148       NA                       0.021     0.010
+##     NFP_CNC_04         0.158       NA                       0.023     0.011
+##   NFP_SPA =~                                                               
+##     NFP_SPA_01         1.000                                0.962     0.462
+##     NFP_SPA_02         0.174       NA                       0.167     0.084
+##     NFP_SPA_03        -0.196       NA                      -0.188    -0.099
+##     NFP_SPA_04         0.347       NA                       0.333     0.164
+##   NFP_GOV =~                                                               
+##     NFP_GOV_01         1.000                                   NA        NA
+##     NFP_GOV_02         1.330       NA                          NA        NA
+##     NFP_GOV_03         0.972       NA                          NA        NA
+##     NFP_GOV_04        -0.502       NA                          NA        NA
+##   NFP_INT =~                                                               
+##     NFP_INT_01         1.000                                0.000     0.000
+##     NFP_INT_02      3110.230       NA                       0.182     0.091
+##     NFP_INT_03      4636.022       NA                       0.272     0.139
+##     NFP_INT_04     10285.162       NA                       0.604     0.299
+##   NFP_ANO =~                                                               
+##     NFP_ANO_01         1.000                                0.158     0.077
+##     NFP_ANO_02         1.298       NA                       0.205     0.099
+##     NFP_ANO_03         0.837       NA                       0.132     0.066
+##     NFP_ANO_04        -0.227       NA                      -0.036    -0.018
+##   NFP_COM =~                                                               
+##     NFP_COM_01         1.000                               85.298    43.899
+##     NFP_COM_02        -0.000       NA                      -0.003    -0.002
+##     NFP_COM_03         0.000       NA                       0.000     0.000
+##     NFP_COM_04         0.000       NA                       0.001     0.000
+##   NFP_GEN =~                                                               
+##     NFP_GEN_01         1.000                                   NA        NA
+##     NFP_GEN_02        -1.706       NA                          NA        NA
+##     NFP_GEN_03         1.082       NA                          NA        NA
+##     NFP_GEN_04         1.267       NA                          NA        NA
+## 
+## Covariances:
+##                    Estimate   Std.Err  z-value  P(&gt;|z|)   Std.lv   Std.all 
+##   age ~~                                                                   
+##     gender             0.080       NA                       0.058     0.058
+##     ethnicity         -0.001       NA                      -0.001    -0.001
+##     relationship       0.001       NA                       0.001     0.001
+##     college            0.007       NA                       0.008     0.008
+##     income            -0.036       NA                      -0.026    -0.026
+##     conservatism       0.140       NA                       0.041     0.041
+##     NFP_INF           -0.000       NA                      -0.032    -0.032
+##     NFP_PSY           -0.000       NA                      -0.001    -0.001
+##     NFP_PHY           -0.096       NA                      -0.223    -0.223
+##     NFP_CNC            0.189       NA                       0.770     0.770
+##     NFP_SPA           -0.146       NA                      -0.089    -0.089
+##     NFP_GOV           -0.072       NA                      -0.129    -0.129
+##     NFP_INT            0.000       NA                       0.007     0.007
+##     NFP_ANO            0.083       NA                       0.308     0.308
+##     NFP_COM            0.181       NA                       0.001     0.001
+##     NFP_GEN            0.008       NA                       0.026     0.026
+##   gender ~~                                                                
+##     ethnicity         -0.014       NA                      -0.034    -0.034
+##     relationship       0.004       NA                       0.010     0.010
+##     college            0.016       NA                       0.038     0.038
+##     income             0.035       NA                       0.052     0.052
+##     conservatism       0.011       NA                       0.007     0.007
+##     NFP_INF            0.000       NA                       0.051     0.051
+##     NFP_PSY           -0.000       NA                      -0.000    -0.000
+##     NFP_PHY            0.079       NA                       0.383     0.383
+##     NFP_CNC            0.010       NA                       0.081     0.081
+##     NFP_SPA           -0.024       NA                      -0.031    -0.031
+##     NFP_GOV           -0.011       NA                      -0.042    -0.042
+##     NFP_INT           -0.000       NA                      -0.040    -0.040
+##     NFP_ANO           -0.041       NA                      -0.318    -0.318
+##     NFP_COM           -0.149       NA                      -0.002    -0.002
+##     NFP_GEN            0.016       NA                       0.101     0.101
+##   ethnicity ~~                                                             
+##     relationship      -0.004       NA                      -0.016    -0.016
+##     college           -0.008       NA                      -0.032    -0.032
+##     income            -0.007       NA                      -0.018    -0.018
+##     conservatism      -0.040       NA                      -0.040    -0.040
+##     NFP_INF           -0.000       NA                      -0.042    -0.042
+##     NFP_PSY            0.000       NA                       0.002     0.002
+##     NFP_PHY            0.033       NA                       0.260     0.260
+##     NFP_CNC           -0.046       NA                      -0.649    -0.649
+##     NFP_SPA            0.052       NA                       0.109     0.109
+##     NFP_GOV            0.013       NA                       0.081     0.081
+##     NFP_INT           -0.000       NA                      -0.021    -0.021
+##     NFP_ANO           -0.012       NA                      -0.150    -0.150
+##     NFP_COM           -0.056       NA                      -0.001    -0.001
+##     NFP_GEN           -0.024       NA                      -0.248    -0.248
+##   relationship ~~                                                          
+##     college           -0.014       NA                      -0.058    -0.058
+##     income             0.012       NA                       0.029     0.029
+##     conservatism       0.003       NA                       0.003     0.003
+##     NFP_INF           -0.000       NA                      -0.015    -0.015
+##     NFP_PSY           -0.000       NA                      -0.002    -0.002
+##     NFP_PHY            0.024       NA                       0.193     0.193
+##     NFP_CNC           -0.019       NA                      -0.269    -0.269
+##     NFP_SPA            0.041       NA                       0.084     0.084
+##     NFP_GOV           -0.001       NA                      -0.008    -0.008
+##     NFP_INT           -0.000       NA                      -0.035    -0.035
+##     NFP_ANO           -0.003       NA                      -0.036    -0.036
+##     NFP_COM            0.009       NA                       0.000     0.000
+##     NFP_GEN           -0.011       NA                      -0.118    -0.118
+##   college ~~                                                               
+##     income            -0.011       NA                      -0.026    -0.026
+##     conservatism      -0.065       NA                      -0.065    -0.065
+##     NFP_INF            0.000       NA                       0.050     0.050
+##     NFP_PSY           -0.000       NA                      -0.001    -0.001
+##     NFP_PHY            0.005       NA                       0.041     0.041
+##     NFP_CNC           -0.042       NA                      -0.591    -0.591
+##     NFP_SPA            0.016       NA                       0.033     0.033
+##     NFP_GOV           -0.057       NA                      -0.345    -0.345
+##     NFP_INT           -0.000       NA                      -0.181    -0.181
+##     NFP_ANO            0.011       NA                       0.137     0.137
+##     NFP_COM           -0.044       NA                      -0.001    -0.001
+##     NFP_GEN           -0.030       NA                      -0.304    -0.304
+##   income ~~                                                                
+##     conservatism       0.034       NA                       0.020     0.020
+##     NFP_INF           -0.000       NA                      -0.041    -0.041
+##     NFP_PSY           -0.000       NA                      -0.000    -0.000
+##     NFP_PHY           -0.034       NA                      -0.160    -0.160
+##     NFP_CNC           -0.067       NA                      -0.558    -0.558
+##     NFP_SPA           -0.036       NA                      -0.044    -0.044
+##     NFP_GOV            0.046       NA                       0.165     0.165
+##     NFP_INT            0.000       NA                       0.100     0.100
+##     NFP_ANO           -0.036       NA                      -0.275    -0.275
+##     NFP_COM           -0.054       NA                      -0.001    -0.001
+##     NFP_GEN            0.010       NA                       0.059     0.059
+##   conservatism ~~                                                          
+##     NFP_INF           -0.000       NA                      -0.031    -0.031
+##     NFP_PSY            0.000       NA                       0.001     0.001
+##     NFP_PHY           -0.180       NA                      -0.354    -0.354
+##     NFP_CNC            0.020       NA                       0.070     0.070
+##     NFP_SPA            0.313       NA                       0.162     0.162
+##     NFP_GOV            0.014       NA                       0.021     0.021
+##     NFP_INT            0.000       NA                       0.390     0.390
+##     NFP_ANO            0.048       NA                       0.150     0.150
+##     NFP_COM            0.142       NA                       0.001     0.001
+##     NFP_GEN            0.028       NA                       0.072     0.072
+##   NFP_INF ~~                                                               
+##     NFP_PSY            0.000       NA                       0.001     0.001
+##     NFP_PHY            0.000       NA                       0.039     0.039
+##     NFP_CNC           -0.000       NA                      -0.277    -0.277
+##     NFP_SPA           -0.000       NA                      -0.065    -0.065
+##     NFP_GOV           -0.000       NA                      -0.143    -0.143
+##     NFP_INT           -0.000       NA                      -0.113    -0.113
+##     NFP_ANO           -0.000       NA                      -0.210    -0.210
+##     NFP_COM           -0.000       NA                      -0.000    -0.000
+##     NFP_GEN            0.000       NA                       0.084     0.084
+##   NFP_PSY ~~                                                               
+##     NFP_PHY            0.000       NA                       0.002     0.002
+##     NFP_CNC            0.000       NA                       0.003     0.003
+##     NFP_SPA           -0.000       NA                      -0.001    -0.001
+##     NFP_GOV           -0.000       NA                      -0.005    -0.005
+##     NFP_INT            0.000       NA                       0.002     0.002
+##     NFP_ANO           -0.000       NA                      -0.022    -0.022
+##     NFP_COM            0.000       NA                       0.000     0.000
+##     NFP_GEN           -0.000       NA                      -0.010    -0.010
+##   NFP_PHY ~~                                                               
+##     NFP_CNC            0.108       NA                       2.979     2.979
+##     NFP_SPA            0.266       NA                       1.093     1.093
+##     NFP_GOV           -0.019       NA                      -0.224    -0.224
+##     NFP_INT           -0.000       NA                      -0.108    -0.108
+##     NFP_ANO            0.205       NA                       5.139     5.139
+##     NFP_COM           -0.067       NA                      -0.003    -0.003
+##     NFP_GEN            0.005       NA                       0.092     0.092
+##   NFP_CNC ~~                                                               
+##     NFP_SPA           -0.486       NA                      -3.512    -3.512
+##     NFP_GOV           -0.027       NA                      -0.576    -0.576
+##     NFP_INT           -0.000       NA                      -2.399    -2.399
+##     NFP_ANO            0.083       NA                       3.663     3.663
+##     NFP_COM            0.213       NA                       0.017     0.017
+##     NFP_GEN            0.102       NA                       3.651     3.651
+##   NFP_SPA ~~                                                               
+##     NFP_GOV           -0.278       NA                      -0.873    -0.873
+##     NFP_INT            0.000       NA                       0.084     0.084
+##     NFP_ANO            0.139       NA                       0.915     0.915
+##     NFP_COM            0.174       NA                       0.002     0.002
+##     NFP_GEN           -0.079       NA                      -0.420    -0.420
+##   NFP_GOV ~~                                                               
+##     NFP_INT            0.000       NA                       0.310     0.310
+##     NFP_ANO           -0.004       NA                      -0.077    -0.077
+##     NFP_COM           -0.156       NA                      -0.006    -0.006
+##     NFP_GEN           -0.073       NA                      -1.137    -1.137
+##   NFP_INT ~~                                                               
+##     NFP_ANO            0.000       NA                       1.275     1.275
+##     NFP_COM            0.000       NA                       0.001     0.001
+##     NFP_GEN           -0.000       NA                      -0.018    -0.018
+##   NFP_ANO ~~                                                               
+##     NFP_COM           -0.085       NA                      -0.006    -0.006
+##     NFP_GEN            0.012       NA                       0.391     0.391
+##   NFP_COM ~~                                                               
+##     NFP_GEN           -0.057       NA                      -0.003    -0.003
+## 
+## Variances:
+##                    Estimate   Std.Err  z-value  P(&gt;|z|)   Std.lv   Std.all 
+##    .AGE                0.000                                0.000     0.000
+##    .GEN                0.000                                0.000     0.000
+##    .ETH                0.000                                0.000     0.000
+##    .REL_               0.000                                0.000     0.000
+##    .COL_               0.000                                0.000     0.000
+##    .INC                0.000                                0.000     0.000
+##    .CON                0.000                                0.000     0.000
+##    .NFP_INF_01         3.908       NA                       3.908     1.000
+##    .NFP_INF_02         4.100       NA                       4.100     0.998
+##    .NFP_INF_03         3.978       NA                       3.978     0.990
+##    .NFP_INF_04        -3.394       NA                      -3.394    -0.840
+##    .NFP_PSY_01         3.669       NA                       3.669     1.000
+##    .NFP_PSY_02         3.929       NA                       3.929     1.000
+##    .NFP_PSY_03     -4886.111       NA                   -4886.111 -1263.774
+##    .NFP_PSY_04         3.856       NA                       3.856     1.000
+##    .NFP_PHY_01         4.051       NA                       4.051     0.984
+##    .NFP_PHY_02         4.122       NA                       4.122     0.999
+##    .NFP_PHY_03         3.827       NA                       3.827     0.976
+##    .NFP_PHY_04         3.972       NA                       3.972     0.982
+##    .NFP_CNC_01         3.838       NA                       3.838     0.995
+##    .NFP_CNC_02         4.156       NA                       4.156     0.998
+##    .NFP_CNC_03         4.118       NA                       4.118     1.000
+##    .NFP_CNC_04         4.081       NA                       4.081     1.000
+##    .NFP_SPA_01         3.404       NA                       3.404     0.786
+##    .NFP_SPA_02         3.914       NA                       3.914     0.993
+##    .NFP_SPA_03         3.600       NA                       3.600     0.990
+##    .NFP_SPA_04         4.004       NA                       4.004     0.973
+##    .NFP_GOV_01         3.979       NA                       3.979     1.028
+##    .NFP_GOV_02         4.214       NA                       4.214     1.048
+##    .NFP_GOV_03         4.251       NA                       4.251     1.025
+##    .NFP_GOV_04         4.174       NA                       4.174     1.007
+##    .NFP_INT_01         4.025       NA                       4.025     1.000
+##    .NFP_INT_02         3.950       NA                       3.950     0.992
+##    .NFP_INT_03         3.751       NA                       3.751     0.981
+##    .NFP_INT_04         3.718       NA                       3.718     0.911
+##    .NFP_ANO_01         4.142       NA                       4.142     0.994
+##    .NFP_ANO_02         4.202       NA                       4.202     0.990
+##    .NFP_ANO_03         3.984       NA                       3.984     0.996
+##    .NFP_ANO_04         3.939       NA                       3.939     1.000
+##    .NFP_COM_01     -7271.940       NA                   -7271.940 -1926.154
+##    .NFP_COM_02         4.166       NA                       4.166     1.000
+##    .NFP_COM_03         4.170       NA                       4.170     1.000
+##    .NFP_COM_04         3.638       NA                       3.638     1.000
+##    .NFP_GEN_01         4.209       NA                       4.209     1.009
+##    .NFP_GEN_02         4.089       NA                       4.089     1.028
+##    .NFP_GEN_03         3.880       NA                       3.880     1.012
+##    .NFP_GEN_04         4.040       NA                       4.040     1.015
+##     age                2.906       NA                       1.000     1.000
+##     gender             0.663       NA                       1.000     1.000
+##     ethnicity          0.248       NA                       1.000     1.000
+##     relationship       0.250       NA                       1.000     1.000
+##     college            0.250       NA                       1.000     1.000
+##     income             0.699       NA                       1.000     1.000
+##     conservatism       4.043       NA                       1.000     1.000
+##     NFP_INF            0.000       NA                       1.000     1.000
+##     NFP_PSY            0.000       NA                       1.000     1.000
+##     NFP_PHY            0.064       NA                       1.000     1.000
+##     NFP_CNC            0.021       NA                       1.000     1.000
+##     NFP_SPA            0.926       NA                       1.000     1.000
+##     NFP_GOV           -0.109       NA                          NA        NA
+##     NFP_INT            0.000       NA                       1.000     1.000
+##     NFP_ANO            0.025       NA                       1.000     1.000
+##     NFP_COM         7275.715       NA                       1.000     1.000
+##     NFP_GEN           -0.038       NA                          NA        NA</code></pre>
+<pre><code>## Error in JAC %*% OUT : requires numeric/complex matrix/vector arguments</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

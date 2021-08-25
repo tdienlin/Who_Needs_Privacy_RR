@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Items</title>
+
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="proposal.html">Proposal</a>
+</li>
+<li>
+  <a href="analyses.html">Analyses</a>
+</li>
+<li>
+  <a href="items.html">Items</a>
+</li>
+<li>
+  <a href="analyses_readability.html">Readability Analyses</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="proposal.pdf">
+    <span class="fa fa-file"></span>
+     
+    PDF
+  </a>
+</li>
+<li>
+  <a href="https://github.com/tdienlin/who_needs_privacy_rr">
+    <span class="fa fa-lg fa-github"></span>
+     
+    Source Code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Items</h1>
+
+</div>
+
+
+<p>All items were answered on a 7-point scale with the following options:</p>
+<p>“To what extent do you agree or disagree with the following statements?”</p>
+<p>(-3) Strongly Disagree, (-2) Disagree, (-1) Slightly Disagree, (0) Neutral, (1) Slightly Agree (2) Agree, (3) Strongly Agree</p>
+<div id="personality" class="section level1">
+<h1>Personality</h1>
+<div id="honesty-humility" class="section level2">
+<h2>Honesty Humility</h2>
+<div id="sincerity" class="section level3">
+<h3>Sincerity</h3>
+<ol style="list-style-type: decimal">
+<li>If I want something from a person I dislike, I will act very nicely toward that person in order to get it.</li>
+<li>I wouldn’t use flattery to get a raise or promotion at work, even if I thought it would succeed.</li>
+<li>If I want something from someone, I will laugh at that person’s worst jokes.</li>
+<li>I wouldn’t pretend to like someone just to get that person to do favors for me.</li>
+</ol>
+</div>
+<div id="fairness" class="section level3">
+<h3>Fairness</h3>
+<ol style="list-style-type: decimal">
+<li>If I knew that I could never get caught, I would be willing to steal a million dollars.</li>
+<li>I would be tempted to buy stolen property if I were financially tight.</li>
+<li>I would never accept a bribe, even if it were very large.</li>
+<li>I’d be tempted to use counterfeit money, if I were sure I could get away with it.</li>
+</ol>
+</div>
+<div id="greed-avoidance" class="section level3">
+<h3>Greed Avoidance</h3>
+<ol style="list-style-type: decimal">
+<li>Having a lot of money is not especially important to me.</li>
+<li>I would like to live in a very expensive, high-class neighborhood.</li>
+<li>I would like to be seen driving around in a very expensive car.</li>
+<li>I would get a lot of pleasure from owning expensive luxury goods.</li>
+</ol>
+</div>
+<div id="modesty" class="section level3">
+<h3>Modesty</h3>
+<ol style="list-style-type: decimal">
+<li>I am an ordinary person who is no better than others.</li>
+<li>I wouldn’t want people to treat me as though I were superior to them.</li>
+<li>I think that I am entitled to more respect than the average person is.</li>
+<li>I want people to know that I am an important person of high status.</li>
+</ol>
+</div>
+</div>
+<div id="emotionality" class="section level2">
+<h2>Emotionality</h2>
+<div id="fearfulness" class="section level3">
+<h3>Fearfulness</h3>
+<ol style="list-style-type: decimal">
+<li>I would feel afraid if I had to travel in bad weather conditions.</li>
+<li>I don’t mind doing jobs that involve dangerous work.</li>
+<li>When it comes to physical danger, I am very fearful.</li>
+<li>Even in an emergency I wouldn’t feel like panicking.</li>
+</ol>
+</div>
+<div id="anxiety" class="section level3">
+<h3>Anxiety</h3>
+<ol style="list-style-type: decimal">
+<li>I sometimes can’t help worrying about little things.</li>
+<li>I worry a lot less than most people do.</li>
+<li>I rarely, if ever, have trouble sleeping due to stress or anxiety.</li>
+<li>I get very anxious when waiting to hear about an important decision.</li>
+</ol>
+</div>
+<div id="dependence" class="section level3">
+<h3>Dependence</h3>
+<ol style="list-style-type: decimal">
+<li>When I suffer from a painful experience, I need someone to make me feel comfortable.</li>
+<li>I can handle difficult situations without needing emotional support from anyone else.</li>
+<li>Whenever I feel worried about something, I want to share my concern with another person.</li>
+<li>I rarely discuss my problems with other people.</li>
+</ol>
+</div>
+<div id="sentimentality" class="section level3">
+<h3>Sentimentality</h3>
+<ol style="list-style-type: decimal">
+<li>I feel like crying when I see other people crying.</li>
+<li>When someone I know well is unhappy, I can almost feel that person’s pain myself.</li>
+<li>I feel strong emotions when someone close to me is going away for a long time.</li>
+<li>I remain unemotional even in situations where most people get very sentimental.</li>
+</ol>
+</div>
+</div>
+<div id="extraversion" class="section level2">
+<h2>Extraversion</h2>
+<div id="social-self-esteem" class="section level3">
+<h3>Social Self-Esteem</h3>
+<ol style="list-style-type: decimal">
+<li>I feel reasonably satisfied with myself overall.</li>
+<li>I think that most people like some aspects of my personality.</li>
+<li>I feel that I am an unpopular person.</li>
+<li>Even in an emergency I wouldn’t feel like panicking.</li>
+</ol>
+</div>
+<div id="social-boldness" class="section level3">
+<h3>Social Boldness</h3>
+<ol style="list-style-type: decimal">
+<li>I rarely express my opinions in group meetings.</li>
+<li>In social situations, I’m usually the one who makes the first move.</li>
+<li>When I’m in a group of people, I’m often the one who speaks on behalf of the group.</li>
+<li>I tend to feel quite self-conscious when speaking in front of a group of people.</li>
+</ol>
+</div>
+<div id="sociability" class="section level3">
+<h3>Sociability</h3>
+<ol style="list-style-type: decimal">
+<li>I avoid making “small talk” with people.</li>
+<li>I enjoy having lots of people around to talk with.</li>
+<li>I prefer jobs that involve active social interaction to those that involve working alone.</li>
+<li>The first thing that I always do in a new place is to make friends.</li>
+</ol>
+</div>
+<div id="liveliness" class="section level3">
+<h3>Liveliness</h3>
+<ol style="list-style-type: decimal">
+<li>I am energetic nearly all the time.</li>
+<li>On most days, I feel cheerful and optimistic.</li>
+<li>People often tell me that I should try to cheer up.</li>
+<li>Most people are more upbeat and dynamic than I generally am.</li>
+</ol>
+</div>
+</div>
+<div id="agreeableness" class="section level2">
+<h2>Agreeableness</h2>
+<div id="forgiveness" class="section level3">
+<h3>Forgiveness</h3>
+<ol style="list-style-type: decimal">
+<li>I rarely hold a grudge, even against people who have badly wronged me.</li>
+<li>My attitude toward people who have treated me badly is “forgive and forget.”</li>
+<li>If someone has cheated me once, I will always feel suspicious of that person.</li>
+<li>I find it hard to fully forgive someone who has done something mean to me.</li>
+</ol>
+</div>
+<div id="gentleness" class="section level3">
+<h3>Gentleness</h3>
+<ol style="list-style-type: decimal">
+<li>People sometimes tell me that I am too critical of others.</li>
+<li>I generally accept people’s faults without complaining about them.</li>
+<li>I tend to be lenient in judging other people.</li>
+<li>Even when people make a lot of mistakes, I rarely say anything negative.</li>
+</ol>
+</div>
+<div id="flexibility" class="section level3">
+<h3>Flexibility</h3>
+<ol style="list-style-type: decimal">
+<li>People sometimes tell me that I’m too stubborn.</li>
+<li>I am usually quite flexible in my opinions when people disagree with me.</li>
+<li>When people tell me that I’m wrong, my first reaction is to argue with them.</li>
+<li>I find it hard to compromise with people when I really think I’m right.</li>
+</ol>
+</div>
+<div id="patience" class="section level3">
+<h3>Patience</h3>
+<ol style="list-style-type: decimal">
+<li>People think of me as someone who has a quick temper.</li>
+<li>I rarely feel anger, even when people treat me quite badly.</li>
+<li>Most people tend to get angry more quickly than I do.</li>
+<li>I find it hard to keep my temper when people insult me.</li>
+</ol>
+</div>
+</div>
+<div id="conscientiousness" class="section level2">
+<h2>Conscientiousness</h2>
+<div id="organization" class="section level3">
+<h3>Organization</h3>
+<ol style="list-style-type: decimal">
+<li>I clean my office or home quite frequently.</li>
+<li>I plan ahead and organize things, to avoid scrambling at the last minute.</li>
+<li>People often joke with me about the messiness of my room or desk.</li>
+<li>When working, I sometimes have difficulties due to being disorganized.</li>
+</ol>
+</div>
+<div id="diligence" class="section level3">
+<h3>Diligence</h3>
+<ol style="list-style-type: decimal">
+<li>When working, I often set ambitious goals for myself.</li>
+<li>I often push myself very hard when trying to achieve a goal.</li>
+<li>Often when I set a goal, I end up quitting without having reached it.</li>
+<li>I do only the minimum amount of work needed to get by.</li>
+</ol>
+</div>
+<div id="perfectionism" class="section level3">
+<h3>Perfectionism</h3>
+<ol style="list-style-type: decimal">
+<li>I often check my work over repeatedly to find any mistakes.</li>
+<li>When working on something, I don’t pay much attention to small details.</li>
+<li>I always try to be accurate in my work, even at the expense of time.</li>
+<li>People often call me a perfectionist.</li>
+</ol>
+</div>
+<div id="prudence" class="section level3">
+<h3>Prudence</h3>
+<ol style="list-style-type: decimal">
+<li>I make decisions based on the feeling of the moment rather than on careful thought.</li>
+<li>I make a lot of mistakes because I don’t think before I act.</li>
+<li>I don’t allow my impulses to govern my behavior.</li>
+<li>I prefer to do whatever comes to mind, rather than stick to a plan.</li>
+</ol>
+</div>
+</div>
+<div id="openness" class="section level2">
+<h2>Openness</h2>
+<div id="aesthetic-appreciation" class="section level3">
+<h3>Aesthetic Appreciation</h3>
+<ol style="list-style-type: decimal">
+<li>I would be quite bored by a visit to an art gallery.</li>
+<li>I wouldn’t spend my time reading a book of poetry.</li>
+<li>If I had the opportunity, I would like to attend a classical music concert.</li>
+<li>Sometimes I like to just watch the wind as it blows through the trees.</li>
+</ol>
+</div>
+<div id="inquisitiveness" class="section level3">
+<h3>Inquisitiveness</h3>
+<ol style="list-style-type: decimal">
+<li>I’m interested in learning about the history and politics of other countries.</li>
+<li>I enjoy looking at maps of different places.</li>
+<li>I would be very bored by a book about the history of science and technology.</li>
+<li>I’ve never really enjoyed looking through an encyclopedia.</li>
+</ol>
+</div>
+<div id="creativeness" class="section level3">
+<h3>Creativeness</h3>
+<ol style="list-style-type: decimal">
+<li>I would like a job that requires following a routine rather than being creative.</li>
+<li>I would enjoy creating a work of art, such as a novel, a song, or a painting.</li>
+<li>People have often told me that I have a good imagination.</li>
+<li>I don’t think of myself as the artistic or creative type.</li>
+</ol>
+</div>
+<div id="unconventionality" class="section level3">
+<h3>Unconventionality</h3>
+<ol style="list-style-type: decimal">
+<li>I think that paying attention to radical ideas is a waste of time.</li>
+<li>I like people who have unconventional views.</li>
+<li>I think of myself as a somewhat eccentric person.</li>
+<li>I find it boring to discuss philosophy.</li>
+</ol>
+</div>
+</div>
+<div id="altruism" class="section level2">
+<h2>Altruism</h2>
+<ol style="list-style-type: decimal">
+<li>I have sympathy for people who are less fortunate than I am.</li>
+<li>I try to give generously to those in need.</li>
+<li>It wouldn’t bother me to harm someone I didn’t like.</li>
+<li>People see me as a hard-hearted person.</li>
+</ol>
+</div>
+</div>
+<div id="need-for-privacy" class="section level1">
+<h1>Need for privacy</h1>
+<div id="informational" class="section level2">
+<h2>Informational</h2>
+<ol style="list-style-type: decimal">
+<li>I would prefer that little is known about me.</li>
+<li>In general, I prefer to remain incognito.</li>
+<li>I don’t want my personal data to be publicly accessible.</li>
+<li>Not everyone has to know everything about me.</li>
+</ol>
+</div>
+<div id="psychological" class="section level2">
+<h2>Psychological</h2>
+<ol style="list-style-type: decimal">
+<li>I don’t like to talk about personal issues unless others do it first.</li>
+<li>There are a lot of things about me that I don’t like to talk about with others.</li>
+<li>I feel uncomfortable when others tell me private things about their lives.</li>
+<li>It is hard for me to talk about my feelings and inner thoughts.</li>
+</ol>
+</div>
+<div id="physiological" class="section level2">
+<h2>Physiological</h2>
+<ol style="list-style-type: decimal">
+<li>I don’t like it when strangers come too close to me.</li>
+<li>I feel uncomfortable when others enter my flat or room unannounced.</li>
+<li>I don’t like to stand in a dense crowd of people.</li>
+<li>I don’t like to sit next to a stranger on the tram or bus.</li>
+</ol>
+</div>
+<div id="social" class="section level2">
+<h2>Social</h2>
+<ol style="list-style-type: decimal">
+<li>My need for privacy is so strong that it prevents me from using social media actively.</li>
+<li>I don’t feel I need to tell my friends all my secrets.</li>
+<li>I feel I need to protect my privacy from other people.</li>
+<li>I prefer it when others don’t know much about me.</li>
+</ol>
+</div>
+<div id="privacy-from-government" class="section level2">
+<h2>Privacy from Government</h2>
+<ol style="list-style-type: decimal">
+<li>I need government agencies to respect my privacy, even if that makes catching criminals harder.,</li>
+<li>I don’t want the government to gather data about me, even if that makes it harder to spend tax income efficiently.,</li>
+<li>I don’t want government agencies to monitor my communication, even if that prevents terrorist attacks.,</li>
+<li>I feel I need to protect my privacy from government agencies.</li>
+</ol>
+</div>
+<div id="privacy-need-anonymity" class="section level2">
+<h2>Privacy need anonymity</h2>
+<ol style="list-style-type: decimal">
+<li>I need to be able to use a fake account on social network sites to preserve my privacy.</li>
+<li>I feel I need to avoid places with video surveillance.</li>
+<li>I prefer not to carry my drivers license or ID with me all the time to preserve my privacy.</li>
+<li>I need to be able to surf the Internet anonymously. (new)</li>
+</ol>
+</div>
+<div id="privacy-from-companies" class="section level2">
+<h2>Privacy from Companies</h2>
+<ol style="list-style-type: decimal">
+<li>I’m willing to pay more for products or services so that companies don’t have to sell my data.</li>
+<li>I’m happy to give up a little bit of privacy, so that I can use certain apps or services for free.</li>
+<li>I don’t want companies to gather information about me, even if that reduces the quality of their services.</li>
+<li>I feel I need to protect my privacy from companies.</li>
+</ol>
+</div>
+<div id="general-need-for-privacy" class="section level2">
+<h2>General Need for privacy</h2>
+<ol style="list-style-type: decimal">
+<li>I need a lot of privacy.</li>
+<li>Privacy is very important to me.</li>
+<li>I think a lot about how I can protect my privacy.</li>
+<li>I need a lot of time for myself.</li>
+</ol>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+---
+title: "Items"
+output:
+  html_document:
+    toc: TRUE
+    toc_float:
+      collapsed: FALSE
+      toc_depth: 3
+bibliography      : 
+  - "bibliography/r-references.bib"
+  - "bibliography/references.bib"
+# pdf_document:
+#   toc: TRUE
+---
+  
+All items were answered on a 7-point scale with the following options:
+  
+"To what extent do you agree or disagree with the following statements?"
+
+(-3) Strongly Disagree, (-2) Disagree, (-1) Slightly Disagree, (0) Neutral, (1) Slightly Agree (2) Agree, (3) Strongly Agree
+
+# Personality
+## Honesty Humility
+### Sincerity
+
+ 1. If I want something from a person I dislike, I will act very nicely toward that person in order to get it.
+ 1. I wouldn't use flattery to get a raise or promotion at work, even if I thought it would succeed.
+ 1. If I want something from someone, I will laugh at that person's worst jokes.
+ 1. I wouldn't pretend to like someone just to get that person to do favors for me.
+
+### Fairness
+
+ 1. If I knew that I could never get caught, I would be willing to steal a million dollars.
+ 1. I would be tempted to buy stolen property if I were financially tight.
+ 1. I would never accept a bribe, even if it were very large.
+ 1. I’d be tempted to use counterfeit money, if I were sure I could get away with it.
+
+### Greed Avoidance
+
+ 1. Having a lot of money is not especially important to me.
+ 1. I would like to live in a very expensive, high-class neighborhood.
+ 1. I would like to be seen driving around in a very expensive car.
+ 1. I would get a lot of pleasure from owning expensive luxury goods.
+
+### Modesty
+
+ 1. I am an ordinary person who is no better than others.
+ 1. I wouldn’t want people to treat me as though I were superior to them.
+ 1. I think that I am entitled to more respect than the average person is.
+ 1. I want people to know that I am an important person of high status.
+
+## Emotionality
+### Fearfulness
+
+ 1. I would feel afraid if I had to travel in bad weather conditions.
+ 1. I don’t mind doing jobs that involve dangerous work.
+ 1. When it comes to physical danger, I am very fearful.
+ 1. Even in an emergency I wouldn't feel like panicking.
+
+### Anxiety
+
+ 1. I sometimes can't help worrying about little things.
+ 1. I worry a lot less than most people do.
+ 1. I rarely, if ever, have trouble sleeping due to stress or anxiety.
+ 1. I get very anxious when waiting to hear about an important decision.
+ 
+### Dependence
+ 1. When I suffer from a painful experience, I need someone to make me feel comfortable.
+ 1. I can handle difficult situations without needing emotional support from anyone else.
+ 1. Whenever I feel worried about something, I want to share my concern with another person.
+ 1. I rarely discuss my problems with other people.
+
+### Sentimentality
+
+ 1. I feel like crying when I see other people crying.
+ 1. When someone I know well is unhappy, I can almost feel that person's pain myself.
+ 1. I feel strong emotions when someone close to me is going away for a long time.
+ 1. I remain unemotional even in situations where most people get very sentimental.
+
+## Extraversion
+### Social Self-Esteem
+
+ 1. I feel reasonably satisfied with myself overall.
+ 1. I think that most people like some aspects of my personality.
+ 1. I feel that I am an unpopular person.
+ 1. Even in an emergency I wouldn't feel like panicking.
+ 
+### Social Boldness
+
+ 1. I rarely express my opinions in group meetings.
+ 1. In social situations, I'm usually the one who makes the first move.
+ 1. When I'm in a group of people, I'm often the one who speaks on behalf of the group.
+ 1. I tend to feel quite self-conscious when speaking in front of a group of people.
+
+### Sociability
+
+ 1. I avoid making "small talk" with people.
+ 1. I enjoy having lots of people around to talk with.
+ 1. I prefer jobs that involve active social interaction to those that involve working alone.
+ 1. The first thing that I always do in a new place is to make friends.
+
+### Liveliness
+
+ 1. I am energetic nearly all the time.
+ 1. On most days, I feel cheerful and optimistic.
+ 1. People often tell me that I should try to cheer up.
+ 1. Most people are more upbeat and dynamic than I generally am.
+
+## Agreeableness
+### Forgiveness
+
+ 1. I rarely hold a grudge, even against people who have badly wronged me.
+ 1. My attitude toward people who have treated me badly is "forgive and forget".
+ 1. If someone has cheated me once, I will always feel suspicious of that person.
+ 1. I find it hard to fully forgive someone who has done something mean to me.
+
+### Gentleness
+
+ 1. People sometimes tell me that I am too critical of others.
+ 1. I generally accept people’s faults without complaining about them.
+ 1. I tend to be lenient in judging other people.
+ 1. Even when people make a lot of mistakes, I rarely say anything negative.
+
+### Flexibility
+
+ 1. People sometimes tell me that I'm too stubborn.
+ 1. I am usually quite flexible in my opinions when people disagree with me.
+ 1. When people tell me that I’m wrong, my first reaction is to argue with them.
+ 1. I find it hard to compromise with people when I really think I’m right.
+
+### Patience
+
+ 1. People think of me as someone who has a quick temper.
+ 1. I rarely feel anger, even when people treat me quite badly.
+ 1. Most people tend to get angry more quickly than I do.
+ 1. I find it hard to keep my temper when people insult me.
+
+## Conscientiousness
+### Organization
+
+ 1. I clean my office or home quite frequently.
+ 1. I plan ahead and organize things, to avoid scrambling at the last minute.
+ 1. People often joke with me about the messiness of my room or desk.
+ 1. When working, I sometimes have difficulties due to being disorganized.
+
+### Diligence
+
+ 1. When working, I often set ambitious goals for myself.
+ 1. I often push myself very hard when trying to achieve a goal.
+ 1. Often when I set a goal, I end up quitting without having reached it.
+ 1. I do only the minimum amount of work needed to get by.
+
+### Perfectionism
+
+ 1. I often check my work over repeatedly to find any mistakes.
+ 1. When working on something, I don't pay much attention to small details.
+ 1. I always try to be accurate in my work, even at the expense of time.
+ 1. People often call me a perfectionist.
+
+### Prudence
+
+ 1. I make decisions based on the feeling of the moment rather than on careful thought.
+ 1. I make a lot of mistakes because I don't think before I act.
+ 1. I don’t allow my impulses to govern my behavior.
+ 1. I prefer to do whatever comes to mind, rather than stick to a plan.
+ 
+## Openness
+### Aesthetic Appreciation
+
+ 1. I would be quite bored by a visit to an art gallery.
+ 1. I wouldn't spend my time reading a book of poetry.
+ 1. If I had the opportunity, I would like to attend a classical music concert.
+ 1. Sometimes I like to just watch the wind as it blows through the trees.
+
+### Inquisitiveness
+
+ 1. I'm interested in learning about the history and politics of other countries.
+ 1. I enjoy looking at maps of different places.
+ 1. I would be very bored by a book about the history of science and technology.
+ 1. I’ve never really enjoyed looking through an encyclopedia.
+ 
+### Creativeness
+
+ 1. I would like a job that requires following a routine rather than being creative.
+ 1. I would enjoy creating a work of art, such as a novel, a song, or a painting.
+ 1. People have often told me that I have a good imagination.
+ 1. I don't think of myself as the artistic or creative type.
+
+### Unconventionality
+
+ 1. I think that paying attention to radical ideas is a waste of time.
+ 1. I like people who have unconventional views.
+ 1. I think of myself as a somewhat eccentric person.
+ 1. I find it boring to discuss philosophy.
+
+## Altruism
+
+ 1. I have sympathy for people who are less fortunate than I am.
+ 1. I try to give generously to those in need.
+ 1. It wouldn’t bother me to harm someone I didn’t like.
+ 1. People see me as a hard-hearted person.
+
+# Need for privacy
+## Informational
+
+ 1. I would prefer that little is known about me. 
+ 1. In general, I prefer to remain incognito. 
+ 1. I don’t want my personal data to be publicly accessible. 
+ 1. Not everyone has to know everything about me. 
+
+## Psychological
+
+ 1. I don’t like to talk about personal issues unless others do it first.
+ 1. There are a lot of things about me that I don’t like to talk about with others. 
+ 1. I feel uncomfortable when others tell me private things about their lives. 
+ 1. It is hard for me to talk about my feelings and inner thoughts.
+
+## Physiological
+
+ 1. I don’t like it when strangers come too close to me. 
+ 1. I feel uncomfortable when others enter my flat or room unannounced. 
+ 1. I don’t like to stand in a dense crowd of people. 
+ 1. I don’t like to sit next to a stranger on the tram or bus.
+
+## Social
+
+ 1. My need for privacy is so strong that it prevents me from using social media actively. 
+ 1. I don’t feel I need to tell my friends all my secrets.
+ 1. I feel I need to protect my privacy from other people.
+ 1. I prefer it when others don’t know much about me.
+
+## Privacy from Government
+
+ 1. I need government agencies to respect my privacy, even if that makes catching criminals harder.,
+ 1. I don’t want the government to gather data about me, even if that makes it harder to spend tax income efficiently.,
+ 1. I don’t want government agencies to monitor my communication, even if that prevents terrorist attacks.,
+ 1. I feel I need to protect my privacy from government agencies.
+
+## Privacy need anonymity
+
+ 1. I need to be able to use a fake account on social network sites to preserve my privacy. 
+ 1. I feel I need to avoid places with video surveillance.
+ 1. I prefer not to carry my drivers license or ID with me all the time to preserve my privacy.
+ 1. I need to be able to surf the Internet anonymously. (new)
+
+## Privacy from Companies
+
+ 1. I’m willing to pay more for products or services so that companies don’t have to sell my data.
+ 1. I’m happy to give up a little bit of privacy, so that I can use certain apps or services for free.
+ 1. I don’t want companies to gather information about me, even if that reduces the quality of their services.
+ 1. I feel I need to protect my privacy from companies.
+
+## General Need for privacy
+
+ 1. I need a lot of privacy.
+ 1. Privacy is very important to me.
+ 1. I think a lot about how I can protect my privacy.
+ 1. I need a lot of time for myself.

@@ -1,0 +1,711 @@
+---
+title: "Who Needs Privacy? Exploring the relationship between personality and need for privacy"
+subtitle: "Analyses"
+output:
+  html_document:
+    toc: TRUE
+    toc_float:
+      collapsed: FALSE
+    toc_depth: 2
+    code_folding: hide
+bibliography      : 
+  - "bibliography/r-references.bib"
+  - "bibliography/references.bib"
+  # pdf_document:
+  #   toc: TRUE
+---
+
+```{r knitr-setup, include=F}
+set.seed(170819)
+knitr::opts_chunk$set(warning=F, echo=F, error=F, message=F, cache = T, 
+                      tidy=T, dev = 'pdf', cache.extra = knitr::rand_seed)
+options(digits = 3, width = 90)
+```
+
+```{r r-setup, include=F}
+# install packages
+# devtools::install_github("https://github.com/tdienlin/td")
+
+# define packages
+packages <- c("corrplot", "devtools", "GGally", "ggplot2", "haven", "kableExtra", "knitr", 
+              "lavaan", "magrittr", "mice", "MVN", "PerFit", "psych", "quanteda.textstats",
+              "pwr", "semPlot", "semTools", "tidyverse", "td")
+
+# load packages
+lapply(packages, library, character.only = TRUE)
+
+# readability function
+readability = function(data){
+  reading_estimates <- c("Flesch.Kincaid", "FOG", "Coleman.Liau.short", "Dale.Chall.PSK")
+  textstat_readability(data, measure = reading_estimates) %>% 
+    as.data.frame %>% 
+    mutate(average = rowMeans(select(., -document)))
+}
+```
+
+```{r data-wrangling}
+d <- read_spss("data/Need+for+Privacy_August+16%2C+2021_15.33.sav")
+
+# define vars and labels
+vars_pers_fac <- c("HEX_HOH_SIN", "HEX_HOH_FAI", "HEX_HOH_GRE", "HEX_HOH_MOD", 
+                   "HEX_EMO_FEA", "HEX_EMO_ANX", "HEX_EMO_DEP", "HEX_EMO_SEN", 
+                   "HEX_EXT_SSE", "HEX_EXT_BOL", "HEX_EXT_SOC", "HEX_EXT_LIV", 
+                   "HEX_AGR_FOR", "HEX_AGR_GEN", "HEX_AGR_FLX", "HEX_AGR_PAT", 
+                   "HEX_CNS_ORG", "HEX_CNS_DIL", "HEX_CNS_PER", "HEX_CNS_PRU", 
+                   "HEX_OPN_AES", "HEX_OPN_INQ", "HEX_OPN_CRE", "HEX_OPN_UNC", 
+                   "HEX_ALT")
+vars_pers_fac_txt <- c("Sincerity", "Fairness", "Greed avoidance", "Modesty", 
+                       "Fearfulness", "Anxiety", "Dependence", "Sentimentality", 
+                       "Social Self-Esteem", "Social Boldness", "Sociability", "Liveliness",
+                       "Forgiveness", "Gentleness", "Flexibility", "Patience", 
+                       "Organization", "Diligence", "Perfectionism", "Prudence", 
+                       "Aesthetic Appreciation", "Inquisitiveness", "Creativeness", "Unconventionality", 
+                       "Altruism")
+
+vars_pers_dim <- c("HEX_HOH", "HEX_EMO", "HEX_EXT", "HEX_AGR", "HEX_CNS", "HEX_OPN")
+vars_pers_dim_txt <- c("Honesty humility", "Emotionality", "Extraversion", 
+                       "Agreeableness", "Conscientiousness", "Openness")
+
+vars_pri <- c("NFP_INF", "NFP_PSY", "NFP_PHY", "NFP_CNC", "NFP_SPA", 
+              "NFP_GOV", "NFP_INT", "NFP_ANO", "NFP_COM", "NFP_GEN")
+vars_pri_txt <- c("Informational", "Psychological", "Physical", "Concealment", "Personal Space", 
+                  "Government", "Interpersonal", "Anonymity", "Companies", "General")
+
+vars_ses <- c("age", "gender", "ethnicity", "relationship", "college", "income", "conservatism")
+
+```
+
+# Items
+
+All items were answered on a 7-point scale with the following options:
+
+"To what extent do you agree or disagree with the following statements?"
+
+(-3) Strongly Disagree, (-2) Disagree, (-1) Slightly Disagree, (0) Neutral, (1) Slightly Agree (2) Agree, (3) Strongly Agree
+
+## Personality
+### Honesty Humility
+#### Sincerity
+
+ - If I want something from a person I dislike, I will act very nicely toward that person in order to get it.
+ - I wouldn't use flattery to get a raise or promotion at work, even if I thought it would succeed.
+ - If I want something from someone, I will laugh at that person's worst jokes.
+ - I wouldn't pretend to like someone just to get that person to do favors for me.
+
+```{r}
+model <- "HEX_HOH_SIN =~ HEX_HOH_SIN_01 + HEX_HOH_SIN_02 + HEX_HOH_SIN_03 + HEX_HOH_SIN_04"
+```
+
+#### Fairness
+
+ - If I knew that I could never get caught, I would be willing to steal a million dollars.
+ - I would be tempted to buy stolen property if I were financially tight.
+ - I would never accept a bribe, even if it were very large.
+ - I’d be tempted to use counterfeit money, if I were sure I could get away with it.
+
+```{r}
+model <- "HEX_HOH_FAI =~ HEX_HOH_FAI_01 + HEX_HOH_FAI_02 + HEX_HOH_FAI_03 + HEX_HOH_FAI_04"
+```
+
+#### Greed Avoidance
+
+ - Having a lot of money is not especially important to me.
+ - I would like to live in a very expensive, high-class neighborhood.
+ - I would like to be seen driving around in a very expensive car.
+ - I would get a lot of pleasure from owning expensive luxury goods.
+
+```{r}
+model <- "HEX_HOH_GRE =~ HEX_HOH_GRE_01 + HEX_HOH_GRE_02 + HEX_HOH_GRE_03 + HEX_HOH_GRE_04"
+```
+
+#### Modesty
+
+ - I am an ordinary person who is no better than others.
+ - I wouldn’t want people to treat me as though I were superior to them.
+ - I think that I am entitled to more respect than the average person is.
+ - I want people to know that I am an important person of high status.
+
+```{r}
+model <- "HEX_HOH_MOD =~ HEX_HOH_MOD_01 + HEX_HOH_MOD_02 + HEX_HOH_MOD_03 + HEX_HOH_MOD_04"
+```
+
+### Emotionality
+#### Fearfulness
+
+ - I would feel afraid if I had to travel in bad weather conditions.
+ - I don’t mind doing jobs that involve dangerous work.
+ - When it comes to physical danger, I am very fearful.
+ - Even in an emergency I wouldn't feel like panicking.
+
+```{r}
+model <- "HEX_EMO_FEA =~ HEX_EMO_FEA_01 + HEX_EMO_FEA_02 + HEX_EMO_FEA_03 + HEX_EMO_FEA_04"
+```
+
+#### Anxiety
+ 
+ - I sometimes can't help worrying about little things.
+ - I worry a lot less than most people do.
+ - I rarely, if ever, have trouble sleeping due to stress or anxiety.
+ - I get very anxious when waiting to hear about an important decision.
+ 
+```{r}
+model <- "HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_EMO_ANX_04"
+```
+
+
+#### Dependence
+ - When I suffer from a painful experience, I need someone to make me feel comfortable.
+ - I can handle difficult situations without needing emotional support from anyone else.
+ - Whenever I feel worried about something, I want to share my concern with another person.
+ - I rarely discuss my problems with other people.
+
+```{r}
+model <- "HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_EMO_DEP_04"
+```
+ 
+#### Sentimentality
+
+ - I feel like crying when I see other people crying.
+ - When someone I know well is unhappy, I can almost feel that person's pain myself.
+ - I feel strong emotions when someone close to me is going away for a long time.
+ - I remain unemotional even in situations where most people get very sentimental.
+
+```{r}
+model <- "HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_EMO_SEN_04"
+```
+
+### Extraversion
+#### Social Self-Esteem
+
+ - I feel reasonably satisfied with myself overall.
+ - I think that most people like some aspects of my personality.
+ - I feel that I am an unpopular person.
+ - Even in an emergency I wouldn't feel like panicking.
+ 
+```{r}
+model <- "HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_EXT_SSE_04"
+```
+
+#### Social Boldness
+
+ - I rarely express my opinions in group meetings.
+ - In social situations, I'm usually the one who makes the first move.
+ - When I'm in a group of people, I'm often the one who speaks on behalf of the group.
+ - I tend to feel quite self-conscious when speaking in front of a group of people.
+
+```{r}
+model <- "HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_EXT_BOL_04"
+```
+
+#### Sociability
+
+ - I avoid making "small talk" with people.
+ - I enjoy having lots of people around to talk with.
+ - I prefer jobs that involve active social interaction to those that involve working alone.
+ - The first thing that I always do in a new place is to make friends.
+
+```{r}
+model <- "HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04"
+```
+
+#### Liveliness
+
+ - I am energetic nearly all the time.
+ - On most days, I feel cheerful and optimistic.
+ - People often tell me that I should try to cheer up.
+ - Most people are more upbeat and dynamic than I generally am.
+
+```{r}
+model <- "HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_EXT_LIV_04"
+```
+
+### Agreeableness
+#### Forgiveness
+
+ - I rarely hold a grudge, even against people who have badly wronged me.
+ - My attitude toward people who have treated me badly is "forgive and forget".
+ - If someone has cheated me once, I will always feel suspicious of that person.
+ - I find it hard to fully forgive someone who has done something mean to me.
+
+```{r}
+model <- "HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04"
+```
+
+#### Gentleness
+
+ - People sometimes tell me that I am too critical of others.
+ - I generally accept people’s faults without complaining about them.
+ - I tend to be lenient in judging other people.
+ - Even when people make a lot of mistakes, I rarely say anything negative.
+ 
+```{r}
+model <- "HEX_AGR_GEN =~ HEX_AGR_GEN_01 + HEX_AGR_GEN_02 + HEX_AGR_GEN_03 + HEX_AGR_GEN_04"
+```
+
+#### Flexibility
+
+ - People sometimes tell me that I'm too stubborn.
+ - I am usually quite flexible in my opinions when people disagree with me.
+ - When people tell me that I’m wrong, my first reaction is to argue with them.
+ - I find it hard to compromise with people when I really think I’m right.
+
+```{r}
+model <- "HEX_AGR_FLX =~ HEX_AGR_FLX_01 + HEX_AGR_FLX_02 + HEX_AGR_FLX_03 + HEX_AGR_FLX_04"
+```
+
+#### Patience
+
+ - People think of me as someone who has a quick temper.
+ - I rarely feel anger, even when people treat me quite badly.
+ - Most people tend to get angry more quickly than I do.
+ - I find it hard to keep my temper when people insult me.
+
+```{r}
+model <- "HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_AGR_PAT_04"
+```
+
+### Conscientiousness
+#### Organization
+
+ - I clean my office or home quite frequently.
+ - I plan ahead and organize things, to avoid scrambling at the last minute.
+ - People often joke with me about the messiness of my room or desk.
+ - When working, I sometimes have difficulties due to being disorganized.
+
+```{r}
+model <- "HEX_CNS_ORG =~ HEX_CNS_ORG_01 + HEX_CNS_ORG_02 + HEX_CNS_ORG_03 + HEX_CNS_ORG_04"
+```
+
+#### Diligence
+
+ - When working, I often set ambitious goals for myself.
+ - I often push myself very hard when trying to achieve a goal.
+ - Often when I set a goal, I end up quitting without having reached it.
+ - I do only the minimum amount of work needed to get by.
+
+```{r}
+model <- "HEX_CNS_DIL =~ HEX_CNS_DIL_01 + HEX_CNS_DIL_02 + HEX_CNS_DIL_03 + HEX_CNS_DIL_04"
+```
+
+#### Perfectionism
+
+ - I often check my work over repeatedly to find any mistakes.
+ - When working on something, I don't pay much attention to small details.
+ - I always try to be accurate in my work, even at the expense of time.
+ - People often call me a perfectionist.
+
+```{r}
+model <- "HEX_CNS_PER =~ HEX_CNS_PER_01 + HEX_CNS_PER_02 + HEX_CNS_PER_03 + HEX_CNS_PER_04"
+```
+
+
+#### Prudence
+
+ - I make decisions based on the feeling of the moment rather than on careful thought.
+ - I make a lot of mistakes because I don't think before I act.
+ - I don’t allow my impulses to govern my behavior.
+ - I prefer to do whatever comes to mind, rather than stick to a plan.
+ 
+```{r}
+model <- "HEX_CNS_PRU =~ HEX_CNS_PRU_01 + HEX_CNS_PRU_02 + HEX_CNS_PRU_03 + HEX_CNS_PRU_04"
+```
+
+### Openness
+#### Aesthetic Appreciation
+
+ - I would be quite bored by a visit to an art gallery.
+ - I wouldn't spend my time reading a book of poetry.
+ - If I had the opportunity, I would like to attend a classical music concert.
+ - Sometimes I like to just watch the wind as it blows through the trees.
+ 
+```{r}
+model <- "HEX_OPN_AES =~ HEX_OPN_AES_01 + HEX_OPN_AES_02 + HEX_OPN_AES_03 + HEX_OPN_AES_04"
+```
+
+
+#### Inquisitiveness
+
+ - I'm interested in learning about the history and politics of other countries.
+ - I enjoy looking at maps of different places.
+ - I would be very bored by a book about the history of science and technology.
+ - I’ve never really enjoyed looking through an encyclopedia.
+ 
+```{r}
+model <- "HEX_OPN_INQ =~ HEX_OPN_INQ_01 + HEX_OPN_INQ_02 + HEX_OPN_INQ_03 + HEX_OPN_INQ_04"
+```
+
+
+#### Creativeness
+
+ - I would like a job that requires following a routine rather than being creative.
+ - I would enjoy creating a work of art, such as a novel, a song, or a painting.
+ - People have often told me that I have a good imagination.
+ - I don't think of myself as the artistic or creative type.
+
+```{r}
+model <- "HEX_OPN_CRE =~ HEX_OPN_CRE_01 + HEX_OPN_CRE_02 + HEX_OPN_CRE_03 + HEX_OPN_CRE_04"
+```
+
+#### Unconventionality
+
+ - I think that paying attention to radical ideas is a waste of time.
+ - I like people who have unconventional views.
+ - I think of myself as a somewhat eccentric person.
+ - I find it boring to discuss philosophy.
+ 
+```{r}
+model <- "HEX_OPN_UNC =~ HEX_OPN_UNC_01 + HEX_OPN_UNC_02 + HEX_OPN_UNC_03 + HEX_OPN_UNC_04"
+```
+
+### Altruism
+
+ - I have sympathy for people who are less fortunate than I am.
+ - I try to give generously to those in need.
+ - It wouldn’t bother me to harm someone I didn’t like.
+ - People see me as a hard-hearted person.
+ 
+```{r}
+model <- "HEX_ALT =~ HEX_ALT_01 + HEX_ALT_02 + HEX_ALT_03 + HEX_ALT_04"
+```
+
+## Need for privacy
+### Informational
+
+ - I would prefer that little is known about me. 
+ - In general, I prefer to remain incognito. 
+ - I don’t want my personal data to be publicly accessible. 
+ - Not everyone has to know everything about me. 
+
+```{r}
+model <- "NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04"
+```
+
+### Psychological
+
+ - I don’t like to talk about personal issues unless others do it first.
+ - There are a lot of things about me that I don’t like to talk about with others. 
+ - I feel uncomfortable when others tell me private things about their lives. 
+ - It is hard for me to talk about my feelings and inner thoughts.
+
+```{r}
+model <- "NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04"
+```
+
+### Physiological
+
+ - I don’t like it when strangers come too close to me. 
+ - I feel uncomfortable when others enter my flat or room unannounced. 
+ - I don’t like to stand in a dense crowd of people. 
+ - I don’t like to sit next to a stranger on the tram or bus.
+
+
+```{r}
+model <- "NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04"
+```
+
+### Privacy from other People
+
+ - My need for privacy is so strong that it prevents me from using social media actively. 
+ - I don’t feel I need to tell my friends all my secrets.
+ - I feel I need to protect my privacy from other people.
+ - I prefer it when others don’t know much about me.
+
+
+```{r}
+model <- "NFP_INT =~ NFP_INT_01 + NFP_INT_02 + NFP_INT_03 + NFP_INT_04"
+```
+
+#### Validation
+
+### Privacy from Government
+
+ - I need government agencies to respect my privacy, even if that makes catching criminals harder.,
+ - I don’t want the government to gather data about me, even if that makes it harder to spend tax income efficiently.,
+ - I don’t want government agencies to monitor my communication, even if that prevents terrorist attacks.,
+ - I feel I need to protect my privacy from government agencies.
+
+```{r}
+model <- "NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04"
+```
+
+#### Validation
+
+### Privacy need anonymity
+
+ - I need to be able to use a fake account on social network sites to preserve my privacy. 
+ - I feel I need to avoid places with video surveillance.
+ - I prefer not to carry my drivers license or ID with me all the time to preserve my privacy.
+ - I need to be able to surf the Internet anonymously. (new)
+
+```{r}
+model <- "NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04"
+```
+
+#### Validation
+
+### Privacy from Companies
+
+ - I’m willing to pay more for products or services so that companies don’t have to sell my data.
+ - I’m happy to give up a little bit of privacy, so that I can use certain apps or services for free.
+ - I don’t want companies to gather information about me, even if that reduces the quality of their services.
+ - I feel I need to protect my privacy from companies.
+
+```{r}
+model <- "NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04"
+```
+
+#### Validation
+
+### General Need for privacy
+
+ - I need a lot of privacy.
+ - Privacy is very important to me.
+ - I think a lot about how I can protect my privacy.
+ - I need a lot of time for myself.
+
+```{r}
+model <- "NFP_GEN =~ NFP_GEN_01 + NFP_GEN_02 + NFP_GEN_03 + NFP_GEN_04"
+```
+
+#### Validation
+
+# Power Analyses
+
+To estimate sample size, we conducted a rudimentary power analysis. That is, we planned for a two-sided correlation of r = .1. We adopted a balanced alpha and beta error approach. Because we were in exploration mode, we aimed for a high statistical power and relaxed alpha. Ideally, we would have wanted to set an error rate of 5%; however, this was outside of our budget. Instead, we opted for an error rate of 10%.
+
+```{r}
+sesoi <- .1
+
+# a priori power analyses
+pwr.r.test(r = sesoi, sig.level = .05, power = .95) ## too expensive
+```
+
+A 5% error rate would imply collecting 1.293 participants, which was outside of our budget.
+
+```{r}
+pwr.r.test(r = sesoi, sig.level = .1, power = .9)
+```
+
+A 10% error rate would imply collecting 853 participants, which was within our budget.
+
+```{r}
+power <- pwr.r.test(r = sesoi, sig.level = .05, power = .8)
+print(power)
+power_n <- power$n
+```
+
+# Results
+## Facets
+
+```{r}
+model_fac <- "
+HEX_HOH_SIN =~ HEX_HOH_SIN_01 + HEX_HOH_SIN_02 + HEX_HOH_SIN_03 + HEX_HOH_SIN_04
+HEX_HOH_FAI =~ HEX_HOH_FAI_01 + HEX_HOH_FAI_02 + HEX_HOH_FAI_03 + HEX_HOH_FAI_04
+HEX_HOH_GRE =~ HEX_HOH_GRE_01 + HEX_HOH_GRE_02 + HEX_HOH_GRE_03 + HEX_HOH_GRE_04
+HEX_HOH_MOD =~ HEX_HOH_MOD_01 + HEX_HOH_MOD_02 + HEX_HOH_MOD_03 + HEX_HOH_MOD_04
+HEX_EMO_FEA =~ HEX_EMO_FEA_01 + HEX_EMO_FEA_02 + HEX_EMO_FEA_03 + HEX_EMO_FEA_04
+HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_EMO_ANX_04
+HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_EMO_DEP_04
+HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_EMO_SEN_04
+HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_EXT_SSE_04
+HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_EXT_BOL_04
+HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04
+HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_EXT_LIV_04
+HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04
+HEX_AGR_GEN =~ HEX_AGR_GEN_01 + HEX_AGR_GEN_02 + HEX_AGR_GEN_03 + HEX_AGR_GEN_04
+HEX_AGR_FLX =~ HEX_AGR_FLX_01 + HEX_AGR_FLX_02 + HEX_AGR_FLX_03 + HEX_AGR_FLX_04
+HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_AGR_PAT_04
+HEX_CNS_ORG =~ HEX_CNS_ORG_01 + HEX_CNS_ORG_02 + HEX_CNS_ORG_03 + HEX_CNS_ORG_04
+HEX_CNS_DIL =~ HEX_CNS_DIL_01 + HEX_CNS_DIL_02 + HEX_CNS_DIL_03 + HEX_CNS_DIL_04
+HEX_CNS_PER =~ HEX_CNS_PER_01 + HEX_CNS_PER_02 + HEX_CNS_PER_03 + HEX_CNS_PER_04
+HEX_CNS_PRU =~ HEX_CNS_PRU_01 + HEX_CNS_PRU_02 + HEX_CNS_PRU_03 + HEX_CNS_PRU_04
+HEX_OPN_AES =~ HEX_OPN_AES_01 + HEX_OPN_AES_02 + HEX_OPN_AES_03 + HEX_OPN_AES_04
+HEX_OPN_INQ =~ HEX_OPN_INQ_01 + HEX_OPN_INQ_02 + HEX_OPN_INQ_03 + HEX_OPN_INQ_04
+HEX_OPN_CRE =~ HEX_OPN_CRE_01 + HEX_OPN_CRE_02 + HEX_OPN_CRE_03 + HEX_OPN_CRE_04
+HEX_OPN_UNC =~ HEX_OPN_UNC_01 + HEX_OPN_UNC_02 + HEX_OPN_UNC_03 + HEX_OPN_UNC_04
+HEX_ALT =~ HEX_ALT_01 + HEX_ALT_02 + HEX_ALT_03 + HEX_ALT_04
+NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04
+NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04
+NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04
+NFP_CNC =~ NFP_CNC_01 + NFP_CNC_02 + NFP_CNC_03 + NFP_CNC_04
+NFP_SPA =~ NFP_SPA_01 + NFP_SPA_02 + NFP_SPA_03 + NFP_SPA_04
+NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04
+NFP_INT =~ NFP_INT_01 + NFP_INT_02 + NFP_INT_03 + NFP_INT_04
+NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04
+NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04
+NFP_GEN =~ NFP_GEN_01 + NFP_GEN_02 + NFP_GEN_03 + NFP_GEN_04
+age =~ AGE
+gender =~ GEN
+ethnicity =~ ETH
+relationship =~ REL_
+college =~ COL_
+income =~ INC
+conservatism =~ CON
+"
+fit_fac <- sem(model_fac, d, estimator = "ML", fixed.x = TRUE)
+summary(fit_fac, standardized = TRUE)
+
+d_fac <- 
+  standardizedsolution(fit_fac, ci = TRUE, level = .90) %>% 
+  as.data.frame() %>% 
+  filter(op == "~~", lhs %in% vars_pers_dim, rhs %in% vars_pri)
+
+fig_fac <- ggplot(d_fac, aes(x = est.std, y = lhs)) +
+  geom_point() +
+  geom_errorbarh(aes(xmin = ci.lower, xmax = ci.upper)) +
+  facet_wrap(vars(rhs), nrow = 1)
+
+# tab_results <- data.frame(
+#   tab_results_raw[1 : length(vars_pers_fac), ]$std.all,
+#   tab_results_raw[(1 * length(vars_pers_fac) + 1) : (length(vars_pers_fac) * 2), ]$std.all,
+#   tab_results_raw[(2 * length(vars_pers_fac) + 1) : (length(vars_pers_fac) * 3), ]$std.all,
+#   tab_results_raw[(3 * length(vars_pers_fac) + 1) : (length(vars_pers_fac) * 4), ]$std.all,
+#   tab_results_raw[(4 * length(vars_pers_fac) + 1) : (length(vars_pers_fac) * 5), ]$std.all,
+#   tab_results_raw[(5 * length(vars_pers_fac) + 1) : (length(vars_pers_fac) * 6), ]$std.all,
+#   tab_results_raw[(6 * length(vars_pers_fac) + 1) : (length(vars_pers_fac) * 7), ]$std.all,
+#   tab_results_raw[(7 * length(vars_pers_fac) + 1) : (length(vars_pers_fac) * 8), ]$std.all,
+#   tab_results_raw[(8 * length(vars_pers_fac) + 1) : (length(vars_pers_fac) * 9), ]$std.all,
+#   tab_results_raw[(9 * length(vars_pers_fac) + 1) : (length(vars_pers_fac) * 10), ]$std.all
+# )
+# names(tab_results) <- vars_pri
+# rownames(tab_results) <- vars_pers_fac
+```
+
+## Factors
+
+Factor or dimensions.
+
+```{r}
+model_dim <- "
+HEX_HOH =~ HEX_HOH_SIN + HEX_HOH_FAI + HEX_HOH_GRE + HEX_HOH_MOD
+HEX_HOH_SIN =~ HEX_HOH_SIN_01 + HEX_HOH_SIN_02 + HEX_HOH_SIN_03 + HEX_HOH_SIN_04
+HEX_HOH_FAI =~ HEX_HOH_FAI_01 + HEX_HOH_FAI_02 + HEX_HOH_FAI_03 + HEX_HOH_FAI_04
+HEX_HOH_GRE =~ HEX_HOH_GRE_01 + HEX_HOH_GRE_02 + HEX_HOH_GRE_03 + HEX_HOH_GRE_04
+HEX_HOH_MOD =~ HEX_HOH_MOD_01 + HEX_HOH_MOD_02 + HEX_HOH_MOD_03 + HEX_HOH_MOD_04
+
+HEX_EMO =~ HEX_EMO_FEA + HEX_EMO_ANX + HEX_EMO_DEP + HEX_EMO_SEN
+HEX_EMO_FEA =~ HEX_EMO_FEA_01 + HEX_EMO_FEA_02 + HEX_EMO_FEA_03 + HEX_EMO_FEA_04
+HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_EMO_ANX_04
+HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_EMO_DEP_04
+HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_EMO_SEN_04
+
+HEX_EXT =~ HEX_EXT_SSE + HEX_EXT_BOL + HEX_EXT_SOC + HEX_EXT_LIV
+HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_EXT_SSE_04
+HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_EXT_BOL_04
+HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04
+HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_EXT_LIV_04
+
+HEX_AGR =~ HEX_AGR_FOR + HEX_AGR_GEN + HEX_AGR_FLX + HEX_AGR_PAT
+HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04
+HEX_AGR_GEN =~ HEX_AGR_GEN_01 + HEX_AGR_GEN_02 + HEX_AGR_GEN_03 + HEX_AGR_GEN_04
+HEX_AGR_FLX =~ HEX_AGR_FLX_01 + HEX_AGR_FLX_02 + HEX_AGR_FLX_03 + HEX_AGR_FLX_04
+HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_AGR_PAT_04
+
+HEX_CNS =~ HEX_CNS_ORG + HEX_CNS_DIL + HEX_CNS_PER + HEX_CNS_PRU
+HEX_CNS_ORG =~ HEX_CNS_ORG_01 + HEX_CNS_ORG_02 + HEX_CNS_ORG_03 + HEX_CNS_ORG_04
+HEX_CNS_DIL =~ HEX_CNS_DIL_01 + HEX_CNS_DIL_02 + HEX_CNS_DIL_03 + HEX_CNS_DIL_04
+HEX_CNS_PER =~ HEX_CNS_PER_01 + HEX_CNS_PER_02 + HEX_CNS_PER_03 + HEX_CNS_PER_04
+HEX_CNS_PRU =~ HEX_CNS_PRU_01 + HEX_CNS_PRU_02 + HEX_CNS_PRU_03 + HEX_CNS_PRU_04
+
+HEX_OPN =~ HEX_OPN_AES + HEX_OPN_INQ + HEX_OPN_CRE + HEX_OPN_UNC
+HEX_OPN_AES =~ HEX_OPN_AES_01 + HEX_OPN_AES_02 + HEX_OPN_AES_03 + HEX_OPN_AES_04
+HEX_OPN_INQ =~ HEX_OPN_INQ_01 + HEX_OPN_INQ_02 + HEX_OPN_INQ_03 + HEX_OPN_INQ_04
+HEX_OPN_CRE =~ HEX_OPN_CRE_01 + HEX_OPN_CRE_02 + HEX_OPN_CRE_03 + HEX_OPN_CRE_04
+HEX_OPN_UNC =~ HEX_OPN_UNC_01 + HEX_OPN_UNC_02 + HEX_OPN_UNC_03 + HEX_OPN_UNC_04
+
+NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04
+NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04
+NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04
+NFP_CNC =~ NFP_CNC_01 + NFP_CNC_02 + NFP_CNC_03 + NFP_CNC_04
+NFP_SPA =~ NFP_SPA_01 + NFP_SPA_02 + NFP_SPA_03 + NFP_SPA_04
+NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04
+NFP_INT =~ NFP_INT_01 + NFP_INT_02 + NFP_INT_03 + NFP_INT_04
+NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04
+NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04
+NFP_GEN =~ NFP_GEN_01 + NFP_GEN_02 + NFP_GEN_03 + NFP_GEN_04
+"
+fit_dim <- sem(model_dim, d, estimator = "ML", fixed.x = TRUE)
+summary(fit_dim, standardized = TRUE)
+
+# extract results
+d_dim <- 
+  standardizedsolution(fit_dim, ci = TRUE, level = .90) %>% 
+  as.data.frame() %>% 
+  filter(op == "~~", lhs %in% vars_pers_dim, rhs %in% vars_pri)
+
+fig_dim <- ggplot(d_dim, aes(x = est.std, y = lhs)) +
+  geom_point() +
+  geom_errorbarh(aes(xmin = ci.lower, xmax = ci.upper)) +
+  facet_wrap(vars(rhs), nrow = 1)
+
+# tab_results <- data.frame(
+#   tab_results_raw[1 : length(vars_pers_dim), ]$std.all,
+#   tab_results_raw[(1 * length(vars_pers_dim) + 1) : (length(vars_pers_dim) * 2), ]$std.all,
+#   tab_results_raw[(2 * length(vars_pers_dim) + 1) : (length(vars_pers_dim) * 3), ]$std.all,
+#   tab_results_raw[(3 * length(vars_pers_dim) + 1) : (length(vars_pers_dim) * 4), ]$std.all,
+#   tab_results_raw[(4 * length(vars_pers_dim) + 1) : (length(vars_pers_dim) * 5), ]$std.all,
+#   tab_results_raw[(5 * length(vars_pers_dim) + 1) : (length(vars_pers_dim) * 6), ]$std.all,
+#   tab_results_raw[(6 * length(vars_pers_dim) + 1) : (length(vars_pers_dim) * 7), ]$std.all,
+#   tab_results_raw[(7 * length(vars_pers_dim) + 1) : (length(vars_pers_dim) * 8), ]$std.all,
+#   tab_results_raw[(8 * length(vars_pers_dim) + 1) : (length(vars_pers_dim) * 9), ]$std.all,
+#   tab_results_raw[(9 * length(vars_pers_dim) + 1) : (length(vars_pers_dim) * 10), ]$std.all
+# )
+# names(tab_results) <- vars_pri
+# rownames(tab_results) <- vars_pers_dim
+```
+
+## SES
+
+```{r}
+model_ses <- "
+age =~ AGE
+gender =~ GEN
+ethnicity =~ ETH
+relationship =~ REL_
+college =~ COL_
+income =~ INC
+conservatism =~ CON
+NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04
+NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04
+NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04
+NFP_CNC =~ NFP_CNC_01 + NFP_CNC_02 + NFP_CNC_03 + NFP_CNC_04
+NFP_SPA =~ NFP_SPA_01 + NFP_SPA_02 + NFP_SPA_03 + NFP_SPA_04
+NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04
+NFP_INT =~ NFP_INT_01 + NFP_INT_02 + NFP_INT_03 + NFP_INT_04
+NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04
+NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04
+NFP_GEN =~ NFP_GEN_01 + NFP_GEN_02 + NFP_GEN_03 + NFP_GEN_04
+"
+fit_ses <- sem(model_ses, d, estimator = "ML", fixed.x = TRUE)
+summary(fit_ses, standardized = TRUE)
+
+# extract results
+d_ses <- 
+  standardizedsolution(fit_ses, ci = TRUE, level = .90) %>% 
+  as.data.frame() %>% 
+  filter(op == "~~", lhs %in% vars_ses, rhs %in% vars_pri)
+
+fig_ses <- ggplot(d_ses, aes(x = est.std, y = lhs)) +
+  geom_point() +
+  geom_errorbarh(aes(xmin = ci.lower, xmax = ci.upper)) +
+  facet_wrap(vars(rhs), nrow = 1)
+
+# tab_results <- data.frame(
+#   tab_results_raw[1 : length(vars_ses), ]$std.all,
+#   tab_results_raw[(1 * length(vars_ses) + 1) : (length(vars_ses) * 2), ]$std.all,
+#   tab_results_raw[(2 * length(vars_ses) + 1) : (length(vars_ses) * 3), ]$std.all,
+#   tab_results_raw[(3 * length(vars_ses) + 1) : (length(vars_ses) * 4), ]$std.all,
+#   tab_results_raw[(4 * length(vars_ses) + 1) : (length(vars_ses) * 5), ]$std.all,
+#   tab_results_raw[(5 * length(vars_ses) + 1) : (length(vars_ses) * 6), ]$std.all,
+#   tab_results_raw[(6 * length(vars_ses) + 1) : (length(vars_ses) * 7), ]$std.all,
+#   tab_results_raw[(7 * length(vars_ses) + 1) : (length(vars_ses) * 8), ]$std.all,
+#   tab_results_raw[(8 * length(vars_ses) + 1) : (length(vars_ses) * 9), ]$std.all,
+#   tab_results_raw[(9 * length(vars_ses) + 1) : (length(vars_ses) * 10), ]$std.all
+# )
+# names(tab_results) <- vars_pri
+# rownames(tab_results) <- vars_ses
+```
+
+```{r}
+save.image("data/workspace.RData")
+```

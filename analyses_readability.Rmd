@@ -1,0 +1,305 @@
+---
+title: "Readability analyses of items"
+output:
+  html_document:
+    toc: TRUE
+    toc_float:
+      collapsed: FALSE
+    toc_depth: 2
+    code_folding: hide
+bibliography      : 
+  - "bibliography/r-references.bib"
+  - "bibliography/references.bib"
+  # pdf_document:
+  #   toc: TRUE
+---
+
+```{r knitr-setup, include=F}
+set.seed(170819)
+knitr::opts_chunk$set(warning=F, echo=F, error=F, message=F, cache = T, 
+                      tidy=T, dev = 'pdf', cache.extra = knitr::rand_seed)
+options(digits = 3, width = 90)
+```
+
+```{r r-setup, include=F}
+# install packages
+# devtools::install_github("https://github.com/tdienlin/td")
+
+# define packages
+packages <- c("corrplot", "devtools", "GGally", "ggplot2", "haven", "kableExtra", "knitr", 
+              "lavaan", "magrittr", "mice", "MVN", "PerFit", "psych", "quanteda.textstats",
+              "pwr", "semPlot", "semTools", "tidyverse", "td")
+
+# load packages
+lapply(packages, library, character.only = TRUE)
+
+# readability function
+readability = function(data){
+  reading_estimates <- c("Flesch.Kincaid", "FOG", "Coleman.Liau.short", "Dale.Chall.PSK")
+  textstat_readability(data, measure = reading_estimates) %>% 
+    as.data.frame %>% 
+    mutate(average = rowMeans(select(., -document)))
+}
+```
+
+```{r data-wrangling}
+d <- read_spss("data/Need+for+Privacy_August+16%2C+2021_15.33.sav")
+```
+
+Below, we develop several new items for need for privacy. To validate items, we follow the procedure implemented by @patalayAssessingReadabilitySelfreported2018 and calculate the following four reading scores: Flesch–Kincaid reading grade (FK), Gunning Fog Index (GFI), Coleman Liau Index (CLI), and the Powers-Sumner-Kearl Variation of the Dale and Chall Readability formula (DC).
+
+To have a benchmark, we calculated the readability of the HEXACO items. It was as follows:
+
+```{r}
+items_hexaco <- c(
+  "If I want something from a person I dislike, I will act very nicely toward that person in order to get it.", 
+ "I wouldn't use flattery to get a raise or promotion at work, even if I thought it would succeed.", 
+ "If I want something from someone, I will laugh at that person's worst jokes.", 
+ "I wouldn't pretend to like someone just to get that person to do favors for me.", 
+ "If I knew that I could never get caught, I would be willing to steal a million dollars.", 
+ "I would be tempted to buy stolen property if I were financially tight.", 
+ "I would never accept a bribe, even if it were very large.", 
+ "I’d be tempted to use counterfeit money, if I were sure I could get away with it.", 
+ "Having a lot of money is not especially important to me.", 
+ "I would like to live in a very expensive, high-class neighborhood.", 
+ "I would like to be seen driving around in a very expensive car.", 
+ "I would get a lot of pleasure from owning expensive luxury goods.", 
+ "I am an ordinary person who is no better than others.", 
+ "I wouldn’t want people to treat me as though I were superior to them.", 
+ "I think that I am entitled to more respect than the average person is.", 
+ "I want people to know that I am an important person of high status.", 
+ "I would feel afraid if I had to travel in bad weather conditions.", 
+ "I don’t mind doing jobs that involve dangerous work.", 
+ "When it comes to physical danger, I am very fearful.", 
+ "Even in an emergency I wouldn't feel like panicking.", 
+ "I sometimes can't help worrying about little things.", 
+ "I worry a lot less than most people do.", 
+ "I rarely, if ever, have trouble sleeping due to stress or anxiety.", 
+ "I get very anxious when waiting to hear about an important decision.", 
+ "When I suffer from a painful experience, I need someone to make me feel comfortable.", 
+ "I can handle difficult situations without needing emotional support from anyone else.", 
+ "Whenever I feel worried about something, I want to share my concern with another person.", 
+ "I rarely discuss my problems with other people.", 
+ "I feel like crying when I see other people crying.", 
+ "When someone I know well is unhappy, I can almost feel that person's pain myself.", 
+ "I feel strong emotions when someone close to me is going away for a long time.", 
+ "I remain unemotional even in situations where most people get very sentimental.", 
+ "I feel reasonably satisfied with myself overall.", 
+ "I think that most people like some aspects of my personality.", 
+ "I feel that I am an unpopular person.", 
+ "Even in an emergency I wouldn't feel like panicking.", 
+ "I rarely express my opinions in group meetings.", 
+ "In social situations, I'm usually the one who makes the first move.", 
+ "When I'm in a group of people, I'm often the one who speaks on behalf of the group.", 
+ "I tend to feel quite self-conscious when speaking in front of a group of people.", 
+ "I avoid making 'small talk' with people.", 
+ "I enjoy having lots of people around to talk with.", 
+ "I prefer jobs that involve active social interaction to those that involve working alone.", 
+ "The first thing that I always do in a new place is to make friends.", 
+ "I am energetic nearly all the time.", 
+ "On most days, I feel cheerful and optimistic.", 
+ "People often tell me that I should try to cheer up.", 
+ "Most people are more upbeat and dynamic than I generally am.", 
+ "I rarely hold a grudge, even against people who have badly wronged me.", 
+ "My attitude toward people who have treated me badly is 'forgive and forget'.", 
+ "If someone has cheated me once, I will always feel suspicious of that person.", 
+ "I find it hard to fully forgive someone who has done something mean to me.", 
+ "People sometimes tell me that I am too critical of others.", 
+ "I generally accept people’s faults without complaining about them.", 
+ "I tend to be lenient in judging other people.", 
+ "Even when people make a lot of mistakes, I rarely say anything negative.", 
+ "People sometimes tell me that I'm too stubborn.", 
+ "I am usually quite flexible in my opinions when people disagree with me.", 
+ "When people tell me that I’m wrong, my first reaction is to argue with them.", 
+ "I find it hard to compromise with people when I really think I’m right.", 
+ "People think of me as someone who has a quick temper.", 
+ "I rarely feel anger, even when people treat me quite badly.", 
+ "Most people tend to get angry more quickly than I do.", 
+ "I find it hard to keep my temper when people insult me.", 
+ "I clean my office or home quite frequently.", 
+ "I plan ahead and organize things, to avoid scrambling at the last minute.", 
+ "People often joke with me about the messiness of my room or desk.", 
+ "When working, I sometimes have difficulties due to being disorganized.", 
+ "When working, I often set ambitious goals for myself.", 
+ "I often push myself very hard when trying to achieve a goal.", 
+ "Often when I set a goal, I end up quitting without having reached it.", 
+ "I do only the minimum amount of work needed to get by.", 
+ "I often check my work over repeatedly to find any mistakes.", 
+ "When working on something, I don't pay much attention to small details.", 
+ "I always try to be accurate in my work, even at the expense of time.", 
+ "People often call me a perfectionist.", 
+ "I make decisions based on the feeling of the moment rather than on careful thought.", 
+ "I make a lot of mistakes because I don't think before I act.", 
+ "I don’t allow my impulses to govern my behavior.", 
+ "I prefer to do whatever comes to mind, rather than stick to a plan.", 
+ "I would be quite bored by a visit to an art gallery.", 
+ "I wouldn't spend my time reading a book of poetry.", 
+ "If I had the opportunity, I would like to attend a classical music concert.", 
+ "Sometimes I like to just watch the wind as it blows through the trees.", 
+ "I'm interested in learning about the history and politics of other countries.", 
+ "I enjoy looking at maps of different places.", 
+ "I would be very bored by a book about the history of science and technology.", 
+ "I’ve never really enjoyed looking through an encyclopedia.", 
+ "I would like a job that requires following a routine rather than being creative.", 
+ "I would enjoy creating a work of art, such as a novel, a song, or a painting.", 
+ "People have often told me that I have a good imagination.", 
+ "I don't think of myself as the artistic or creative type.", 
+ "I think that paying attention to radical ideas is a waste of time.", 
+ "I like people who have unconventional views.", 
+ "I think of myself as a somewhat eccentric person.", 
+ "I find it boring to discuss philosophy.", 
+ "I have sympathy for people who are less fortunate than I am.", 
+ "I try to give generously to those in need.", 
+ "It wouldn’t bother me to harm someone I didn’t like.", 
+ "People see me as a hard-hearted person."
+)
+readability_hexaco <- readability(items_hexaco)
+readability_hexaco <- colMeans(select(readability_hexaco, -document))
+readability_hexaco <- data.frame(document = "HEXACO", as.list(readability_hexaco))
+readability_hexaco
+```
+
+Readability was good. The results means that, on average, understanding the items requires seven years of schooling.
+
+# Privacy from Government
+
+ - I need government agencies to respect my privacy, even if that hinders a greater societal cause, such as catching criminals.
+ - I don’t want the government to gather information about me, even if that makes it more difficult for them to spend tax income efficiently.
+ - I don’t want government agencies to monitor my personal communication, even if doing so prevents future terrorist attacks.
+ - I feel I need to protect my privacy from government agencies. 
+
+```{r}
+items_old <- c(
+ "I need government agencies to respect my privacy, even if that hinders a greater societal cause, such as catching criminals.",
+ "I don’t want the government to gather information about me, even if that makes it more difficult for them to spend tax income efficiently.",
+ "I don’t want government agencies to monitor my personal communication, even if doing so prevents future terrorist attacks.",
+ "I feel I need to protect my privacy from government agencies."
+)
+readability(items_old) %>% rbind(readability_hexaco)
+```
+
+Items 1, 2 and 3 show rather high scores. Try to formulate easier.
+
+New items:
+
+ - I need government agencies to respect my privacy, even if that makes catching criminals harder.,
+ - I don’t want the government to gather data about me, even if that makes it harder to spend tax income efficiently.,
+ - I don’t want government agencies to monitor my communication, even if that prevents terrorist attacks.,
+ - I feel I need to protect my privacy from government agencies.
+  
+```{r}
+items_new <- c(
+ "I need government agencies to respect my privacy, even if that makes catching criminals harder.",
+ "I don’t want the government to gather data about me, even if that makes it harder to spend tax income efficiently.",
+  "I don’t want government agencies to track my communication, even if that stops terrorist attacks.",
+  "I feel I need to protect my privacy from government agencies."
+)
+readability(items_new) %>% rbind(readability_hexaco)
+```
+
+A bit better, but not much.
+
+```{r}
+model <- "NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04"
+```
+
+# Privacy from other People
+
+ - My need for privacy is so strong that it prevents me from using social media actively. 
+ - I don’t feel I need to tell my friends all my secrets.
+ - I feel I need to protect my privacy from other people.
+ - I prefer it when others don’t know much about me.
+ 
+```{r}
+items <- c(
+ "My need for privacy is so strong that it prevents me from using social media actively.",
+ "I don’t feel I need to tell my friends all my secrets.",
+ "I feel I need to protect my privacy from other people.",
+ "I prefer it when others don’t know much about me."
+)
+readability(items) %>% rbind(readability_hexaco)
+```
+
+Readability looks good!
+
+```{r}
+model <- "NFP_INT =~ NFP_INT_01 + NFP_INT_02 + NFP_INT_03 + NFP_INT_04"
+```
+
+# Privacy need anonymity
+
+ - I need to be able to use a fake account on social network sites to preserve my privacy. 
+ - I feel I need to avoid places with video surveillance.
+ - I prefer not to carry my drivers license or ID with me all the time to preserve my privacy.
+ - I need to be able to surf the Internet anonymously. (new)
+ 
+```{r}
+items <- c(
+ "I need to be able to use a fake account on social network sites to preserve my privacy.",
+ "I feel I need to avoid places with video surveillance.",
+ "I prefer not to carry my drivers license or ID with me all the time to preserve my privacy.",
+ "I need to be able to surf the Internet anonymously."
+)
+readability(items) %>% rbind(readability_hexaco)
+```
+
+Readability looks good!
+
+```{r}
+model <- "NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04"
+```
+
+
+# Privacy from Companies
+
+ - I’m willing to pay more for products or services so that companies don’t have to sell my data.
+ - I’m happy to give up a little bit of privacy, so that I can use certain apps or services for free.
+ - I don’t want companies to gather information about me, even if that reduces the quality of their services.
+ - I feel I need to protect my privacy from companies.
+
+```{r}
+items <- c(
+ "I’m willing to pay more for products or services so that companies don’t have to sell my data.",
+ "I’m happy to give up a little bit of privacy, so that I can use certain apps or services for free.",
+ "I don’t want companies to collect data about me, even if that makes their services worse.",
+ "I feel I need to protect my privacy from companies."
+)
+readability(items) %>% rbind(readability_hexaco)
+```
+
+Items 3 seems to be a bit too difficult. Try to make easier.
+
+```{r}
+items <- c(
+ "I’m willing to pay more for products or services so that companies don’t have to sell my data.",
+ "I’m happy to give up a little bit of privacy, so that I can use certain apps or services for free.",
+ "I don’t want companies to gather information about me, even if that lowers the quality of their services.",
+ "I feel I need to protect my privacy from companies."
+)
+readability(items) %>% rbind(readability_hexaco)
+```
+
+Readability now much better.
+
+```{r}
+model <- "NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04"
+```
+
+# General Need for privacy
+
+ - I need a lot of privacy.
+ - Privacy is very important to me.
+ - I think a lot about how I can protect my privacy.
+ - I need a lot of time for myself.
+
+```{r}
+items <- c(
+  "I need a lot of privacy.",
+  "Privacy is very important to me.",
+  "I think a lot about how I can protect my privacy.",
+  "I need a lot of time for myself."
+)
+readability(items) %>% rbind(readability_hexaco)
+```
+
+Readability was good.

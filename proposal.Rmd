@@ -1,0 +1,340 @@
+---
+title             : "Who Needs Privacy? Exploring the relation between personality and need for privacy"
+shorttitle        : "Who Needs Privacy?"
+
+author: 
+  - name          : "Tobias Dienlin"
+    affiliation   : "1"
+    corresponding : yes
+    address       : "University of Vienna, Department of Communication, 1090 Vienna, Austria"
+    email         : "tobias.dienlin@univie.ac.at"
+  - name          : "Miriam Metzger"
+    affiliation   : "2"
+    email         : "metzger@ucsb.edu"
+
+affiliation:
+  - id            : "1"
+    institution   : "University of Vienna"
+  - id            : "2"
+    institution   : "University of California Santa Barbara"
+
+authornote: |
+  Tobias Dienlin, Department of Communication, University of Vienna, Germany; Miriam Metzger, Department of Communication, University of California, Santa Barbara, United States of America.
+
+  Competing Interests: Both authors declare no competing interests.
+  
+  Data Accessibility Statement: All the stimuli, presentation materials, participant data, analysis scripts, and a reproducible version of the manuscript can be found or will be shared as online supplementary material on the open science framework (https://osf.io/7ncpk/).
+  
+  Funding Information: During the conception and data collection of the prestudy, TD was funded by The German Academic Scholarship Foundation (German: Studienstiftung des deutschen Volkes), which financially supported a research stay at UCSB. During some time working on the article and while at University of Hohenheim, TD was funded by the Volkswagen Foundation (German: Volkswagenstiftung), grant "Transformations of Privacy". TD is now funded by a regular and not-tenured assistant professorship at University of Vienna. MM is funded by a regular and tenured full professorship at UCSB.
+
+# In addition, we invite everyone to suggest changes and improvements to the manuscript via our github (https://github.com/tdienlin/need_for_privacy/).
+
+# Author contribution: conception and design: TD, MM; acquisition of data: MM, TD; code: TD; analysis and interpretation of data: TD, MM; First draft: TD; Revisions & Comments: TD & MM
+
+abstract          : "Privacy is an important societal topic. Living in an information age, people constantly have to decide what information to share, which service to use, or when to communicate. All these decisions are reflective of and determined by the users' need for privacy. It is relevant to understand who needs more and who needs less privacy, because desiring privacy often requires justification. For example, well-known statements such as 'who has nothing to hide has nothing to fear' imply that people who desire privacy are suspicious. Although such suspicions might be justified in some cases, it could also be that people desiring more privacy are just more introverted, anxious, creative, or prudent. In this study we, hence, plan to explore the relation between personality and the need for privacy. Personality factors and facets will be operationalized using the HEXACO personality inventory. Need for privacy will be captured with a multidimensional approach, including informational and social privacy, need for privacy from government agencies, or need fro privacy from companies. Adopting an exploratory analytical framework, we will collect a sample of more than 800 respondents representative of the US in terms of age, gender, and ethnicity. The relations between personality and privacy will be explored using structural equation modeling. Potential implications will be discussed."
+keywords          : "Privacy, need for privacy, personality, HEXACO, structural equation modeling"
+
+bibliography      : 
+  - "bibliography/r-references.bib"
+  - "bibliography/references.bib"
+
+floatsintext      : yes
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+# output            : papaja::apa6_word
+header-includes:
+  - \setlength{\parskip}{0em}
+  - \raggedbottom
+  - \note{\clearpage}
+---
+
+```{r analysis-preferences, include=F}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed,
+                      fig.pos = 'h')
+```
+
+```{r setup, include=F}
+# devtools::install_github("tdienlin/td@v.0.0.2.5")  # uncomment to install
+packages <- c("devtools", "english", "ggplot2", "kableExtra", "lavaan", 
+              "magrittr", "papaja", "semPlot", "td", "tidyverse")
+lapply(packages, library, character.only = TRUE)
+load("data/workspace.RData")
+
+# export references
+r_refs(file = "bibliography/r-references.bib")
+```
+
+In light of the increasing digitization of everyday life, which has led to several sweeping societal changes such as the commodification and monetization of personal information [@sevignaniPrivacyCapitalismAge2016], privacy has become a major topic of public and academic interest. 
+Despite the topic's importance, to date we still know surprisingly little about the relation between privacy and personality [@masurSituationalPrivacySelfdisclosure2018, p. 155]. 
+Why do some people feel they need or desire more privacy than others do, and how do these people differ from one another? 
+
+We believe it is relevant to understand better this research questions, because people who desire privacy are often confronted to justify their need for privacy. 
+For example, well-known statements such as 'who has nothing to hide has nothing to fear' imply that people who desire privacy are suspicious.
+Indeed, it is only logical that people who commit crimes and who are insincere in fact benefit from more privacy.
+However, it could also be that people desiring more privacy are just more introverted, anxious, creative, or prudent. 
+We therefore believe that a better understanding of the relation between personality and privacy is relevant. 
+Also from an academic perspective, several theories argue that personality determines privacy behaviors [@masurSituationalPrivacySelfdisclosure2018, p. 155]
+However, to date there is almost no empirical research that can be used to deduce well-informed hypotheses. 
+As a result, the main question of this paper is: 
+What are personality factors and facets that best explain peoples' felt need for privacy?
+
+## The Need for Privacy
+
+Because orivacy as a theoretical concept is complicated and contested [@nissenbaumPrivacyContextTechnology2010, p. 71], we first outline our own understanding of privacy. 
+First and foremost, privacy captures the extent of (a) _voluntary_ (b) _withdrawal_ from others or from society in general [@westinPrivacyFreedom1967]. 
+Several models suggest that privacy is multi-dimensional. 
+For example, in a theory-driven treatise [@burgoonPrivacyCommunication1982] argued that privacy has four dimensions: informational, social, psychological, and physical privacy. 
+[@pedersenDimensionsPrivacy1979], by contrast, conducted an empirical factor analysis initially starting with 94 items and found that privacy exists on six dimensions: 
+reserve, isolation, solitude, intimacy with friends, intimacy with family, and anonymity. 
+Next, [@schwartzSocialPsychologyPrivacy1968] or [@masurPrivatheitOnlineKommunikation2018] differentiated between horizontal and vertical privacy; whereas horizontal privacy captures withdrawal from peers, vertical privacy addresses withdrawal from superiors or institutions (e.g., government agencies or business companies). 
+The need for privacy, then, captures "[a]n individual’s need to selectively control the access of others to the individual self with the aim of achieving a desired level of physical or psychological privacy [...]") [@trepteNeedPrivacy2017, p.1]. 
+<!-- Finally, one can also distinguish between the objective privacy context (e.g., how many users can actually read a post on an SNS?), subjective privacy perceptions (e.g., how many users people _think_ can read a post on an SNS?), and resulting privacy behaviors (e.g., how much do people self-disclose?) [@dienlinPrivacyProcessModel2014]. -->
+
+For the purpose of this study, we will hence employ a multifaceted model of need for privacy.
+We fill focus on (a) vertical privacy with regard to people's felt need for withdrawal from government surveillance and private companies, (b) horizontal privacy in terms of the perceived need for withdrawal from other people, psychological and physical privacy, and (c) both horizontal and vertical privacy as captured by people's felt need for informational privacy, anonymity, and privacy in general.
+
+<!-- In order to guide the selection of personality dimensions that might explain need for privacy best, it is useful to determine why people actually feel they need privacy.  -->
+According to @trepteNeedPrivacy2017, the need for privacy is a secondary need---it is not an end in itself, but rather a way to satisfy other more fundamental needs such as safety, sexuality, recovery, or contemplation.
+Specifically, [@westinPrivacyFreedom1967] defined four ultimate purposes of privacy: (1) self-development (i.e., the integration of experiences into meaningful patterns), (2) autonomy (i.e., the desire to avoid being manipulated and dominated), (3) emotional release (i.e., the release of tension from social role demands), and (4) protected communication (i.e., the ability to foster intimate relationships). 
+Not least, privacy facilitates self-disclosure [@dienlinPrivacyProcessModel2014], which is necessary for attaining social support, initiating relationships, and getting close to other people [@omarzuDisclosureDecisionModel2000].
+
+On the other hand, however, privacy also has negative aspects. 
+For example, it can be problematic if there is too much privacy.
+Human beings are inherently social, and being overly cut-off from others can diminish flourishing, nurture deviant behavior, or introduce power asymmetries [@altmanEnvironmentSocialBehavior1975]. 
+The fact that privacy fosters self-disclosure presents also a potential risk, because others might disagree, disapprove, or misuse the information in other contexts [@petronioCommunicationPrivacyManagement2010]. 
+Privacy can also help conceal power-asymmetries, wrongdoing, or violence and other crimes. 
+The dialectical tension between the positive and negative aspects of privacy likely causes variability across individuals in their need for privacy. 
+
+## Predicting the Need for Privacy
+
+What role does personality play in determining individual-level variations in need for privacy?
+So far, not a lot of studies have analyzed this question explicitly.
+We are aware of only two studies that conducted an empirical analysis [pedersenPersonalityCorrelatesPrivacy1982, @hosmanRelationshipsNeedPrivacy1991].
+And as there is no established theory connecting privacy and personality, it is difficult to deduce precise and well-informed hypotheses. 
+As a result, in this study we adopt an exploratory perspective.
+Not to miss potentially relevant personality factors and facets, we will adopt a large-scale perspective on personality.
+
+To this end, we build on the HEXACO inventory of personality [@leePsychometricPropertiesHEXACO1002018], which is in the tradition of Big Five approach [@johnBigFiveTrait1999] and which represents a broad understanding of personality.
+The HEXACO inventory measures overall six factors (see below), which each have four more specific facets. 
+Including the facets seems helpful because we do not expect that need for privacy will relate closely to the overarching factors.
+(For example, consider that privacy concerns, a variable conceptually close to need for privacy, shows only small relations with the Big Five factors [@bansalImpactPersonalDispositions2010; @junglasPersonalityTraitsConcern2008].)
+Hence, in order to increase precision we follow Paunonen's [-@paunonenBigFiveFactors2001] advice and include also specific personality facets.
+Notably, in addition to the Big Five the HEXACO model includes a sixth factor labeled Honesty Humility plus a facet labeled Altruism, which seem promising to investigate the nothing to hide argument. 
+We chose 
+<!-- To illustrate, instead of dwelling on the general factor of _Extraversion_, we instead focused on the facet _Gregariousness_, which we consider to be more pertinent.  -->
+In what follows, we briefly present all factors and outline how they and selected facets might relate to privacy.
+
+<!-- The rationales that we outline below should hence be considered tentative suggestions toward a theory of personality and privacy. Also, please note that we elaborate only on those dimensions of need for privacy for which plausible rationales could be formed. -->
+
+Our reasoning further was guided by another central theoretical tenet. 
+As suggested above, privacy can be either positive or negative. 
+Similarly, other people, the government, and anonymity can be considered either a _resource_ or a _threat_. 
+Having information about a person's personality can inform us whether he or she is more likely to think of others as a resource or a threat. 
+It follows that if other people are considered a threat it seems to be more likely that a person will desire more privacy from others, and vice versa [@altmanPrivacyConceptualAnalysis1976].
+
+### Honesty-Humility
+
+More controversially, it has been argued by some that people need privacy because they have something to hide. 
+The so-called nothing-to-hide argument states that “If you have nothing to hide, you have nothing to fear.” 
+As described by Solove, the nothing-to-hide argument says that data mining and surveillance by government entities “is not likely to be threatening to the privacy of law-abiding citizens. 
+Only those who are engaged in illegal activities have a reason to hide this information” [@Solove.2007, p. 753]. 
+Hence, another potential predictor of why people need privacy could also be a so-called "lack" of integrity. 
+
+Because integrity is a delicate concept, let us first try to define it conceptually. 
+Although in terms of a scientific definition there is no consensus, most scholars seem to agree that integrity “incorporates a tendency to comply with social norms, avoid deviant behavior, and embrace a sense of justice, truthfulness, and fairness” [@Connelly.2006, p. 82]. 
+In order to sidestep the (very legitimate) philosophical debates about what constitutes integrity and what not, we hence follow @Paunonen.2002 and adopt a lowest common denominator definition, which means that we only consider participating in explicitly socially-sanctioned or illegal activities as a sign of lack of integrity.
+
+It is possible to think of theoretical arguments for why lack of integrity might correlate positively with a person's felt need for privacy. 
+People who actually commit crimes may face even greater risk from self-disclosure compared to others, because government agencies and people would surely disapprove of their activities [@Petronio.2010]. 
+Hence, the government and other people are more likely to be perceived as a threat, which should render anonymity  a resource. 
+As a consequence, people with lower integrity might desire more privacy as a means to mitigate their felt risk [@altmanPrivacyConceptualAnalysis1976].
+
+There are also a few empirical studies that imply---at least indirectly---a relation between privacy and integrity. 
+For example, studies have found that surveillance can reduce cheating behaviors [@Corcoran.1987; @Covey.1989]. 
+@Covey.1989 for example asked students to solve an impossible maze. 
+In the high surveillance condition, the experimenter stood in front of the students and closely monitored their behavior. 
+In the low surveillance condition, the experimenter remained behind the students where he or she could not see the students. 
+Results showed greater cheating among students in the low surveillance condition, suggesting that in situations with less privacy, people show more integrity (i.e., fewer cheating behaviors). 
+Next, in a longitudinal sample with 457 respondents in Germany [@Trepte.2013a], people who felt they needed more privacy were also less authentic on their online social network profiles (_r_ = -.48) and less authentic in their personal relationships (_r_ = -.28). 
+Given the argument that authenticity is a subset of integrity [@Sheldon.2004], one could hence also reason that the concept of integrity might relate to a person’s perceived need for privacy. 
+Somewhat related, it has been found that people who are more agreeable are also moderately less concerned about their privacy [@Junglas.2008]. 
+Finally, @pedersenPersonalityCorrelatesPrivacy1982 showed that three dimensions of need for privacy relate to self-esteem: 
+Respondents who held a lower self-esteem were more reserved (_r_ = .29), needed more anonymity (_r_ = .21), and preferred solitude (_r_ = .24). 
+While self-esteem and integrity are distinct concepts, Pedersen’s specific operationalization of self-esteem integrated several aspects of integrity by using items such as moral, nice, fair, unselfish, good, honest, and reputable (p. 12).
+
+In conclusion, we could imagine that lack of integrity may indeed relate to an increased felt need for privacy from government surveillance, as governments have the legitimate power to prosecute illegal activities. 
+Next, it seems plausible that lack of integrity may relate to an increased need for anonymity, as anonymity makes it more difficult for both government and social agents to identify and address potential wrongdoers. 
+Finally, lack of integrity may also relate to an increased need for privacy from other people, as most other people will disapprove of immoral or illegal activities, and could even reveal those activities to authorities.
+
+### Emotionality
+
+Next, it seems possible that the need for privacy is also related to people's level of general anxiety [which is a subdimension of neuroticism, @Costa.1992b]. 
+General anxiety measures for example whether people are afraid of negative events or whether they are easily frightened. 
+With regard to interpersonal privacy, one could argue that people who are anxious are more likely to feel that social interactions pose a greater risk and threat [especially with strangers or weak ties; @Granovetter.1973], which is why anxious people might desire more privacy. 
+Somewhat related, prior empirical research has shown that people who are more concerned about their privacy are also more likely to withdraw online, for example by deleting posts or untagging themselves from linked content [@Dienlin.2016a]. 
+On the other hand, one could argue in favor of the opposite: People who are more anxious may desire _less_ privacy from others (especially their strong ties), as a means to cope better with their daily challenges.
+
+Concerning the need for privacy from government surveillance, we could imagine that people who are more anxious desire less privacy. 
+Despite the fact that only 18% of all Americans trust their government "to do what is right" [@PewResearchCenter.2017], almost everyone agrees that "it's the government's job to keep the country safe," with most people also being satisfied with the government's job [@PewResearchCenter.2015c]. 
+Hence, for anxious individuals, the government might be seen as a resource rather than a threat. 
+It therefore seems plausible that people who are in general more anxious are also more likely to consent to government surveillance, given that such surveillance promises to prevent crime or to reduce the likelihood of terrorist attacks [@Greenwald.2013], implying that people who are more anxious might desire less privacy from government surveillance and, for the same reasons, also less anonymity.
+
+### Extraversion
+
+First, we argue that need for privacy should be closely related to a person's sociability or gregariousness [which is a subdimension of extraversion, @Costa.1992b]. 
+Sociability captures whether people prefer to spend their time alone or with company. 
+It seems plausible that people who are more sociable are also more likely to think of other people as a resource, which is why they should generally desire less interpersonal privacy and less anonymity [e.g., @Buss.2001]. 
+Put differently, given that privacy is a voluntary withdrawal from society [@westinPrivacyFreedom1967], we expect that people who are less sociable, more reserved, or more shy should have a greater need for privacy from others. 
+
+This rationale is supported by several empirical studies: 
+People who score higher on the personality meta-factor _plasticity_, which is a composite of the two personality factors extraversion and openness, have been shown to desire less privacy [@Morton.2013]; people who describe themselves as introverted thinkers are more likely to prefer social isolation [@pedersenPersonalityCorrelatesPrivacy1982]; and introverted people are more likely to report invasions of privacy [@Stone.1986].
+
+### Agreeableness
+
+### Openness to Experience
+
+Similarly, it could be that an individual's felt need for privacy is related to a general tendency to avoid risks, to deliberate, and to plan carefully [deliberation is a subdimension of conscientiousness, @Costa.1992b]. 
+Risk avoidance captures the degree to which people prefer to abstain from taking risks. 
+If other people are considered a threat, people who are risk averse should desire more interpersonal privacy, because they may feel greater risk associated with disclosure of personal information. 
+The most cautious strategy to minimize risks of information disclosure would be, arguably, to keep as much information as possible private. 
+Somewhat related, empirical studies report that people who think that their privacy is at risk are less likely to disclose information online [e.g., @Bol.2018]. 
+Moreover, research suggests that conscientious people are slightly more concerned about their privacy [@Junglas.2008]. 
+But as above, especially with regard to privacy from government surveillance, risk averse people could also desire _less_ privacy, in order for the government to be able to avert potential threats. 
+In sum, think that it is most plausible that people who are more risk averse also desire more privacy in all three contexts measured in this study.
+
+### Traditionality
+
+Next, it seems plausible that need for privacy is also related to traditionality [which is a subdimension of openness to experience, @Costa.1992b]. 
+Traditionalism measures whether people prefer to stick with their usual routines. 
+Computers and the Internet have rendered the world increasingly knowable: 
+Social interactions, purchases, and medical treatments nowadays all produce digital traces, which can be combined into accurate latent user profiles. 
+Given that digital information is persistent, searchable, reproducible, and scalable [@boyd.2008c], this allows for unprecedented means and degrees of surveillance. 
+Mark Zuckerberg famously observed that privacy is no longer a social norm, rather the norm is that people share personal information [@Johnson.2010]. 
+Hence, in order to be part of contemporary life, it seems necessary to give up some privacy. 
+However, people may not be equally willing to pay that price, and especially people who are more traditional might decide against giving up their privacy. 
+
+Empirical research does find that older people, who are generally less open and more traditional [@Donnellan.2008], are more concerned about their privacy [@Fife.2012]. 
+On the other hand, @Junglas.2008 report that openness to experience is positively related to privacy concern, which would argue in favor of the exact opposite pattern of results. 
+Taken together, we still consider it plausible that people who are more traditional also desire more privacy in all three contexts measured in this study.
+
+### Socio-demographic variables
+
+Finally, it has often been shown that socio-demographic variables such as sex, age, and affluence can relate to the need for privacy [@Park.2015; @Tifferet.2019; @Weinberger.2017b; @Trepte.2013a]. 
+Although these variables do not specifically address our research question at hand they will be included as control variables---not least as their omission could lead to spurious results or an inflation of false positives.
+
+# Method
+
+This section describes how we determine the sample size, data exclusions, the analyses, and all measures in the study.
+
+## Sample
+
+Participants will be collected from the professional online survey panel Prolific. 
+The sample will be representative of the US regarding age, gender, and ethnicity. 
+The study received IRB approval from University of Vienna. 
+We calculated that participation will take approximately 15 minutes. 
+We paid participants were paid \$ 2.56 for participation, equaling an hourly wage of \$ 9,81. 
+
+To determine sample size, we ran a priori power analyses. 
+The final analyses will be conducted using structural equation modeling, for which exact power analyses are difficult to obtain. 
+We hence conducted power analyses using two-sided bivariate correlations. 
+Hence, power analysis are not exact but only a rough guide to determine minimum sample size. 
+
+We based our power analysis on a smallest effect size of interest. 
+We only consider effects at least as great as _r_ = .10 as sufficient support for our theoretical rationales [@cohenPowerPrimer1992]. 
+Because we adopt an exploratory perspective, we do not want to miss potentially existing effects. 
+We opted for a balanced alpha and beta error approach, because we consider both errors to be equally relevant. 
+In conclusion, in our study we assume an alpha error of 10% and a beta error of 10%, representing a power of 90%. 
+Hence, we will use two inference criteria: Effects need to show a p-value below _p_ = 10% and an effect size of at least _r_ = .10. 
+Together, power analyses revealed a minimum sample size of _N_ = `r power_n %>% round(0)`.
+
+We will individually check responses for patterns such as straight-lining or missing of inverted items, making sure to remove only clear cases. 
+We will automatically exclude participants who miss two attention checks. 
+Participants who miss one attention check will be checked carefully regarding response patterns. 
+We will remove participants if they should report ages below the minimum participation age of 18 years. 
+We will exclude respondents if they answer less than 50% of all questions. 
+The remaining missing responses will be imputed using predictive mean matching. 
+We will remove respondents with exceedingly fast responses, namely below three standard deviations of the medium response time. 
+
+## Data Analyses
+
+The factorial validity of the measures and the hypotheses will be tested with structural equation modeling (SEM). 
+If Mardia’s test shows that the assumption of multivariate normality is violated, we will use the more robust Satorra-Bentler scaled and mean-adjusted test statistic (MLM) as estimator. 
+We will test each scale in a confirmatory factor analysis. 
+To avoid overfiting the models to the data, we will use more liberal fit criteria (CFI > .90, TLI > .90, RMSEA <. .10, SRMR < .10) [@Kline.2016]. 
+If the models' fit is below the criteria, we will first inspect modification indices, potentially allowing covariance or cross-loadings if theoretically plausible. 
+If these changes do not yield sufficient fit, we will drop malfunctioning items. 
+If fit is still subpar, we will conduct exploratory factor analyses (EFA) to asssess the underlying factor structure. 
+EFAs will be run using maximum likelihood estimation and oblimin rotation [@Osborne.2004b, p. 7]. 
+If more than one dimension was revealed, we will implement bifactor model solutions.[^1] 
+Bifactor models retain a general measure of the variable, and it is not necessary to introduce novel subdimensions. 
+If no adequate bifactor model can be found, we will proceed by deleting items with low loadings on the general factor and/or the specific factors. 
+If also after deletion of individual items no bifactor solution should emerge, using a subset of the items we will extract a single factor with sufficient factorial validity.
+
+[^1]: Bifactor models implement one factor that explains the variance in all items (the so-called general factor or g-factor). 
+In addition, at least two additional factors are implemented that explain the variance in a subset of the items. The general factor and the specific factors are orthogonal. 
+Bifactor models are nested within hierarchical models. 
+For more information on bifactor models, see @Kline.2016, p. 319. 
+Note that we will not specify a bifactor model of need for privacy, because we are explicitly interested in the relations between the personality facets and the three dimensions of need for privacy.
+
+To answer our research question, we will analyze the variables' bivariate relations. 
+To assess better the variables' potential causal effect, we will also ran a multiple structural regression model. 
+Because we were interested in a complex model (overall, eight predictors and three outcomes) but the sample was comparatively small, we simplified the model. 
+To this end, instead of a fully latent structural regression model we conducted a partially latent structural regression model, in which the predictor variables were modeled as single indicators while controlling for measurement error [@Kline.2016, p. 214]. 
+To get high-quality single indicators of the predictors, we computed the average of the model predicted values / latent factor scores, which we extracted from the CFAs. 
+If the CFAs showed a unidimensional solution, we used the model predicted values for this latent factor; if the CFAs produced a multidimensional solution, we used the model predicted values for the general latent factor.
+
+Finally, combining several items into a latent factors helps to reduce and condense information, while partialing out error. 
+At the same time, and although above we explicated our analysis pipeline, this approach still maintains several researcher degrees of freedom. 
+We hence emphasize that we will adapt the models only to achieve satisfactory factorial validity and not to cherry-pick significant material. 
+To provide a broader picture, in the online supplementary material (OSM) we will also share the results of the unaltered factors and how the personality factors predicted reach need for privacy item individually.
+
+## Measures
+
+All items were answered on a 7-point Likert scale ranging from 1 (_strongly disagree_) to 7 (_strongly agree_).[^2] 
+A list of all the items that were used (including deleted ones), results of CFAs/EFAs, as well as item statistics and their distribution plots can be found or will later be reported in the OSM.
+
+[^2] Note that the HEXACO inventory normally uses 5-point scales. 
+Because we were not interested in comparing absolute values across studies, we used 7-point scales to have a uniform answer format for all items, which in addition likely increase meaningful variance.
+
+### Need for privacy
+
+Although there exist several operationalizations of need for privacy [@bussPsychologicalDimensionsSelf2001; @pedersenDimensionsPrivacy1979; @frenerDevelopmentValidationNeed2021; @marshallDimensionsPrivacyPreferences1974], we are not aware of a scale that is both encompassing and up-to-date. 
+Hence, we use both extant scales and newly developed ad-hoc scales, some of which were already pretested. 
+Ad-hoc scales were tentatively validated. 
+We (a) collected qualitative feedback from three different privacy experts, (b) tested and adapted the items using four established readability indices [i.e., Flesch–Kincaid reading grade, Gunning Fog Index, Coleman Liau Index, and the Dale–Chall Readability Formula; see, e.g.,, @patalayAssessingReadabilitySelfreported2018], and (c) like @frenerDevelopmentValidationNeed2021 will assess convergent validity by collecting single-item measures of privacy concern and privacy behavior, for which we expect to find small to moderate relations.
+
+Overall, we will collect 32 items measuring need for privacy, with eight subdimensions consisting of four items each. 
+Three subdimensions were adopted from @frenerDevelopmentValidationNeed2021 -- namely psychological, informational, and physiological privacy -- which build on Burgoon's @burgoonPrivacyCommunication1982 privacy theory. 
+Because @frenerDevelopmentValidationNeed2021 could not successfully operationalize the dimension of social privacy, we also measured a social privacy dimension, which in a prestudy showed satisfactory fit. 
+We then measured need for privacy on a societal level. 
+The first subdimension was government surveillance, which represents the extent to which people want the government to abstain from collecting information about them. 
+The second dimension was anonymity, which captures the extent to which people feel the need to avoid identification. 
+Both scales were pretested and showed good factorial validity. 
+Third, we measured need for privacy from companies using four self-designed items. 
+Finally, we self-developed also a general measure of need for privacy.
+
+### Personality
+
+Personality will be measured using the HEXACO personality inventory. 
+The inventory consists of six factors with four dimensions each, including the additional meta scale "altruism". 
+We will predict need for privacy first using the factors and then using the facets.
+
+\newpage
+
+# References
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+<div id = "refs"></div>
+\endgroup

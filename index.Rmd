@@ -1,0 +1,10 @@
+---
+title: "Who needs privacy?"
+---
+
+
+On this website, you can find the companion material for the paper _Who needs privacy? Exploring the relation between personality and need for privacy_. 
+
+You can either read the paper [in your browser](manuscript.html) or download it as [pdf](manuscript.pdf). You can also find the detailed code and summaries of the [analyses](analyses.html) reported in the paper, as well as [additional analyses](analyses_additional.html) not reported in the paper. 
+
+This website is produced directly from the project's [github repository](https://github.com/tdienlin/who_needs_privacy_rr). You can download the material and the data, file an issue, or submit a pull request.
