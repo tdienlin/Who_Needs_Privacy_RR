@@ -21,16 +21,6 @@ affiliation:
 authornote: |
   Tobias Dienlin, Department of Communication, University of Vienna, Germany; Miriam Metzger, Department of Communication, University of California, Santa Barbara, United States of America.
 
-  Competing Interests: Both authors declare no competing interests.
-  
-  Data Accessibility Statement: All the stimuli, presentation materials, participant data, analysis scripts, and a reproducible version of the manuscript can be found or will be shared as online supplementary material on the open science framework (https://osf.io/7ncpk/).
-  
-  Funding Information: During the conception and data collection of the prestudy, TD was funded by The German Academic Scholarship Foundation (German: Studienstiftung des deutschen Volkes), which financially supported a research stay at UCSB. During some time working on the article and while at University of Hohenheim, TD was funded by the Volkswagen Foundation (German: Volkswagenstiftung), grant "Transformations of Privacy". TD is now funded by a regular and not-tenured assistant professorship at University of Vienna. MM is funded by a regular and tenured full professorship at UCSB.
-
-# In addition, we invite everyone to suggest changes and improvements to the manuscript via our github (https://github.com/tdienlin/need_for_privacy/).
-
-# Author contribution: conception and design: TD, MM; acquisition of data: MM, TD; code: TD; analysis and interpretation of data: TD, MM; First draft: TD; Revisions & Comments: TD & MM
-
 abstract          : "Privacy is an important societal topic. Living in an information age, people constantly have to decide what information to share, which service to use, or when to communicate. All these decisions are reflective of and determined by the users' need for privacy. It is relevant to understand who needs more and who needs less privacy, because desiring privacy often requires justification. For example, well-known statements such as 'who has nothing to hide has nothing to fear' imply that people who desire privacy are suspicious. Although such suspicions might be justified in some cases, it could also be that people desiring more privacy are just more introverted, anxious, creative, or prudent. In this study we, hence, plan to explore the relation between personality and the need for privacy. Personality factors and facets will be operationalized using the HEXACO personality inventory. Need for privacy will be captured with a multidimensional approach, including informational and social privacy, need for privacy from government agencies, or need fro privacy from companies. Adopting an exploratory analytical framework, we will collect a sample of more than 800 respondents representative of the US in terms of age, gender, and ethnicity. The relations between personality and privacy will be explored using structural equation modeling. Potential implications will be discussed."
 keywords          : "Privacy, need for privacy, personality, HEXACO, structural equation modeling"
 
@@ -124,13 +114,13 @@ And as there is no established theory connecting privacy and personality, it is 
 As a result, in this study we adopt an exploratory perspective.
 Not to miss potentially relevant personality factors and facets, we will adopt a large-scale perspective on personality.
 
-To this end, we build on the HEXACO inventory of personality [@leePsychometricPropertiesHEXACO1002018], which is in the tradition of Big Five approach [@johnBigFiveTrait1999] and which represents a broad understanding of personality.
-The HEXACO inventory measures overall six factors (see below), which each have four more specific facets. 
-Including the facets seems helpful because we do not expect that need for privacy will relate closely to the overarching factors.
-(For example, consider that privacy concerns, a variable conceptually close to need for privacy, shows only small relations with the Big Five factors [@bansalImpactPersonalDispositions2010; @junglasPersonalityTraitsConcern2008].)
+To this end, we build on the HEXACO inventory of personality [@leePsychometricPropertiesHEXACO1002018].
+The HEXACO model is in the tradition of Big Five approach [@johnBigFiveTrait1999], and it represents a broad understanding of personality.
+It measures overall six factors (see below), which have four specific facets each. 
+Building not only on factors but also facets seems helpful because we do not expect that need for privacy will relate closely to the overarching factors.
+(For example, consider that privacy concerns, a variable conceptually close to need for privacy, shows only small relations to the Big Five factors [@bansalImpactPersonalDispositions2010; @junglasPersonalityTraitsConcern2008].)
 Hence, in order to increase precision we follow Paunonen's [-@paunonenBigFiveFactors2001] advice and include also specific personality facets.
-Notably, in addition to the Big Five the HEXACO model includes a sixth factor labeled Honesty Humility plus a facet labeled Altruism, which seem promising to investigate the nothing to hide argument. 
-We chose 
+Notably, in addition to the Big Five the HEXACO model includes a sixth factor labeled Honesty Humility, plus a facet labeled Altruism, which together seem promising to investigate the nothing to hide argument. 
 <!-- To illustrate, instead of dwelling on the general factor of _Extraversion_, we instead focused on the facet _Gregariousness_, which we consider to be more pertinent.  -->
 In what follows, we briefly present all factors and outline how they and selected facets might relate to privacy.
 
@@ -338,3 +328,25 @@ We will predict need for privacy first using the factors and then using the face
 \setlength{\leftskip}{0.5in}
 <div id = "refs"></div>
 \endgroup
+
+# Contributions
+
+Conception and design: TD, MM. Data acquisition: TD. Code: TD. Analysis and interpretation of data: TD, MM; First draft: TD; Revisions & Comments: TD & MM.
+
+# Funding Information
+
+During the conception and data collection of the prestudy, TD was funded by The German Academic Scholarship Foundation (German: Studienstiftung des deutschen Volkes), which financially supported a research stay at UCSB. During some time working on the article and while at University of Hohenheim, TD was funded by the Volkswagen Foundation (German: Volkswagenstiftung), grant "Transformations of Privacy". TD is now funded by a regular and not-tenured assistant professorship at University of Vienna. MM is funded by a regular and tenured full professorship at UCSB.
+
+# Competing Interests
+
+Both authors declare no competing interests.
+  
+# Supplementary Material
+
+All the stimuli, presentation materials, participant data, analysis scripts, and a reproducible version of the manuscript can be found or will be shared as online supplementary material on the open science framework (https://osf.io/7ncpk/). The paper also has a companion website where all materials can be accessed ().
+
+# Data Accessibility Statement
+
+The data will be shared on the open science framework (https://osf.io/7ncpk/).
+  
+# In addition, we invite everyone to suggest changes and improvements to the manuscript via our github (https://github.com/tdienlin/need_for_privacy/).
