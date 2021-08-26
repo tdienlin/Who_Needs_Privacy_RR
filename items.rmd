@@ -6,11 +6,6 @@ output:
     toc_float:
       collapsed: FALSE
       toc_depth: 3
-bibliography      : 
-  - "bibliography/r-references.bib"
-  - "bibliography/references.bib"
-# pdf_document:
-#   toc: TRUE
 ---
   
 All items were answered on a 7-point scale with the following options:
