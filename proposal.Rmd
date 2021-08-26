@@ -120,7 +120,8 @@ The HEXACO model stands in the tradition of Big Five approach [@johnBigFiveTrait
 It measures overall six factors (see below), which have four specific facets each. 
 Building not only on factors but also facets seems helpful because we do not expect that need for privacy will relate closely to the overarching factors.
 (For example, consider that privacy concerns, a variable conceptually close to need for privacy, shows only small relations to the Big Five factors [@bansalImpactPersonalDispositions2010; @junglasPersonalityTraitsConcern2008].)
-Hence, in order to increase precision we follow Paunonen's [-@paunonenBigFiveFactors2001] advice and also include specific personality facets.
+Another reason for choosing the HEXACO model was that in addition to the Big Five factors the HEXACO model includes a sixth one labeled Honesty Humility, plus another facet labeled Altruism, which together seem promising to investigate the nothing to hide argument.
+<!-- Hence, in order to increase precision we follow Paunonen's [-@paunonenBigFiveFactors2001] advice and also include specific personality facets. -->
 <!-- To illustrate, instead of dwelling on the general factor of _Extraversion_, we instead focused on the facet _Gregariousness_, which we consider to be more pertinent.  -->
 In what follows, we briefly present all factors and outline how they and selected facets might relate to privacy.
 
@@ -133,8 +134,6 @@ Having information about a person's personality can inform us whether he or she 
 It follows that if other people are considered a threat it seems to be more likely that a person will desire more privacy from others, and vice versa [@altmanPrivacyConceptualAnalysis1976].
 
 ### Honesty-Humility
-
-Notably, in addition to the Big Five the HEXACO model includes a sixth factor labeled Honesty Humility, plus a facet labeled Altruism, which together seem promising to investigate the nothing to hide argument. 
 
 More controversially, it has been argued by some that people need privacy because they have something to hide. 
 The so-called nothing-to-hide argument states that “If you have nothing to hide, you have nothing to fear.” 
