@@ -38,7 +38,7 @@ draft             : no
 
 documentclass     : "apa6"
 classoption       : "man"
-output            : papaja::apa6_pdf
+# output            : papaja::apa6_pdf
 # output            : papaja::apa6_word
 header-includes:
   - \setlength{\parskip}{0em}
@@ -83,11 +83,12 @@ What are personality factors and facets that best explain peoples' felt need for
 Because orivacy as a theoretical concept is complicated and contested [@nissenbaumPrivacyContextTechnology2010, p. 71], we first outline our own understanding of privacy. 
 First and foremost, privacy captures the extent of (a) _voluntary_ (b) _withdrawal_ from others or from society in general [@westinPrivacyFreedom1967]. 
 Several models suggest that privacy is multi-dimensional. 
-For example, in a theory-driven treatise [@burgoonPrivacyCommunication1982] argued that privacy has four dimensions: informational, social, psychological, and physical privacy. 
-[@pedersenDimensionsPrivacy1979], by contrast, conducted an empirical factor analysis initially starting with 94 items and found that privacy exists on six dimensions: 
+For example, in a theory-driven treatise @burgoonPrivacyCommunication1982 argued that privacy has four dimensions: informational, social, psychological, and physical privacy. 
+@pedersenDimensionsPrivacy1979, by contrast, conducted an empirical factor analysis of overall 94 items and found six dimensions of privacy: 
 reserve, isolation, solitude, intimacy with friends, intimacy with family, and anonymity. 
-Next, [@schwartzSocialPsychologyPrivacy1968] or [@masurPrivatheitOnlineKommunikation2018] differentiated between horizontal and vertical privacy; whereas horizontal privacy captures withdrawal from peers, vertical privacy addresses withdrawal from superiors or institutions (e.g., government agencies or business companies). 
-The need for privacy, then, captures "[a]n individual’s need to selectively control the access of others to the individual self with the aim of achieving a desired level of physical or psychological privacy [...]") [@trepteNeedPrivacy2017, p.1]. 
+Next, @schwartzSocialPsychologyPrivacy1968 or @masurPrivatheitOnlineKommunikation2018 differentiated between horizontal and vertical privacy; whereas horizontal privacy captures withdrawal from peers, vertical privacy addresses withdrawal from superiors or institutions (e.g., government agencies or business companies). 
+
+<!-- The need for privacy, then, captures "[a]n individual’s need to selectively control the access of others to the individual self with the aim of achieving a desired level of physical or psychological privacy [...]") [@trepteNeedPrivacy2017, p.1].  -->
 <!-- Finally, one can also distinguish between the objective privacy context (e.g., how many users can actually read a post on an SNS?), subjective privacy perceptions (e.g., how many users people _think_ can read a post on an SNS?), and resulting privacy behaviors (e.g., how much do people self-disclose?) [@dienlinPrivacyProcessModel2014]. -->
 
 For the purpose of this study, we will hence employ a multifaceted model of need for privacy.
@@ -95,32 +96,31 @@ We fill focus on (a) vertical privacy with regard to people's felt need for with
 
 <!-- In order to guide the selection of personality dimensions that might explain need for privacy best, it is useful to determine why people actually feel they need privacy.  -->
 According to @trepteNeedPrivacy2017, the need for privacy is a secondary need---it is not an end in itself, but rather a way to satisfy other more fundamental needs such as safety, sexuality, recovery, or contemplation.
-Specifically, [@westinPrivacyFreedom1967] defined four ultimate purposes of privacy: (1) self-development (i.e., the integration of experiences into meaningful patterns), (2) autonomy (i.e., the desire to avoid being manipulated and dominated), (3) emotional release (i.e., the release of tension from social role demands), and (4) protected communication (i.e., the ability to foster intimate relationships). 
+Specifically, @westinPrivacyFreedom1967 defined four ultimate purposes of privacy: (1) self-development (i.e., the integration of experiences into meaningful patterns), (2) autonomy (i.e., the desire to avoid being manipulated and dominated), (3) emotional release (i.e., the release of tension from social role demands), and (4) protected communication (i.e., the ability to foster intimate relationships). 
 Not least, privacy facilitates self-disclosure [@dienlinPrivacyProcessModel2014], which is necessary for attaining social support, initiating relationships, and getting close to other people [@omarzuDisclosureDecisionModel2000].
 
-On the other hand, however, privacy also has negative aspects. 
-For example, it can be problematic if there is too much privacy.
+On the other hand, however, privacy can also have negative aspects. 
+For example, it is possible to have too much privacy.
 Human beings are inherently social, and being overly cut-off from others can diminish flourishing, nurture deviant behavior, or introduce power asymmetries [@altmanEnvironmentSocialBehavior1975]. 
 The fact that privacy fosters self-disclosure presents also a potential risk, because others might disagree, disapprove, or misuse the information in other contexts [@petronioCommunicationPrivacyManagement2010]. 
-Privacy can also help conceal power-asymmetries, wrongdoing, or violence and other crimes. 
+Privacy can also help conceal power-asymmetries, wrongdoing, or crimes such as violence or theft.
 The dialectical tension between the positive and negative aspects of privacy likely causes variability across individuals in their need for privacy. 
+In this study we now ask, what role does personality play in determining individual-level variations in need for privacy?
 
 ## Predicting the Need for Privacy
 
-What role does personality play in determining individual-level variations in need for privacy?
-So far, not a lot of studies have analyzed this question explicitly.
-We are aware of only two studies that conducted an empirical analysis [pedersenPersonalityCorrelatesPrivacy1982, @hosmanRelationshipsNeedPrivacy1991].
-And as there is no established theory connecting privacy and personality, it is difficult to deduce precise and well-informed hypotheses. 
+So far, not a lot of studies have explicitly analyzed the relation between personality and need for privacy.
+We are aware of only two studies that conducted an empirical analysis [@pedersenPersonalityCorrelatesPrivacy1982, @hosmanRelationshipsNeedPrivacy1991].
+And as there is no established theory connecting privacy and personality, it is difficult to formulate precise and well-informed hypotheses. 
 As a result, in this study we adopt an exploratory perspective.
-Not to miss potentially relevant personality factors and facets, we will adopt a large-scale perspective on personality.
+We will adopt a large-scale perspective on personality, in order not to miss potentially relevant personality factors and facets.
 
 To this end, we build on the HEXACO inventory of personality [@leePsychometricPropertiesHEXACO1002018].
-The HEXACO model is in the tradition of Big Five approach [@johnBigFiveTrait1999], and it represents a broad understanding of personality.
+The HEXACO model stands in the tradition of Big Five approach [@johnBigFiveTrait1999], and it represents a broad understanding of personality.
 It measures overall six factors (see below), which have four specific facets each. 
 Building not only on factors but also facets seems helpful because we do not expect that need for privacy will relate closely to the overarching factors.
 (For example, consider that privacy concerns, a variable conceptually close to need for privacy, shows only small relations to the Big Five factors [@bansalImpactPersonalDispositions2010; @junglasPersonalityTraitsConcern2008].)
-Hence, in order to increase precision we follow Paunonen's [-@paunonenBigFiveFactors2001] advice and include also specific personality facets.
-Notably, in addition to the Big Five the HEXACO model includes a sixth factor labeled Honesty Humility, plus a facet labeled Altruism, which together seem promising to investigate the nothing to hide argument. 
+Hence, in order to increase precision we follow Paunonen's [-@paunonenBigFiveFactors2001] advice and also include specific personality facets.
 <!-- To illustrate, instead of dwelling on the general factor of _Extraversion_, we instead focused on the facet _Gregariousness_, which we consider to be more pertinent.  -->
 In what follows, we briefly present all factors and outline how they and selected facets might relate to privacy.
 
@@ -133,6 +133,8 @@ Having information about a person's personality can inform us whether he or she 
 It follows that if other people are considered a threat it seems to be more likely that a person will desire more privacy from others, and vice versa [@altmanPrivacyConceptualAnalysis1976].
 
 ### Honesty-Humility
+
+Notably, in addition to the Big Five the HEXACO model includes a sixth factor labeled Honesty Humility, plus a facet labeled Altruism, which together seem promising to investigate the nothing to hide argument. 
 
 More controversially, it has been argued by some that people need privacy because they have something to hide. 
 The so-called nothing-to-hide argument states that “If you have nothing to hide, you have nothing to fear.” 
@@ -232,14 +234,14 @@ Participants will be collected from the professional online survey panel Prolifi
 The sample will be representative of the US regarding age, gender, and ethnicity. 
 The study received IRB approval from University of Vienna. 
 We calculated that participation will take approximately 15 minutes. 
-We paid participants were paid \$ 2.56 for participation, equaling an hourly wage of \$ 9,81. 
+We will pay participants \$ 2.56 for participation, equaling an hourly wage of \$ 9,81. 
 
 To determine sample size, we ran a priori power analyses. 
 The final analyses will be conducted using structural equation modeling, for which exact power analyses are difficult to obtain. 
-We hence conducted power analyses using two-sided bivariate correlations. 
-Hence, power analysis are not exact but only a rough guide to determine minimum sample size. 
+We hence conducted tentative power analyses using two-sided bivariate correlations. 
+Hence, power analysis are not exact but only a rough guide to get a better idea of the required minimum sample size. 
 
-We based our power analysis on a smallest effect size of interest. 
+We based our power analysis on a smallest effect size of interest (SESOI).
 We only consider effects at least as great as _r_ = .10 as sufficient support for our theoretical rationales [@cohenPowerPrimer1992]. 
 Because we adopt an exploratory perspective, we do not want to miss potentially existing effects. 
 We opted for a balanced alpha and beta error approach, because we consider both errors to be equally relevant. 
@@ -349,4 +351,4 @@ All the stimuli, presentation materials, participant data, analysis scripts, and
 
 The data will be shared on the open science framework (https://osf.io/7ncpk/).
   
-# In addition, we invite everyone to suggest changes and improvements to the manuscript via our github (https://github.com/tdienlin/need_for_privacy/).
+<!-- In addition, we invite everyone to suggest changes and improvements to the manuscript via our github (https://github.com/tdienlin/need_for_privacy/). -->
