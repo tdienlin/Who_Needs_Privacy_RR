@@ -471,28 +471,24 @@ model <- "NFP_GEN =~ NFP_GEN_01 + NFP_GEN_02 + NFP_GEN_03 + NFP_GEN_04"
 
 # Power Analyses
 
-To estimate sample size, we conducted a rudimentary power analysis. That is, we planned for a two-sided correlation of r = .1. We adopted a balanced alpha and beta error approach. Because we were in exploration mode, we aimed for a high statistical power and relaxed alpha. Ideally, we would have wanted to set an error rate of 5%; however, this was outside of our budget. Instead, we opted for an error rate of 10%.
+To estimate sample size, we conducted a rudimentary power analysis. That is, we planned for a two-sided correlation of _r_ = .1. We adopted a balanced alpha and beta error approach. Because we were in "exploration mode", we aimed for a high statistical power and hence relaxed alpha. Ideally, we would have wanted to set an error rate of 5%; however, this was outside of our budget. Instead, we opted for an error rate of 10%.
 
 ```{r}
 sesoi <- .1
 
 # a priori power analyses
 pwr.r.test(r = sesoi, sig.level = .05, power = .95) ## too expensive
+power_n_95 <- pwr.r.test(r = sesoi, sig.level = .05, power = .95)$n
 ```
 
 A 5% error rate would imply collecting 1.293 participants, which was outside of our budget.
 
 ```{r}
 pwr.r.test(r = sesoi, sig.level = .1, power = .9)
+power_n_90 <- pwr.r.test(r = sesoi, sig.level = .1, power = .9)$n
 ```
 
 A 10% error rate would imply collecting 853 participants, which was within our budget.
-
-```{r}
-power <- pwr.r.test(r = sesoi, sig.level = .05, power = .8)
-print(power)
-power_n <- power$n
-```
 
 # Results
 ## Facets
