@@ -204,8 +204,9 @@ Arguably, extraversion is the factor that should correspond most closely to the 
 This especially pertains to the facet sociability, which captures whether people prefer to spend their time alone or in company. 
 It seems plausible that people who are more sociable are also more likely to think of other people as a resource, which is why they should generally desire less interpersonal privacy and less anonymity [e.g., @bussPsychologicalDimensionsSelf2001]. 
 Put differently, given that privacy is a voluntary withdrawal from society [@westinPrivacyFreedom1967], we expect that people who are less sociable, more reserved, or more shy should have a greater need for privacy from others. 
-One could even make the case that need for privacy and extraversion are conceptually the same, and that need for privacy is just a different label for the same underlying personality trait. 
-Interestingly, we are not aware of a personality inventory that explicitly refers to privacy.
+One could even make the case that need for (interpersonal) privacy and extraversion are conceptually the same, and that need for privacy is just a different label for the same underlying personality trait. 
+That said, we are not aware of a personality inventory that explicitly refers to privacy,
+and besides, as we outline above privacy is multidimensional and aspects such as need for privacy from the government or anonymity appear to be different conceptually.
 
 Several empirical studies support the relation.
 People who scored higher on the personality meta-factor _plasticity_, which is a composite of the two personality factors extraversion and openness, desired less privacy [@mortonMeasuringInherentPrivacy2013]; people who described themselves as introverted thinkers were more likely to prefer social isolation [@pedersenPersonalityCorrelatesPrivacy1982]; and introverted people were more likely to report invasions of privacy [@stoneRelationshipIntroversionExtraversion1986].
@@ -310,10 +311,12 @@ Participants who miss one attention check will be checked individually regarding
 We will remove participants below the minimum participation age of 18 years. 
 We will exclude respondents if they answer less than 50% of all questions. 
 The remaining missing responses will be imputed using predictive mean matching. 
-We will remove respondents with exceedingly fast responses, namely below three standard deviations of the medium response time. 
+We will remove respondents with unrealistically fast responses, namely below three standard deviations of the medium response time. 
 
 ## Data Analyses and Decision Pipeline
 
+As a "reality check", we will test items for potential ceiling and floor effects. 
+If means are below 0.5 or above 6.5, these items will be excluded.
 The factorial validity of the measures and the hypotheses will be tested with structural equation modeling (SEM). 
 If Mardia’s test shows that the assumption of multivariate normality is violated, we will use the more robust Satorra-Bentler scaled and mean-adjusted test statistic (MLM) as estimator. 
 We will test each scale in a confirmatory factor analysis. 
