@@ -28,7 +28,7 @@ Here you can find the results of our study.
 - At this point, we haven't yet collected data. 
 - The results below use simulated data. 
 - The data are random and don't make sense, but help to illustrate the overall approach and planned analyses.
-- We'll later conduct further analyses not yet reported here, for example model-alterations given misfit.
+- We'll later conduct further analyses not yet reported here, for example model-alterations given misfit or imputation of missing data.
 
 # Set-Up
 
