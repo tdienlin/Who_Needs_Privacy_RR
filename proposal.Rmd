@@ -38,7 +38,13 @@ draft             : no
 
 documentclass     : "apa6"
 classoption       : "man"
-output            : papaja::apa6_pdf
+output:
+  html_document:
+    toc: TRUE
+    toc_float:
+      collapsed: FALSE
+      toc_depth: 2
+# output            : papaja::apa6_pdf
 # output            : papaja::apa6_word
 header-includes:
   - \setlength{\parskip}{0em}
@@ -302,7 +308,7 @@ A power analysis with an alpha and beta error of 5% and an effect size of _r_ = 
 We obtained sufficient funding to collect a sample of this size.
 Hence, we will use two inference criteria: Effects need to show a _p_-value of below _p_ = 5% and an effect size of at least _r_ = .10. 
 
-## Removing Participants, Imputation of Missing Data, and Planned Analyses
+## Planned Analyses
 
 We will individually check answers for response patterns such as straight-lining or missing of inverted items.
 We will conservatively remove participants with clear response patterns. 
@@ -322,6 +328,7 @@ If Mardia’s test shows that the assumption of multivariate normality is violat
 We will test each scale in a confirmatory factor analysis. 
 To assess model fit, we will use more liberal fit criteria to avoid overfitting (CFI > .90, TLI > .90, RMSEA <. .10, SRMR < .10) [@klinePrinciplesPracticeStructural2016]. 
 In cases of misfit, we will conservatively alter models using an a priori defined analysis pipeline (see online supplementary material).
+As a “reality check,” we will test items for potential ceiling and floor effects. If means are below 1.5 or above 6.5, these items will be excluded.
 
 We want to find out _who_ needs privacy, and not so much _what causes_ the need for privacy.
 Hence, to answer our research question, in a joint model combining all variables (including sociodemographic variables) we will analyze the variables' bivariate relations. 
@@ -336,6 +343,8 @@ We still decided to use fully latent SEMs, because we consider it superior to re
 Combining several items into a latent factors helps reduce error and condense information, thereby reducing noise.
 Together, this should provide a better measure of the latent variables, which will also reduce the beta error. 
 To provide context, in the online supplementary material (OSM) we will also share the results of alternative analyses, such as correlations of average scores.
+
+We anticipate to finish the project three months after our registration was accepted.
 
 ## Measures
 
