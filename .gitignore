@@ -5,5 +5,6 @@
 .DS_Store
 *.tex
 analyses_cache/*
-analyses_readability_cache/*
+items_readability_cache/*
+items_readability_cache/html/*
 archive/*

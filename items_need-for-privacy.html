@@ -11,7 +11,7 @@
 
 
 
-<title>Items</title>
+<title>Items: Need for Privacy</title>
 
 <script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -243,6 +246,75 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
 
 </head>
 
@@ -250,6 +322,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -303,7 +385,7 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Items</h1>
+<h1 class="title toc-ignore">Items: Need for Privacy</h1>
 
 </div>
 
@@ -314,303 +396,6 @@ options:</p>
 statements?”</p>
 <p>(-3) Strongly Disagree, (-2) Disagree, (-1) Slightly Disagree, (0)
 Neutral, (1) Slightly Agree (2) Agree, (3) Strongly Agree</p>
-<div id="personality" class="section level1">
-<h1>Personality</h1>
-<p><span class="citation">Lee and Ashton (2018)</span></p>
-<div id="honesty-humility" class="section level2">
-<h2>Honesty Humility</h2>
-<div id="sincerity" class="section level3">
-<h3>Sincerity</h3>
-<ol style="list-style-type: decimal">
-<li>If I want something from a person I dislike, I will act very nicely
-toward that person in order to get it.</li>
-<li>I wouldn’t use flattery to get a raise or promotion at work, even if
-I thought it would succeed.</li>
-<li>If I want something from someone, I will laugh at that person’s
-worst jokes.</li>
-<li>I wouldn’t pretend to like someone just to get that person to do
-favors for me.</li>
-</ol>
-</div>
-<div id="fairness" class="section level3">
-<h3>Fairness</h3>
-<ol style="list-style-type: decimal">
-<li>If I knew that I could never get caught, I would be willing to steal
-a million dollars.</li>
-<li>I would be tempted to buy stolen property if I were financially
-tight.</li>
-<li>I would never accept a bribe, even if it were very large.</li>
-<li>I’d be tempted to use counterfeit money, if I were sure I could get
-away with it.</li>
-</ol>
-</div>
-<div id="greed-avoidance" class="section level3">
-<h3>Greed Avoidance</h3>
-<ol style="list-style-type: decimal">
-<li>Having a lot of money is not especially important to me.</li>
-<li>I would like to live in a very expensive, high-class
-neighborhood.</li>
-<li>I would like to be seen driving around in a very expensive car.</li>
-<li>I would get a lot of pleasure from owning expensive luxury
-goods.</li>
-</ol>
-</div>
-<div id="modesty" class="section level3">
-<h3>Modesty</h3>
-<ol style="list-style-type: decimal">
-<li>I am an ordinary person who is no better than others.</li>
-<li>I wouldn’t want people to treat me as though I were superior to
-them.</li>
-<li>I think that I am entitled to more respect than the average person
-is.</li>
-<li>I want people to know that I am an important person of high
-status.</li>
-</ol>
-</div>
-</div>
-<div id="emotionality" class="section level2">
-<h2>Emotionality</h2>
-<div id="fearfulness" class="section level3">
-<h3>Fearfulness</h3>
-<ol style="list-style-type: decimal">
-<li>I would feel afraid if I had to travel in bad weather
-conditions.</li>
-<li>I don’t mind doing jobs that involve dangerous work.</li>
-<li>When it comes to physical danger, I am very fearful.</li>
-<li>Even in an emergency I wouldn’t feel like panicking.</li>
-</ol>
-</div>
-<div id="anxiety" class="section level3">
-<h3>Anxiety</h3>
-<ol style="list-style-type: decimal">
-<li>I sometimes can’t help worrying about little things.</li>
-<li>I worry a lot less than most people do.</li>
-<li>I rarely, if ever, have trouble sleeping due to stress or
-anxiety.</li>
-<li>I get very anxious when waiting to hear about an important
-decision.</li>
-</ol>
-</div>
-<div id="dependence" class="section level3">
-<h3>Dependence</h3>
-<ol style="list-style-type: decimal">
-<li>When I suffer from a painful experience, I need someone to make me
-feel comfortable.</li>
-<li>I can handle difficult situations without needing emotional support
-from anyone else.</li>
-<li>Whenever I feel worried about something, I want to share my concern
-with another person.</li>
-<li>I rarely discuss my problems with other people.</li>
-</ol>
-</div>
-<div id="sentimentality" class="section level3">
-<h3>Sentimentality</h3>
-<ol style="list-style-type: decimal">
-<li>I feel like crying when I see other people crying.</li>
-<li>When someone I know well is unhappy, I can almost feel that person’s
-pain myself.</li>
-<li>I feel strong emotions when someone close to me is going away for a
-long time.</li>
-<li>I remain unemotional even in situations where most people get very
-sentimental.</li>
-</ol>
-</div>
-</div>
-<div id="extraversion" class="section level2">
-<h2>Extraversion</h2>
-<div id="social-self-esteem" class="section level3">
-<h3>Social Self-Esteem</h3>
-<ol style="list-style-type: decimal">
-<li>I feel reasonably satisfied with myself overall.</li>
-<li>I think that most people like some aspects of my personality.</li>
-<li>I feel that I am an unpopular person.</li>
-<li>Even in an emergency I wouldn’t feel like panicking.</li>
-</ol>
-</div>
-<div id="social-boldness" class="section level3">
-<h3>Social Boldness</h3>
-<ol style="list-style-type: decimal">
-<li>I rarely express my opinions in group meetings.</li>
-<li>In social situations, I’m usually the one who makes the first
-move.</li>
-<li>When I’m in a group of people, I’m often the one who speaks on
-behalf of the group.</li>
-<li>I tend to feel quite self-conscious when speaking in front of a
-group of people.</li>
-</ol>
-</div>
-<div id="sociability" class="section level3">
-<h3>Sociability</h3>
-<ol style="list-style-type: decimal">
-<li>I avoid making “small talk” with people.</li>
-<li>I enjoy having lots of people around to talk with.</li>
-<li>I prefer jobs that involve active social interaction to those that
-involve working alone.</li>
-<li>The first thing that I always do in a new place is to make
-friends.</li>
-</ol>
-</div>
-<div id="liveliness" class="section level3">
-<h3>Liveliness</h3>
-<ol style="list-style-type: decimal">
-<li>I am energetic nearly all the time.</li>
-<li>On most days, I feel cheerful and optimistic.</li>
-<li>People often tell me that I should try to cheer up.</li>
-<li>Most people are more upbeat and dynamic than I generally am.</li>
-</ol>
-</div>
-</div>
-<div id="agreeableness" class="section level2">
-<h2>Agreeableness</h2>
-<div id="forgiveness" class="section level3">
-<h3>Forgiveness</h3>
-<ol style="list-style-type: decimal">
-<li>I rarely hold a grudge, even against people who have badly wronged
-me.</li>
-<li>My attitude toward people who have treated me badly is “forgive and
-forget”.</li>
-<li>If someone has cheated me once, I will always feel suspicious of
-that person.</li>
-<li>I find it hard to fully forgive someone who has done something mean
-to me.</li>
-</ol>
-</div>
-<div id="gentleness" class="section level3">
-<h3>Gentleness</h3>
-<ol style="list-style-type: decimal">
-<li>People sometimes tell me that I am too critical of others.</li>
-<li>I generally accept people’s faults without complaining about
-them.</li>
-<li>I tend to be lenient in judging other people.</li>
-<li>Even when people make a lot of mistakes, I rarely say anything
-negative.</li>
-</ol>
-</div>
-<div id="flexibility" class="section level3">
-<h3>Flexibility</h3>
-<ol style="list-style-type: decimal">
-<li>People sometimes tell me that I’m too stubborn.</li>
-<li>I am usually quite flexible in my opinions when people disagree with
-me.</li>
-<li>When people tell me that I’m wrong, my first reaction is to argue
-with them.</li>
-<li>I find it hard to compromise with people when I really think I’m
-right.</li>
-</ol>
-</div>
-<div id="patience" class="section level3">
-<h3>Patience</h3>
-<ol style="list-style-type: decimal">
-<li>People think of me as someone who has a quick temper.</li>
-<li>I rarely feel anger, even when people treat me quite badly.</li>
-<li>Most people tend to get angry more quickly than I do.</li>
-<li>I find it hard to keep my temper when people insult me.</li>
-</ol>
-</div>
-</div>
-<div id="conscientiousness" class="section level2">
-<h2>Conscientiousness</h2>
-<div id="organization" class="section level3">
-<h3>Organization</h3>
-<ol style="list-style-type: decimal">
-<li>I clean my office or home quite frequently.</li>
-<li>I plan ahead and organize things, to avoid scrambling at the last
-minute.</li>
-<li>People often joke with me about the messiness of my room or
-desk.</li>
-<li>When working, I sometimes have difficulties due to being
-disorganized.</li>
-</ol>
-</div>
-<div id="diligence" class="section level3">
-<h3>Diligence</h3>
-<ol style="list-style-type: decimal">
-<li>When working, I often set ambitious goals for myself.</li>
-<li>I often push myself very hard when trying to achieve a goal.</li>
-<li>Often when I set a goal, I end up quitting without having reached
-it.</li>
-<li>I do only the minimum amount of work needed to get by.</li>
-</ol>
-</div>
-<div id="perfectionism" class="section level3">
-<h3>Perfectionism</h3>
-<ol style="list-style-type: decimal">
-<li>I often check my work over repeatedly to find any mistakes.</li>
-<li>When working on something, I don’t pay much attention to small
-details.</li>
-<li>I always try to be accurate in my work, even at the expense of
-time.</li>
-<li>People often call me a perfectionist.</li>
-</ol>
-</div>
-<div id="prudence" class="section level3">
-<h3>Prudence</h3>
-<ol style="list-style-type: decimal">
-<li>I make decisions based on the feeling of the moment rather than on
-careful thought.</li>
-<li>I make a lot of mistakes because I don’t think before I act.</li>
-<li>I don’t allow my impulses to govern my behavior.</li>
-<li>I prefer to do whatever comes to mind, rather than stick to a
-plan.</li>
-</ol>
-</div>
-</div>
-<div id="openness" class="section level2">
-<h2>Openness</h2>
-<div id="aesthetic-appreciation" class="section level3">
-<h3>Aesthetic Appreciation</h3>
-<ol style="list-style-type: decimal">
-<li>I would be quite bored by a visit to an art gallery.</li>
-<li>I wouldn’t spend my time reading a book of poetry.</li>
-<li>If I had the opportunity, I would like to attend a classical music
-concert.</li>
-<li>Sometimes I like to just watch the wind as it blows through the
-trees.</li>
-</ol>
-</div>
-<div id="inquisitiveness" class="section level3">
-<h3>Inquisitiveness</h3>
-<ol style="list-style-type: decimal">
-<li>I’m interested in learning about the history and politics of other
-countries.</li>
-<li>I enjoy looking at maps of different places.</li>
-<li>I would be very bored by a book about the history of science and
-technology.</li>
-<li>I’ve never really enjoyed looking through an encyclopedia.</li>
-</ol>
-</div>
-<div id="creativeness" class="section level3">
-<h3>Creativeness</h3>
-<ol style="list-style-type: decimal">
-<li>I would like a job that requires following a routine rather than
-being creative.</li>
-<li>I would enjoy creating a work of art, such as a novel, a song, or a
-painting.</li>
-<li>People have often told me that I have a good imagination.</li>
-<li>I don’t think of myself as the artistic or creative type.</li>
-</ol>
-</div>
-<div id="unconventionality" class="section level3">
-<h3>Unconventionality</h3>
-<ol style="list-style-type: decimal">
-<li>I think that paying attention to radical ideas is a waste of
-time.</li>
-<li>I like people who have unconventional views.</li>
-<li>I think of myself as a somewhat eccentric person.</li>
-<li>I find it boring to discuss philosophy.</li>
-</ol>
-</div>
-</div>
-<div id="altruism" class="section level2">
-<h2>Altruism</h2>
-<ol style="list-style-type: decimal">
-<li>I have sympathy for people who are less fortunate than I am.</li>
-<li>I try to give generously to those in need.</li>
-<li>It wouldn’t bother me to harm someone I didn’t like.</li>
-<li>People see me as a hard-hearted person.</li>
-</ol>
-</div>
-</div>
 <div id="need-for-privacy" class="section level1">
 <h1>Need for privacy</h1>
 <div id="horizontal-privacy" class="section level2">
@@ -625,7 +410,7 @@ do it first.</li>
 with others.</li>
 <li>I prefer not to share my feelings and inner thoughts with
 others.</li>
-<li>I don’t like it when others talk to me about their private issues.
+<li>I do not like it when others talk to me about their private issues.
 (new)</li>
 </ol>
 </div>
@@ -663,7 +448,7 @@ catching criminals harder.</li>
 <li>I don’t want the government to gather data about me, even if that
 makes it harder to spend tax income effectively.</li>
 <li>I don’t want government agencies to monitor my communication, even
-if that stops terrorist attacks.</li>
+if that prevents terrorist attacks.</li>
 <li>I feel I need to protect my privacy from government agencies.</li>
 </ol>
 </div>
@@ -675,8 +460,8 @@ if that stops terrorist attacks.</li>
 don’t have to sell my data.</li>
 <li>I’m happy to give up a little bit of privacy so that I can use
 certain apps or services for free.</li>
-<li>I don’t want companies to collect data about me, even if that makes
-their services worse.</li>
+<li>I don’t want companies to gather information about me, even if that
+reduces the quality of their services.</li>
 <li>I feel I need to protect my privacy from companies.</li>
 </ol>
 </div>
@@ -718,82 +503,6 @@ to preserve my privacy.</li>
 </ol>
 </div>
 </div>
-</div>
-<div id="privacy-other" class="section level1">
-<h1>Privacy other</h1>
-<div id="concerns" class="section level2">
-<h2>Concerns</h2>
-<p>I’m very much concerned about my privacy in general.</p>
-</div>
-<div id="behavior" class="section level2">
-<h2>Behavior</h2>
-<p>I often take safety measures to protect my privacy.</p>
-</div>
-</div>
-<div id="sociodemographics" class="section level1">
-<h1>Sociodemographics</h1>
-<div id="age" class="section level2">
-<h2>Age</h2>
-<p>How old are you?</p>
-</div>
-<div id="gender" class="section level2">
-<h2>Gender</h2>
-<p>How do you describe yourself?</p>
-<ol style="list-style-type: decimal">
-<li>Man</li>
-<li>Woman</li>
-<li>Third gender / other</li>
-</ol>
-</div>
-<div id="ethnicity" class="section level2">
-<h2>Ethnicity</h2>
-<p>With what ethnicity do you identify with?</p>
-<ol style="list-style-type: decimal">
-<li>White</li>
-<li>Other</li>
-</ol>
-</div>
-<div id="relationship-status" class="section level2">
-<h2>Relationship status</h2>
-<p>Are you currently in a partnership or relation with another
-person?</p>
-<ol style="list-style-type: decimal">
-<li>No</li>
-<li>Yes</li>
-</ol>
-</div>
-<div id="college" class="section level2">
-<h2>College</h2>
-<p>Please indicate the highest degree you have completed</p>
-<ol style="list-style-type: decimal">
-<li>No college degree</li>
-<li>College degree</li>
-</ol>
-</div>
-<div id="income" class="section level2">
-<h2>Income</h2>
-<p>About how much money do you have at your disposal each month?</p>
-<ol style="list-style-type: decimal">
-<li>&lt; $1.000</li>
-<li>$1.000 - $4.000</li>
-<li><blockquote>
-<p>$4.000</p>
-</blockquote></li>
-</ol>
-</div>
-<div id="politics" class="section level2">
-<h2>Politics</h2>
-<p>Where would you position yourself politically?</p>
-<ul>
-<li>Extremely liberal</li>
-<li>Liberal</li>
-<li>Somewhat liberal</li>
-<li>Neutral</li>
-<li>Somewhat conservative</li>
-<li>Conservative</li>
-<li>Extremely conservative</li>
-</ul>
-</div>
 <div id="literature" class="section level2 unnumbered">
 <h2 class="unnumbered">Literature</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
@@ -816,18 +525,14 @@ Dissertations and Theses</em>. PhD thesis, <span>Ann Arbor</span>:
 <span>University of Connecticut</span>. <a
 href="https://uaccess.univie.ac.at/login?url=https://www.proquest.com/dissertations-theses/development-desire-privacy-scale/docview/304030735/se-2?accountid=14682">https://uaccess.univie.ac.at/login?url=https://www.proquest.com/dissertations-theses/development-desire-privacy-scale/docview/304030735/se-2?accountid=14682</a>.
 </div>
-<div id="ref-leePsychometricPropertiesHEXACO1002018" class="csl-entry">
-Lee, Kibeom, and Michael C. Ashton. 2018. <span>“Psychometric
-<span>Properties</span> of the <span>HEXACO-100</span>.”</span>
-<em>Assessment</em> 25 (5): 543–56. <a
-href="https://doi.org/10.1177/1073191116659134">https://doi.org/10.1177/1073191116659134</a>.
-</div>
 </div>
 </div>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -860,6 +565,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

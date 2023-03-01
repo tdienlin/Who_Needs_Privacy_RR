@@ -2,9 +2,10 @@
 title: "Who needs privacy?"
 ---
 
+On this website, you can find the companion material for the paper _Who needs privacy? Exploring the relations between need for privacy and personality_. The paper is currently submitted to the journal Collabra as registered report. The report is based on an [older paper](https://osf.io/m23bn) that was already submitted to Collabra but rejected. This paper now addresses the [feedback from the original submission](reviews.pdf) and considers the original paper a prestudy.
 
-On this website, you can find the companion material for the paper _Who needs privacy? Exploring the relation between personality and need for privacy_. 
-
-You can either read the paper [in your browser](proposal.html) or download it as [pdf](proposal.pdf). You can also find the detailed code and summaries of the [analyses](analyses.html) reported in the paper, as well as [additional analyses](analyses_additional.html) not reported in the paper. 
+- You can either read the paper [in your browser](proposal.html) or download it as [pdf](proposal.pdf). 
+- You can also find the detailed code and summaries of the [planned analyses](analyses.html) reported in the paper
+- Once finished, you will also be able to find [additional analyses](analyses_additional.html) not reported in the paper. 
 
 This website is produced directly from the project's [github repository](https://github.com/tdienlin/who_needs_privacy_rr). You can download the material and the data, file an issue, or submit a pull request.

@@ -13,8 +13,8 @@
 
 <title>Who needs privacy?</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -62,6 +62,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -82,6 +83,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -139,11 +143,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -172,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -181,16 +189,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -234,7 +235,7 @@ $(document).ready(function () {
 <div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -253,7 +254,7 @@ $(document).ready(function () {
   <a href="items.html">Items</a>
 </li>
 <li>
-  <a href="analyses_readability.html">Readability Analyses</a>
+  <a href="items_readability.html">Readability Analyses</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -285,9 +286,27 @@ $(document).ready(function () {
 </div>
 
 
-<p>On this website, you can find the companion material for the paper <em>Who needs privacy? Exploring the relation between personality and need for privacy</em>.</p>
-<p>You can either read the paper <a href="proposal.html">in your browser</a> or download it as <a href="proposal.pdf">pdf</a>. You can also find the detailed code and summaries of the <a href="analyses.html">analyses</a> reported in the paper, as well as <a href="analyses_additional.html">additional analyses</a> not reported in the paper.</p>
-<p>This website is produced directly from the project’s <a href="https://github.com/tdienlin/who_needs_privacy_rr">github repository</a>. You can download the material and the data, file an issue, or submit a pull request.</p>
+<p>On this website, you can find the companion material for the paper
+<em>Who needs privacy? Exploring the relations between need for privacy
+and personality</em>. The paper is currently submitted to the journal
+Collabra as registered report. The report is based on an <a
+href="https://osf.io/m23bn">older paper</a> that was already submitted
+to Collabra but rejected. This paper now addresses the <a
+href="reviews.pdf">feedback from the original submission</a> and
+considers the original paper a prestudy.</p>
+<ul>
+<li>You can either read the paper <a href="proposal.html">in your
+browser</a> or download it as <a href="proposal.pdf">pdf</a>.</li>
+<li>You can also find the detailed code and summaries of the <a
+href="analyses.html">planned analyses</a> reported in the paper</li>
+<li>Once finished, you will also be able to find <a
+href="analyses_additional.html">additional analyses</a> not reported in
+the paper.</li>
+</ul>
+<p>This website is produced directly from the project’s <a
+href="https://github.com/tdienlin/who_needs_privacy_rr">github
+repository</a>. You can download the material and the data, file an
+issue, or submit a pull request.</p>
 
 
 
