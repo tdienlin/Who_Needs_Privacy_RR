@@ -1,0 +1,97 @@
+---
+title: 'Items: Need for Privacy'
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: no
+      toc_depth: 3
+bibliography: bibliography/references.bib
+---
+  
+All items were answered on a 7-point scale with the following options:
+  
+"To what extent do you agree or disagree with the following statements?"
+
+(-3) Strongly Disagree, (-2) Disagree, (-1) Slightly Disagree, (0) Neutral, (1) Slightly Agree (2) Agree, (3) Strongly Agree
+
+# Need for privacy
+## Horizontal privacy
+### Psychological
+
+@frenerDevelopmentValidationNeed2021
+
+ 1.	I don’t like to talk about personal issues with others unless they do it first.
+ 2.	There are a lot of things about me that I don’t like to talk about with others.
+ 3.	I prefer not to share my feelings and inner thoughts with others.
+ 4.	I do not like it when others talk to me about their private issues. (new)
+
+### Physical
+
+@frenerDevelopmentValidationNeed2021
+
+ 1.	I don’t like it when strangers come too close to me.
+ 2.	I don’t like to stand in a dense crowd of people.
+ 3.	I don’t like to sit next to a stranger on a tram, bus, or plane.
+ 4.	I hate it when people enter my personal space uninvited. (new)
+
+### Social
+
+@dienlinWhoNeedsPrivacy2019
+
+ 1.	I don’t feel comfortable interacting with other people. [@harrisonDevelopmentDesirePrivacy1993]
+ 2.	I often want to be alone. (new)
+ 3.	I’m a fairly anti-social person. (new)
+ 4.	I prefer to work independently in most situations. (new)
+
+
+## Vertical privacy
+### Privacy from Government
+
+@dienlinWhoNeedsPrivacy2019
+
+ 1.	I need government agencies to respect my privacy, even if that makes catching criminals harder.
+ 2.	I don’t want the government to gather data about me, even if that makes it harder to spend tax income effectively.
+ 3.	I don’t want government agencies to monitor my communication, even if that prevents terrorist attacks.
+ 4.	I feel I need to protect my privacy from government agencies.
+
+### Privacy from Companies
+
+New, self-designed.
+
+ 1.	I’m willing to pay more for products or services so that companies don’t have to sell my data.
+ 2.	I’m happy to give up a little bit of privacy so that I can use certain apps or services for free.
+ 3.	I don’t want companies to gather information about me, even if that reduces the quality of their services.
+ 4.	I feel I need to protect my privacy from companies.
+
+## General privacy
+### Informational
+
+@frenerDevelopmentValidationNeed2021
+
+ 1.	I would prefer that little is known about me.
+ 2.	I don’t want my personal data to be publicly accessible.
+ 3.	It is important to me that records pertaining to me remain confidential. [@harrisonDevelopmentDesirePrivacy1993]
+ 4.	I prefer that others cannot easily find information about me on the Internet. (new)
+ 
+### Privacy need anonymity
+
+@dienlinWhoNeedsPrivacy2019
+
+ 1.	I would prefer to use a fake account on social network sites to preserve my privacy.
+ 2.	I feel I need to avoid places with video surveillance.
+ 3.	I prefer not to carry my driver’s license or ID with me all the time to preserve my privacy.
+ 4.	I need to be able to surf the Internet anonymously. (new)
+
+### General Need for privacy
+
+New, self-designed.
+
+1.	I need a lot of privacy.
+2.	Privacy is very important to me.
+3.	I think a lot about how I can protect my privacy.
+4.	I value privacy a lot.
+ 
+## Literature

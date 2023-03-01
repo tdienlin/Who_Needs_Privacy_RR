@@ -1,0 +1,39 @@
+---
+title: "Analysis Pipeline"
+output:
+  html_document:
+    toc: TRUE
+    toc_float:
+      collapsed: FALSE
+      toc_depth: 3
+# output: pdf_document
+bibliography: 
+  - "bibliography/references.bib"
+---
+
+Below we state how we plan to analyze the data. To achieve sufficient model fit, there'll likely be several adaptions.
+
+# Model Fit
+
+ - If model fit is below the criteria, we will first inspect modification indices, potentially allowing covariance or cross-loadings if theoretically plausible. 
+ - If these changes do not yield sufficient fit, we will drop malfunctioning items. 
+ - If fit is still subpar, we will conduct exploratory factor analyses (EFA) to asssess the underlying factor structure. 
+ - EFAs will be run using maximum likelihood estimation and oblimin rotation [@osborneSampleSizeSubject2004, p. 7]. 
+ - If more than one dimension is revealed, we will implement bifactor model solutions.[^1] 
+ - Bifactor models retain a general measure of the variable, without introducing novel potentially overfitted subdimensions.
+ - If no adequate bifactor model can be found, we will proceed by deleting items with low loadings on the general factor and/or the specific factors. 
+ - If also after deletion of individual items no bifactor solution should emerge, we will use a subset of the items to extract a single factor with sufficient factorial validity.
+
+[^1]: Bifactor models feature one factor that explains the variance in all items (the so-called general factor or g-factor). 
+In addition, at least two additional factors are implemented that explain the variance in a subset of the items. The general factor and the specific factors are orthogonal. 
+Bifactor models are nested within hierarchical models. 
+For more information on bifactor models, see @klinePrinciplesPracticeStructural2016, p. 319. 
+Note that we will not specify a bifactor model of all items measuring need for privacy, because we are explicitly interested in the relations between the personality facets and the respective dimensions of need for privacy.
+
+# Analysis
+
+Because the analyses are complex, it might be that we need to simplify the model. We will proceed as follows.
+
+- Instead of a fully latent structural regression model, we will then conduct a partially latent structural regression model, in which the predictor variables will be modeled as single indicators while controlling for measurement error [@klinePrinciplesPracticeStructural2016, p. 214]. 
+    - To get high-quality single indicators of the predictors, we will compute the average of the model predicted values/latent factor scores, which can be extracted from the CFAs. 
+    - If the CFAs show a unidimensional solution, we will use the model predicted values for this latent factor; if the CFAs produce a multidimensional solution, we will use the model predicted values for the general latent factor.

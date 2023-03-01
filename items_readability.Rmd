@@ -48,6 +48,8 @@ d <- read_spss("data/Need+for+Privacy_August+16%2C+2021_15.33.sav")
 
 Below, we develop several new items for need for privacy. To validate items, we follow the procedure implemented by @patalayAssessingReadabilitySelfreported2018 and calculate the following four reading scores: Flesch–Kincaid reading grade (FK), Gunning Fog Index (GFI), Coleman Liau Index (CLI), and the Powers-Sumner-Kearl Variation of the Dale and Chall Readability formula (DC).
 
+# Personality
+
 To have a benchmark, we calculated the readability of the HEXACO items. It was as follows:
 
 ```{r}
@@ -161,7 +163,75 @@ readability_hexaco
 
 Readability was good. The results means that, on average, understanding the items requires seven years of schooling.
 
-# Privacy from Government
+# Privacy
+## Horizontal
+### Psychological
+
+@frenerDevelopmentValidationNeed2021
+
+ 1.	I don’t like to talk about personal issues with others unless they do it first.
+ 2.	There are a lot of things about me that I don’t like to talk about with others.
+ 3.	I prefer not to share my feelings and inner thoughts with others.
+ 4.	I do not like it when others talk to me about their private issues. (new)
+
+```{r}
+items <- c(
+ "I don’t like to talk about personal issues with others unless they do it first.",
+ "There are a lot of things about me that I don’t like to talk about with others.",
+ "I prefer not to share my feelings and inner thoughts with others.",
+ "I do not like it when others talk to me about their private issues."
+)
+readability(items) %>% rbind(readability_hexaco)
+```
+
+Readability looks good!
+
+### Physical
+
+@frenerDevelopmentValidationNeed2021
+
+ 1.	I don’t like it when strangers come too close to me.
+ 2.	I don’t like to stand in a dense crowd of people.
+ 3.	I don’t like to sit next to a stranger on a tram, bus, or plane.
+ 4.	I hate it when people enter my personal space uninvited. (new)
+
+```{r}
+items <- c(
+ "I don’t like it when strangers come too close to me.",
+ "I don’t like to stand in a dense crowd of people.",
+ "I don’t like to sit next to a stranger on a tram, bus, or plane.",
+ "I hate it when people enter my personal space uninvited."
+)
+readability(items) %>% rbind(readability_hexaco)
+```
+
+Looks good. (Item 4 not perfect, but it should still work.)
+
+### Social Privacy
+
+@dienlinWhoNeedsPrivacy2019
+
+ 1.	I don’t feel comfortable interacting with other people. [@harrisonDevelopmentDesirePrivacy1993]
+ 2.	I often want to be alone. (new)
+ 3.	I’m a fairly anti-social person. (new)
+ 4.	I prefer to work independently in most situations. (new)
+ 
+```{r}
+items <- c(
+ "My need for privacy is so strong that it prevents me from using social media actively.",
+ "I don’t feel I need to tell my friends all my secrets.",
+ "I feel I need to protect my privacy from other people.",
+ "I prefer it when others don’t know much about me."
+)
+readability(items) %>% rbind(readability_hexaco)
+```
+
+Readability looks good. (Item 1 not perfect, but should still work and was already validated.)
+
+## Vertical
+### Privacy from Government
+
+@dienlinWhoNeedsPrivacy2019
 
  - I need government agencies to respect my privacy, even if that hinders a greater societal cause, such as catching criminals.
  - I don’t want the government to gather information about me, even if that makes it more difficult for them to spend tax income efficiently.
@@ -182,86 +252,41 @@ Items 1, 2 and 3 show rather high scores. Try to formulate easier.
 
 New items:
 
- - I need government agencies to respect my privacy, even if that makes catching criminals harder.,
- - I don’t want the government to gather data about me, even if that makes it harder to spend tax income efficiently.,
- - I don’t want government agencies to monitor my communication, even if that prevents terrorist attacks.,
- - I feel I need to protect my privacy from government agencies.
+ 1.	I need government agencies to respect my privacy, even if that makes catching criminals harder.
+ 2.	I don’t want the government to gather data about me, even if that makes it harder to spend tax income effectively.
+ 3.	I don’t want government agencies to monitor my communication, even if that stops terrorist attacks.
+ 4.	I feel I need to protect my privacy from government agencies.
   
 ```{r}
 items_new <- c(
  "I need government agencies to respect my privacy, even if that makes catching criminals harder.",
- "I don’t want the government to gather data about me, even if that makes it harder to spend tax income efficiently.",
-  "I don’t want government agencies to track my communication, even if that stops terrorist attacks.",
-  "I feel I need to protect my privacy from government agencies."
+ "I don’t want the government to gather data about me, even if that makes it harder to spend tax income effectively.",
+ "I don’t want government agencies to monitor my communication, even if that stops terrorist attacks.",
+ "I feel I need to protect my privacy from government agencies."
 )
 readability(items_new) %>% rbind(readability_hexaco)
 ```
 
-A bit better, but not much.
-
-```{r}
-model <- "NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04"
-```
-
-# Privacy from other People
-
- - My need for privacy is so strong that it prevents me from using social media actively. 
- - I don’t feel I need to tell my friends all my secrets.
- - I feel I need to protect my privacy from other people.
- - I prefer it when others don’t know much about me.
- 
-```{r}
-items <- c(
- "My need for privacy is so strong that it prevents me from using social media actively.",
- "I don’t feel I need to tell my friends all my secrets.",
- "I feel I need to protect my privacy from other people.",
- "I prefer it when others don’t know much about me."
-)
-readability(items) %>% rbind(readability_hexaco)
-```
-
-Readability looks good!
+A bit better, but not much. But scale worked pretty well in original study, so should be okay.
 
 ```{r}
 model <- "NFP_INT =~ NFP_INT_01 + NFP_INT_02 + NFP_INT_03 + NFP_INT_04"
 ```
 
-# Privacy need anonymity
+### Privacy from Companies
 
- - I need to be able to use a fake account on social network sites to preserve my privacy. 
- - I feel I need to avoid places with video surveillance.
- - I prefer not to carry my drivers license or ID with me all the time to preserve my privacy.
- - I need to be able to surf the Internet anonymously. (new)
- 
-```{r}
-items <- c(
- "I need to be able to use a fake account on social network sites to preserve my privacy.",
- "I feel I need to avoid places with video surveillance.",
- "I prefer not to carry my drivers license or ID with me all the time to preserve my privacy.",
- "I need to be able to surf the Internet anonymously."
-)
-readability(items) %>% rbind(readability_hexaco)
-```
+New, self-designed.
 
-Readability looks good!
-
-```{r}
-model <- "NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04"
-```
-
-
-# Privacy from Companies
-
- - I’m willing to pay more for products or services so that companies don’t have to sell my data.
- - I’m happy to give up a little bit of privacy, so that I can use certain apps or services for free.
- - I don’t want companies to gather information about me, even if that reduces the quality of their services.
- - I feel I need to protect my privacy from companies.
+ 1. I’m willing to pay more for products or services so that companies don’t have to sell my data.
+ 2. I’m happy to give up a little bit of privacy, so that I can use certain apps or services for free.
+ 3. I don’t want companies to gather information about me, even if that reduces the quality of their services.
+ 4. I feel I need to protect my privacy from companies.
 
 ```{r}
 items <- c(
  "I’m willing to pay more for products or services so that companies don’t have to sell my data.",
  "I’m happy to give up a little bit of privacy, so that I can use certain apps or services for free.",
- "I don’t want companies to collect data about me, even if that makes their services worse.",
+ "I don’t want companies to gather information about me, even if that reduces the quality of their services.",
  "I feel I need to protect my privacy from companies."
 )
 readability(items) %>% rbind(readability_hexaco)
@@ -269,28 +294,74 @@ readability(items) %>% rbind(readability_hexaco)
 
 Items 3 seems to be a bit too difficult. Try to make easier.
 
+ 1. I’m willing to pay more for products or services so that companies don’t have to sell my data.
+ 2. I’m happy to give up a little bit of privacy so that I can use certain apps or services for free.
+ 3. I don’t want companies to collect data about me, even if that makes their services worse.
+ 4. I feel I need to protect my privacy from companies.
+	
 ```{r}
 items <- c(
- "I’m willing to pay more for products or services so that companies don’t have to sell my data.",
- "I’m happy to give up a little bit of privacy, so that I can use certain apps or services for free.",
- "I don’t want companies to gather information about me, even if that lowers the quality of their services.",
- "I feel I need to protect my privacy from companies."
+	"I’m willing to pay more for products or services so that companies don’t have to sell my data.",
+	"I’m happy to give up a little bit of privacy so that I can use certain apps or services for free.",
+	"I don’t want companies to collect data about me, even if that makes their services worse.",
+	"I feel I need to protect my privacy from companies."
 )
 readability(items) %>% rbind(readability_hexaco)
 ```
 
 Readability now much better.
 
+## General
+### Informational
+
+@frenerDevelopmentValidationNeed2021
+
+ 1.	I would prefer that little is known about me.
+ 2.	I don’t want my personal data to be publicly accessible.
+ 3.	It is important to me that records pertaining to me remain confidential. [@harrisonDevelopmentDesirePrivacy1993]
+ 4.	I prefer that others cannot easily find information about me on the Internet. (new)
+ 
 ```{r}
-model <- "NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04"
+items <- c(
+	"I would prefer that little is known about me.",
+ 	"I don’t want my personal data to be publicly accessible.",
+ 	"It is important to me that records pertaining to me remain confidential.",
+  "I prefer that others cannot easily find information about me on the Internet."
+)
+readability(items) %>% rbind(readability_hexaco)
 ```
 
-# General Need for privacy
+Readability looks good.
 
- - I need a lot of privacy.
- - Privacy is very important to me.
- - I think a lot about how I can protect my privacy.
- - I need a lot of time for myself.
+### Privacy need anonymity
+
+@dienlinWhoNeedsPrivacy2019
+
+ 1.	I would prefer to use a fake account on social network sites to preserve my privacy.
+ 2.	I feel I need to avoid places with video surveillance.
+ 3.	I prefer not to carry my driver’s license or ID with me all the time to preserve my privacy.
+ 4.	I need to be able to surf the Internet anonymously. (new)
+ 
+```{r}
+items <- c(
+ "I would prefer to use a fake account on social network sites to preserve my privacy.",
+ "I feel I need to avoid places with video surveillance.",
+ "I prefer not to carry my drivers license or ID with me all the time to preserve my privacy.",
+ "I need to be able to surf the Internet anonymously."
+)
+readability(items) %>% rbind(readability_hexaco)
+```
+
+Readability looks good.
+
+### General Need for privacy
+
+New, self-designed.
+
+ 1.	I need a lot of privacy.
+ 2.	Privacy is very important to me.
+ 3.	I think a lot about how I can protect my privacy.
+ 4.	I value privacy a lot.
 
 ```{r}
 items <- c(
