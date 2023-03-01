@@ -342,7 +342,7 @@ div.tocify {
   <a href="items.html">Items</a>
 </li>
 <li>
-  <a href="analyses_readability.html">Readability Analyses</a>
+  <a href="items_readability.html">Readability Analyses</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -390,257 +390,29 @@ relationship between personality and need for privacy</h1>
 <li>The results below use simulated data.</li>
 <li>The data are random and don’t make sense, but help to illustrate the
 overall approach and planned analyses.</li>
-<li>We’ll later conduct additional analyses, for example
-model-alterations given misfit.</li>
+<li>We’ll later conduct further analyses not yet reported here, for
+example model-alterations given misfit.</li>
 </ul>
 <div id="set-up" class="section level1">
 <h1>Set-Up</h1>
-<pre><code>## [[1]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[2]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[3]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[4]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[5]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[6]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[7]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[8]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[9]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[10]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[11]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[12]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[13]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[14]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[15]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[16]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[17]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[18]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;              
-## 
-## [[19]]
-##  [1] &quot;td&quot;                 &quot;forcats&quot;            &quot;stringr&quot;            &quot;dplyr&quot;             
-##  [5] &quot;purrr&quot;              &quot;readr&quot;              &quot;tidyr&quot;              &quot;tibble&quot;            
-##  [9] &quot;tidyverse&quot;          &quot;semTools&quot;           &quot;semPlot&quot;            &quot;pwr&quot;               
-## [13] &quot;quanteda.textstats&quot; &quot;psych&quot;              &quot;PerFit&quot;             &quot;mirt&quot;              
-## [17] &quot;stats4&quot;             &quot;lattice&quot;            &quot;ltm&quot;                &quot;polycor&quot;           
-## [21] &quot;msm&quot;                &quot;MASS&quot;               &quot;MVN&quot;                &quot;mice&quot;              
-## [25] &quot;magrittr&quot;           &quot;lavaan&quot;             &quot;knitr&quot;              &quot;kableExtra&quot;        
-## [29] &quot;haven&quot;              &quot;GGally&quot;             &quot;ggplot2&quot;            &quot;devtools&quot;          
-## [33] &quot;usethis&quot;            &quot;corrplot&quot;           &quot;stats&quot;              &quot;graphics&quot;          
-## [37] &quot;grDevices&quot;          &quot;utils&quot;              &quot;datasets&quot;           &quot;methods&quot;           
-## [41] &quot;base&quot;</code></pre>
+<pre class="r"><code># install packages
+# devtools::install_github(&quot;https://github.com/tdienlin/td&quot;)
+
+# define packages
+packages &lt;- c(&quot;corrplot&quot;, &quot;devtools&quot;, &quot;GGally&quot;, &quot;ggplot2&quot;, &quot;haven&quot;, &quot;kableExtra&quot;, &quot;knitr&quot;, 
+              &quot;lavaan&quot;, &quot;magrittr&quot;, &quot;mice&quot;, &quot;MVN&quot;, &quot;PerFit&quot;, &quot;psych&quot;, &quot;quanteda.textstats&quot;,
+              &quot;pwr&quot;, &quot;semPlot&quot;, &quot;semTools&quot;, &quot;tidyverse&quot;, &quot;td&quot;)
+
+# load packages
+lapply(packages, library, character.only = TRUE)
+
+# readability function
+readability = function(data){
+  reading_estimates &lt;- c(&quot;Flesch.Kincaid&quot;, &quot;FOG&quot;, &quot;Coleman.Liau.short&quot;, &quot;Dale.Chall.PSK&quot;)
+  textstat_readability(data, measure = reading_estimates) %&gt;% 
+    as.data.frame %&gt;% 
+    mutate(average = rowMeans(select(., -document)))
+}</code></pre>
 </div>
 <div id="items" class="section level1">
 <h1>Items</h1>
@@ -666,6 +438,91 @@ worst jokes.</li>
 <li>I wouldn’t pretend to like someone just to get that person to do
 favors for me.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 49 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.151
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.927
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 3.232
+##   Degrees of freedom                                 6
+##   P-value                                        0.779
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                      -1.004
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)               -1.004
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4081.264
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8186.528
+##   Bayesian (BIC)                              8236.689
+##   Sample-size adjusted Bayesian (SABIC)       8198.601
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.028
+##   P-value H_0: RMSEA &lt;= 0.050                    0.977
+##   P-value H_0: RMSEA &gt;= 0.080                    0.004
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.028
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.977
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.004
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.005
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_HOH_SIN =~                                                        
+##     HEX_HOH_SIN_01    1.000                               0.761    0.380
+##     HEX_HOH_SIN_02    0.237    0.594    0.399    0.690    0.180    0.092
+##     HEX_HOH_SIN_03    0.307    0.655    0.468    0.640    0.234    0.113
+##     HEX_HOH_SIN_04   -0.370    0.791   -0.467    0.640   -0.281   -0.142
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_HOH_SIN_01    3.884    0.091   42.664    0.000    3.884    1.941
+##    .HEX_HOH_SIN_02    4.062    0.089   45.565    0.000    4.062    2.073
+##    .HEX_HOH_SIN_03    3.988    0.094   42.394    0.000    3.988    1.929
+##    .HEX_HOH_SIN_04    4.027    0.090   44.614    0.000    4.027    2.030
+##     HEX_HOH_SIN       0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_HOH_SIN_01    3.424    1.328    2.578    0.010    3.424    0.855
+##    .HEX_HOH_SIN_02    3.806    0.264   14.399    0.000    3.806    0.992
+##    .HEX_HOH_SIN_03    4.219    0.301   14.036    0.000    4.219    0.987
+##    .HEX_HOH_SIN_04    3.856    0.305   12.626    0.000    3.856    0.980
+##     HEX_HOH_SIN       0.579    1.316    0.440    0.660    1.000    1.000</code></pre>
 </div>
 <div id="fairness" class="section level4">
 <h4>Fairness</h4>
@@ -678,6 +535,91 @@ tight.</li>
 <li>I’d be tempted to use counterfeit money, if I were sure I could get
 away with it.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 88 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.949
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.622
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 5.274
+##   Degrees of freedom                                 6
+##   P-value                                        0.509
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                      -3.341
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)               -3.341
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4062.220
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8148.440
+##   Bayesian (BIC)                              8198.601
+##   Sample-size adjusted Bayesian (SABIC)       8160.514
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.072
+##   P-value H_0: RMSEA &lt;= 0.050                    0.854
+##   P-value H_0: RMSEA &gt;= 0.080                    0.032
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.072
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.854
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.032
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.012
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_HOH_FAI =~                                                        
+##     HEX_HOH_FAI_01    1.000                                  NA       NA
+##     HEX_HOH_FAI_02    1.518    2.954    0.514    0.607       NA       NA
+##     HEX_HOH_FAI_03    6.577   23.169    0.284    0.777       NA       NA
+##     HEX_HOH_FAI_04   -2.702    4.513   -0.599    0.549       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_HOH_FAI_01    4.081    0.090   45.484    0.000    4.081    2.070
+##    .HEX_HOH_FAI_02    4.056    0.091   44.807    0.000    4.056    2.039
+##    .HEX_HOH_FAI_03    3.913    0.091   43.129    0.000    3.913    1.962
+##    .HEX_HOH_FAI_04    4.087    0.090   45.402    0.000    4.087    2.066
+##     HEX_HOH_FAI       0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_HOH_FAI_01    3.905    0.264   14.799    0.000    3.905    1.004
+##    .HEX_HOH_FAI_02    3.996    0.277   14.421    0.000    3.996    1.010
+##    .HEX_HOH_FAI_03    4.700    2.077    2.263    0.024    4.700    1.182
+##    .HEX_HOH_FAI_04    4.036    0.421    9.594    0.000    4.036    1.031
+##     HEX_HOH_FAI      -0.017    0.077   -0.217    0.828       NA       NA</code></pre>
 </div>
 <div id="greed-avoidance" class="section level4">
 <h4>Greed Avoidance</h4>
@@ -689,6 +631,91 @@ neighborhood.</li>
 <li>I would get a lot of pleasure from owning expensive luxury
 goods.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 118 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 1.474
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.479
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 6.303
+##   Degrees of freedom                                 6
+##   P-value                                        0.390
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                       6.215
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)                6.215
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4057.903
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8139.806
+##   Bayesian (BIC)                              8189.966
+##   Sample-size adjusted Bayesian (SABIC)       8151.879
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.082
+##   P-value H_0: RMSEA &lt;= 0.050                    0.774
+##   P-value H_0: RMSEA &gt;= 0.080                    0.058
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.082
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.774
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.058
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.015
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_HOH_GRE =~                                                        
+##     HEX_HOH_GRE_01    1.000                                  NA       NA
+##     HEX_HOH_GRE_02    7.753   22.371    0.347    0.729       NA       NA
+##     HEX_HOH_GRE_03   -2.600    6.337   -0.410    0.682       NA       NA
+##     HEX_HOH_GRE_04    3.881    7.688    0.505    0.614       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_HOH_GRE_01    4.133    0.091   45.534    0.000    4.133    2.072
+##    .HEX_HOH_GRE_02    4.054    0.089   45.589    0.000    4.054    2.074
+##    .HEX_HOH_GRE_03    3.959    0.089   44.487    0.000    3.959    2.024
+##    .HEX_HOH_GRE_04    4.002    0.092   43.695    0.000    4.002    1.988
+##     HEX_HOH_GRE       0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_HOH_GRE_01    3.988    0.261   15.276    0.000    3.988    1.002
+##    .HEX_HOH_GRE_02    4.416    1.328    3.324    0.001    4.416    1.156
+##    .HEX_HOH_GRE_03    3.892    0.283   13.748    0.000    3.892    1.018
+##    .HEX_HOH_GRE_04    4.201    0.441    9.536    0.000    4.201    1.037
+##     HEX_HOH_GRE      -0.010    0.044   -0.224    0.823       NA       NA</code></pre>
 </div>
 <div id="modesty" class="section level4">
 <h4>Modesty</h4>
@@ -701,6 +728,91 @@ is.</li>
 <li>I want people to know that I am an important person of high
 status.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 50 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.362
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.834
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 4.091
+##   Degrees of freedom                                 6
+##   P-value                                        0.664
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                      -1.574
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)               -1.574
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4065.332
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8154.664
+##   Bayesian (BIC)                              8204.824
+##   Sample-size adjusted Bayesian (SABIC)       8166.737
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.052
+##   P-value H_0: RMSEA &lt;= 0.050                    0.945
+##   P-value H_0: RMSEA &gt;= 0.080                    0.010
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.052
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.945
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.010
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.007
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_HOH_MOD =~                                                        
+##     HEX_HOH_MOD_01    1.000                               0.605    0.310
+##     HEX_HOH_MOD_02    0.641    0.935    0.686    0.493    0.388    0.192
+##     HEX_HOH_MOD_03   -0.266    0.492   -0.541    0.589   -0.161   -0.081
+##     HEX_HOH_MOD_04   -0.524    0.830   -0.632    0.528   -0.317   -0.160
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_HOH_MOD_01    3.963    0.089   44.653    0.000    3.963    2.032
+##    .HEX_HOH_MOD_02    3.986    0.092   43.295    0.000    3.986    1.970
+##    .HEX_HOH_MOD_03    3.948    0.090   43.661    0.000    3.948    1.987
+##    .HEX_HOH_MOD_04    4.031    0.090   44.637    0.000    4.031    2.031
+##     HEX_HOH_MOD       0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_HOH_MOD_01    3.438    0.635    5.411    0.000    3.438    0.904
+##    .HEX_HOH_MOD_02    3.943    0.350   11.261    0.000    3.943    0.963
+##    .HEX_HOH_MOD_03    3.924    0.263   14.918    0.000    3.924    0.993
+##    .HEX_HOH_MOD_04    3.838    0.309   12.430    0.000    3.838    0.974
+##     HEX_HOH_MOD       0.366    0.605    0.605    0.545    1.000    1.000</code></pre>
 </div>
 </div>
 <div id="emotionality" class="section level3">
@@ -714,6 +826,91 @@ conditions.</li>
 <li>When it comes to physical danger, I am very fearful.</li>
 <li>Even in an emergency I wouldn’t feel like panicking.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 38 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 1.371
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.504
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 5.884
+##   Degrees of freedom                                 6
+##   P-value                                        0.436
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                     -15.290
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)              -15.290
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4080.838
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8185.676
+##   Bayesian (BIC)                              8235.836
+##   Sample-size adjusted Bayesian (SABIC)       8197.749
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.081
+##   P-value H_0: RMSEA &lt;= 0.050                    0.790
+##   P-value H_0: RMSEA &gt;= 0.080                    0.052
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.081
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.790
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.052
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.014
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_EMO_FEA =~                                                        
+##     HEX_EMO_FEA_01    1.000                               0.745    0.366
+##     HEX_EMO_FEA_02    0.157       NA                      0.117    0.059
+##     HEX_EMO_FEA_03   -0.256       NA                     -0.191   -0.094
+##     HEX_EMO_FEA_04   -0.604       NA                     -0.451   -0.231
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EMO_FEA_01    4.164    0.093   44.966    0.000    4.164    2.046
+##    .HEX_EMO_FEA_02    3.998    0.091   44.034    0.000    3.998    2.004
+##    .HEX_EMO_FEA_03    4.081    0.092   44.163    0.000    4.081    2.009
+##    .HEX_EMO_FEA_04    3.952    0.089   44.529    0.000    3.952    2.026
+##     HEX_EMO_FEA       0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EMO_FEA_01    3.585       NA                      3.585    0.866
+##    .HEX_EMO_FEA_02    3.968    0.096   41.532    0.000    3.968    0.997
+##    .HEX_EMO_FEA_03    4.088    0.254   16.111    0.000    4.088    0.991
+##    .HEX_EMO_FEA_04    3.602       NA                      3.602    0.947
+##     HEX_EMO_FEA       0.556       NA                      1.000    1.000</code></pre>
 </div>
 <div id="anxiety" class="section level4">
 <h4>Anxiety</h4>
@@ -725,6 +922,91 @@ anxiety.</li>
 <li>I get very anxious when waiting to hear about an important
 decision.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 54 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 3.859
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.145
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                13.824
+##   Degrees of freedom                                 6
+##   P-value                                        0.032
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.762
+##   Tucker-Lewis Index (TLI)                       0.287
+##                                                       
+##   Robust Comparative Fit Index (CFI)             0.762
+##   Robust Tucker-Lewis Index (TLI)                0.287
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4089.698
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8203.395
+##   Bayesian (BIC)                              8253.556
+##   Sample-size adjusted Bayesian (SABIC)       8215.468
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.044
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.110
+##   P-value H_0: RMSEA &lt;= 0.050                    0.458
+##   P-value H_0: RMSEA &gt;= 0.080                    0.225
+##                                                       
+##   Robust RMSEA                                   0.044
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.110
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.458
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.225
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.025
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_EMO_ANX =~                                                        
+##     HEX_EMO_ANX_01    1.000                                  NA       NA
+##     HEX_EMO_ANX_02    0.835    0.788    1.060    0.289       NA       NA
+##     HEX_EMO_ANX_03    1.210    1.048    1.154    0.248       NA       NA
+##     HEX_EMO_ANX_04   -0.278    0.472   -0.590    0.555       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EMO_ANX_01    3.990    0.091   43.762    0.000    3.990    1.991
+##    .HEX_EMO_ANX_02    4.091    0.093   43.900    0.000    4.091    1.998
+##    .HEX_EMO_ANX_03    4.039    0.090   44.827    0.000    4.039    2.040
+##    .HEX_EMO_ANX_04    3.959    0.092   42.913    0.000    3.959    1.953
+##     HEX_EMO_ANX       0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EMO_ANX_01    4.317    0.438    9.865    0.000    4.317    1.075
+##    .HEX_EMO_ANX_02    4.406    0.401   10.973    0.000    4.406    1.050
+##    .HEX_EMO_ANX_03    4.365    0.564    7.735    0.000    4.365    1.113
+##    .HEX_EMO_ANX_04    4.134    0.276   15.000    0.000    4.134    1.006
+##     HEX_EMO_ANX      -0.303    0.322   -0.939    0.348       NA       NA</code></pre>
 </div>
 <div id="dependence" class="section level4">
 <h4>Dependence</h4>
@@ -737,6 +1019,46 @@ from anyone else.</li>
 with another person.</li>
 <li>I rarely discuss my problems with other people.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 did NOT end normally after 464 iterations
+## ** WARNING ** Estimates below are most likely unreliable
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_EMO_DEP =~                                                        
+##     HEX_EMO_DEP_01    1.000                              25.519   12.584
+##     HEX_EMO_DEP_02    0.001       NA                      0.014    0.007
+##     HEX_EMO_DEP_03    0.000       NA                      0.001    0.000
+##     HEX_EMO_DEP_04    0.001       NA                      0.014    0.007
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EMO_DEP_01    4.077       NA                      4.077    2.010
+##    .HEX_EMO_DEP_02    4.035       NA                      4.035    2.069
+##    .HEX_EMO_DEP_03    3.996       NA                      3.996    2.020
+##    .HEX_EMO_DEP_04    4.021       NA                      4.021    1.981
+##     HEX_EMO_DEP       0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EMO_DEP_01 -647.115       NA                   -647.115 -157.362
+##    .HEX_EMO_DEP_02    3.802       NA                      3.802    1.000
+##    .HEX_EMO_DEP_03    3.913       NA                      3.913    1.000
+##    .HEX_EMO_DEP_04    4.119       NA                      4.119    1.000
+##     HEX_EMO_DEP     651.227       NA                      1.000    1.000</code></pre>
 </div>
 <div id="sentimentality" class="section level4">
 <h4>Sentimentality</h4>
@@ -749,6 +1071,91 @@ long time.</li>
 <li>I remain unemotional even in situations where most people get very
 sentimental.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 56 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.830
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.660
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 4.221
+##   Degrees of freedom                                 6
+##   P-value                                        0.647
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                      -0.974
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)               -0.974
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4058.094
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8140.188
+##   Bayesian (BIC)                              8190.349
+##   Sample-size adjusted Bayesian (SABIC)       8152.261
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.070
+##   P-value H_0: RMSEA &lt;= 0.050                    0.873
+##   P-value H_0: RMSEA &gt;= 0.080                    0.027
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.070
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.873
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.027
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.011
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_EMO_SEN =~                                                        
+##     HEX_EMO_SEN_01    1.000                                  NA       NA
+##     HEX_EMO_SEN_02    0.375    0.689    0.544    0.586       NA       NA
+##     HEX_EMO_SEN_03   -1.099    1.737   -0.633    0.527       NA       NA
+##     HEX_EMO_SEN_04    1.010    1.475    0.685    0.493       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EMO_SEN_01    3.861    0.090   42.925    0.000    3.861    1.953
+##    .HEX_EMO_SEN_02    4.014    0.090   44.403    0.000    4.014    2.020
+##    .HEX_EMO_SEN_03    4.190    0.091   46.258    0.000    4.190    2.105
+##    .HEX_EMO_SEN_04    3.959    0.089   44.391    0.000    3.959    2.020
+##     HEX_EMO_SEN       0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EMO_SEN_01    4.071    0.406   10.030    0.000    4.071    1.042
+##    .HEX_EMO_SEN_02    3.971    0.270   14.733    0.000    3.971    1.006
+##    .HEX_EMO_SEN_03    4.160    0.446    9.321    0.000    4.160    1.049
+##    .HEX_EMO_SEN_04    4.006    0.401    9.993    0.000    4.006    1.043
+##     HEX_EMO_SEN      -0.162    0.301   -0.539    0.590       NA       NA</code></pre>
 </div>
 </div>
 <div id="extraversion" class="section level3">
@@ -761,6 +1168,91 @@ sentimental.</li>
 <li>I feel that I am an unpopular person.</li>
 <li>Even in an emergency I wouldn’t feel like panicking.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 68 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.153
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.926
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 5.792
+##   Degrees of freedom                                 6
+##   P-value                                        0.447
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                     -25.684
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)              -25.684
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4082.972
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8189.943
+##   Bayesian (BIC)                              8240.103
+##   Sample-size adjusted Bayesian (SABIC)       8202.016
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.029
+##   P-value H_0: RMSEA &lt;= 0.050                    0.977
+##   P-value H_0: RMSEA &gt;= 0.080                    0.004
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.029
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.977
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.004
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.005
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_EXT_SSE =~                                                        
+##     HEX_EXT_SSE_01    1.000                               0.204    0.105
+##     HEX_EXT_SSE_02    1.596    1.850    0.863    0.388    0.326    0.160
+##     HEX_EXT_SSE_03    4.263    7.254    0.588    0.557    0.870    0.418
+##     HEX_EXT_SSE_04   -1.535    1.759   -0.873    0.383   -0.313   -0.159
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EXT_SSE_01    4.081    0.088   46.305    0.000    4.081    2.107
+##    .HEX_EXT_SSE_02    3.971    0.093   42.871    0.000    3.971    1.951
+##    .HEX_EXT_SSE_03    3.963    0.095   41.833    0.000    3.963    1.903
+##    .HEX_EXT_SSE_04    3.884    0.090   43.319    0.000    3.884    1.971
+##     HEX_EXT_SSE       0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EXT_SSE_01    3.710    0.255   14.566    0.000    3.710    0.989
+##    .HEX_EXT_SSE_02    4.038    0.307   13.173    0.000    4.038    0.974
+##    .HEX_EXT_SSE_03    3.577    1.166    3.068    0.002    3.577    0.825
+##    .HEX_EXT_SSE_04    3.785    0.288   13.134    0.000    3.785    0.975
+##     HEX_EXT_SSE       0.042    0.096    0.435    0.663    1.000    1.000</code></pre>
 </div>
 <div id="social-boldness" class="section level4">
 <h4>Social Boldness</h4>
@@ -773,6 +1265,46 @@ behalf of the group.</li>
 <li>I tend to feel quite self-conscious when speaking in front of a
 group of people.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 did NOT end normally after 1033 iterations
+## ** WARNING ** Estimates below are most likely unreliable
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_EXT_BOL =~                                                        
+##     HEX_EXT_BOL_01    1.000                               0.041    0.021
+##     HEX_EXT_BOL_02    0.829       NA                      0.034    0.017
+##     HEX_EXT_BOL_03  157.505       NA                      6.476    3.155
+##     HEX_EXT_BOL_04   -0.288       NA                     -0.012   -0.006
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EXT_BOL_01    3.849       NA                      3.849    1.923
+##    .HEX_EXT_BOL_02    3.969       NA                      3.969    1.940
+##    .HEX_EXT_BOL_03    4.010       NA                      4.010    1.954
+##    .HEX_EXT_BOL_04    3.992       NA                      3.992    1.936
+##     HEX_EXT_BOL       0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EXT_BOL_01    4.002       NA                      4.002    1.000
+##    .HEX_EXT_BOL_02    4.186       NA                      4.186    1.000
+##    .HEX_EXT_BOL_03  -37.730       NA                    -37.730   -8.955
+##    .HEX_EXT_BOL_04    4.252       NA                      4.252    1.000
+##     HEX_EXT_BOL       0.002       NA                      1.000    1.000</code></pre>
 </div>
 <div id="sociability" class="section level4">
 <h4>Sociability</h4>
@@ -784,6 +1316,91 @@ involve working alone.</li>
 <li>The first thing that I always do in a new place is to make
 friends.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 590 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.425
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.809
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 5.821
+##   Degrees of freedom                                 6
+##   P-value                                        0.444
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                     -25.429
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)              -25.429
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4079.379
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8182.758
+##   Bayesian (BIC)                              8232.919
+##   Sample-size adjusted Bayesian (SABIC)       8194.831
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.056
+##   P-value H_0: RMSEA &lt;= 0.050                    0.935
+##   P-value H_0: RMSEA &gt;= 0.080                    0.012
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.056
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.935
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.012
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.008
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_EXT_SOC =~                                                        
+##     HEX_EXT_SOC_01    1.000                               0.060    0.030
+##     HEX_EXT_SOC_02  -69.025 2065.866   -0.033    0.973   -4.169   -2.047
+##     HEX_EXT_SOC_03   -0.504    0.869   -0.580    0.562   -0.030   -0.015
+##     HEX_EXT_SOC_04    1.264    1.189    1.063    0.288    0.076    0.039
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EXT_SOC_01    4.058    0.092   44.110    0.000    4.058    2.007
+##    .HEX_EXT_SOC_02    4.054    0.093   43.732    0.000    4.054    1.990
+##    .HEX_EXT_SOC_03    4.052    0.091   44.596    0.000    4.052    2.029
+##    .HEX_EXT_SOC_04    3.905    0.089   43.972    0.000    3.905    2.001
+##     HEX_EXT_SOC       0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EXT_SOC_01    4.084    0.285   14.346    0.000    4.084    0.999
+##    .HEX_EXT_SOC_02  -13.232  518.537   -0.026    0.980  -13.232   -3.188
+##    .HEX_EXT_SOC_03    3.986    0.258   15.459    0.000    3.986    1.000
+##    .HEX_EXT_SOC_04    3.803    0.300   12.656    0.000    3.803    0.998
+##     HEX_EXT_SOC       0.004    0.110    0.033    0.973    1.000    1.000</code></pre>
 </div>
 <div id="liveliness" class="section level4">
 <h4>Liveliness</h4>
@@ -793,6 +1410,91 @@ friends.</li>
 <li>People often tell me that I should try to cheer up.</li>
 <li>Most people are more upbeat and dynamic than I generally am.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 118 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.059
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.971
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 2.017
+##   Degrees of freedom                                 6
+##   P-value                                        0.918
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                      -0.462
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)               -0.462
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4064.660
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8153.320
+##   Bayesian (BIC)                              8203.480
+##   Sample-size adjusted Bayesian (SABIC)       8165.393
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.000
+##   P-value H_0: RMSEA &lt;= 0.050                    0.991
+##   P-value H_0: RMSEA &gt;= 0.080                    0.001
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.000
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.991
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.001
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.003
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_EXT_LIV =~                                                        
+##     HEX_EXT_LIV_01    1.000                                  NA       NA
+##     HEX_EXT_LIV_02    0.183    1.167    0.157    0.876       NA       NA
+##     HEX_EXT_LIV_03    0.065    0.406    0.161    0.872       NA       NA
+##     HEX_EXT_LIV_04   -0.128    0.829   -0.154    0.877       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EXT_LIV_01    4.153    0.091   45.749    0.000    4.153    2.082
+##    .HEX_EXT_LIV_02    4.075    0.091   44.712    0.000    4.075    2.034
+##    .HEX_EXT_LIV_03    3.946    0.089   44.378    0.000    3.946    2.019
+##    .HEX_EXT_LIV_04    3.942    0.090   43.608    0.000    3.942    1.984
+##     HEX_EXT_LIV       0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_EXT_LIV_01    5.057    6.997    0.723    0.470    5.057    1.270
+##    .HEX_EXT_LIV_02    4.047    0.350   11.575    0.000    4.047    1.009
+##    .HEX_EXT_LIV_03    3.824    0.248   15.393    0.000    3.824    1.001
+##    .HEX_EXT_LIV_04    3.965    0.282   14.045    0.000    3.965    1.004
+##     HEX_EXT_LIV      -1.077    6.986   -0.154    0.878       NA       NA</code></pre>
 </div>
 </div>
 <div id="agreeableness" class="section level3">
@@ -809,6 +1511,91 @@ that person.</li>
 <li>I find it hard to fully forgive someone who has done something mean
 to me.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 52 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 1.011
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.603
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 7.642
+##   Degrees of freedom                                 6
+##   P-value                                        0.266
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                       2.808
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)                2.808
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4063.432
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8150.865
+##   Bayesian (BIC)                              8201.025
+##   Sample-size adjusted Bayesian (SABIC)       8162.938
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.074
+##   P-value H_0: RMSEA &lt;= 0.050                    0.845
+##   P-value H_0: RMSEA &gt;= 0.080                    0.035
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.074
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.845
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.035
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.012
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_AGR_FOR =~                                                        
+##     HEX_AGR_FOR_01    1.000                                  NA       NA
+##     HEX_AGR_FOR_02    1.004    1.492    0.673    0.501       NA       NA
+##     HEX_AGR_FOR_03    0.251    0.428    0.587    0.557       NA       NA
+##     HEX_AGR_FOR_04    0.350    0.442    0.792    0.429       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_AGR_FOR_01    4.070    0.089   45.963    0.000    4.070    2.091
+##    .HEX_AGR_FOR_02    3.940    0.092   42.646    0.000    3.940    1.940
+##    .HEX_AGR_FOR_03    4.112    0.092   44.565    0.000    4.112    2.028
+##    .HEX_AGR_FOR_04    4.153    0.088   47.039    0.000    4.153    2.140
+##     HEX_AGR_FOR       0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_AGR_FOR_01    4.173    0.672    6.212    0.000    4.173    1.102
+##    .HEX_AGR_FOR_02    4.511    0.681    6.623    0.000    4.511    1.094
+##    .HEX_AGR_FOR_03    4.136    0.275   15.024    0.000    4.136    1.006
+##    .HEX_AGR_FOR_04    3.812    0.264   14.465    0.000    3.812    1.013
+##     HEX_AGR_FOR      -0.385    0.605   -0.636    0.525       NA       NA</code></pre>
 </div>
 <div id="gentleness" class="section level4">
 <h4>Gentleness</h4>
@@ -820,6 +1607,91 @@ them.</li>
 <li>Even when people make a lot of mistakes, I rarely say anything
 negative.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 57 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 3.045
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.218
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                19.719
+##   Degrees of freedom                                 6
+##   P-value                                        0.003
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.924
+##   Tucker-Lewis Index (TLI)                       0.771
+##                                                       
+##   Robust Comparative Fit Index (CFI)             0.924
+##   Robust Tucker-Lewis Index (TLI)                0.771
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4076.549
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8177.098
+##   Bayesian (BIC)                              8227.259
+##   Sample-size adjusted Bayesian (SABIC)       8189.171
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.033
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.102
+##   P-value H_0: RMSEA &lt;= 0.050                    0.554
+##   P-value H_0: RMSEA &gt;= 0.080                    0.161
+##                                                       
+##   Robust RMSEA                                   0.033
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.102
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.554
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.161
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.021
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_AGR_GEN =~                                                        
+##     HEX_AGR_GEN_01    1.000                               1.890    0.924
+##     HEX_AGR_GEN_02    0.127    0.280    0.453    0.650    0.240    0.120
+##     HEX_AGR_GEN_03   -0.144    0.295   -0.488    0.626   -0.272   -0.134
+##     HEX_AGR_GEN_04   -0.091    0.214   -0.427    0.669   -0.173   -0.089
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_AGR_GEN_01    3.839    0.093   41.216    0.000    3.839    1.875
+##    .HEX_AGR_GEN_02    3.992    0.091   43.887    0.000    3.992    1.997
+##    .HEX_AGR_GEN_03    4.110    0.093   44.306    0.000    4.110    2.016
+##    .HEX_AGR_GEN_04    3.975    0.088   45.133    0.000    3.975    2.054
+##     HEX_AGR_GEN       0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_AGR_GEN_01    0.616    7.613    0.081    0.935    0.616    0.147
+##    .HEX_AGR_GEN_02    3.938    0.284   13.866    0.000    3.938    0.986
+##    .HEX_AGR_GEN_03    4.081    0.299   13.655    0.000    4.081    0.982
+##    .HEX_AGR_GEN_04    3.717    0.250   14.861    0.000    3.717    0.992
+##     HEX_AGR_GEN       3.573    7.617    0.469    0.639    1.000    1.000</code></pre>
 </div>
 <div id="flexibility" class="section level4">
 <h4>Flexibility</h4>
@@ -832,6 +1704,91 @@ with them.</li>
 <li>I find it hard to compromise with people when I really think I’m
 right.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 52 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.204
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.903
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                11.020
+##   Degrees of freedom                                 6
+##   P-value                                        0.088
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                       2.073
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)                2.073
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4057.866
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8139.732
+##   Bayesian (BIC)                              8189.893
+##   Sample-size adjusted Bayesian (SABIC)       8151.806
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.038
+##   P-value H_0: RMSEA &lt;= 0.050                    0.969
+##   P-value H_0: RMSEA &gt;= 0.080                    0.005
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.038
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.969
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.005
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.005
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_AGR_FLX =~                                                        
+##     HEX_AGR_FLX_01    1.000                               0.468    0.241
+##     HEX_AGR_FLX_02   -2.049    2.279   -0.899    0.369   -0.959   -0.479
+##     HEX_AGR_FLX_03   -0.684    0.475   -1.440    0.150   -0.320   -0.163
+##     HEX_AGR_FLX_04   -0.362    0.397   -0.911    0.362   -0.169   -0.084
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_AGR_FLX_01    4.261    0.088   48.252    0.000    4.261    2.196
+##    .HEX_AGR_FLX_02    3.921    0.091   43.012    0.000    3.921    1.957
+##    .HEX_AGR_FLX_03    4.054    0.089   45.320    0.000    4.054    2.062
+##    .HEX_AGR_FLX_04    4.000    0.092   43.529    0.000    4.000    1.981
+##     HEX_AGR_FLX       0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_AGR_FLX_01    3.547    0.341   10.389    0.000    3.547    0.942
+##    .HEX_AGR_FLX_02    3.095    1.054    2.938    0.003    3.095    0.771
+##    .HEX_AGR_FLX_03    3.762    0.269   13.997    0.000    3.762    0.973
+##    .HEX_AGR_FLX_04    4.050    0.266   15.213    0.000    4.050    0.993
+##     HEX_AGR_FLX       0.219    0.267    0.821    0.411    1.000    1.000</code></pre>
 </div>
 <div id="patience" class="section level4">
 <h4>Patience</h4>
@@ -841,6 +1798,91 @@ right.</li>
 <li>Most people tend to get angry more quickly than I do.</li>
 <li>I find it hard to keep my temper when people insult me.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 50 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.227
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.893
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 7.478
+##   Degrees of freedom                                 6
+##   P-value                                        0.279
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                       4.600
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)                4.600
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4096.079
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8216.157
+##   Bayesian (BIC)                              8266.317
+##   Sample-size adjusted Bayesian (SABIC)       8228.230
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.041
+##   P-value H_0: RMSEA &lt;= 0.050                    0.966
+##   P-value H_0: RMSEA &gt;= 0.080                    0.006
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.041
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.966
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.006
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.006
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_AGR_PAT =~                                                        
+##     HEX_AGR_PAT_01    1.000                               0.452    0.228
+##     HEX_AGR_PAT_02   -0.007    0.471   -0.014    0.989   -0.003   -0.001
+##     HEX_AGR_PAT_03    0.988    0.768    1.286    0.199    0.446    0.222
+##     HEX_AGR_PAT_04    1.627    1.714    0.949    0.343    0.735    0.358
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_AGR_PAT_01    3.979    0.090   44.073    0.000    3.979    2.005
+##    .HEX_AGR_PAT_02    3.865    0.093   41.662    0.000    3.865    1.896
+##    .HEX_AGR_PAT_03    4.058    0.091   44.449    0.000    4.058    2.023
+##    .HEX_AGR_PAT_04    3.921    0.093   42.027    0.000    3.921    1.912
+##     HEX_AGR_PAT       0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_AGR_PAT_01    3.733    0.335   11.158    0.000    3.733    0.948
+##    .HEX_AGR_PAT_02    4.158    0.268   15.540    0.000    4.158    1.000
+##    .HEX_AGR_PAT_03    3.827    0.334   11.452    0.000    3.827    0.951
+##    .HEX_AGR_PAT_04    3.665    0.665    5.509    0.000    3.665    0.872
+##     HEX_AGR_PAT       0.204    0.246    0.828    0.408    1.000    1.000</code></pre>
 </div>
 </div>
 <div id="conscientiousness" class="section level3">
@@ -856,6 +1898,46 @@ desk.</li>
 <li>When working, I sometimes have difficulties due to being
 disorganized.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 did NOT end normally after 391 iterations
+## ** WARNING ** Estimates below are most likely unreliable
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate   Std.Err  z-value  P(&gt;|z|)   Std.lv   Std.all
+##   HEX_CNS_ORG =~                                                          
+##     HEX_CNS_ORG_01     1.000                               54.689   27.706
+##     HEX_CNS_ORG_02    -0.000       NA                      -0.004   -0.002
+##     HEX_CNS_ORG_03     0.000       NA                       0.007    0.004
+##     HEX_CNS_ORG_04     0.000       NA                       0.005    0.002
+## 
+## Intercepts:
+##                    Estimate   Std.Err  z-value  P(&gt;|z|)   Std.lv   Std.all
+##    .HEX_CNS_ORG_01     4.075       NA                       4.075    2.064
+##    .HEX_CNS_ORG_02     3.919       NA                       3.919    1.946
+##    .HEX_CNS_ORG_03     3.979       NA                       3.979    1.933
+##    .HEX_CNS_ORG_04     4.070       NA                       4.070    1.976
+##     HEX_CNS_ORG        0.000                                0.000    0.000
+## 
+## Variances:
+##                    Estimate   Std.Err  z-value  P(&gt;|z|)   Std.lv   Std.all
+##    .HEX_CNS_ORG_01 -2987.002       NA                   -2987.002 -766.597
+##    .HEX_CNS_ORG_02     4.058       NA                       4.058    1.000
+##    .HEX_CNS_ORG_03     4.240       NA                       4.240    1.000
+##    .HEX_CNS_ORG_04     4.243       NA                       4.243    1.000
+##     HEX_CNS_ORG     2990.898       NA                       1.000    1.000</code></pre>
 </div>
 <div id="diligence" class="section level4">
 <h4>Diligence</h4>
@@ -866,6 +1948,91 @@ disorganized.</li>
 it.</li>
 <li>I do only the minimum amount of work needed to get by.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 108 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.160
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.923
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 5.887
+##   Degrees of freedom                                 6
+##   P-value                                        0.436
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                     -48.037
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)              -48.037
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4090.382
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8204.764
+##   Bayesian (BIC)                              8254.925
+##   Sample-size adjusted Bayesian (SABIC)       8216.838
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.030
+##   P-value H_0: RMSEA &lt;= 0.050                    0.976
+##   P-value H_0: RMSEA &gt;= 0.080                    0.004
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.030
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.976
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.004
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.005
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_CNS_DIL =~                                                        
+##     HEX_CNS_DIL_01    1.000                                  NA       NA
+##     HEX_CNS_DIL_02    0.138    0.501    0.277    0.782       NA       NA
+##     HEX_CNS_DIL_03    0.226    0.830    0.273    0.785       NA       NA
+##     HEX_CNS_DIL_04    0.060    0.203    0.294    0.769       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_CNS_DIL_01    3.938    0.092   42.851    0.000    3.938    1.950
+##    .HEX_CNS_DIL_02    3.737    0.092   40.713    0.000    3.737    1.852
+##    .HEX_CNS_DIL_03    4.104    0.091   45.106    0.000    4.104    2.052
+##    .HEX_CNS_DIL_04    4.012    0.092   43.731    0.000    4.012    1.990
+##     HEX_CNS_DIL       0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_CNS_DIL_01    5.672    5.923    0.958    0.338    5.672    1.390
+##    .HEX_CNS_DIL_02    4.100    0.289   14.194    0.000    4.100    1.007
+##    .HEX_CNS_DIL_03    4.079    0.403   10.123    0.000    4.079    1.020
+##    .HEX_CNS_DIL_04    4.072    0.263   15.456    0.000    4.072    1.001
+##     HEX_CNS_DIL      -1.593    5.906   -0.270    0.787       NA       NA</code></pre>
 </div>
 <div id="perfectionism" class="section level4">
 <h4>Perfectionism</h4>
@@ -877,6 +2044,91 @@ details.</li>
 time.</li>
 <li>People often call me a perfectionist.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 203 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.113
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.945
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 1.789
+##   Degrees of freedom                                 6
+##   P-value                                        0.938
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                      -0.344
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)               -0.344
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4092.798
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8209.596
+##   Bayesian (BIC)                              8259.756
+##   Sample-size adjusted Bayesian (SABIC)       8221.669
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.014
+##   P-value H_0: RMSEA &lt;= 0.050                    0.983
+##   P-value H_0: RMSEA &gt;= 0.080                    0.003
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.014
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.983
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.003
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.004
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_CNS_PER =~                                                        
+##     HEX_CNS_PER_01    1.000                               0.035    0.017
+##     HEX_CNS_PER_02    2.232    9.903    0.225    0.822    0.078    0.040
+##     HEX_CNS_PER_03   -4.034   17.029   -0.237    0.813   -0.141   -0.069
+##     HEX_CNS_PER_04  -41.805  633.796   -0.066    0.947   -1.458   -0.721
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_CNS_PER_01    3.971    0.093   42.595    0.000    3.971    1.938
+##    .HEX_CNS_PER_02    4.054    0.089   45.663    0.000    4.054    2.078
+##    .HEX_CNS_PER_03    3.957    0.093   42.752    0.000    3.957    1.945
+##    .HEX_CNS_PER_04    3.946    0.092   42.893    0.000    3.946    1.952
+##     HEX_CNS_PER       0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_CNS_PER_01    4.197    0.271   15.510    0.000    4.197    1.000
+##    .HEX_CNS_PER_02    3.801    0.265   14.356    0.000    3.801    0.998
+##    .HEX_CNS_PER_03    4.117    0.422    9.762    0.000    4.117    0.995
+##    .HEX_CNS_PER_04    1.963   35.005    0.056    0.955    1.963    0.480
+##     HEX_CNS_PER       0.001    0.018    0.067    0.946    1.000    1.000</code></pre>
 </div>
 <div id="prudence" class="section level4">
 <h4>Prudence</h4>
@@ -888,6 +2140,91 @@ careful thought.</li>
 <li>I prefer to do whatever comes to mind, rather than stick to a
 plan.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 52 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.436
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.804
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 4.211
+##   Degrees of freedom                                 6
+##   P-value                                        0.648
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                      -1.622
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)               -1.622
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4050.145
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8124.289
+##   Bayesian (BIC)                              8174.450
+##   Sample-size adjusted Bayesian (SABIC)       8136.362
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.056
+##   P-value H_0: RMSEA &lt;= 0.050                    0.934
+##   P-value H_0: RMSEA &gt;= 0.080                    0.012
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.056
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.934
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.012
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.008
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_CNS_PRU =~                                                        
+##     HEX_CNS_PRU_01    1.000                                  NA       NA
+##     HEX_CNS_PRU_02   -0.797    0.978   -0.815    0.415       NA       NA
+##     HEX_CNS_PRU_03   -0.836    1.208   -0.692    0.489       NA       NA
+##     HEX_CNS_PRU_04    0.679    1.063    0.639    0.523       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_CNS_PRU_01    4.004    0.090   44.700    0.000    4.004    2.034
+##    .HEX_CNS_PRU_02    4.002    0.087   46.037    0.000    4.002    2.095
+##    .HEX_CNS_PRU_03    3.961    0.090   43.815    0.000    3.961    1.994
+##    .HEX_CNS_PRU_04    3.988    0.092   43.416    0.000    3.988    1.976
+##     HEX_CNS_PRU       0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_CNS_PRU_01    4.073    0.429    9.488    0.000    4.073    1.051
+##    .HEX_CNS_PRU_02    3.776    0.330   11.446    0.000    3.776    1.034
+##    .HEX_CNS_PRU_03    4.085    0.367   11.130    0.000    4.085    1.035
+##    .HEX_CNS_PRU_04    4.166    0.328   12.695    0.000    4.166    1.022
+##     HEX_CNS_PRU      -0.198    0.330   -0.599    0.549       NA       NA</code></pre>
 </div>
 </div>
 <div id="openness" class="section level3">
@@ -902,6 +2239,91 @@ concert.</li>
 <li>Sometimes I like to just watch the wind as it blows through the
 trees.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 46 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.931
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.628
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                10.870
+##   Degrees of freedom                                 6
+##   P-value                                        0.092
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                       1.658
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)                1.658
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4076.327
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8176.655
+##   Bayesian (BIC)                              8226.815
+##   Sample-size adjusted Bayesian (SABIC)       8188.728
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.072
+##   P-value H_0: RMSEA &lt;= 0.050                    0.857
+##   P-value H_0: RMSEA &gt;= 0.080                    0.031
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.072
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.857
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.031
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.011
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_OPN_AES =~                                                        
+##     HEX_OPN_AES_01    1.000                               0.591    0.302
+##     HEX_OPN_AES_02    0.234    0.347    0.676    0.499    0.138    0.071
+##     HEX_OPN_AES_03    0.559    0.441    1.268    0.205    0.331    0.160
+##     HEX_OPN_AES_04    1.334    1.291    1.033    0.302    0.788    0.388
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_OPN_AES_01    4.075    0.089   45.764    0.000    4.075    2.082
+##    .HEX_OPN_AES_02    4.014    0.089   45.119    0.000    4.014    2.053
+##    .HEX_OPN_AES_03    4.164    0.094   44.393    0.000    4.164    2.020
+##    .HEX_OPN_AES_04    4.091    0.092   44.251    0.000    4.091    2.014
+##     HEX_OPN_AES       0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_OPN_AES_01    3.480    0.417    8.336    0.000    3.480    0.909
+##    .HEX_OPN_AES_02    3.805    0.249   15.270    0.000    3.805    0.995
+##    .HEX_OPN_AES_03    4.139    0.296   13.988    0.000    4.139    0.974
+##    .HEX_OPN_AES_04    3.507    0.673    5.214    0.000    3.507    0.850
+##     HEX_OPN_AES       0.349    0.367    0.951    0.341    1.000    1.000</code></pre>
 </div>
 <div id="inquisitiveness" class="section level4">
 <h4>Inquisitiveness</h4>
@@ -913,6 +2335,91 @@ countries.</li>
 technology.</li>
 <li>I’ve never really enjoyed looking through an encyclopedia.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 52 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.193
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.908
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 4.444
+##   Degrees of freedom                                 6
+##   P-value                                        0.617
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                      -2.485
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)               -2.485
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4064.764
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8153.528
+##   Bayesian (BIC)                              8203.688
+##   Sample-size adjusted Bayesian (SABIC)       8165.601
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.036
+##   P-value H_0: RMSEA &lt;= 0.050                    0.971
+##   P-value H_0: RMSEA &gt;= 0.080                    0.005
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.036
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.971
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.005
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.005
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_OPN_INQ =~                                                        
+##     HEX_OPN_INQ_01    1.000                                  NA       NA
+##     HEX_OPN_INQ_02    0.054    0.380    0.143    0.886       NA       NA
+##     HEX_OPN_INQ_03    0.467    0.662    0.705    0.481       NA       NA
+##     HEX_OPN_INQ_04    1.003    1.834    0.547    0.585       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_OPN_INQ_01    3.950    0.091   43.377    0.000    3.950    1.974
+##    .HEX_OPN_INQ_02    4.207    0.088   47.692    0.000    4.207    2.170
+##    .HEX_OPN_INQ_03    3.959    0.091   43.352    0.000    3.959    1.973
+##    .HEX_OPN_INQ_04    3.959    0.091   43.554    0.000    3.959    1.982
+##     HEX_OPN_INQ       0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_OPN_INQ_01    4.313    0.662    6.512    0.000    4.313    1.077
+##    .HEX_OPN_INQ_02    3.759    0.242   15.516    0.000    3.759    1.000
+##    .HEX_OPN_INQ_03    4.094    0.296   13.844    0.000    4.094    1.017
+##    .HEX_OPN_INQ_04    4.299    0.663    6.481    0.000    4.299    1.077
+##     HEX_OPN_INQ      -0.307    0.592   -0.519    0.604       NA       NA</code></pre>
 </div>
 <div id="creativeness" class="section level4">
 <h4>Creativeness</h4>
@@ -924,6 +2431,91 @@ painting.</li>
 <li>People have often told me that I have a good imagination.</li>
 <li>I don’t think of myself as the artistic or creative type.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 116 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 1.322
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.516
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 6.938
+##   Degrees of freedom                                 6
+##   P-value                                        0.327
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                       3.167
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)                3.167
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4065.687
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8155.375
+##   Bayesian (BIC)                              8205.535
+##   Sample-size adjusted Bayesian (SABIC)       8167.448
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.080
+##   P-value H_0: RMSEA &lt;= 0.050                    0.797
+##   P-value H_0: RMSEA &gt;= 0.080                    0.050
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.080
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.797
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.050
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.014
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_OPN_CRE =~                                                        
+##     HEX_OPN_CRE_01    1.000                                  NA       NA
+##     HEX_OPN_CRE_02   -0.859    1.007   -0.853    0.394       NA       NA
+##     HEX_OPN_CRE_03   -1.105    1.171   -0.944    0.345       NA       NA
+##     HEX_OPN_CRE_04   10.349   57.633    0.180    0.857       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_OPN_CRE_01    3.915    0.092   42.353    0.000    3.915    1.927
+##    .HEX_OPN_CRE_02    3.874    0.089   43.391    0.000    3.874    1.974
+##    .HEX_OPN_CRE_03    4.023    0.092   43.857    0.000    4.023    1.996
+##    .HEX_OPN_CRE_04    4.017    0.088   45.451    0.000    4.017    2.068
+##     HEX_OPN_CRE       0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_OPN_CRE_01    4.151    0.301   13.773    0.000    4.151    1.006
+##    .HEX_OPN_CRE_02    3.867    0.264   14.619    0.000    3.867    1.004
+##    .HEX_OPN_CRE_03    4.092    0.302   13.567    0.000    4.092    1.007
+##    .HEX_OPN_CRE_04    6.269   13.404    0.468    0.640    6.269    1.662
+##     HEX_OPN_CRE      -0.023    0.137   -0.171    0.865       NA       NA</code></pre>
 </div>
 <div id="unconventionality" class="section level4">
 <h4>Unconventionality</h4>
@@ -934,6 +2526,91 @@ time.</li>
 <li>I think of myself as a somewhat eccentric person.</li>
 <li>I find it boring to discuss philosophy.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 50 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.458
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.795
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 3.189
+##   Degrees of freedom                                 6
+##   P-value                                        0.785
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                      -0.646
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)               -0.646
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4108.611
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8241.223
+##   Bayesian (BIC)                              8291.383
+##   Sample-size adjusted Bayesian (SABIC)       8253.296
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.057
+##   P-value H_0: RMSEA &lt;= 0.050                    0.930
+##   P-value H_0: RMSEA &gt;= 0.080                    0.013
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.057
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.930
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.013
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.008
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_OPN_UNC =~                                                        
+##     HEX_OPN_UNC_01    1.000                               0.737    0.353
+##     HEX_OPN_UNC_02   -0.417    0.950   -0.439    0.661   -0.307   -0.153
+##     HEX_OPN_UNC_03   -0.333    0.786   -0.423    0.672   -0.245   -0.123
+##     HEX_OPN_UNC_04   -0.168    0.598   -0.282    0.778   -0.124   -0.061
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_OPN_UNC_01    4.025    0.095   42.425    0.000    4.025    1.930
+##    .HEX_OPN_UNC_02    4.006    0.091   43.876    0.000    4.006    1.996
+##    .HEX_OPN_UNC_03    4.054    0.091   44.748    0.000    4.054    2.036
+##    .HEX_OPN_UNC_04    3.870    0.093   41.659    0.000    3.870    1.896
+##     HEX_OPN_UNC       0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_OPN_UNC_01    3.805    1.384    2.749    0.006    3.805    0.875
+##    .HEX_OPN_UNC_02    3.933    0.333   11.804    0.000    3.933    0.977
+##    .HEX_OPN_UNC_03    3.904    0.294   13.272    0.000    3.904    0.985
+##    .HEX_OPN_UNC_04    4.152    0.278   14.947    0.000    4.152    0.996
+##     HEX_OPN_UNC       0.542    1.369    0.396    0.692    1.000    1.000</code></pre>
 </div>
 </div>
 <div id="altruism" class="section level3">
@@ -944,6 +2621,91 @@ time.</li>
 <li>It wouldn’t bother me to harm someone I didn’t like.</li>
 <li>People see me as a hard-hearted person.</li>
 </ul>
+<pre><code>## lavaan 0.6.13 ended normally after 84 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.813
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.666
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 8.360
+##   Degrees of freedom                                 6
+##   P-value                                        0.213
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                       2.510
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)                2.510
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4072.642
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8169.284
+##   Bayesian (BIC)                              8219.444
+##   Sample-size adjusted Bayesian (SABIC)       8181.357
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.069
+##   P-value H_0: RMSEA &lt;= 0.050                    0.875
+##   P-value H_0: RMSEA &gt;= 0.080                    0.026
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.069
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.875
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.026
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.011
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   HEX_ALT =~                                                            
+##     HEX_ALT_01        1.000                               0.132    0.066
+##     HEX_ALT_02       -2.858    3.650   -0.783    0.434   -0.377   -0.190
+##     HEX_ALT_03        1.287    1.897    0.679    0.497    0.170    0.086
+##     HEX_ALT_04        8.624   22.649    0.381    0.703    1.139    0.567
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_ALT_01        4.159    0.091   45.651    0.000    4.159    2.077
+##    .HEX_ALT_02        3.963    0.091   43.757    0.000    3.963    1.991
+##    .HEX_ALT_03        3.940    0.090   43.666    0.000    3.940    1.987
+##    .HEX_ALT_04        3.824    0.091   41.869    0.000    3.824    1.905
+##     HEX_ALT           0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .HEX_ALT_01        3.992    0.263   15.200    0.000    3.992    0.996
+##    .HEX_ALT_02        3.819    0.392    9.746    0.000    3.819    0.964
+##    .HEX_ALT_03        3.903    0.260   14.990    0.000    3.903    0.993
+##    .HEX_ALT_04        2.732    2.872    0.951    0.341    2.732    0.678
+##     HEX_ALT           0.017    0.060    0.292    0.770    1.000    1.000</code></pre>
 </div>
 </div>
 <div id="need-for-privacy" class="section level2">
@@ -960,6 +2722,91 @@ others.</li>
 <li>I don’t like it when others talk to me about their private
 issues.</li>
 </ol>
+<pre><code>## lavaan 0.6.13 ended normally after 107 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 1.966
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.374
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 7.734
+##   Degrees of freedom                                 6
+##   P-value                                        0.258
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                       1.059
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)                1.059
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4039.404
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8102.808
+##   Bayesian (BIC)                              8152.968
+##   Sample-size adjusted Bayesian (SABIC)       8114.881
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.090
+##   P-value H_0: RMSEA &lt;= 0.050                    0.701
+##   P-value H_0: RMSEA &gt;= 0.080                    0.086
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.090
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.701
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.086
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.017
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   NFP_PSY =~                                                            
+##     NFP_PSY_01        1.000                                  NA       NA
+##     NFP_PSY_02        0.230    0.716    0.321    0.748       NA       NA
+##     NFP_PSY_03       -0.189    0.541   -0.349    0.727       NA       NA
+##     NFP_PSY_04        0.167    0.423    0.395    0.693       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_PSY_01        4.070    0.087   46.948    0.000    4.070    2.136
+##    .NFP_PSY_02        3.986    0.090   44.083    0.000    3.986    2.006
+##    .NFP_PSY_03        3.874    0.089   43.321    0.000    3.874    1.971
+##    .NFP_PSY_04        3.892    0.090   43.058    0.000    3.892    1.959
+##     NFP_PSY           0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_PSY_01        4.802    3.530    1.360    0.174    4.802    1.323
+##    .NFP_PSY_02        4.010    0.334   12.011    0.000    4.010    1.016
+##    .NFP_PSY_03        3.904    0.282   13.836    0.000    3.904    1.011
+##    .NFP_PSY_04        3.980    0.270   14.722    0.000    3.980    1.008
+##     NFP_PSY          -1.171    3.511   -0.334    0.739       NA       NA</code></pre>
 </div>
 <div id="physical" class="section level3">
 <h3>Physical</h3>
@@ -970,6 +2817,91 @@ issues.</li>
 plane.</li>
 <li>I hate it when people enter my personal space uninvited.</li>
 </ol>
+<pre><code>## lavaan 0.6.13 ended normally after 63 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.264
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.876
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 6.156
+##   Degrees of freedom                                 6
+##   P-value                                        0.406
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                      34.313
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)               34.313
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4088.324
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8200.648
+##   Bayesian (BIC)                              8250.808
+##   Sample-size adjusted Bayesian (SABIC)       8212.721
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.045
+##   P-value H_0: RMSEA &lt;= 0.050                    0.960
+##   P-value H_0: RMSEA &gt;= 0.080                    0.007
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.045
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.960
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.007
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.006
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   NFP_PHY =~                                                            
+##     NFP_PHY_01        1.000                                  NA       NA
+##     NFP_PHY_02       -0.004    0.386   -0.009    0.993       NA       NA
+##     NFP_PHY_03       -0.356    0.482   -0.738    0.460       NA       NA
+##     NFP_PHY_04        1.998    6.024    0.332    0.740       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_PHY_01        4.027    0.093   43.528    0.000    4.027    1.981
+##    .NFP_PHY_02        3.979    0.091   43.572    0.000    3.979    1.983
+##    .NFP_PHY_03        4.199    0.091   46.104    0.000    4.199    2.098
+##    .NFP_PHY_04        4.133    0.091   45.346    0.000    4.133    2.063
+##     NFP_PHY           0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_PHY_01        4.341    0.694    6.255    0.000    4.341    1.050
+##    .NFP_PHY_02        4.029    0.259   15.540    0.000    4.029    1.000
+##    .NFP_PHY_03        4.032    0.271   14.883    0.000    4.032    1.007
+##    .NFP_PHY_04        4.838    2.549    1.898    0.058    4.838    1.206
+##     NFP_PHY          -0.207    0.630   -0.329    0.742       NA       NA</code></pre>
 </div>
 <div id="social" class="section level3">
 <h3>Social</h3>
@@ -979,6 +2911,91 @@ plane.</li>
 <li>I’m a fairly anti-social person.</li>
 <li>I prefer to work independently in most situations.</li>
 </ol>
+<pre><code>## lavaan 0.6.13 ended normally after 59 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.590
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.744
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 3.953
+##   Degrees of freedom                                 6
+##   P-value                                        0.683
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                      -1.066
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)               -1.066
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4068.896
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8161.792
+##   Bayesian (BIC)                              8211.952
+##   Sample-size adjusted Bayesian (SABIC)       8173.865
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.062
+##   P-value H_0: RMSEA &lt;= 0.050                    0.910
+##   P-value H_0: RMSEA &gt;= 0.080                    0.017
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.062
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.910
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.017
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.010
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   NFP_SOC =~                                                            
+##     NFP_SOC_01        1.000                                  NA       NA
+##     NFP_SOC_02       -0.231    1.101   -0.210    0.834       NA       NA
+##     NFP_SOC_03        1.789    2.545    0.703    0.482       NA       NA
+##     NFP_SOC_04       -1.901    3.571   -0.532    0.595       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_SOC_01        4.066    0.090   45.011    0.000    4.066    2.048
+##    .NFP_SOC_02        3.934    0.091   43.028    0.000    3.934    1.958
+##    .NFP_SOC_03        3.930    0.089   44.228    0.000    3.930    2.012
+##    .NFP_SOC_04        3.967    0.092   43.328    0.000    3.967    1.971
+##     NFP_SOC           0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_SOC_01        4.016    0.304   13.202    0.000    4.016    1.019
+##    .NFP_SOC_02        4.041    0.263   15.389    0.000    4.041    1.001
+##    .NFP_SOC_03        4.052    0.626    6.475    0.000    4.052    1.063
+##    .NFP_SOC_04        4.318    0.726    5.947    0.000    4.318    1.067
+##     NFP_SOC          -0.075    0.153   -0.489    0.625       NA       NA</code></pre>
 </div>
 <div id="privacy-from-government" class="section level3">
 <h3>Privacy from Government</h3>
@@ -991,6 +3008,91 @@ makes it harder to spend tax income effectively.</li>
 if that stops terrorist attacks.</li>
 <li>I feel I need to protect my privacy from government agencies.</li>
 </ol>
+<pre><code>## lavaan 0.6.13 ended normally after 57 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 2.499
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.287
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 7.681
+##   Degrees of freedom                                 6
+##   P-value                                        0.262
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.703
+##   Tucker-Lewis Index (TLI)                       0.110
+##                                                       
+##   Robust Comparative Fit Index (CFI)             0.703
+##   Robust Tucker-Lewis Index (TLI)                0.110
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4074.446
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8172.891
+##   Bayesian (BIC)                              8223.052
+##   Sample-size adjusted Bayesian (SABIC)       8184.965
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.023
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.096
+##   P-value H_0: RMSEA &lt;= 0.050                    0.626
+##   P-value H_0: RMSEA &gt;= 0.080                    0.121
+##                                                       
+##   Robust RMSEA                                   0.023
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.096
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.626
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.121
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.019
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   NFP_GOV =~                                                            
+##     NFP_GOV_01        1.000                               0.473    0.245
+##     NFP_GOV_02        0.384    0.503    0.764    0.445    0.182    0.091
+##     NFP_GOV_03       -1.568    4.580   -0.342    0.732   -0.742   -0.365
+##     NFP_GOV_04       -0.352    0.872   -0.404    0.686   -0.167   -0.082
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_GOV_01        3.892    0.088   44.233    0.000    3.892    2.013
+##    .NFP_GOV_02        3.892    0.091   42.900    0.000    3.892    1.952
+##    .NFP_GOV_03        4.060    0.093   43.879    0.000    4.060    1.997
+##    .NFP_GOV_04        4.081    0.092   44.274    0.000    4.081    2.015
+##     NFP_GOV           0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_GOV_01        3.516    0.707    4.973    0.000    3.516    0.940
+##    .NFP_GOV_02        3.943    0.277   14.255    0.000    3.943    0.992
+##    .NFP_GOV_03        3.585    1.612    2.224    0.026    3.585    0.867
+##    .NFP_GOV_04        4.075    0.273   14.929    0.000    4.075    0.993
+##     NFP_GOV           0.224    0.675    0.332    0.740    1.000    1.000</code></pre>
 </div>
 <div id="privacy-from-companies" class="section level3">
 <h3>Privacy from Companies</h3>
@@ -1003,6 +3105,91 @@ certain apps or services for free.</li>
 their services worse.</li>
 <li>I feel I need to protect my privacy from companies.</li>
 </ol>
+<pre><code>## lavaan 0.6.13 ended normally after 61 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.481
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.786
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 6.147
+##   Degrees of freedom                                 6
+##   P-value                                        0.407
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                      32.059
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)               32.059
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4061.062
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8146.123
+##   Bayesian (BIC)                              8196.283
+##   Sample-size adjusted Bayesian (SABIC)       8158.196
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.058
+##   P-value H_0: RMSEA &lt;= 0.050                    0.927
+##   P-value H_0: RMSEA &gt;= 0.080                    0.014
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.058
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.927
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.014
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.008
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   NFP_COM =~                                                            
+##     NFP_COM_01        1.000                               0.333    0.171
+##     NFP_COM_02       -2.959    6.160   -0.480    0.631   -0.985   -0.482
+##     NFP_COM_03        0.844    0.737    1.146    0.252    0.281    0.138
+##     NFP_COM_04       -0.114    0.560   -0.203    0.839   -0.038   -0.020
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_COM_01        4.023    0.088   45.510    0.000    4.023    2.071
+##    .NFP_COM_02        3.979    0.093   42.787    0.000    3.979    1.947
+##    .NFP_COM_03        4.075    0.092   44.057    0.000    4.075    2.005
+##    .NFP_COM_04        3.909    0.087   44.851    0.000    3.909    2.041
+##     NFP_COM           0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_COM_01        3.663    0.330   11.092    0.000    3.663    0.971
+##    .NFP_COM_02        3.207    2.099    1.528    0.126    3.207    0.768
+##    .NFP_COM_03        4.052    0.310   13.057    0.000    4.052    0.981
+##    .NFP_COM_04        3.667    0.236   15.514    0.000    3.667    1.000
+##     NFP_COM           0.111    0.239    0.465    0.642    1.000    1.000</code></pre>
 </div>
 <div id="informational" class="section level3">
 <h3>Informational</h3>
@@ -1014,6 +3201,91 @@ confidential.</li>
 <li>I prefer that others cannot easily find information about me on the
 Internet.</li>
 </ol>
+<pre><code>## lavaan 0.6.13 ended normally after 61 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.360
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.835
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                14.844
+##   Degrees of freedom                                 6
+##   P-value                                        0.022
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                       1.556
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)                1.556
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4067.071
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8158.142
+##   Bayesian (BIC)                              8208.302
+##   Sample-size adjusted Bayesian (SABIC)       8170.215
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.052
+##   P-value H_0: RMSEA &lt;= 0.050                    0.945
+##   P-value H_0: RMSEA &gt;= 0.080                    0.010
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.052
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.945
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.010
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.007
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   NFP_INF =~                                                            
+##     NFP_INF_01        1.000                               0.206    0.105
+##     NFP_INF_02        1.530    1.238    1.235    0.217    0.315    0.157
+##     NFP_INF_03        6.378    7.947    0.803    0.422    1.315    0.655
+##     NFP_INF_04        1.749    1.363    1.283    0.199    0.360    0.181
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_INF_01        3.886    0.090   43.397    0.000    3.886    1.975
+##    .NFP_INF_02        4.017    0.092   43.866    0.000    4.017    1.996
+##    .NFP_INF_03        4.000    0.091   43.774    0.000    4.000    1.992
+##    .NFP_INF_04        4.014    0.090   44.426    0.000    4.014    2.021
+##     NFP_INF           0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_INF_01        3.831    0.252   15.175    0.000    3.831    0.989
+##    .NFP_INF_02        3.950    0.289   13.672    0.000    3.950    0.975
+##    .NFP_INF_03        2.305    2.225    1.036    0.300    2.305    0.571
+##    .NFP_INF_04        3.814    0.301   12.688    0.000    3.814    0.967
+##     NFP_INF           0.042    0.066    0.647    0.518    1.000    1.000</code></pre>
 </div>
 <div id="privacy-need-anonymity" class="section level3">
 <h3>Privacy need anonymity</h3>
@@ -1025,6 +3297,91 @@ preserve my privacy.</li>
 to preserve my privacy.</li>
 <li>I need to be able to surf the Internet anonymously.</li>
 </ol>
+<pre><code>## lavaan 0.6.13 ended normally after 54 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.195
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.907
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 2.840
+##   Degrees of freedom                                 6
+##   P-value                                        0.829
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                      -0.714
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)               -0.714
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4109.103
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8242.206
+##   Bayesian (BIC)                              8292.366
+##   Sample-size adjusted Bayesian (SABIC)       8254.279
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.037
+##   P-value H_0: RMSEA &lt;= 0.050                    0.971
+##   P-value H_0: RMSEA &gt;= 0.080                    0.005
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.037
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.971
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.005
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.005
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   NFP_ANO =~                                                            
+##     NFP_ANO_01        1.000                                  NA       NA
+##     NFP_ANO_02       -0.939    1.530   -0.614    0.539       NA       NA
+##     NFP_ANO_03       -0.744    1.205   -0.618    0.537       NA       NA
+##     NFP_ANO_04        0.258    0.683    0.377    0.706       NA       NA
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_ANO_01        4.112    0.093   44.232    0.000    4.112    2.013
+##    .NFP_ANO_02        3.915    0.096   40.978    0.000    3.915    1.865
+##    .NFP_ANO_03        4.081    0.092   44.545    0.000    4.081    2.027
+##    .NFP_ANO_04        3.952    0.090   44.076    0.000    3.952    2.006
+##     NFP_ANO           0.000                                  NA       NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_ANO_01        4.386    0.506    8.661    0.000    4.386    1.051
+##    .NFP_ANO_02        4.596    0.472    9.733    0.000    4.596    1.042
+##    .NFP_ANO_03        4.171    0.365   11.439    0.000    4.171    1.029
+##    .NFP_ANO_04        3.898    0.259   15.035    0.000    3.898    1.004
+##     NFP_ANO          -0.212    0.411   -0.515    0.606       NA       NA</code></pre>
 </div>
 <div id="general-need-for-privacy" class="section level3">
 <h3>General Need for privacy</h3>
@@ -1034,6 +3391,91 @@ to preserve my privacy.</li>
 <li>I think a lot about how I can protect my privacy.</li>
 <li>I value privacy a lot.</li>
 </ol>
+<pre><code>## lavaan 0.6.13 ended normally after 66 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        12
+## 
+##   Number of observations                           483
+##   Number of missing patterns                         1
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.439
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.803
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                 1.214
+##   Degrees of freedom                                 6
+##   P-value                                        0.976
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                       0.021
+##                                                       
+##   Robust Comparative Fit Index (CFI)             1.000
+##   Robust Tucker-Lewis Index (TLI)                0.021
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -4071.517
+##   Loglikelihood unrestricted model (H1)             NA
+##                                                       
+##   Akaike (AIC)                                8167.033
+##   Bayesian (BIC)                              8217.193
+##   Sample-size adjusted Bayesian (SABIC)       8179.106
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.056
+##   P-value H_0: RMSEA &lt;= 0.050                    0.933
+##   P-value H_0: RMSEA &gt;= 0.080                    0.012
+##                                                       
+##   Robust RMSEA                                   0.000
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.056
+##   P-value H_0: Robust RMSEA &lt;= 0.050             0.933
+##   P-value H_0: Robust RMSEA &gt;= 0.080             0.012
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.008
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   NFP_GEN =~                                                            
+##     NFP_GEN_01        1.000                               0.247    0.120
+##     NFP_GEN_02        0.751    2.097    0.358    0.720    0.185    0.094
+##     NFP_GEN_03       -0.282    1.416   -0.199    0.842   -0.070   -0.035
+##     NFP_GEN_04        1.962    9.476    0.207    0.836    0.484    0.245
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_GEN_01        4.010    0.094   42.855    0.000    4.010    1.950
+##    .NFP_GEN_02        3.963    0.090   44.175    0.000    3.963    2.010
+##    .NFP_GEN_03        3.878    0.089   43.432    0.000    3.878    1.976
+##    .NFP_GEN_04        3.946    0.090   43.905    0.000    3.946    1.998
+##     NFP_GEN           0.000                               0.000    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .NFP_GEN_01        4.169    0.417   10.004    0.000    4.169    0.986
+##    .NFP_GEN_02        3.852    0.291   13.226    0.000    3.852    0.991
+##    .NFP_GEN_03        3.846    0.252   15.268    0.000    3.846    0.999
+##    .NFP_GEN_04        3.668    1.145    3.202    0.001    3.668    0.940
+##     NFP_GEN           0.061    0.322    0.189    0.850    1.000    1.000</code></pre>
 </div>
 </div>
 </div>
@@ -1054,7 +3496,7 @@ rate of 10%.</p>
 ##       sig.level = 0.05
 ##           power = 0.95
 ##     alternative = two.sided</code></pre>
-<p>A 5% error rate would imply collecting 1.293 participants.</p>
+<p>A 5% error rate would imply collecting 1292.88 participants.</p>
 </div>
 <div id="results" class="section level1">
 <h1>Results</h1>

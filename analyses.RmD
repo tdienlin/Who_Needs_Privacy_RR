@@ -28,11 +28,11 @@ Here you can find the results of our study.
 - At this point, we haven't yet collected data. 
 - The results below use simulated data. 
 - The data are random and don't make sense, but help to illustrate the overall approach and planned analyses.
-- We'll later conduct additional analyses, for example model-alterations given misfit.
+- We'll later conduct further analyses not yet reported here, for example model-alterations given misfit.
 
 # Set-Up
 
-```{r r-setup, include=T, echo=F}
+```{r r-setup, include=T, echo=T, results='hide'}
 # install packages
 # devtools::install_github("https://github.com/tdienlin/td")
 
@@ -112,7 +112,10 @@ All items were answered on a 7-point scale with the following options:
  - I wouldn't pretend to like someone just to get that person to do favors for me.
 
 ```{r}
+name <- "HEX_HOH_SIN"
 model <- "HEX_HOH_SIN =~ HEX_HOH_SIN_01 + HEX_HOH_SIN_02 + HEX_HOH_SIN_03 + HEX_HOH_SIN_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Fairness
@@ -123,7 +126,10 @@ model <- "HEX_HOH_SIN =~ HEX_HOH_SIN_01 + HEX_HOH_SIN_02 + HEX_HOH_SIN_03 + HEX_
  - I’d be tempted to use counterfeit money, if I were sure I could get away with it.
 
 ```{r}
+name <- "HEX_HOH_FAI"
 model <- "HEX_HOH_FAI =~ HEX_HOH_FAI_01 + HEX_HOH_FAI_02 + HEX_HOH_FAI_03 + HEX_HOH_FAI_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Greed Avoidance
@@ -134,7 +140,10 @@ model <- "HEX_HOH_FAI =~ HEX_HOH_FAI_01 + HEX_HOH_FAI_02 + HEX_HOH_FAI_03 + HEX_
  - I would get a lot of pleasure from owning expensive luxury goods.
 
 ```{r}
+name <- "HEY_HOH_GRE"
 model <- "HEX_HOH_GRE =~ HEX_HOH_GRE_01 + HEX_HOH_GRE_02 + HEX_HOH_GRE_03 + HEX_HOH_GRE_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Modesty
@@ -145,7 +154,10 @@ model <- "HEX_HOH_GRE =~ HEX_HOH_GRE_01 + HEX_HOH_GRE_02 + HEX_HOH_GRE_03 + HEX_
  - I want people to know that I am an important person of high status.
 
 ```{r}
+name <- "HEX_HOH_MOD"
 model <- "HEX_HOH_MOD =~ HEX_HOH_MOD_01 + HEX_HOH_MOD_02 + HEX_HOH_MOD_03 + HEX_HOH_MOD_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ### Emotionality
@@ -157,7 +169,10 @@ model <- "HEX_HOH_MOD =~ HEX_HOH_MOD_01 + HEX_HOH_MOD_02 + HEX_HOH_MOD_03 + HEX_
  - Even in an emergency I wouldn't feel like panicking.
 
 ```{r}
+name <- "HEX_EMO_FEA"
 model <- "HEX_EMO_FEA =~ HEX_EMO_FEA_01 + HEX_EMO_FEA_02 + HEX_EMO_FEA_03 + HEX_EMO_FEA_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Anxiety
@@ -168,7 +183,10 @@ model <- "HEX_EMO_FEA =~ HEX_EMO_FEA_01 + HEX_EMO_FEA_02 + HEX_EMO_FEA_03 + HEX_
  - I get very anxious when waiting to hear about an important decision.
  
 ```{r}
+name <- "HEX_EMO_ANX"
 model <- "HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_EMO_ANX_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Dependence
@@ -179,7 +197,10 @@ model <- "HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_
  - I rarely discuss my problems with other people.
 
 ```{r}
+name <- "HEX_EMO_DEP"
 model <- "HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_EMO_DEP_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
  
 #### Sentimentality
@@ -190,7 +211,10 @@ model <- "HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_
  - I remain unemotional even in situations where most people get very sentimental.
 
 ```{r}
+name <- "HEX_EMO_SEN"
 model <- "HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_EMO_SEN_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ### Extraversion
@@ -202,7 +226,10 @@ model <- "HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_
  - Even in an emergency I wouldn't feel like panicking.
  
 ```{r}
+name <- "HEX_EXT_SSE"
 model <- "HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_EXT_SSE_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Social Boldness
@@ -213,7 +240,10 @@ model <- "HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_
  - I tend to feel quite self-conscious when speaking in front of a group of people.
 
 ```{r}
+name <- "HEX_EXT_BOL"
 model <- "HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_EXT_BOL_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Sociability
@@ -224,7 +254,10 @@ model <- "HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_
  - The first thing that I always do in a new place is to make friends.
 
 ```{r}
+name <- "HEX_EXT_SOC"
 model <- "HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Liveliness
@@ -235,7 +268,10 @@ model <- "HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_
  - Most people are more upbeat and dynamic than I generally am.
 
 ```{r}
+name <- "HEX_EXT_LIV"
 model <- "HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_EXT_LIV_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ### Agreeableness
@@ -247,7 +283,10 @@ model <- "HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_
  - I find it hard to fully forgive someone who has done something mean to me.
 
 ```{r}
+name <- "HEX_AGR_FOR"
 model <- "HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Gentleness
@@ -258,7 +297,10 @@ model <- "HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_
  - Even when people make a lot of mistakes, I rarely say anything negative.
  
 ```{r}
+name <- "HEX_AGR_GEN"
 model <- "HEX_AGR_GEN =~ HEX_AGR_GEN_01 + HEX_AGR_GEN_02 + HEX_AGR_GEN_03 + HEX_AGR_GEN_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Flexibility
@@ -269,7 +311,10 @@ model <- "HEX_AGR_GEN =~ HEX_AGR_GEN_01 + HEX_AGR_GEN_02 + HEX_AGR_GEN_03 + HEX_
  - I find it hard to compromise with people when I really think I’m right.
 
 ```{r}
+name <- "HEX_AGR_FLX"
 model <- "HEX_AGR_FLX =~ HEX_AGR_FLX_01 + HEX_AGR_FLX_02 + HEX_AGR_FLX_03 + HEX_AGR_FLX_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Patience
@@ -280,7 +325,10 @@ model <- "HEX_AGR_FLX =~ HEX_AGR_FLX_01 + HEX_AGR_FLX_02 + HEX_AGR_FLX_03 + HEX_
  - I find it hard to keep my temper when people insult me.
 
 ```{r}
+name <- "HEX_AGR_PAT"
 model <- "HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_AGR_PAT_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ### Conscientiousness
@@ -292,7 +340,10 @@ model <- "HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_
  - When working, I sometimes have difficulties due to being disorganized.
 
 ```{r}
+name <- "HEX_CNS_ORG"
 model <- "HEX_CNS_ORG =~ HEX_CNS_ORG_01 + HEX_CNS_ORG_02 + HEX_CNS_ORG_03 + HEX_CNS_ORG_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Diligence
@@ -303,7 +354,10 @@ model <- "HEX_CNS_ORG =~ HEX_CNS_ORG_01 + HEX_CNS_ORG_02 + HEX_CNS_ORG_03 + HEX_
  - I do only the minimum amount of work needed to get by.
 
 ```{r}
+name <- "HEX_CNS_DIL"
 model <- "HEX_CNS_DIL =~ HEX_CNS_DIL_01 + HEX_CNS_DIL_02 + HEX_CNS_DIL_03 + HEX_CNS_DIL_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Perfectionism
@@ -314,7 +368,10 @@ model <- "HEX_CNS_DIL =~ HEX_CNS_DIL_01 + HEX_CNS_DIL_02 + HEX_CNS_DIL_03 + HEX_
  - People often call me a perfectionist.
 
 ```{r}
+name <- "HEX_CNS_PER"
 model <- "HEX_CNS_PER =~ HEX_CNS_PER_01 + HEX_CNS_PER_02 + HEX_CNS_PER_03 + HEX_CNS_PER_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 
@@ -326,7 +383,10 @@ model <- "HEX_CNS_PER =~ HEX_CNS_PER_01 + HEX_CNS_PER_02 + HEX_CNS_PER_03 + HEX_
  - I prefer to do whatever comes to mind, rather than stick to a plan.
  
 ```{r}
+name <- "HEX_CNS_PRU"
 model <- "HEX_CNS_PRU =~ HEX_CNS_PRU_01 + HEX_CNS_PRU_02 + HEX_CNS_PRU_03 + HEX_CNS_PRU_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ### Openness
@@ -338,7 +398,10 @@ model <- "HEX_CNS_PRU =~ HEX_CNS_PRU_01 + HEX_CNS_PRU_02 + HEX_CNS_PRU_03 + HEX_
  - Sometimes I like to just watch the wind as it blows through the trees.
  
 ```{r}
+name <- "HEX_OPN_AEX"
 model <- "HEX_OPN_AES =~ HEX_OPN_AES_01 + HEX_OPN_AES_02 + HEX_OPN_AES_03 + HEX_OPN_AES_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Inquisitiveness
@@ -349,7 +412,10 @@ model <- "HEX_OPN_AES =~ HEX_OPN_AES_01 + HEX_OPN_AES_02 + HEX_OPN_AES_03 + HEX_
  - I’ve never really enjoyed looking through an encyclopedia.
  
 ```{r}
+name <- "HEX_OPN_INQ"
 model <- "HEX_OPN_INQ =~ HEX_OPN_INQ_01 + HEX_OPN_INQ_02 + HEX_OPN_INQ_03 + HEX_OPN_INQ_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 
@@ -361,7 +427,10 @@ model <- "HEX_OPN_INQ =~ HEX_OPN_INQ_01 + HEX_OPN_INQ_02 + HEX_OPN_INQ_03 + HEX_
  - I don't think of myself as the artistic or creative type.
 
 ```{r}
+name <- "HEX_OPN_CRE"
 model <- "HEX_OPN_CRE =~ HEX_OPN_CRE_01 + HEX_OPN_CRE_02 + HEX_OPN_CRE_03 + HEX_OPN_CRE_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 #### Unconventionality
@@ -372,7 +441,10 @@ model <- "HEX_OPN_CRE =~ HEX_OPN_CRE_01 + HEX_OPN_CRE_02 + HEX_OPN_CRE_03 + HEX_
  - I find it boring to discuss philosophy.
  
 ```{r}
+name <- "HEX_OPN_UNC"
 model <- "HEX_OPN_UNC =~ HEX_OPN_UNC_01 + HEX_OPN_UNC_02 + HEX_OPN_UNC_03 + HEX_OPN_UNC_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ### Altruism
@@ -383,7 +455,10 @@ model <- "HEX_OPN_UNC =~ HEX_OPN_UNC_01 + HEX_OPN_UNC_02 + HEX_OPN_UNC_03 + HEX_
  - People see me as a hard-hearted person.
  
 ```{r}
+name <- "HEX_ALT"
 model <- "HEX_ALT =~ HEX_ALT_01 + HEX_ALT_02 + HEX_ALT_03 + HEX_ALT_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ## Need for privacy
@@ -395,7 +470,10 @@ model <- "HEX_ALT =~ HEX_ALT_01 + HEX_ALT_02 + HEX_ALT_03 + HEX_ALT_04"
  4.	I don't like it when others talk to me about their private issues.
 
 ```{r}
+name <- "NFP_PSY"
 model <- "NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ### Physical
@@ -406,7 +484,10 @@ model <- "NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04"
  4.	I hate it when people enter my personal space uninvited.
 
 ```{r}
+name <- "NFP_PHY"
 model <- "NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ### Social
@@ -417,7 +498,10 @@ model <- "NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04"
  4.	I prefer to work independently in most situations.
 
 ```{r}
+name <- "NFP_SOC"
 model <- "NFP_SOC =~ NFP_SOC_01 + NFP_SOC_02 + NFP_SOC_03 + NFP_SOC_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ### Privacy from Government
@@ -428,7 +512,10 @@ model <- "NFP_SOC =~ NFP_SOC_01 + NFP_SOC_02 + NFP_SOC_03 + NFP_SOC_04"
  4.	I feel I need to protect my privacy from government agencies.
 
 ```{r}
+name <- "NFP_GOV"
 model <- "NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ### Privacy from Companies
@@ -439,7 +526,10 @@ model <- "NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04"
  4. I feel I need to protect my privacy from companies.
 
 ```{r}
+name <- "NFP_COM"
 model <- "NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ### Informational
@@ -450,7 +540,10 @@ model <- "NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04"
  4.	I prefer that others cannot easily find information about me on the Internet.
 
 ```{r}
+name <- "NFP_INF"
 model <- "NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ### Privacy need anonymity
@@ -461,7 +554,10 @@ model <- "NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04"
  4.	I need to be able to surf the Internet anonymously.
 
 ```{r}
+name <- "NFP_ANO"
 model <- "NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 ### General Need for privacy
@@ -472,7 +568,10 @@ model <- "NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04"
  4.	I value privacy a lot.
  
 ```{r}
+name <- "NFP_GEN"
 model <- "NFP_GEN =~ NFP_GEN_01 + NFP_GEN_02 + NFP_GEN_03 + NFP_GEN_04"
+assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 # Power Analyses
@@ -487,7 +586,7 @@ pwr.r.test(r = sesoi, sig.level = .05, power = .95)
 power_n_95 <- pwr.r.test(r = sesoi, sig.level = .05, power = .95)$n
 ```
 
-A 5% error rate would imply collecting 1.293 participants.
+A 5% error rate would imply collecting `r power_n_95` participants.
 
 # Results
 ## SES
