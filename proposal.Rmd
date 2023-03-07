@@ -21,7 +21,7 @@ affiliation:
 authornote: |
   Tobias Dienlin, Department of Communication, University of Vienna, Austria; Miriam Metzger, Department of Communication, University of California, Santa Barbara, United States of America.
 
-abstract          : "Privacy is defined as a voluntary withdrawal from society. While everyone needs some degree of privacy, we currently know little about people’s privacy needs.. In this study, we explore the relations between the need for privacy and personality. Personality will be operationalized using the HEXACO personality inventory. Need for privacy will be measured in relation to (a) social, (b) psychological, and (c) physical privacy from other individuals (horizontal privacy); need for privacy from (d) government agencies and (e) companies (vertical privacy); as well as need for (f) informational privacy, (g) anonymity, and (h) general privacy (both horizontal and vertical privacy). A sample of 1,293 respondents representative of the U.S. in terms of age, gender, and ethnicity will be collected. The correlations between privacy, personality, and sociodemographics will be analyzed using structural equation modeling."
+abstract          : "Privacy is defined as a voluntary withdrawal from society. While everyone needs some degree of privacy, we currently know little about people’s privacy needs.. In this study, we explore the relations between the need for privacy and personality. Personality will be operationalized using the HEXACO personality inventory. Need for privacy will be measured in relation to social, psychological, and physical privacy from other individuals (horizontal privacy); need for privacy from government agencies and companies (vertical privacy); as well as need for informational privacy, anonymity, and general privacy (both horizontal and vertical privacy). A sample of 1,293 respondents representative of the U.S. in terms of age, gender, and ethnicity will be collected. The correlations between privacy, personality, and sociodemographics will be analyzed using structural equation modeling."
 keywords          : "Privacy, need for privacy, personality, HEXACO"
 
 bibliography      : 
@@ -38,13 +38,13 @@ draft             : no
 
 documentclass     : "apa6"
 classoption       : "man"
-# output:
-#   html_document:
-#     toc: TRUE
-#     toc_float:
-#       collapsed: FALSE
-#       toc_depth: 2
-output            : papaja::apa6_pdf
+output:
+  html_document:
+    toc: TRUE
+    toc_float:
+      collapsed: FALSE
+      toc_depth: 2
+# output            : papaja::apa6_pdf
 # output            : papaja::apa6_word
 header-includes:
   - \setlength{\parskip}{0em}
