@@ -123,9 +123,7 @@ The HEXACO model stands in the tradition of the Big Five approach [@johnBigFiveT
 It includes six factors (discussed below), which have four specific facets each. 
 In addition, the HEXACO model includes a sixth factor not present in the Big Five labeled honesty-humility (plus a meta-facet called altruism), which seem particularly well-suited to investigate the nothing-to-hide-argument. 
 
-In predicting the need for privacy, we will primarily focus on the facets, because it is unlikely that the very specific need for privacy dimensions will relate closely to more general personality factors  
-<!-- For example, consider that privacy concern, a variable conceptually close to need for privacy, shows only small relations to the Big Five factors  -->
-[@bansalImpactPersonalDispositions2010; @junglasPersonalityTraitsConcern2008]. 
+In predicting the need for privacy, we will primarily focus on the facets, because it is unlikely that the very specific need for privacy dimensions will relate closely to more general personality factors [@bansalImpactPersonalDispositions2010; @junglasPersonalityTraitsConcern2008]. 
 And for reasons of scope, below we cannot discuss all four facets for all six factors. Instead, we focus on those we consider most relevant. However, all we be analyzed empirically. 
 
 ## Predicting the Need for Privacy
@@ -135,7 +133,7 @@ Moreover, we are not aware of a viable theory specifically connecting privacy an
 Due to the dearth of empirical studies and the lack of theory, in this study we hence adopt an exploratory perspective. 
 <!-- In order to guide the selection of personality dimensions that might explain need for privacy best, it is useful to determine why people actually feel they need privacy.  -->
 
-In order to understand how personality might relate to privacy, we can ask ourselves the following question:  
+In order to understand how personality might relate to privacy, we can ask ourselves the following question: 
 Why do people desire privacy?
 Privacy is important.
 But according to @trepteNeedPrivacy2017, the need for privacy is only a secondary need---not an end in itself.
@@ -313,7 +311,7 @@ The analyses will be run with all five datasets, and the pooled results will be 
 The factorial validity of the measures and the hypotheses will be tested using structural equation modeling. 
 If Mardia’s test shows that the assumption of multivariate normality is violated, we will use the more robust Satorra-Bentler scaled and mean-adjusted test statistic (MLM) as estimator. 
 We will test each scale in a confirmatory factor analysis. 
-To assess model fit, we will use more liberal fit criteria to avoid overfitting (CFI > .90, TLI > .90, RMSEA <. .10, SRMR < .10) [@klinePrinciplesPracticeStructural2016]. 
+To assess model fit, we will use more liberal fit criteria to avoid overfitting (CFI > .90, TLI > .90, RMSEA < .10, SRMR < .10) [@klinePrinciplesPracticeStructural2016]. 
 In cases of misfit, we will conservatively alter models using an a priori defined analysis pipeline (see online supplementary material).
 As a “reality check,” we will test items for potential ceiling and floor effects. If means are below 1.5 or above 6.5, these items will be excluded.
 
