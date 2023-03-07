@@ -262,6 +262,8 @@ We will also explore whether a person’s romantic relationship status correspon
 # Method
 
 This section describes how we determine the sample size, data exclusions, the analyses, and all measures in the study.
+The Study will be conducted as an online questionnaire, programmed with Qualtrics.
+A preview of the survey can be found [here](https://compcommlab.eu.qualtrics.com/jfe/preview/previewId/5c6193c9-12a4-424f-9808-a7c6e74247c1/SV_9ppRmr32VrmeAnA?Q_CHL=preview&Q_SurveyVersionID=current).
 
 ## Prestudy
 
@@ -335,6 +337,7 @@ We anticipate to finish the project three months after our registration was acce
 
 All items will be answered on a 7-point Likert scale ranging from 1 (_strongly disagree_) to 7 (_strongly agree_).[^2] 
 A list of all the items that we will use are reported in the online supplementary material. 
+The personality and privacy items will be presented in random order, and the sociodemographic questions will be asked at the end.
 We will later report also the results of the CFAs/EFAs, as well as item statistics and their distribution plots.
 
 [^2]: Note that the HEXACO inventory normally uses 5-point scales. 
