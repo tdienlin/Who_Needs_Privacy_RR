@@ -478,7 +478,7 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
  1.	I don’t like it when strangers come too close to me.
  2.	I don’t like to stand in a dense crowd of people.
- 3.	I don’t like to sit next to a stranger on a tram, bus, or plane.
+ 3.	I don’t like to sit next to a stranger on a train, bus, or plane.
  4.	I hate it when people enter my personal space uninvited.
 
 ```{r}
