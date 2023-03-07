@@ -1,5 +1,5 @@
 ---
-title: "Who Needs Privacy? Exploring the relationship between personality and need for privacy"
+title: "Who needs privacy? Exploring the relations between need for privacy and personality"
 subtitle: "Analyses"
 output:
   html_document:
@@ -12,8 +12,6 @@ output:
 bibliography      : 
   - "bibliography/r-references.bib"
   - "bibliography/references.bib"
-  # pdf_document:
-  #   toc: TRUE
 ---
 
 ```{r knitr-setup, include=F}
@@ -223,7 +221,7 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
  - I feel reasonably satisfied with myself overall.
  - I think that most people like some aspects of my personality.
  - I feel that I am an unpopular person.
- - Even in an emergency I wouldn't feel like panicking.
+ - I sometimes feel that I am a worthless person.
  
 ```{r}
 name <- "HEX_EXT_SSE"

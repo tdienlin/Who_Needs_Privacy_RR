@@ -34,7 +34,7 @@ All items were answered on a 7-point scale with the following options:
  1. If I knew that I could never get caught, I would be willing to steal a million dollars.
  1. I would be tempted to buy stolen property if I were financially tight.
  1. I would never accept a bribe, even if it were very large.
- 1. I’d be tempted to use counterfeit money, if I were sure I could get away with it.
+ 1. I’d be tempted to use counterfeit money if I were sure I could get away with it.
 
 ### Greed Avoidance
 
@@ -84,7 +84,7 @@ All items were answered on a 7-point scale with the following options:
  1. I feel reasonably satisfied with myself overall.
  1. I think that most people like some aspects of my personality.
  1. I feel that I am an unpopular person.
- 1. Even in an emergency I wouldn't feel like panicking.
+ 1. I sometimes feel that I am a worthless person.
  
 ### Social Boldness
 
@@ -218,7 +218,7 @@ All items were answered on a 7-point scale with the following options:
 
  1.	I don’t like it when strangers come too close to me.
  2.	I don’t like to stand in a dense crowd of people.
- 3.	I don’t like to sit next to a stranger on a tram, bus, or plane.
+ 3.	I don’t like to sit next to a stranger on a subway, bus, or plane.
  4.	I hate it when people enter my personal space uninvited. (new)
 
 ### Social
@@ -310,7 +310,7 @@ With what ethnicity do you identify with?
  
 ## Relationship status
 
-Are you currently in a partnership or relation with another person?
+Are you currently in a romantic partnership or relation with another person?
 
  1. No
  2. Yes
