@@ -37,7 +37,7 @@ mask              : no
 draft             : no
 
 documentclass     : "apa6"
-classoption       : "man"
+# classoption       : "man"
 output:
   html_document:
     toc: TRUE
@@ -452,9 +452,9 @@ Conception and design: TD, MM. Data acquisition: TD. Code: TD. Analysis and inte
 
 During the conception and data collection of the prestudy, TD was funded by The German Academic Scholarship Foundation (German: Studienstiftung des deutschen Volkes), which financially supported a research stay at UCSB. During some time working on the article and while at University of Hohenheim, TD was funded by the Volkswagen Foundation (German: Volkswagenstiftung), grant "Transformations of Privacy". TD is now funded by a regular and not-tenured assistant professorship at University of Vienna. MM is funded by a regular and tenured full professorship at UCSB.
 
-# Competing Interests
+# Conflict of Interests
 
-Both authors declare no competing interests.
+Both authors declare no conflict of interests.
   
 # Supplementary Material
 
