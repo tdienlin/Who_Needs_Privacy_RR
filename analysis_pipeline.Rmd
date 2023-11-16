@@ -13,11 +13,15 @@ bibliography:
 
 Below we state how we plan to analyze the data. To achieve sufficient model fit, there'll likely be several adaptions.
 
-# Model Fit
+# Factorial validity
 
- - If model fit is below the criteria, we will first inspect modification indices, potentially allowing covariance or cross-loadings if theoretically plausible. 
- - If these changes do not yield sufficient fit, we will drop malfunctioning items. 
- - If fit is still subpar, we will conduct exploratory factor analyses (EFA) to asssess the underlying factor structure. 
+We will inspect the factorial validity of the privacy and personality variables as follows.
+
+ - We run a model with all personality and privacy variables as we originally configured them in a confirmatory factor analysis.
+ - If model fit is below the criteria, we will first inspect modification indices, potentially allowing covariances or cross-loadings if theoretically plausible. 
+ - If these changes do not yield sufficient fit, we will drop malfunctioning items, while having at least three items per dimension/facet.
+ - If this should not work out, we will run Exploratory Structural Equation Modelling using oblimin rotation, allowing all personality items to load on the same factors, while allowing all privacy items to load on the same factors.
+ - If fit is still subpar, we will conduct in-depth exploratory factor analyses (EFA) to asssess the underlying factor structure. 
  - EFAs will be run using maximum likelihood estimation and oblimin rotation [@osborneSampleSizeSubject2004, p. 7]. 
  - If more than one dimension is revealed, we will implement bifactor model solutions.[^1] 
  - Bifactor models retain a general measure of the variable, without introducing novel potentially overfitted subdimensions.
