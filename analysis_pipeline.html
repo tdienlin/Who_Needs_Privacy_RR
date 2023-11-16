@@ -13,7 +13,7 @@
 
 <title>Analysis Pipeline</title>
 
-<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -29,14 +29,14 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -67,6 +67,7 @@ if (window.hljs) {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -392,16 +393,25 @@ div.tocify {
 
 <p>Below we state how we plan to analyze the data. To achieve sufficient
 model fit, there’ll likely be several adaptions.</p>
-<div id="model-fit" class="section level1">
-<h1>Model Fit</h1>
+<div id="factorial-validity" class="section level1">
+<h1>Factorial validity</h1>
+<p>We will inspect the factorial validity of the privacy and personality
+variables as follows.</p>
 <ul>
+<li>We run a model with all personality and privacy variables as we
+originally configured them in a confirmatory factor analysis.</li>
 <li>If model fit is below the criteria, we will first inspect
-modification indices, potentially allowing covariance or cross-loadings
+modification indices, potentially allowing covariances or cross-loadings
 if theoretically plausible.</li>
 <li>If these changes do not yield sufficient fit, we will drop
-malfunctioning items.</li>
-<li>If fit is still subpar, we will conduct exploratory factor analyses
-(EFA) to asssess the underlying factor structure.</li>
+malfunctioning items, while having at least three items per
+dimension/facet.</li>
+<li>If this should not work out, we will run Exploratory Structural
+Equation Modelling using oblimin rotation, allowing all personality
+items to load on the same factors, while allowing all privacy items to
+load on the same factors.</li>
+<li>If fit is still subpar, we will conduct in-depth exploratory factor
+analyses (EFA) to asssess the underlying factor structure.</li>
 <li>EFAs will be run using maximum likelihood estimation and oblimin
 rotation <span class="citation">(Osborne and Costello 2004,
 7)</span>.</li>
@@ -438,7 +448,8 @@ multidimensional solution, we will use the model predicted values for
 the general latent factor.</li>
 </ul></li>
 </ul>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
 <div id="ref-klinePrinciplesPracticeStructural2016" class="csl-entry">
 Kline, Rex B. 2016. <em>Principles and Practice of Structural Equation
 Modeling</em>. 4th ed. Methodology in the Social Sciences. <span>New

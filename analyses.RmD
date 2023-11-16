@@ -37,7 +37,7 @@ Here you can find the results of our study.
 # define packages
 packages <- c("corrplot", "devtools", "GGally", "ggplot2", "haven", "kableExtra", "knitr", 
               "lavaan", "magrittr", "mice", "MVN", "PerFit", "psych", "quanteda.textstats",
-              "pwr", "semPlot", "semTools", "tidyverse", "td")
+              "pwr", "semPlot", "simsem", "semTools", "tidyverse", "td")
 
 # load packages
 lapply(packages, library, character.only = TRUE)
@@ -80,7 +80,7 @@ vars_pri <- c("NFP_SOC", "NFP_PHY", "NFP_PSY",
               "NFP_INF", "NFP_ANO", "NFP_GEN")
 vars_pri_txt <- c("Social", "Physical", "Psychological",
                   "Companies", "Governnment",
-                  "Anonynmity", "Infornmational", "General")
+                  "Anonynmity", "Informational", "General")
 vars_pri_txt_brk <- c("Social", "Physical", "Psycho-\nlogical",
                   "Companies", "Govern-\nment",
                   "Anony-\nmity", "Infor-\nmational", "General")
@@ -573,6 +573,7 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
 # Power Analyses
+## Rudimentary
 
 To estimate sample size, we conducted a rudimentary power analysis. That is, we planned for a two-sided correlation of _r_ = .1. We adopted a balanced alpha and beta error approach. Because we were in "exploration mode", we aimed for a high statistical power and hence relaxed alpha. Ideally, we would have wanted to set an error rate of 5%; however, this was outside of our budget. Instead, we opted for an error rate of 10%.
 
@@ -585,6 +586,61 @@ power_n_95 <- pwr.r.test(r = sesoi, sig.level = .05, power = .95)$n
 ```
 
 A 5% error rate would imply collecting `r power_n_95` participants.
+
+## Detailed: Simple
+
+```{r}
+population <- 
+  "
+  # Fix means to 0
+  HEX_HOH_SIN_01 ~ 0*1
+  HEX_HOH_SIN_02 ~ 0*1
+  HEX_HOH_SIN_03 ~ 0*1
+  HEX_HOH_SIN_04 ~ 0*1
+  NFP_PHY_01 ~ 0*1
+  NFP_PHY_02 ~ 0*1
+  NFP_PHY_03 ~ 0*1
+  NFP_PHY_04 ~ 0*1
+  
+  # Fix variances
+  HEX_HOH_SIN_01 ~~ 1 * HEX_HOH_SIN_01
+  HEX_HOH_SIN_02 ~~ 1 * HEX_HOH_SIN_02
+  HEX_HOH_SIN_03 ~~ 1 * HEX_HOH_SIN_03
+  HEX_HOH_SIN_04 ~~ 1 * HEX_HOH_SIN_04
+  NFP_PHY_01 ~~ 1 * NFP_PHY_01
+  NFP_PHY_02 ~~ 1 * NFP_PHY_02
+  NFP_PHY_03 ~~ 1 * NFP_PHY_03
+  NFP_PHY_04 ~~ 1 * NFP_PHY_04
+  
+  # Define latent vars
+  HEX_HOH_SIN =~ .9*HEX_HOH_SIN_01 + .9*HEX_HOH_SIN_02 + .9*HEX_HOH_SIN_03 + .9*HEX_HOH_SIN_04
+  NFP_PHY =~ .9*NFP_PHY_01 + .9*NFP_PHY_02 + .9*NFP_PHY_03 + .9*NFP_PHY_04
+  
+  # Covariances
+  HEX_HOH_SIN ~~ .1*NFP_PHY
+  "
+sample <- "
+  HEX_HOH_SIN =~ HEX_HOH_SIN_01 + HEX_HOH_SIN_02 + HEX_HOH_SIN_03 + HEX_HOH_SIN_04
+  NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04
+"
+  
+reliability <- sim(
+  # nRep = NULL, 
+  model = sample, 
+#  n = 500,
+  n = seq(500, 5000, 50), 
+  generate = population, 
+  # std.lv = TRUE, 
+  lavaanfun = "sem"
+  )
+
+summary(reliability)
+power_tab <- getPower(reliability)
+power_80 <- findPower(power_tab, "N", 0.90)
+power_80["HEX_HOH_SIN~~NFP_PHY"]
+```
+
+
 
 # Results
 ## SES
@@ -839,6 +895,7 @@ tab_reg <-
          `Need for privacy` = factor(`Need for privacy`, levels = c(vars_pri), labels = c(vars_pri_txt)),
          Predictor_cat = c(vars_pers_dim_txt %>% rep(each = 4), "Sociodemographics" %>% rep(7)) %>% rep(length(vars_pri_txt)))
 
+# make figure
 reg_fig <- ggplot(tab_reg, aes(x = Estimate, y = Predictor)) + 
   coord_cartesian(xlim = c(-.5, .5)) +
   geom_vline(xintercept = 0, lwd = .75, colour = "darkgrey") + 
