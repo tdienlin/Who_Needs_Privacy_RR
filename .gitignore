@@ -8,3 +8,4 @@ analyses_cache/*
 items_readability_cache/*
 items_readability_cache/html/*
 archive/*
+data/*

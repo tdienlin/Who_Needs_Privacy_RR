@@ -16,81 +16,526 @@ bibliography      :
 
 ```{r knitr-setup, include=F}
 set.seed(170819)
-knitr::opts_chunk$set(warning=F, echo=F, error=F, message=F, cache = T, 
-                      tidy=T, dev = 'pdf', cache.extra = knitr::rand_seed)
-options(digits = 3, width = 90)
+
+knitr::opts_chunk$set(
+  warning=F, 
+  echo=F, 
+  error=F, 
+  message=F, 
+  cache = T, 
+  tidy=T, 
+  dev = 'pdf', 
+  cache.extra = knitr::rand_seed
+  )
+
+options(
+  digits = 3, 
+  width = 150,
+  max.print = 100000000
+  )
 ```
 
 Here you can find the results of our study. 
 
-- At this point, we haven't yet collected data. 
-- The results below use simulated data. 
-- The data are random and don't make sense, but help to illustrate the overall approach and planned analyses.
-- We'll later conduct further analyses not yet reported here, for example model-alterations given misfit or imputation of missing data.
-
 # Set-Up
+## Packages
 
 ```{r r-setup, include=T, echo=T, results='hide'}
 # install packages
 # devtools::install_github("https://github.com/tdienlin/td")
 
-# define packages
-packages <- c("corrplot", "devtools", "GGally", "ggplot2", "haven", "kableExtra", "knitr", 
-              "lavaan", "magrittr", "mice", "MVN", "PerFit", "psych", "quanteda.textstats",
-              "pwr", "semPlot", "simsem", "semTools", "tidyverse", "td")
+library(confintr)
+library(corrplot)
+library(devtools)
+library(easystats)
+library(GGally)
+library(ggplot2)
+library(haven)
+library(kableExtra)
+library(knitr)
+library(lavaan)
+library(magrittr)
+library(mice)
+library(MVN)
+library(naniar)
+library(PerFit)
+library(psych)
+library(quanteda.textstats)
+library(pwr)
+library(semPlot)
+library(sjlabelled)
+library(simsem)
+library(semTools)
+library(tidyverse)
+library(td)
 
-# load packages
-lapply(packages, library, character.only = TRUE)
-
-# readability function
-readability = function(data){
-  reading_estimates <- c("Flesch.Kincaid", "FOG", "Coleman.Liau.short", "Dale.Chall.PSK")
-  textstat_readability(data, measure = reading_estimates) %>% 
-    as.data.frame %>% 
-    mutate(average = rowMeans(select(., -document)))
-}
+load("data/workspace_1.RData")
+source("custom_functions.R")
 ```
 
-```{r data-wrangling}
-d <- read_spss("data/Need+for+Privacy_February+27%2C+2023_13.45.sav")
-d <- rename(d, COL = COL_, REL = REL_)
 
+```{r data-wrangling}
+# d <- read_spss("data/Need+for+Privacy_February+27%2C+2023_13.45.sav")
+d_raw <- sjlabelled::read_spss(
+  "data/Need+for+Privacy_February+6%2C+2024_15.56.sav",
+  convert.factors = FALSE
+  )
+```
+
+### Data-Wrangling
+
+```{r data-inverting}
+vars_invert <- c(
+  "HEX_HOH_SIN_01", "HEX_HOH_SIN_03",
+  "HEX_HOH_FAI_01", "HEX_HOH_FAI_02", "HEX_HOH_FAI_04",
+  "HEX_HOH_GRE_02", "HEX_HOH_GRE_03", "HEX_HOH_GRE_04",
+  "HEX_HOH_MOD_03", "HEX_HOH_MOD_04",
+  "HEX_EMO_FEA_02", "HEX_EMO_FEA_04",
+  "HEX_EMO_ANX_02", "HEX_EMO_ANX_03",
+  "HEX_EMO_DEP_02", "HEX_EMO_DEP_04",
+  "HEX_EMO_SEN_04",
+  "HEX_EXT_SSE_03", "HEX_EXT_SSE_04",
+  "HEX_EXT_BOL_01", "HEX_EXT_BOL_04",
+  "HEX_EXT_SOC_01",
+  "HEX_EXT_LIV_03", "HEX_EXT_LIV_04",
+  "HEX_AGR_FOR_03", "HEX_AGR_FOR_04",
+  "HEX_AGR_GEN_01",
+  "HEX_AGR_FLX_01", "HEX_AGR_FLX_03", "HEX_AGR_FLX_04",
+  "HEX_AGR_PAT_01", "HEX_AGR_PAT_04",
+  "HEX_CNS_ORG_03", "HEX_CNS_ORG_04",
+  "HEX_CNS_DIL_03", "HEX_CNS_DIL_04",
+  "HEX_CNS_PER_02",
+  "HEX_CNS_PRU_01", "HEX_CNS_PRU_02", "HEX_CNS_PRU_04",
+  "HEX_OPN_AES_01", "HEX_OPN_AES_02",
+  "HEX_OPN_INQ_03", "HEX_OPN_INQ_04",
+  "HEX_OPN_CRE_01", "HEX_OPN_CRE_04",
+  "HEX_OPN_UNC_01", "HEX_OPN_UNC_04",
+  "HEX_ALT_03", "HEX_ALT_04",
+  "NFP_COM_02"
+)
+
+d <-
+  d_raw %>% 
+  rename(
+    COL = COL_,
+    REL = REL_
+    ) %>%
+  mutate(
+    across(all_of(vars_invert),
+    ~ 8 - .x
+         ),
+    male = case_match(
+      GEN,
+      c(2, 3) ~ 0,
+      1 ~ 1),
+    age = case_match(
+      AGE,
+      1 ~ 1,
+      2 ~ 2,
+      3 ~ 3,
+      4 ~ 4,
+      5 ~ 7,
+      6 ~ 5,
+      7 ~ 6),
+    white = case_match(
+      ETH,
+      2 ~ 0,
+      1 ~ 1),
+    relation = case_match(
+      REL,
+      2 ~ 1,
+      1 ~ 0),
+    college = case_match(
+      COL,
+      2 ~ 1,
+      1 ~ 0),
+    conserv = CON,
+    income = INC
+  ) 
+```
+
+### Labels
+
+```{r data-labels}
 # define vars and labels
-vars_pers_fac <- c("HEX_HOH_SIN", "HEX_HOH_FAI", "HEX_HOH_GRE", "HEX_HOH_MOD", 
+vars_ses <- c("age", "male", "white", "relation", "college", "income", "conserv")
+vars_ses_txt <- c("Age", "Male", "White", "Relationship", "College", "Income", "Conservatism")
+
+vars_pers_fac <- c("HEX_HOH_SIN", "HEX_HOH_FAI", "HEX_HOH_GRE", "HEX_HOH_MOD",
+                   "HEX_ALT",
                    "HEX_EMO_FEA", "HEX_EMO_ANX", "HEX_EMO_DEP", "HEX_EMO_SEN", 
                    "HEX_EXT_SSE", "HEX_EXT_BOL", "HEX_EXT_SOC", "HEX_EXT_LIV", 
                    "HEX_AGR_FOR", "HEX_AGR_GEN", "HEX_AGR_FLX", "HEX_AGR_PAT", 
                    "HEX_CNS_ORG", "HEX_CNS_DIL", "HEX_CNS_PER", "HEX_CNS_PRU", 
-                   "HEX_OPN_AES", "HEX_OPN_INQ", "HEX_OPN_CRE", "HEX_OPN_UNC", 
-                   "HEX_ALT")
+                   "HEX_OPN_AES", "HEX_OPN_INQ", "HEX_OPN_CRE", "HEX_OPN_UNC")
 vars_pers_fac_txt <- c("Sincerity", "Fairness", "Greed avoidance", "Modesty", 
+                       "Altruism",
                        "Fearfulness", "Anxiety", "Dependence", "Sentimentality", 
                        "Social self-esteem", "Social boldness", "Sociability", "Liveliness",
                        "Forgiveness", "Gentleness", "Flexibility", "Patience", 
                        "Organization", "Diligence", "Perfectionism", "Prudence", 
-                       "Aesthetic appreciation", "Inquisitiveness", "Creativeness", "Unconventionality", 
-                       "Altruism")
+                       "Aesthetic\nappreciation", "Inquisitiveness", "Creativeness", "Unconventionality")
+
+vars_pers_hoh <- 
+  c("HEX_HOH", "HEX_HOH_SIN", "HEX_HOH_FAI", "HEX_HOH_GRE", "HEX_HOH_MOD", "HEX_ALT")
+vars_pers_emo <- 
+  c("HEX_EMO", "HEX_EMO_FEA", "HEX_EMO_ANX", "HEX_EMO_DEP", "HEX_EMO_SEN")
+vars_pers_ext <- 
+  c("HEX_EXT", "HEX_EXT_SSE", "HEX_EXT_BOL", "HEX_EXT_SOC", "HEX_EXT_LIV")
+vars_pers_agr <- 
+  c("HEX_AGR", "HEX_AGR_FOR", "HEX_AGR_GEN", "HEX_AGR_FLX", "HEX_AGR_PAT")
+vars_pers_cns <- 
+  c("HEX_CNS", "HEX_CNS_ORG", "HEX_CNS_DIL", "HEX_CNS_PER", "HEX_CNS_PRU")
+vars_pers_opn <- 
+  c("HEX_OPN", "HEX_OPN_AES", "HEX_OPN_INQ", "HEX_OPN_CRE", "HEX_OPN_UNC")
+
+vars_pers_all <- 
+  c(
+    vars_pers_hoh, 
+    vars_pers_emo, 
+    vars_pers_ext, 
+    vars_pers_agr, 
+    vars_pers_cns,
+    vars_pers_opn
+    )
+
+vars_pers_all_txt <- 
+  c("Honesty humility", 
+      "Sincerity", "Fairness", "Greed avoidance", "Modesty", "Altruism",
+    "Emotionality", 
+      "Fearfulness", "Anxiety", "Dependence", "Sentimentality", 
+    "Extraversion",
+      "Social self-esteem", "Social boldness", "Sociability", "Liveliness",
+    "Agreeableness",
+      "Forgiveness", "Gentleness", "Flexibility", "Patience",
+    "Conscientiousness",
+      "Organization", "Diligence", "Perfectionism", "Prudence", 
+    "Openness",
+      "Aesthetic\nappreciation", "Inquisitiveness", "Creativeness", "Unconventionality"
+    )
+
+vars_pred_all_txt <- 
+  c(
+    vars_pers_all_txt,
+    vars_ses_txt
+    )
 
 vars_pers_dim <- c("HEX_HOH", "HEX_EMO", "HEX_EXT", "HEX_AGR", "HEX_CNS", "HEX_OPN")
 vars_pers_dim_txt <- c("Honesty humility", "Emotionality", "Extraversion", 
                        "Agreeableness", "Conscientiousness", "Openness")
 
-vars_pri <- c("NFP_SOC", "NFP_PHY", "NFP_PSY",
+vars_pri <- c("NFP_PSY", "NFP_SOC", "NFP_PHY", 
               "NFP_GOV", "NFP_COM", 
               "NFP_INF", "NFP_ANO", "NFP_GEN")
-vars_pri_txt <- c("Social", "Physical", "Psychological",
-                  "Companies", "Governnment",
-                  "Anonynmity", "Informational", "General")
-vars_pri_txt_brk <- c("Social", "Physical", "Psycho-\nlogical",
-                  "Companies", "Govern-\nment",
-                  "Anony-\nmity", "Infor-\nmational", "General")
-vars_pri_txt_abr <- c("Social", "Phys.", "Psych.",
-                  "Comp.", "Gov.",
-                  "Anonym.", "Inform.", "General")
+vars_pri_txt <- c("Psychological", "Social", "Physical", 
+                  "Government", "Companies", 
+                  "Informational", "Anonymity", "General")
+vars_pri_txt_brk <- c("Psycho-\nlogical", "Social", "Physical", 
+                  "Govern-\nment", "Companies", 
+                  "Infor-\nmational", "Anony-\nmity", "General")
+vars_pri_txt_abr <- c("Psych.", "Social", "Phys.", 
+                  "Gov.", "Comp.", 
+                  "Inform.", "Anonym.", "General")
 
-vars_ses <- c("AGE", "GEN", "ETH", "REL", "COL", "INC", "CON")
-vars_ses_txt <- c("Age", "Gender", "Ethnicity", "Relationship", "College", "Income", "Conservatism")
+vars_pers_pri <- c(vars_pers_fac, vars_pri)
 ```
+
+## Means
+
+```{r}
+# Person means per facet
+
+d %<>%
+  mutate(
+    HEX_HOH_M = rowMeans(select(., starts_with("HEX_HOH"))),
+    HEX_EMO_M = rowMeans(select(., starts_with("HEX_EMO"))),
+    HEX_EXT_M = rowMeans(select(., starts_with("HEX_EXT"))),
+    HEX_AGR_M = rowMeans(select(., starts_with("HEX_AGR"))),
+    HEX_CNS_M = rowMeans(select(., starts_with("HEX_CNS"))),
+    HEX_OPN_M = rowMeans(select(., starts_with("HEX_OPN"))),
+    HEX_ALT_M = rowMeans(select(., starts_with("HEX_ALT_0"))),
+    HEX_AGR_FLX_M = rowMeans(select(., starts_with("HEX_AGR_FLX_0"))),
+    HEX_AGR_FOR_M = rowMeans(select(., starts_with("HEX_AGR_FOR_0"))),
+    HEX_AGR_GEN_M = rowMeans(select(., starts_with("HEX_AGR_GEN_0"))),
+    HEX_AGR_PAT_M = rowMeans(select(., starts_with("HEX_AGR_PAT_0"))),
+    HEX_CNS_DIL_M = rowMeans(select(., starts_with("HEX_CNS_DIL_0"))),
+    HEX_CNS_ORG_M = rowMeans(select(., starts_with("HEX_CNS_ORG_0"))),
+    HEX_CNS_PER_M = rowMeans(select(., starts_with("HEX_CNS_PER_0"))),
+    HEX_CNS_PRU_M = rowMeans(select(., starts_with("HEX_CNS_PRU_0"))),
+    HEX_EMO_ANX_M = rowMeans(select(., starts_with("HEX_EMO_ANX_0"))),
+    HEX_EMO_DEP_M = rowMeans(select(., starts_with("HEX_EMO_DEP_0"))),
+    HEX_EMO_FEA_M = rowMeans(select(., starts_with("HEX_EMO_FEA_0"))),
+    HEX_EMO_SEN_M = rowMeans(select(., starts_with("HEX_EMO_SEN_0"))),
+    HEX_EXT_BOL_M = rowMeans(select(., starts_with("HEX_EXT_BOL_0"))),
+    HEX_EXT_LIV_M = rowMeans(select(., starts_with("HEX_EXT_LIV_0"))),
+    HEX_EXT_SOC_M = rowMeans(select(., starts_with("HEX_EXT_SOC_0"))),
+    HEX_EXT_SSE_M = rowMeans(select(., starts_with("HEX_EXT_SSE_0"))),
+    HEX_HOH_FAI_M = rowMeans(select(., starts_with("HEX_HOH_FAI_0"))),
+    HEX_HOH_GRE_M = rowMeans(select(., starts_with("HEX_HOH_GRE_0"))),
+    HEX_HOH_MOD_M = rowMeans(select(., starts_with("HEX_HOH_MOD_0"))),
+    HEX_HOH_SIN_M = rowMeans(select(., starts_with("HEX_HOH_SIN_0"))),
+    HEX_OPN_AES_M = rowMeans(select(., starts_with("HEX_OPN_AES_0"))),
+    HEX_OPN_CRE_M = rowMeans(select(., starts_with("HEX_OPN_CRE_0"))),
+    HEX_OPN_INQ_M = rowMeans(select(., starts_with("HEX_OPN_INQ_0"))),
+    HEX_OPN_UNC_M = rowMeans(select(., starts_with("HEX_OPN_UNC_0"))),
+    NFP_ANO_M = rowMeans(select(., starts_with("NFP_ANO_0"))),
+    NFP_COM_M = rowMeans(select(., starts_with("NFP_COM_0"))),
+    NFP_GEN_M = rowMeans(select(., starts_with("NFP_GEN_0"))),
+    NFP_GOV_M = rowMeans(select(., starts_with("NFP_GOV_0"))),
+    NFP_INF_M = rowMeans(select(., starts_with("NFP_INF_0"))),
+    NFP_PHY_M = rowMeans(select(., starts_with("NFP_PHY_0"))),
+    NFP_PSY_M = rowMeans(select(., starts_with("NFP_PSY_0"))),
+    NFP_SOC_M = rowMeans(select(., starts_with("NFP_SOC_0")))
+  )
+
+# item means
+c_m <- 
+  c(
+    HEX_ALT_m     = mean(d$HEX_ALT_M, na.rm = T),
+    HEX_AGR_FLX_m = mean(d$HEX_AGR_FLX_M, na.rm = T),
+    HEX_AGR_FOR_m = mean(d$HEX_AGR_FOR_M, na.rm = T),
+    HEX_AGR_GEN_m = mean(d$HEX_AGR_GEN_M, na.rm = T),
+    HEX_AGR_PAT_m = mean(d$HEX_AGR_PAT_M, na.rm = T),
+    HEX_CNS_DIL_m = mean(d$HEX_CNS_DIL_M, na.rm = T),
+    HEX_CNS_ORG_m = mean(d$HEX_CNS_ORG_M, na.rm = T),
+    HEX_CNS_PER_m = mean(d$HEX_CNS_PER_M, na.rm = T),
+    HEX_CNS_PRU_m = mean(d$HEX_CNS_PRU_M, na.rm = T),
+    HEX_EMO_ANX_m = mean(d$HEX_EMO_ANX_M, na.rm = T),
+    HEX_EMO_DEP_m = mean(d$HEX_EMO_DEP_M, na.rm = T),
+    HEX_EMO_FEA_m = mean(d$HEX_EMO_FEA_M, na.rm = T),
+    HEX_EMO_SEN_m = mean(d$HEX_EMO_SEN_M, na.rm = T),
+    HEX_EXT_BOL_m = mean(d$HEX_EXT_BOL_M, na.rm = T),
+    HEX_EXT_LIV_m = mean(d$HEX_EXT_LIV_M, na.rm = T),
+    HEX_EXT_SOC_m = mean(d$HEX_EXT_SOC_M, na.rm = T),
+    HEX_EXT_SSE_m = mean(d$HEX_EXT_SSE_M, na.rm = T),
+    HEX_HOH_FAI_m = mean(d$HEX_HOH_FAI_M, na.rm = T),
+    HEX_HOH_GRE_m = mean(d$HEX_HOH_GRE_M, na.rm = T),
+    HEX_HOH_MOD_m = mean(d$HEX_HOH_MOD_M, na.rm = T),
+    HEX_HOH_SIN_m = mean(d$HEX_HOH_SIN_M, na.rm = T),
+    HEX_OPN_AES_m = mean(d$HEX_OPN_AES_M, na.rm = T),
+    HEX_OPN_CRE_m = mean(d$HEX_OPN_CRE_M, na.rm = T),
+    HEX_OPN_INQ_m = mean(d$HEX_OPN_INQ_M, na.rm = T),
+    HEX_OPN_UNC_m = mean(d$HEX_OPN_UNC_M, na.rm = T),
+    NFP_ANO_m     = mean(d$NFP_ANO_M, na.rm = T),
+    NFP_COM_m     = mean(d$NFP_COM_M, na.rm = T),
+    NFP_GEN_m     = mean(d$NFP_GEN_M, na.rm = T),
+    NFP_GOV_m     = mean(d$NFP_GOV_M, na.rm = T),
+    NFP_INF_m     = mean(d$NFP_INF_M, na.rm = T),
+    NFP_PHY_m     = mean(d$NFP_PHY_M, na.rm = T),
+    NFP_PSY_m     = mean(d$NFP_PSY_M, na.rm = T),
+    NFP_SOC_m     = mean(d$NFP_SOC_M, na.rm = T),
+    HEX_HOH_m     = mean(d$HEX_HOH_M, na.rm = T),
+    HEX_EMO_m     = mean(d$HEX_EMO_M, na.rm = T),
+    HEX_EXT_m     = mean(d$HEX_EXT_M, na.rm = T),
+    HEX_AGR_m     = mean(d$HEX_AGR_M, na.rm = T),
+    HEX_CNS_m     = mean(d$HEX_CNS_M, na.rm = T),
+    HEX_OPN_m     = mean(d$HEX_OPN_M, na.rm = T)
+  )
+
+# item standard deviation
+c_sd <- 
+  c(
+    HEX_ALT_sd     = sd(d$HEX_ALT_M, na.rm = T),
+    HEX_AGR_FLX_sd = sd(d$HEX_AGR_FLX_M, na.rm = T),
+    HEX_AGR_FOR_sd = sd(d$HEX_AGR_FOR_M, na.rm = T),
+    HEX_AGR_GEN_sd = sd(d$HEX_AGR_GEN_M, na.rm = T),
+    HEX_AGR_PAT_sd = sd(d$HEX_AGR_PAT_M, na.rm = T),
+    HEX_CNS_DIL_sd = sd(d$HEX_CNS_DIL_M, na.rm = T),
+    HEX_CNS_ORG_sd = sd(d$HEX_CNS_ORG_M, na.rm = T),
+    HEX_CNS_PER_sd = sd(d$HEX_CNS_PER_M, na.rm = T),
+    HEX_CNS_PRU_sd = sd(d$HEX_CNS_PRU_M, na.rm = T),
+    HEX_EMO_ANX_sd = sd(d$HEX_EMO_ANX_M, na.rm = T),
+    HEX_EMO_DEP_sd = sd(d$HEX_EMO_DEP_M, na.rm = T),
+    HEX_EMO_FEA_sd = sd(d$HEX_EMO_FEA_M, na.rm = T),
+    HEX_EMO_SEN_sd = sd(d$HEX_EMO_SEN_M, na.rm = T),
+    HEX_EXT_BOL_sd = sd(d$HEX_EXT_BOL_M, na.rm = T),
+    HEX_EXT_LIV_sd = sd(d$HEX_EXT_LIV_M, na.rm = T),
+    HEX_EXT_SOC_sd = sd(d$HEX_EXT_SOC_M, na.rm = T),
+    HEX_EXT_SSE_sd = sd(d$HEX_EXT_SSE_M, na.rm = T),
+    HEX_HOH_FAI_sd = sd(d$HEX_HOH_FAI_M, na.rm = T),
+    HEX_HOH_GRE_sd = sd(d$HEX_HOH_GRE_M, na.rm = T),
+    HEX_HOH_MOD_sd = sd(d$HEX_HOH_MOD_M, na.rm = T),
+    HEX_HOH_SIN_sd = sd(d$HEX_HOH_SIN_M, na.rm = T),
+    HEX_OPN_AES_sd = sd(d$HEX_OPN_AES_M, na.rm = T),
+    HEX_OPN_CRE_sd = sd(d$HEX_OPN_CRE_M, na.rm = T),
+    HEX_OPN_INQ_sd = sd(d$HEX_OPN_INQ_M, na.rm = T),
+    HEX_OPN_UNC_sd = sd(d$HEX_OPN_UNC_M, na.rm = T),
+    NFP_ANO_sd     = sd(d$NFP_ANO_M, na.rm = T),
+    NFP_COM_sd     = sd(d$NFP_COM_M, na.rm = T),
+    NFP_GEN_sd     = sd(d$NFP_GEN_M, na.rm = T),
+    NFP_GOV_sd     = sd(d$NFP_GOV_M, na.rm = T),
+    NFP_INF_sd     = sd(d$NFP_INF_M, na.rm = T),
+    NFP_PHY_sd     = sd(d$NFP_PHY_M, na.rm = T),
+    NFP_PSY_sd     = sd(d$NFP_PSY_M, na.rm = T),
+    NFP_SOC_sd     = sd(d$NFP_SOC_M, na.rm = T),
+    HEX_HOH_sd     = sd(d$HEX_HOH_M, na.rm = T),
+    HEX_EMO_sd     = sd(d$HEX_EMO_M, na.rm = T),
+    HEX_EXT_sd     = sd(d$HEX_EXT_M, na.rm = T),
+    HEX_AGR_sd     = sd(d$HEX_AGR_M, na.rm = T),
+    HEX_CNS_sd     = sd(d$HEX_CNS_M, na.rm = T),
+    HEX_OPN_sd     = sd(d$HEX_OPN_M, na.rm = T)
+  )
+```
+
+# Missing data
+
+First filter those who didn't finish the questionnaire.
+
+```{r}
+d %<>%
+  filter(
+    Progress == 100
+  )
+
+n_finished <- nrow(d)
+```
+
+Let's first inspect missing data.
+
+How many missing do we have?
+
+```{r}
+n_miss(d)
+prop_miss(d)
+```
+
+Only 23 cells are missing -- which is very little. To be precise, 0.00006 percent only. 
+
+Which variables are affected?
+
+```{r}
+miss_var_summary(d) %>% 
+  head(19)
+```
+
+Missing answers vary randomly across variables.
+
+How about participants?
+
+```{r}
+miss_case_summary(d)
+```
+
+Only six participants with missing data, and even then, not much. We hence decided to keep everyone.
+
+
+# Quality checks
+
+We preregistered to remove participants faster than 3 standard deviations than the median response time.
+
+```{r cache=F}
+# Median response time
+time_med <- median(d$Duration__in_seconds_)
+
+# Average response time
+time_m <- mean(d$Duration__in_seconds_) / 60
+
+# Standard deviation
+time_sd <- sd(d$Duration__in_seconds_)
+
+# filter speeders
+time_crit_init <- time_med - (3 * time_sd) # minimum time on survey
+```
+
+However, this made little sense. The median response time was `r time_med` and the standard deviation `r time_sd`. Hence, three SDs below median was `r time_crit_init`, hence not informative. 
+
+Instead, we decided to remove respondents who took less than five minutes answering the questionnaire, which we considered unreasonably fast.
+
+```{r cache=F}
+time_crit <- 5 * 60
+
+# count number of speeders
+n_speeding <- 
+  nrow(
+    filter(
+      d, 
+      Duration__in_seconds_ < time_crit
+      )
+    )
+
+# Deletion of fast respondents
+d <- 
+  filter(
+    d, 
+    Duration__in_seconds_ >= time_crit
+    )
+
+n_used <- nrow(d)
+```
+
+Average response time was `r time_m %>% round(0)` minutes. We removed `r n_speeding` because they answered the survey unreasonably fast.
+
+Let's inspect for potential response patterns.
+
+
+# Sociodemographics
+
+To improve privacy, we didn't collect exact but binned measures of sociodemographics.
+
+Let's first inspect age. Here, the age categories were as follows:
+
+1: Under 18 years old
+2: 18-24 years old 
+3: 25-34 years old 
+4: 35-44 years old 
+5: 45-54 years old 
+6: 55-64 years old 
+7: 65+ years old
+
+```{r}
+table(d$AGE)
+```
+
+No person indicated being younger than 18 years old. Hence, everybody could be included.
+
+```{r}
+age_m <- 
+  mean(d$AGE)
+```
+
+The mean age was 45 to 54 years of age.
+
+Let's next inspect gender. Categories were: 
+
+1: "Man" 
+2: "Woman" 
+3: "Third gender / Other"
+
+```{r}
+table(d$GEN) %>% 
+  prop.table() %>% 
+  round(2)
+```
+
+48 percent were male, 50 female, and 1 percent indicated third/other gender.
+
+Let's next inspect education. Categories were: 
+
+1: "No college degree" 
+2: "College degree"
+
+```{r}
+table(d$COL) %>% 
+  prop.table() %>% 
+  round(2)
+```
+
+69% reported having a college degree. 
+
+Let's next inspect ethnicity. Answer categories were as follows:
+
+1: "White"
+2: "Other"
+
+```{r}
+table(d$ETH) %>%
+  prop.table() %>% 
+  round(2)
+```
+
+78 % percent were white, 22 % not white.
+
+
 
 # Items
 
@@ -99,6 +544,22 @@ All items were answered on a 7-point scale with the following options:
 "To what extent do you agree or disagree with the following statements?"
 
 (-3) Strongly Disagree, (-2) Disagree, (-1) Slightly Disagree, (0) Neutral, (1) Slightly Agree (2) Agree, (3) Strongly Agree
+
+## Ceiling/Floor effects
+
+Let's first check for ceiling and floor effects.
+
+```{r}
+d %>%
+  select(
+    paste0(rep(vars_pers_pri, each = 4), "_0", 1:4)
+  ) %>% 
+  apply(
+    2,  mean, na.rm = T
+  )
+```
+
+No item below floor (1.5) or ceiling (6.5) thresholds.
 
 ## Personality
 ### Honesty Humility
@@ -111,10 +572,53 @@ All items were answered on a 7-point scale with the following options:
 
 ```{r}
 name <- "HEX_HOH_SIN"
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
 model <- "HEX_HOH_SIN =~ HEX_HOH_SIN_01 + HEX_HOH_SIN_02 + HEX_HOH_SIN_03 + HEX_HOH_SIN_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is okay, but RMSEA is significantly above .10. Let's hence inspect modification indices to see if there are potential fixes.
+
+```{r}
+modindices(fit_HEX_HOH_SIN)
+```
+
+Suggests that item 1 & 3, and item 2 & 4 build subdimensions. Let's allow covariances.
+
+```{r}
+model <- 
+  "HEX_HOH_SIN =~ HEX_HOH_SIN_01 + HEX_HOH_SIN_02 + HEX_HOH_SIN_03 + HEX_HOH_SIN_04
+  HEX_HOH_SIN_01 ~~ a*HEX_HOH_SIN_03
+  HEX_HOH_SIN_02 ~~ a*HEX_HOH_SIN_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is now great.
 
 #### Fairness
 
@@ -125,10 +629,31 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_HOH_FAI"
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+
 model <- "HEX_HOH_FAI =~ HEX_HOH_FAI_01 + HEX_HOH_FAI_02 + HEX_HOH_FAI_03 + HEX_HOH_FAI_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is good.
 
 #### Greed Avoidance
 
@@ -138,11 +663,55 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
  - I would get a lot of pleasure from owning expensive luxury goods.
 
 ```{r}
-name <- "HEY_HOH_GRE"
+name <- "HEX_HOH_GRE"
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+
 model <- "HEX_HOH_GRE =~ HEX_HOH_GRE_01 + HEX_HOH_GRE_02 + HEX_HOH_GRE_03 + HEX_HOH_GRE_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is okaish, but RMSEA above .10. Let's inspect modification indices.
+
+```{r}
+modindices(fit_HEX_HOH_GRE)
+```
+
+Item 1 & 2, and item 3 & 4 form subdimensions.
+
+```{r}
+model <- "
+  HEX_HOH_GRE =~ HEX_HOH_GRE_01 + HEX_HOH_GRE_02 + HEX_HOH_GRE_03 + HEX_HOH_GRE_04
+  HEX_HOH_GRE_01 ~~ a*HEX_HOH_GRE_02
+  HEX_HOH_GRE_03 ~~ a*HEX_HOH_GRE_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is now great.
 
 #### Modesty
 
@@ -153,9 +722,52 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_HOH_MOD"
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
 model <- "HEX_HOH_MOD =~ HEX_HOH_MOD_01 + HEX_HOH_MOD_02 + HEX_HOH_MOD_03 + HEX_HOH_MOD_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is good.
+
+#### Honesty Humility
+
+Let's also look at the dimension itself.
+
+```{r}
+model_hex_hoh <- "
+# Personality Factors
+HEX_HOH =~ HEX_HOH_SIN + HEX_HOH_FAI + HEX_HOH_GRE + HEX_HOH_MOD
+HEX_HOH_SIN =~ HEX_HOH_SIN_01 + HEX_HOH_SIN_02 + HEX_HOH_SIN_03 + HEX_HOH_SIN_04
+HEX_HOH_FAI =~ HEX_HOH_FAI_01 + HEX_HOH_FAI_02 + HEX_HOH_FAI_03 + HEX_HOH_FAI_04
+HEX_HOH_GRE =~ HEX_HOH_GRE_01 + HEX_HOH_GRE_02 + HEX_HOH_GRE_03 + HEX_HOH_GRE_04
+HEX_HOH_MOD =~ HEX_HOH_MOD_01 + HEX_HOH_MOD_02 + HEX_HOH_MOD_03 + HEX_HOH_MOD_04
+
+# Covariances
+HEX_HOH_SIN_01 ~~ HEX_HOH_SIN_03
+HEX_HOH_SIN_02 ~~ HEX_HOH_SIN_04
+HEX_HOH_GRE_01 ~~ HEX_HOH_GRE_02
+HEX_HOH_GRE_03 ~~ HEX_HOH_GRE_04
+"
+fit_hex_hoh <- sem(model_hex_hoh, d, estimator = "MLM", fixed.x = TRUE)
+summary(fit_hex_hoh, standardized = TRUE, fit = TRUE)
 ```
 
 ### Emotionality
@@ -168,10 +780,30 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_EMO_FEA"
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
 model <- "HEX_EMO_FEA =~ HEX_EMO_FEA_01 + HEX_EMO_FEA_02 + HEX_EMO_FEA_03 + HEX_EMO_FEA_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLR", missing = "FIML")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is great.
 
 #### Anxiety
  
@@ -182,10 +814,31 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
  
 ```{r}
 name <- "HEX_EMO_ANX"
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+
 model <- "HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_EMO_ANX_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is great.
 
 #### Dependence
 
@@ -196,11 +849,55 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_EMO_DEP"
-model <- "HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_EMO_DEP_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_EMO_DEP_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
- 
+
+Fit is bad; TLI and RMSEA outside thresholds.
+
+```{r}
+modindices(fit_HEX_EMO_DEP)
+```
+
+Not entirely clear. Let's allow items 1 & 4 to correlate, and items 2 & 3.
+
+```{r}
+model <- "
+HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_EMO_DEP_04
+HEX_EMO_DEP_01 ~~ a*HEX_EMO_DEP_04
+HEX_EMO_DEP_02 ~~ a*HEX_EMO_DEP_03
+"
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit not great, but okay.
+
 #### Sentimentality
 
  - I feel like crying when I see other people crying.
@@ -210,10 +907,111 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_EMO_SEN"
-model <- "HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_EMO_SEN_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+
+model <- "
+HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_EMO_SEN_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit not terrible, but TLI and RSMEA outside of thresholds.
+
+```{r}
+modindices(fit_HEX_EMO_SEN)
+```
+
+Items 1 & 3, and items 2 & 4 want to covary.
+
+```{r}
+model <- "
+  HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_EMO_SEN_04
+  HEX_EMO_SEN_01 ~~ a*HEX_EMO_SEN_03
+  HEX_EMO_SEN_02 ~~ a*HEX_EMO_SEN_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is now good.
+
+#### Emotionality
+
+Let's look at overall dimension.
+
+```{r}
+model_hex_emo <- "
+HEX_EMO =~ HEX_EMO_FEA + HEX_EMO_ANX + HEX_EMO_DEP + HEX_EMO_SEN
+HEX_EMO_FEA =~ HEX_EMO_FEA_01 + HEX_EMO_FEA_02 + HEX_EMO_FEA_03 + HEX_EMO_FEA_04
+HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_EMO_ANX_04
+HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_EMO_DEP_04
+HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_EMO_SEN_04
+HEX_EMO_DEP_01 ~~ HEX_EMO_DEP_04
+HEX_EMO_DEP_02 ~~ HEX_EMO_DEP_03
+HEX_EMO_SEN_01 ~~ HEX_EMO_SEN_03
+HEX_EMO_SEN_02 ~~ HEX_EMO_SEN_04
+"
+fit_hex_emo <- sem(model_hex_emo, d, estimator = "MLM", fixed.x = TRUE)
+summary(fit_hex_emo, standardized = TRUE, fit = TRUE)
+```
+
+Fit is subpar. Let's inspect.
+
+```{r}
+modindices(fit_hex_emo, minimum.value = 40)
+```
+
+Suggests one major cross-loading: 
+
+ - HEX_EMO with	HEX_EMO_FEA_04
+
+```{r}
+model_hex_emo <- "
+HEX_EMO =~ HEX_EMO_FEA + HEX_EMO_ANX + HEX_EMO_DEP + HEX_EMO_SEN
+HEX_EMO_FEA =~ HEX_EMO_FEA_01 + HEX_EMO_FEA_02 + HEX_EMO_FEA_03 + HEX_EMO_FEA_04
+HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_EMO_ANX_04 + HEX_EMO_FEA_04
+HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_EMO_DEP_04
+HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_EMO_SEN_04
+
+HEX_EMO_DEP_01 ~~ HEX_EMO_DEP_04
+HEX_EMO_DEP_02 ~~ HEX_EMO_DEP_03
+HEX_EMO_SEN_01 ~~ HEX_EMO_SEN_03
+HEX_EMO_SEN_02 ~~ HEX_EMO_SEN_04
+"
+fit_hex_emo <- sem(model_hex_emo, d, estimator = "MLM", fixed.x = TRUE)
+summary(fit_hex_emo, standardized = TRUE, fit = TRUE)
+```
+
+Still not great. Let's reinspect.
+
+```{r}
+modindices(fit_hex_emo, minimum.value = 50)
+```
+
+No clear candidate emerges. Will keep it that way.
 
 ### Extraversion
 #### Social Self-Esteem
@@ -225,10 +1023,57 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
  
 ```{r}
 name <- "HEX_EXT_SSE"
-model <- "HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_EXT_SSE_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+
+model <- "
+  HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_EXT_SSE_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLR", missing = "FIML")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is not good. Let's inspect.
+
+```{r}
+modindices(fit_HEX_EXT_SSE)
+```
+
+Items 1 & 4 and 2 & 3 want to covary.
+
+```{r}
+model <- "
+  HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_EXT_SSE_04
+  HEX_EXT_SSE_01 ~~ a*HEX_EXT_SSE_04
+  HEX_EXT_SSE_02 ~~ a*HEX_EXT_SSE_03
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLR", missing = "FIML")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is now okay.
 
 #### Social Boldness
 
@@ -239,10 +1084,56 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_EXT_BOL"
-model <- "HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_EXT_BOL_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+
+model <- "
+  HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_EXT_BOL_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+RMSEA significantly larger than .10, will hence check modification indices.
+
+```{r}
+modindices(fit_HEX_EXT_BOL)
+```
+
+Let's allow 1 & 4, and 2 & 3 to covary.
+
+```{r}
+model <- "
+  HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_EXT_BOL_04
+  HEX_EXT_BOL_01 ~~ a*HEX_EXT_BOL_04
+  HEX_EXT_BOL_02 ~~ a*HEX_EXT_BOL_03
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is good.
 
 #### Sociability
 
@@ -253,10 +1144,32 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_EXT_SOC"
-model <- "HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is good.
 
 #### Liveliness
 
@@ -267,10 +1180,109 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_EXT_LIV"
-model <- "HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_EXT_LIV_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_EXT_LIV_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is supar, let's inspect.
+
+```{r}
+modindices(fit_HEX_EXT_LIV)
+```
+
+```{r}
+model <- "
+  HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_EXT_LIV_04
+  HEX_EXT_LIV_01 ~~ a*HEX_EXT_LIV_03
+  HEX_EXT_LIV_02 ~~ a*HEX_EXT_LIV_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Again, fit is not really good --> but it seems preferable to stick to this more parsimoneous solution. 
+
+#### Extraversion
+
+Let's analyze main model.
+
+```{r}
+model_hex_ext <- "
+HEX_EXT =~ HEX_EXT_SSE + HEX_EXT_BOL + HEX_EXT_SOC + HEX_EXT_LIV
+HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_EXT_SSE_04
+HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_EXT_BOL_04
+HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04
+HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_EXT_LIV_04
+
+HEX_EXT_SSE_01 ~~ HEX_EXT_SSE_04
+HEX_EXT_SSE_02 ~~ HEX_EXT_SSE_03
+HEX_EXT_BOL_01 ~~ HEX_EXT_BOL_04
+HEX_EXT_BOL_02 ~~ HEX_EXT_BOL_03
+HEX_EXT_LIV_01 ~~ HEX_EXT_LIV_03
+HEX_EXT_LIV_02 ~~ HEX_EXT_LIV_04
+"
+fit_hex_ext <- sem(model_hex_ext, d, estimator = "MLM", fixed.x = TRUE)
+summary(fit_hex_ext, standardized = TRUE, fit = TRUE)
+```
+
+Fit is subpar. Let's inspect.
+
+```{r}
+modindices(fit_hex_ext, minimum.value = 50)
+```
+
+One clear cross-loading emerges plus one covariance.
+
+- 	HEX_EXT_SOC	=~	HEX_EXT_BOL_02
+-   HEX_EXT_SSE_01	~~	HEX_EXT_LIV_02
+
+```{r}
+model_hex_ext <- "
+HEX_EXT =~ HEX_EXT_SSE + HEX_EXT_BOL + HEX_EXT_SOC + HEX_EXT_LIV
+HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_EXT_SSE_04
+HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_EXT_BOL_04
+HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04 + HEX_EXT_BOL_02
+HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_EXT_LIV_04
+
+HEX_EXT_SSE_01 ~~ HEX_EXT_SSE_04
+HEX_EXT_SSE_02 ~~ HEX_EXT_SSE_03
+HEX_EXT_BOL_01 ~~ HEX_EXT_BOL_04
+HEX_EXT_BOL_02 ~~ HEX_EXT_BOL_03
+HEX_EXT_LIV_01 ~~ HEX_EXT_LIV_03
+HEX_EXT_LIV_02 ~~ HEX_EXT_LIV_04
+HEX_EXT_SSE_01 ~~	HEX_EXT_LIV_02
+"
+fit_hex_ext <- sem(model_hex_ext, d, estimator = "MLM", fixed.x = TRUE)
+summary(fit_hex_ext, standardized = TRUE, fit = TRUE)
+```
+
+Fit not great, but improved.
 
 ### Agreeableness
 #### Forgiveness
@@ -282,10 +1294,32 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_AGR_FOR"
-model <- "HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is good.
 
 #### Gentleness
 
@@ -296,10 +1330,32 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
  
 ```{r}
 name <- "HEX_AGR_GEN"
-model <- "HEX_AGR_GEN =~ HEX_AGR_GEN_01 + HEX_AGR_GEN_02 + HEX_AGR_GEN_03 + HEX_AGR_GEN_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_AGR_GEN =~ HEX_AGR_GEN_01 + HEX_AGR_GEN_02 + HEX_AGR_GEN_03 + HEX_AGR_GEN_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is okay.
 
 #### Flexibility
 
@@ -310,10 +1366,32 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_AGR_FLX"
-model <- "HEX_AGR_FLX =~ HEX_AGR_FLX_01 + HEX_AGR_FLX_02 + HEX_AGR_FLX_03 + HEX_AGR_FLX_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_AGR_FLX =~ HEX_AGR_FLX_01 + HEX_AGR_FLX_02 + HEX_AGR_FLX_03 + HEX_AGR_FLX_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is okay.
 
 #### Patience
 
@@ -324,10 +1402,103 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_AGR_PAT"
-model <- "HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_AGR_PAT_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_AGR_PAT_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is subpar. Let's check for potential improvements.
+
+```{r}
+modindices(fit_HEX_AGR_PAT)
+```
+
+Items 1 & 2 and Items 3 & 4 want to covary.
+
+```{r}
+model <- "
+HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_AGR_PAT_04
+HEX_AGR_PAT_01 ~~ a*HEX_AGR_PAT_02
+HEX_AGR_PAT_03 ~~ a*HEX_AGR_PAT_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is good.
+
+#### Agreeableness
+
+Let's analyze main model.
+
+```{r}
+model_hex_agr <- "
+HEX_AGR =~ HEX_AGR_FOR + HEX_AGR_GEN + HEX_AGR_FLX + HEX_AGR_PAT
+HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04
+HEX_AGR_GEN =~ HEX_AGR_GEN_01 + HEX_AGR_GEN_02 + HEX_AGR_GEN_03 + HEX_AGR_GEN_04
+HEX_AGR_FLX =~ HEX_AGR_FLX_01 + HEX_AGR_FLX_02 + HEX_AGR_FLX_03 + HEX_AGR_FLX_04
+HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_AGR_PAT_04
+
+HEX_AGR_PAT_01 ~~ HEX_AGR_PAT_02
+HEX_AGR_PAT_03 ~~ HEX_AGR_PAT_04
+"
+fit_hex_agr <- sem(model_hex_agr, d, estimator = "MLM", fixed.x = TRUE)
+summary(fit_hex_agr, standardized = TRUE, fit = TRUE)
+```
+
+Fit subpar, let's inspect.
+
+```{r}
+modindices(fit_hex_agr, minimum.value = 50)
+```
+
+One cross-loading and one covariance emerges.
+
+- 	HEX_AGR_FOR	=~	HEX_AGR_PAT_02
+-   HEX_AGR_GEN_01	~~	HEX_AGR_FLX_01
+
+```{r}
+model_hex_agr <- "
+HEX_AGR =~ HEX_AGR_FOR + HEX_AGR_GEN + HEX_AGR_FLX + HEX_AGR_PAT
+HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04 + HEX_AGR_PAT_02
+HEX_AGR_GEN =~ HEX_AGR_GEN_01 + HEX_AGR_GEN_02 + HEX_AGR_GEN_03 + HEX_AGR_GEN_04
+HEX_AGR_FLX =~ HEX_AGR_FLX_01 + HEX_AGR_FLX_02 + HEX_AGR_FLX_03 + HEX_AGR_FLX_04
+HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_AGR_PAT_04
+
+HEX_AGR_PAT_01 ~~ HEX_AGR_PAT_02
+HEX_AGR_PAT_03 ~~ HEX_AGR_PAT_04
+HEX_AGR_GEN_01	~~	HEX_AGR_FLX_01
+"
+fit_hex_agr <- sem(model_hex_agr, d, estimator = "MLM", fixed.x = TRUE)
+summary(fit_hex_agr, standardized = TRUE, fit = TRUE)
+```
+
+Fit is now quite good.
 
 ### Conscientiousness
 #### Organization
@@ -339,11 +1510,32 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_CNS_ORG"
-model <- "HEX_CNS_ORG =~ HEX_CNS_ORG_01 + HEX_CNS_ORG_02 + HEX_CNS_ORG_03 + HEX_CNS_ORG_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_CNS_ORG =~ HEX_CNS_ORG_01 + HEX_CNS_ORG_02 + HEX_CNS_ORG_03 + HEX_CNS_ORG_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
+Fit only "just" above thresholds. 
 #### Diligence
 
  - When working, I often set ambitious goals for myself.
@@ -353,10 +1545,55 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_CNS_DIL"
-model <- "HEX_CNS_DIL =~ HEX_CNS_DIL_01 + HEX_CNS_DIL_02 + HEX_CNS_DIL_03 + HEX_CNS_DIL_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we should use the robust estimator. However, if we do so, one participant will be excluded, because MLM doesn't allow imputation. Will hence use ML but with FIML imputation.
+
+```{r}
+model <- "
+  HEX_CNS_DIL =~ HEX_CNS_DIL_01 + HEX_CNS_DIL_02 + HEX_CNS_DIL_03 + HEX_CNS_DIL_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLR", missing = "FIML")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is bad. Let's inspect.
+
+```{r}
+modindices(fit_HEX_CNS_DIL)
+```
+
+Items 1 & 2, and items 3 & 4 want to covary.
+
+```{r}
+model <- "
+  HEX_CNS_DIL =~ HEX_CNS_DIL_01 + HEX_CNS_DIL_02 + HEX_CNS_DIL_03 + HEX_CNS_DIL_04
+  HEX_CNS_DIL_01 ~~ a*HEX_CNS_DIL_02
+  HEX_CNS_DIL_03 ~~ a*HEX_CNS_DIL_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLR", missing = "FIML")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is now good.
 
 #### Perfectionism
 
@@ -367,11 +1604,56 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_CNS_PER"
-model <- "HEX_CNS_PER =~ HEX_CNS_PER_01 + HEX_CNS_PER_02 + HEX_CNS_PER_03 + HEX_CNS_PER_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_CNS_PER =~ HEX_CNS_PER_01 + HEX_CNS_PER_02 + HEX_CNS_PER_03 + HEX_CNS_PER_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
+Fit subpar, needs to be improved.
+
+```{r}
+modindices(fit_HEX_CNS_PER)
+```
+
+Items 1 & 4 and items 2 & 3 want to covary.
+
+
+```{r}
+model <- "
+  HEX_CNS_PER =~ HEX_CNS_PER_01 + HEX_CNS_PER_02 + HEX_CNS_PER_03 + HEX_CNS_PER_04
+  HEX_CNS_PER_01 ~~ a*HEX_CNS_PER_04
+  HEX_CNS_PER_02 ~~ a*HEX_CNS_PER_03
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is now great.
 
 #### Prudence
 
@@ -382,10 +1664,65 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
  
 ```{r}
 name <- "HEX_CNS_PRU"
-model <- "HEX_CNS_PRU =~ HEX_CNS_PRU_01 + HEX_CNS_PRU_02 + HEX_CNS_PRU_03 + HEX_CNS_PRU_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_CNS_PRU =~ HEX_CNS_PRU_01 + HEX_CNS_PRU_02 + HEX_CNS_PRU_03 + HEX_CNS_PRU_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Although not great, fit is within of thresholds.
+
+#### Conscientiousness
+
+Let's analyze main model as well.
+
+```{r}
+model_hex_cns <- "
+HEX_CNS =~ HEX_CNS_ORG + HEX_CNS_DIL + HEX_CNS_PER + HEX_CNS_PRU
+HEX_CNS_ORG =~ HEX_CNS_ORG_01 + HEX_CNS_ORG_02 + HEX_CNS_ORG_03 + HEX_CNS_ORG_04
+HEX_CNS_DIL =~ HEX_CNS_DIL_01 + HEX_CNS_DIL_02 + HEX_CNS_DIL_03 + HEX_CNS_DIL_04
+HEX_CNS_PER =~ HEX_CNS_PER_01 + HEX_CNS_PER_02 + HEX_CNS_PER_03 + HEX_CNS_PER_04
+HEX_CNS_PRU =~ HEX_CNS_PRU_01 + HEX_CNS_PRU_02 + HEX_CNS_PRU_03 + HEX_CNS_PRU_04
+
+HEX_CNS_ORG_01 ~~ HEX_CNS_ORG_04
+HEX_CNS_ORG_02 ~~ HEX_CNS_ORG_03
+HEX_CNS_DIL_01 ~~ HEX_CNS_DIL_02
+HEX_CNS_DIL_03 ~~ HEX_CNS_DIL_04
+HEX_CNS_PER_01 ~~ HEX_CNS_PER_04
+HEX_CNS_PER_02 ~~ HEX_CNS_PER_03
+HEX_CNS_PRU_01 ~~ HEX_CNS_PRU_04
+HEX_CNS_PRU_02 ~~ HEX_CNS_PRU_03
+"
+fit_hex_cns <- sem(model_hex_cns, d, estimator = "MLM", fixed.x = TRUE)
+summary(fit_hex_cns, standardized = TRUE, fit = TRUE)
+```
+
+Fit is slightly below thresholds, let's inspect.
+
+```{r}
+modindices(fit_hex_cns, minimum.value = 50)
+```
+
+No real candidate emerges. Will keep that way.
 
 ### Openness
 #### Aesthetic Appreciation
@@ -396,11 +1733,33 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
  - Sometimes I like to just watch the wind as it blows through the trees.
  
 ```{r}
-name <- "HEX_OPN_AEX"
-model <- "HEX_OPN_AES =~ HEX_OPN_AES_01 + HEX_OPN_AES_02 + HEX_OPN_AES_03 + HEX_OPN_AES_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+name <- "HEX_OPN_AES"
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_OPN_AES =~ HEX_OPN_AES_01 + HEX_OPN_AES_02 + HEX_OPN_AES_03 + HEX_OPN_AES_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is good.
 
 #### Inquisitiveness
 
@@ -411,11 +1770,32 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
  
 ```{r}
 name <- "HEX_OPN_INQ"
-model <- "HEX_OPN_INQ =~ HEX_OPN_INQ_01 + HEX_OPN_INQ_02 + HEX_OPN_INQ_03 + HEX_OPN_INQ_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_OPN_INQ =~ HEX_OPN_INQ_01 + HEX_OPN_INQ_02 + HEX_OPN_INQ_03 + HEX_OPN_INQ_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
+Fit is just within thresholds.
 
 #### Creativeness
 
@@ -426,10 +1806,32 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "HEX_OPN_CRE"
-model <- "HEX_OPN_CRE =~ HEX_OPN_CRE_01 + HEX_OPN_CRE_02 + HEX_OPN_CRE_03 + HEX_OPN_CRE_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_OPN_CRE =~ HEX_OPN_CRE_01 + HEX_OPN_CRE_02 + HEX_OPN_CRE_03 + HEX_OPN_CRE_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is great.
 
 #### Unconventionality
 
@@ -440,9 +1842,75 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
  
 ```{r}
 name <- "HEX_OPN_UNC"
-model <- "HEX_OPN_UNC =~ HEX_OPN_UNC_01 + HEX_OPN_UNC_02 + HEX_OPN_UNC_03 + HEX_OPN_UNC_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_OPN_UNC =~ HEX_OPN_UNC_01 + HEX_OPN_UNC_02 + HEX_OPN_UNC_03 + HEX_OPN_UNC_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLR", missing = "FIML")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is subpar. Let's inspect.
+
+```{r}
+modindices(fit_HEX_OPN_UNC)
+```
+
+Items 1 & 4 and items 2 & 3 want to covary.
+
+```{r}
+model <- "
+  HEX_OPN_UNC =~ HEX_OPN_UNC_01 + HEX_OPN_UNC_02 + HEX_OPN_UNC_03 + HEX_OPN_UNC_04
+  HEX_OPN_UNC_01 ~~ a*HEX_OPN_UNC_04
+  HEX_OPN_UNC_02 ~~ a*HEX_OPN_UNC_03
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLR", missing = "FIML")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is now great.
+
+#### Openness
+
+Let's analyze main model as well.
+
+```{r}
+model_hex_opn <- "
+HEX_OPN =~ HEX_OPN_AES + HEX_OPN_INQ + HEX_OPN_CRE + HEX_OPN_UNC
+HEX_OPN_AES =~ HEX_OPN_AES_01 + HEX_OPN_AES_02 + HEX_OPN_AES_03 + HEX_OPN_AES_04
+HEX_OPN_INQ =~ HEX_OPN_INQ_01 + HEX_OPN_INQ_02 + HEX_OPN_INQ_03 + HEX_OPN_INQ_04
+HEX_OPN_CRE =~ HEX_OPN_CRE_01 + HEX_OPN_CRE_02 + HEX_OPN_CRE_03 + HEX_OPN_CRE_04
+HEX_OPN_UNC =~ HEX_OPN_UNC_01 + HEX_OPN_UNC_02 + HEX_OPN_UNC_03 + HEX_OPN_UNC_04
+
+HEX_OPN_INQ_01 ~~ HEX_OPN_INQ_04
+HEX_OPN_INQ_02 ~~ HEX_OPN_INQ_03
+HEX_OPN_UNC_01 ~~ HEX_OPN_UNC_04
+HEX_OPN_UNC_02 ~~ HEX_OPN_UNC_03
+"
+fit_hex_opn <- sem(model_hex_opn, d, estimator = "MLM", fixed.x = TRUE)
+summary(fit_hex_opn, standardized = TRUE, fit = TRUE)
 ```
 
 ### Altruism
@@ -454,10 +1922,129 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
  
 ```{r}
 name <- "HEX_ALT"
-model <- "HEX_ALT =~ HEX_ALT_01 + HEX_ALT_02 + HEX_ALT_03 + HEX_ALT_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  HEX_ALT =~ HEX_ALT_01 + HEX_ALT_02 + HEX_ALT_03 + HEX_ALT_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is subpar. Let's inspect.
+
+```{r}
+modindices(fit_HEX_ALT)
+```
+
+Items 1 & 2 and items 3 & 4 want to covary.
+
+```{r}
+model <- "
+  HEX_ALT =~ HEX_ALT_01 + HEX_ALT_02 + HEX_ALT_03 + HEX_ALT_04
+  HEX_ALT_01 ~~ a*HEX_ALT_02
+  HEX_ALT_03 ~~ a*HEX_ALT_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is now good.
+
+### Hexaco Model
+
+```{r}
+model_hex <- "
+HEX_HOH =~ HEX_HOH_SIN + HEX_HOH_FAI + HEX_HOH_GRE + HEX_HOH_MOD
+HEX_EMO =~ HEX_EMO_FEA + HEX_EMO_ANX + HEX_EMO_DEP + HEX_EMO_SEN
+HEX_EXT =~ HEX_EXT_SSE + HEX_EXT_BOL + HEX_EXT_SOC + HEX_EXT_LIV
+HEX_AGR =~ HEX_AGR_FOR + HEX_AGR_GEN + HEX_AGR_FLX + HEX_AGR_PAT
+HEX_CNS =~ HEX_CNS_ORG + HEX_CNS_DIL + HEX_CNS_PER + HEX_CNS_PRU
+HEX_OPN =~ HEX_OPN_AES + HEX_OPN_INQ + HEX_OPN_CRE + HEX_OPN_UNC
+
+HEX_HOH_SIN =~ HEX_HOH_SIN_01 + HEX_HOH_SIN_02 + HEX_HOH_SIN_03 + HEX_HOH_SIN_04
+HEX_HOH_FAI =~ HEX_HOH_FAI_01 + HEX_HOH_FAI_02 + HEX_HOH_FAI_03 + HEX_HOH_FAI_04
+HEX_HOH_GRE =~ HEX_HOH_GRE_01 + HEX_HOH_GRE_02 + HEX_HOH_GRE_03 + HEX_HOH_GRE_04
+HEX_HOH_MOD =~ HEX_HOH_MOD_01 + HEX_HOH_MOD_02 + HEX_HOH_MOD_03 + HEX_HOH_MOD_04
+
+HEX_EMO_FEA =~ HEX_EMO_FEA_01 + HEX_EMO_FEA_02 + HEX_EMO_FEA_03 + HEX_EMO_FEA_04
+HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_EMO_ANX_04 + HEX_EMO_FEA_04
+HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_EMO_DEP_04
+HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_EMO_SEN_04
+
+HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_EXT_SSE_04
+HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_EXT_BOL_04
+HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04 + HEX_EXT_BOL_02
+HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_EXT_LIV_04
+
+HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04 + HEX_AGR_PAT_02
+HEX_AGR_GEN =~ HEX_AGR_GEN_01 + HEX_AGR_GEN_02 + HEX_AGR_GEN_03 + HEX_AGR_GEN_04
+HEX_AGR_FLX =~ HEX_AGR_FLX_01 + HEX_AGR_FLX_02 + HEX_AGR_FLX_03 + HEX_AGR_FLX_04
+HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_AGR_PAT_04
+
+HEX_CNS_ORG =~ HEX_CNS_ORG_01 + HEX_CNS_ORG_02 + HEX_CNS_ORG_03 + HEX_CNS_ORG_04
+HEX_CNS_DIL =~ HEX_CNS_DIL_01 + HEX_CNS_DIL_02 + HEX_CNS_DIL_03 + HEX_CNS_DIL_04
+HEX_CNS_PER =~ HEX_CNS_PER_01 + HEX_CNS_PER_02 + HEX_CNS_PER_03 + HEX_CNS_PER_04
+HEX_CNS_PRU =~ HEX_CNS_PRU_01 + HEX_CNS_PRU_02 + HEX_CNS_PRU_03 + HEX_CNS_PRU_04
+
+HEX_OPN_AES =~ HEX_OPN_AES_01 + HEX_OPN_AES_02 + HEX_OPN_AES_03 + HEX_OPN_AES_04
+HEX_OPN_INQ =~ HEX_OPN_INQ_01 + HEX_OPN_INQ_02 + HEX_OPN_INQ_03 + HEX_OPN_INQ_04
+HEX_OPN_CRE =~ HEX_OPN_CRE_01 + HEX_OPN_CRE_02 + HEX_OPN_CRE_03 + HEX_OPN_CRE_04
+HEX_OPN_UNC =~ HEX_OPN_UNC_01 + HEX_OPN_UNC_02 + HEX_OPN_UNC_03 + HEX_OPN_UNC_04
+
+# Covariances
+HEX_HOH_SIN_01 ~~ HEX_HOH_SIN_03
+HEX_HOH_SIN_02 ~~ HEX_HOH_SIN_04
+HEX_HOH_GRE_01 ~~ HEX_HOH_GRE_02
+HEX_HOH_GRE_03 ~~ HEX_HOH_GRE_04
+HEX_EMO_DEP_01 ~~ HEX_EMO_DEP_04
+HEX_EMO_DEP_02 ~~ HEX_EMO_DEP_03
+HEX_EMO_SEN_01 ~~ HEX_EMO_SEN_03
+HEX_EMO_SEN_02 ~~ HEX_EMO_SEN_04
+HEX_EXT_SSE_01 ~~ HEX_EXT_SSE_04
+HEX_EXT_SSE_02 ~~ HEX_EXT_SSE_03
+HEX_EXT_BOL_01 ~~ HEX_EXT_BOL_04
+HEX_EXT_BOL_02 ~~ HEX_EXT_BOL_03
+HEX_EXT_LIV_01 ~~ HEX_EXT_LIV_03
+HEX_EXT_LIV_02 ~~ HEX_EXT_LIV_04
+HEX_AGR_PAT_01 ~~ HEX_AGR_PAT_02
+HEX_AGR_PAT_03 ~~ HEX_AGR_PAT_04
+HEX_CNS_PER_01 ~~ HEX_CNS_PER_04
+HEX_CNS_PER_02 ~~ HEX_CNS_PER_03
+HEX_CNS_DIL_01 ~~ HEX_CNS_DIL_02
+HEX_CNS_DIL_03 ~~ HEX_CNS_DIL_04
+HEX_OPN_UNC_01 ~~ HEX_OPN_UNC_04
+HEX_OPN_UNC_02 ~~ HEX_OPN_UNC_03
+HEX_AGR_GEN_01	~~	HEX_AGR_FLX_01
+"
+fit_hex <- sem(model_hex, d, estimator = "MLM", fixed.x = TRUE)
+summary(fit_hex, standardized = TRUE, fit = TRUE)
+```
+
+Model throws a warning: Negative variance. Also several Heywood cases included. Shows that latent is not working. 
+
+Hence, let's not extract the factor scores for the personality dimensions, but rather calculate mean scores.
 
 ## Need for privacy
 ### Psychological
@@ -469,10 +2056,32 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "NFP_PSY"
-model <- "NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is great.
 
 ### Physical
 
@@ -483,10 +2092,32 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "NFP_PHY"
-model <- "NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is great.
 
 ### Social
 
@@ -497,10 +2128,55 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "NFP_SOC"
-model <- "NFP_SOC =~ NFP_SOC_01 + NFP_SOC_02 + NFP_SOC_03 + NFP_SOC_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  NFP_SOC =~ NFP_SOC_01 + NFP_SOC_02 + NFP_SOC_03 + NFP_SOC_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit isn't that good. Let's inspect.
+
+```{r}
+modindices(fit_NFP_SOC)
+```
+
+Items 1 & 3 and items 2 & 4 want to covary.
+
+```{r}
+model <- "
+  NFP_SOC =~ NFP_SOC_01 + NFP_SOC_02 + NFP_SOC_03 + NFP_SOC_04
+  NFP_SOC_01 ~~ p1*NFP_SOC_03
+  NFP_SOC_02 ~~ p1*NFP_SOC_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is great.
 
 ### Privacy from Government
 
@@ -511,10 +2187,32 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "NFP_GOV"
-model <- "NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLR", missing = "FIML")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is not optimal, but within thresholds.
 
 ### Privacy from Companies
 
@@ -525,10 +2223,32 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "NFP_COM"
-model <- "NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is not great but sufficiently okay.
 
 ### Informational
 
@@ -539,10 +2259,55 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "NFP_INF"
-model <- "NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is suboptimal. Let's inspect.
+
+```{r}
+modindices(fit_NFP_INF)
+```
+
+Items 1 & 4 and items 2 & 3 want to covary.
+
+```{r}
+model <- "
+  NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04
+  NFP_INF_01 ~~ a*NFP_INF_04
+  NFP_INF_02 ~~ a*NFP_INF_03
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is good.
 
 ### Privacy need anonymity
 
@@ -553,10 +2318,55 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 
 ```{r}
 name <- "NFP_ANO"
-model <- "NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
+
+Fit is really bad. Let's inspect.
+
+```{r}
+modindices(fit_NFP_ANO)
+```
+
+Items 1 & 4 and items 2 & 3 want to covary.
+
+```{r}
+model <- "
+  NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04
+  NFP_ANO_01 ~~ a*NFP_ANO_04
+  NFP_ANO_02 ~~ a*NFP_ANO_03
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLM")
+  )
+
+summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
+```
+
+Fit is now good.
 
 ### General Need for privacy
 
@@ -567,96 +2377,37 @@ summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
  
 ```{r}
 name <- "NFP_GEN"
-model <- "NFP_GEN =~ NFP_GEN_01 + NFP_GEN_02 + NFP_GEN_03 + NFP_GEN_04"
-assign(paste("fit", name, sep = "_"), cfa(model, d, missing = "FIML"))
+
+plot_hist(name)
+
+mardia(
+  select(
+    d, paste0(rep(paste0(name, "_0"), 4), 1:4)
+  )
+)
+```
+
+Assumption of multivariate normality violated. Hence we'll use the robust estimator.
+
+```{r}
+model <- "
+  NFP_GEN =~ NFP_GEN_01 + NFP_GEN_02 + NFP_GEN_03 + NFP_GEN_04
+"
+
+assign(
+  paste("fit", name, sep = "_"), 
+  cfa(model, d, estimator = "MLR", missing = "FIML")
+  )
+
 summary(get(paste0("fit_", name)), fit = TRUE, standardized = TRUE)
 ```
 
-# Power Analyses
-## Rudimentary
+Fit is good.
 
-To estimate sample size, we conducted a rudimentary power analysis. That is, we planned for a two-sided correlation of _r_ = .1. We adopted a balanced alpha and beta error approach. Because we were in "exploration mode", we aimed for a high statistical power and hence relaxed alpha. Ideally, we would have wanted to set an error rate of 5%; however, this was outside of our budget. Instead, we opted for an error rate of 10%.
-
-```{r}
-sesoi <- .1
-
-# a priori power analyses
-pwr.r.test(r = sesoi, sig.level = .05, power = .95)
-power_n_95 <- pwr.r.test(r = sesoi, sig.level = .05, power = .95)$n
-```
-
-A 5% error rate would imply collecting `r power_n_95` participants.
-
-## Detailed: Simple
+### Need for Privacy model
 
 ```{r}
-population <- 
-  "
-  # Fix means to 0
-  HEX_HOH_SIN_01 ~ 0*1
-  HEX_HOH_SIN_02 ~ 0*1
-  HEX_HOH_SIN_03 ~ 0*1
-  HEX_HOH_SIN_04 ~ 0*1
-  NFP_PHY_01 ~ 0*1
-  NFP_PHY_02 ~ 0*1
-  NFP_PHY_03 ~ 0*1
-  NFP_PHY_04 ~ 0*1
-  
-  # Fix variances
-  HEX_HOH_SIN_01 ~~ 1 * HEX_HOH_SIN_01
-  HEX_HOH_SIN_02 ~~ 1 * HEX_HOH_SIN_02
-  HEX_HOH_SIN_03 ~~ 1 * HEX_HOH_SIN_03
-  HEX_HOH_SIN_04 ~~ 1 * HEX_HOH_SIN_04
-  NFP_PHY_01 ~~ 1 * NFP_PHY_01
-  NFP_PHY_02 ~~ 1 * NFP_PHY_02
-  NFP_PHY_03 ~~ 1 * NFP_PHY_03
-  NFP_PHY_04 ~~ 1 * NFP_PHY_04
-  
-  # Define latent vars
-  HEX_HOH_SIN =~ .9*HEX_HOH_SIN_01 + .9*HEX_HOH_SIN_02 + .9*HEX_HOH_SIN_03 + .9*HEX_HOH_SIN_04
-  NFP_PHY =~ .9*NFP_PHY_01 + .9*NFP_PHY_02 + .9*NFP_PHY_03 + .9*NFP_PHY_04
-  
-  # Covariances
-  HEX_HOH_SIN ~~ .1*NFP_PHY
-  "
-sample <- "
-  HEX_HOH_SIN =~ HEX_HOH_SIN_01 + HEX_HOH_SIN_02 + HEX_HOH_SIN_03 + HEX_HOH_SIN_04
-  NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04
-"
-  
-reliability <- sim(
-  # nRep = NULL, 
-  model = sample, 
-#  n = 500,
-  n = seq(500, 5000, 50), 
-  generate = population, 
-  # std.lv = TRUE, 
-  lavaanfun = "sem"
-  )
-
-summary(reliability)
-power_tab <- getPower(reliability)
-power_80 <- findPower(power_tab, "N", 0.90)
-power_80["HEX_HOH_SIN~~NFP_PHY"]
-```
-
-
-
-# Results
-## SES
-
-```{r}
-model_ses <- "
-# SES
-Age =~ AGE
-Gender =~ GEN
-Ethnicity =~ ETH
-Relationship =~ REL
-College =~ COL
-Income =~ INC
-Conservatism =~ CON
-
-# Privacy
+model_pri <- "
 NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04
 NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04
 NFP_SOC =~ NFP_SOC_01 + NFP_SOC_02 + NFP_SOC_03 + NFP_SOC_04
@@ -665,34 +2416,292 @@ NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04
 NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04
 NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04
 NFP_GEN =~ NFP_GEN_01 + NFP_GEN_02 + NFP_GEN_03 + NFP_GEN_04
-"
-fit_ses <- sem(model_ses, d, estimator = "ML", fixed.x = TRUE)
-summary(fit_ses, standardized = TRUE)
 
-# get standardized data
-d_ses <- 
-  standardizedsolution(fit_ses)
+# Covariances
+NFP_SOC_01 ~~ NFP_SOC_03
+NFP_SOC_02 ~~ NFP_SOC_04
+NFP_GOV_01 ~~ NFP_GOV_03
+NFP_GOV_02 ~~ NFP_GOV_04
+NFP_INF_01 ~~ NFP_INF_04
+NFP_INF_02 ~~ NFP_INF_03
+NFP_ANO_01 ~~ NFP_ANO_04
+NFP_ANO_02 ~~ NFP_ANO_03
+"
+fit_pri <- sem(model_pri, d, estimator = "MLM", fixed.x = TRUE)
+summary(fit_pri, standardized = TRUE, fit = TRUE)
 ```
 
+Fit is actually quite good and only marginally below thresholds. Will inspect.
 
 ```{r}
-# make table
-tab_ses <- 
-  d_ses %>% 
-  as.data.frame() %>% 
-  filter(op == "~~", lhs %in% vars_ses_txt, rhs %in% vars_pri) %>% 
-  select("Sociodemographics" = lhs, "Need for privacy" = rhs, est.std) %>% 
-  mutate(`Need for privacy` = factor(`Need for privacy`, levels = vars_pri, labels = vars_pri_txt)) %>% 
-  pivot_wider(id_cols = "Sociodemographics", names_from = "Need for privacy", values_from = "est.std") %>% 
-  as.data.frame()
-tab_ses
+modindices(fit_pri, minimum.value = 50)
 ```
 
+Suggests several cross-loadings. Will integrate.
+
+- NFP_PHY	=~	NFP_GEN_01
+- NFP_PSY	=~	NFP_INF_01
+- NFP_PSY	=~	NFP_GEN_01
+- NFP_SOC	=~	NFP_INF_01
+- NFP_SOC	=~	NFP_GEN_01
+
+```{r}
+model_pri <- "
+NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04 + NFP_GEN_01
+NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04 + NFP_GEN_01 + NFP_INF_01
+NFP_SOC =~ NFP_SOC_01 + NFP_SOC_02 + NFP_SOC_03 + NFP_SOC_04 + NFP_GEN_01 + NFP_INF_01
+NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04
+NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04
+NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04
+NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04
+NFP_GEN =~ NFP_GEN_01 + NFP_GEN_02 + NFP_GEN_03 + NFP_GEN_04
+
+# Covariances
+NFP_SOC_01 ~~ NFP_SOC_03
+NFP_SOC_02 ~~ NFP_SOC_04
+NFP_GOV_01 ~~ NFP_GOV_03
+NFP_GOV_02 ~~ NFP_GOV_04
+NFP_INF_01 ~~ NFP_INF_04
+NFP_INF_02 ~~ NFP_INF_03
+NFP_ANO_01 ~~ NFP_ANO_04
+NFP_ANO_02 ~~ NFP_ANO_03
+"
+fit_pri <- sem(model_pri, d, estimator = "MLM", fixed.x = TRUE)
+summary(fit_pri, standardized = TRUE, fit = TRUE)
+```
+
+Fit is now great.
+
+## Convergent validity
+
+To assess convergent validity, let's correlate measures with privacy concerns and privacy behavior.
+
+```{r}
+tab_conval <- 
+  d %>% 
+  select(
+    all_of(paste0(vars_pri, "_M")), PRI_CON, PRI_BEH
+  ) %>% 
+  cor(use = "pairwise") %>% 
+  round(2) %>% 
+  as.data.frame
+tab_conval
+```
+
+Almost all variables showed high convergent validity.
+
+# Export factor scores
+
+```{r cache=F}
+d <- 
+  d %>% 
+  mutate(
+    HEX_ALT_FS = lavPredict(fit_HEX_ALT),
+    HEX_AGR_FLX_FS = lavPredict(fit_HEX_AGR_FLX),
+    HEX_AGR_FOR_FS = lavPredict(fit_HEX_AGR_FOR),
+    HEX_AGR_GEN_FS = lavPredict(fit_HEX_AGR_GEN),
+    HEX_AGR_PAT_FS = lavPredict(fit_HEX_AGR_PAT),
+    HEX_CNS_DIL_FS = lavPredict(fit_HEX_CNS_DIL),
+    HEX_CNS_ORG_FS = lavPredict(fit_HEX_CNS_ORG),
+    HEX_CNS_PER_FS = lavPredict(fit_HEX_CNS_PER),
+    HEX_CNS_PRU_FS = lavPredict(fit_HEX_CNS_PRU),
+    HEX_EMO_ANX_FS = lavPredict(fit_HEX_EMO_ANX),
+    HEX_EMO_DEP_FS = lavPredict(fit_HEX_EMO_DEP),
+    HEX_EMO_FEA_FS = lavPredict(fit_HEX_EMO_FEA),
+    HEX_EMO_SEN_FS = lavPredict(fit_HEX_EMO_SEN),
+    HEX_EXT_BOL_FS = lavPredict(fit_HEX_EXT_BOL),
+    HEX_EXT_LIV_FS = lavPredict(fit_HEX_EXT_LIV),
+    HEX_EXT_SOC_FS = lavPredict(fit_HEX_EXT_SOC),
+    HEX_EXT_SSE_FS = lavPredict(fit_HEX_EXT_SSE),
+    HEX_HOH_FAI_FS = lavPredict(fit_HEX_HOH_FAI),
+    HEX_HOH_GRE_FS = lavPredict(fit_HEX_HOH_GRE),
+    HEX_HOH_MOD_FS = lavPredict(fit_HEX_HOH_MOD),
+    HEX_HOH_SIN_FS = lavPredict(fit_HEX_HOH_SIN),
+    HEX_OPN_AES_FS = lavPredict(fit_HEX_OPN_AES),
+    HEX_OPN_CRE_FS = lavPredict(fit_HEX_OPN_CRE),
+    HEX_OPN_INQ_FS = lavPredict(fit_HEX_OPN_INQ),
+    HEX_OPN_UNC_FS = lavPredict(fit_HEX_OPN_UNC),
+    NFP_ANO_FS = lavPredict(fit_NFP_ANO),
+    NFP_COM_FS = lavPredict(fit_NFP_COM),
+    NFP_GEN_FS = lavPredict(fit_NFP_GEN),
+    NFP_GOV_FS = lavPredict(fit_NFP_GOV),
+    NFP_INF_FS = lavPredict(fit_NFP_INF),
+    NFP_PHY_FS = lavPredict(fit_NFP_PHY),
+    NFP_PSY_FS = lavPredict(fit_NFP_PSY),
+    NFP_SOC_FS = lavPredict(fit_NFP_SOC)
+  )
+```
+
+# Item errors
+
+```{r}
+# Extract variance
+HEX_ALT_var <- var(d$HEX_ALT_M, na.rm = T)
+HEX_AGR_FLX_var <- var(d$HEX_AGR_FLX_M, na.rm = T)
+HEX_AGR_FOR_var <- var(d$HEX_AGR_FOR_M, na.rm = T)
+HEX_AGR_GEN_var <- var(d$HEX_AGR_GEN_M, na.rm = T)
+HEX_AGR_PAT_var <- var(d$HEX_AGR_PAT_M, na.rm = T)
+HEX_CNS_DIL_var <- var(d$HEX_CNS_DIL_M, na.rm = T)
+HEX_CNS_ORG_var <- var(d$HEX_CNS_ORG_M, na.rm = T)
+HEX_CNS_PER_var <- var(d$HEX_CNS_PER_M, na.rm = T)
+HEX_CNS_PRU_var <- var(d$HEX_CNS_PRU_M, na.rm = T)
+HEX_EMO_ANX_var <- var(d$HEX_EMO_ANX_M, na.rm = T)
+HEX_EMO_DEP_var <- var(d$HEX_EMO_DEP_M, na.rm = T)
+HEX_EMO_FEA_var <- var(d$HEX_EMO_FEA_M, na.rm = T)
+HEX_EMO_SEN_var <- var(d$HEX_EMO_SEN_M, na.rm = T)
+HEX_EXT_BOL_var <- var(d$HEX_EXT_BOL_M, na.rm = T)
+HEX_EXT_LIV_var <- var(d$HEX_EXT_LIV_M, na.rm = T)
+HEX_EXT_SOC_var <- var(d$HEX_EXT_SOC_M, na.rm = T)
+HEX_EXT_SSE_var <- var(d$HEX_EXT_SSE_M, na.rm = T)
+HEX_HOH_FAI_var <- var(d$HEX_HOH_FAI_M, na.rm = T)
+HEX_HOH_GRE_var <- var(d$HEX_HOH_GRE_M, na.rm = T)
+HEX_HOH_MOD_var <- var(d$HEX_HOH_MOD_M, na.rm = T)
+HEX_HOH_SIN_var <- var(d$HEX_HOH_SIN_M, na.rm = T)
+HEX_OPN_AES_var <- var(d$HEX_OPN_AES_M, na.rm = T)
+HEX_OPN_CRE_var <- var(d$HEX_OPN_CRE_M, na.rm = T)
+HEX_OPN_INQ_var <- var(d$HEX_OPN_INQ_M, na.rm = T)
+HEX_OPN_UNC_var <- var(d$HEX_OPN_UNC_M, na.rm = T)
+
+NFP_ANO_var <- var(d$NFP_ANO_M, na.rm = T)
+NFP_COM_var <- var(d$NFP_COM_M, na.rm = T)
+NFP_GEN_var <- var(d$NFP_GEN_M, na.rm = T)
+NFP_GOV_var <- var(d$NFP_GOV_M, na.rm = T)
+NFP_INF_var <- var(d$NFP_INF_M, na.rm = T)
+NFP_PHY_var <- var(d$NFP_PHY_M, na.rm = T)
+NFP_PSY_var <- var(d$NFP_PSY_M, na.rm = T)
+NFP_SOC_var <- var(d$NFP_SOC_M, na.rm = T)
+
+HEX_AGR_var <- var(d$HEX_AGR_M, na.rm = T)
+HEX_CNS_var <- var(d$HEX_CNS_M, na.rm = T)
+HEX_EMO_var <- var(d$HEX_EMO_M, na.rm = T)
+HEX_EXT_var <- var(d$HEX_EXT_M, na.rm = T)
+HEX_HOH_var <- var(d$HEX_HOH_M, na.rm = T)
+HEX_OPN_var <- var(d$HEX_OPN_M, na.rm = T)
+
+# Get reliability
+c_rel <- 
+  c(
+    HEX_ALT_rel     = reliability(fit_HEX_ALT)["omega", "HEX_ALT"],
+    HEX_AGR_FLX_rel = reliability(fit_HEX_AGR_FLX)["omega", "HEX_AGR_FLX"],
+    HEX_AGR_FOR_rel = reliability(fit_HEX_AGR_FOR)["omega", "HEX_AGR_FOR"],
+    HEX_AGR_GEN_rel = reliability(fit_HEX_AGR_GEN)["omega", "HEX_AGR_GEN"],
+    HEX_AGR_PAT_rel = reliability(fit_HEX_AGR_PAT)["omega", "HEX_AGR_PAT"],
+    HEX_CNS_DIL_rel = reliability(fit_HEX_CNS_DIL)["omega", "HEX_CNS_DIL"],
+    HEX_CNS_ORG_rel = reliability(fit_HEX_CNS_ORG)["omega", "HEX_CNS_ORG"],
+    HEX_CNS_PER_rel = reliability(fit_HEX_CNS_PER)["omega", "HEX_CNS_PER"],
+    HEX_CNS_PRU_rel = reliability(fit_HEX_CNS_PRU)["omega", "HEX_CNS_PRU"],
+    HEX_EMO_ANX_rel = reliability(fit_HEX_EMO_ANX)["omega", "HEX_EMO_ANX"],
+    HEX_EMO_DEP_rel = reliability(fit_HEX_EMO_DEP)["omega", "HEX_EMO_DEP"],
+    HEX_EMO_FEA_rel = reliability(fit_HEX_EMO_FEA)["omega", "HEX_EMO_FEA"],
+    HEX_EMO_SEN_rel = reliability(fit_HEX_EMO_SEN)["omega", "HEX_EMO_SEN"],
+    HEX_EXT_BOL_rel = reliability(fit_HEX_EXT_BOL)["omega", "HEX_EXT_BOL"],
+    HEX_EXT_LIV_rel = reliability(fit_HEX_EXT_LIV)["omega", "HEX_EXT_LIV"],
+    HEX_EXT_SOC_rel = reliability(fit_HEX_EXT_SOC)["omega", "HEX_EXT_SOC"],
+    HEX_EXT_SSE_rel = reliability(fit_HEX_EXT_SSE)["omega", "HEX_EXT_SSE"],
+    HEX_HOH_FAI_rel = reliability(fit_HEX_HOH_FAI)["omega", "HEX_HOH_FAI"],
+    HEX_HOH_GRE_rel = reliability(fit_HEX_HOH_GRE)["omega", "HEX_HOH_GRE"],
+    HEX_HOH_MOD_rel = reliability(fit_HEX_HOH_MOD)["omega", "HEX_HOH_MOD"],
+    HEX_HOH_SIN_rel = reliability(fit_HEX_HOH_SIN)["omega", "HEX_HOH_SIN"],
+    HEX_OPN_AES_rel = reliability(fit_HEX_OPN_AES)["omega", "HEX_OPN_AES"],
+    HEX_OPN_CRE_rel = reliability(fit_HEX_OPN_CRE)["omega", "HEX_OPN_CRE"],
+    HEX_OPN_INQ_rel = reliability(fit_HEX_OPN_INQ)["omega", "HEX_OPN_INQ"],
+    HEX_OPN_UNC_rel = reliability(fit_HEX_OPN_UNC)["omega", "HEX_OPN_UNC"],
+    
+    NFP_ANO_rel     = reliability(fit_NFP_ANO)["omega", "NFP_ANO"],
+    NFP_COM_rel     = reliability(fit_NFP_COM)["omega", "NFP_COM"],
+    NFP_GEN_rel     = reliability(fit_NFP_GEN)["omega", "NFP_GEN"],
+    NFP_GOV_rel     = reliability(fit_NFP_GOV)["omega", "NFP_GOV"],
+    NFP_INF_rel     = reliability(fit_NFP_INF)["omega", "NFP_INF"],
+    NFP_PHY_rel     = reliability(fit_NFP_PHY)["omega", "NFP_PHY"],
+    NFP_PSY_rel     = reliability(fit_NFP_PSY)["omega", "NFP_PSY"],
+    NFP_SOC_rel     = reliability(fit_NFP_SOC)["omega", "NFP_SOC"],
+    
+    HEX_HOH_rel     = reliability(fit_hex_hoh, return.total = T)["omega", "total"],
+    HEX_EMO_rel     = reliability(fit_hex_emo, return.total = T)["omega", "total"],
+    HEX_EXT_rel     = reliability(fit_hex_ext, return.total = T)["omega", "total"],
+    HEX_AGR_rel     = reliability(fit_hex_agr, return.total = T)["omega", "total"],
+    HEX_CNS_rel     = reliability(fit_hex_cns, return.total = T)["omega", "total"],
+    HEX_OPN_rel     = reliability(fit_hex_opn, return.total = T)["omega", "total"]
+  )
+
+# Define error
+HEX_ALT_err     <- (1 - c_rel["HEX_ALT_rel"]) * HEX_ALT_var
+HEX_AGR_FLX_err <- (1 - c_rel["HEX_AGR_FLX_rel"]) * HEX_AGR_FLX_var
+HEX_AGR_FOR_err <- (1 - c_rel["HEX_AGR_FOR_rel"]) * HEX_AGR_FOR_var
+HEX_AGR_GEN_err <- (1 - c_rel["HEX_AGR_GEN_rel"]) * HEX_AGR_GEN_var
+HEX_AGR_PAT_err <- (1 - c_rel["HEX_AGR_PAT_rel"]) * HEX_AGR_PAT_var
+HEX_CNS_DIL_err <- (1 - c_rel["HEX_CNS_DIL_rel"]) * HEX_CNS_DIL_var
+HEX_CNS_ORG_err <- (1 - c_rel["HEX_CNS_ORG_rel"]) * HEX_CNS_ORG_var
+HEX_CNS_PER_err <- (1 - c_rel["HEX_CNS_PER_rel"]) * HEX_CNS_PER_var
+HEX_CNS_PRU_err <- (1 - c_rel["HEX_CNS_PRU_rel"]) * HEX_CNS_PRU_var
+HEX_EMO_ANX_err <- (1 - c_rel["HEX_EMO_ANX_rel"]) * HEX_EMO_ANX_var
+HEX_EMO_DEP_err <- (1 - c_rel["HEX_EMO_DEP_rel"]) * HEX_EMO_DEP_var
+HEX_EMO_FEA_err <- (1 - c_rel["HEX_EMO_FEA_rel"]) * HEX_EMO_FEA_var
+HEX_EMO_SEN_err <- (1 - c_rel["HEX_EMO_SEN_rel"]) * HEX_EMO_SEN_var
+HEX_EXT_BOL_err <- (1 - c_rel["HEX_EXT_BOL_rel"]) * HEX_EXT_BOL_var
+HEX_EXT_LIV_err <- (1 - c_rel["HEX_EXT_LIV_rel"]) * HEX_EXT_LIV_var
+HEX_EXT_SOC_err <- (1 - c_rel["HEX_EXT_SOC_rel"]) * HEX_EXT_SOC_var
+HEX_EXT_SSE_err <- (1 - c_rel["HEX_EXT_SSE_rel"]) * HEX_EXT_SSE_var
+HEX_HOH_FAI_err <- (1 - c_rel["HEX_HOH_FAI_rel"]) * HEX_HOH_FAI_var
+HEX_HOH_GRE_err <- (1 - c_rel["HEX_HOH_GRE_rel"]) * HEX_HOH_GRE_var
+HEX_HOH_MOD_err <- (1 - c_rel["HEX_HOH_MOD_rel"]) * HEX_HOH_MOD_var
+HEX_HOH_SIN_err <- (1 - c_rel["HEX_HOH_SIN_rel"]) * HEX_HOH_SIN_var
+HEX_OPN_AES_err <- (1 - c_rel["HEX_OPN_AES_rel"]) * HEX_OPN_AES_var
+HEX_OPN_CRE_err <- (1 - c_rel["HEX_OPN_CRE_rel"]) * HEX_OPN_CRE_var
+HEX_OPN_INQ_err <- (1 - c_rel["HEX_OPN_INQ_rel"]) * HEX_OPN_INQ_var
+HEX_OPN_UNC_err <- (1 - c_rel["HEX_OPN_UNC_rel"]) * HEX_OPN_UNC_var
+
+NFP_ANO_err     <- (1 - c_rel["NFP_ANO_rel"]) * NFP_ANO_var
+NFP_COM_err     <- (1 - c_rel["NFP_COM_rel"]) * NFP_COM_var
+NFP_GEN_err     <- (1 - c_rel["NFP_GEN_rel"]) * NFP_GEN_var
+NFP_GOV_err     <- (1 - c_rel["NFP_GOV_rel"]) * NFP_GOV_var
+NFP_INF_err     <- (1 - c_rel["NFP_INF_rel"]) * NFP_INF_var
+NFP_PHY_err     <- (1 - c_rel["NFP_PHY_rel"]) * NFP_PHY_var
+NFP_PSY_err     <- (1 - c_rel["NFP_PSY_rel"]) * NFP_PSY_var
+NFP_SOC_err     <- (1 - c_rel["NFP_SOC_rel"]) * NFP_SOC_var
+
+HEX_AGR_err <- (1 - c_rel["HEX_AGR_rel"]) * HEX_AGR_var
+HEX_CNS_err <- (1 - c_rel["HEX_CNS_rel"]) * HEX_CNS_var
+HEX_EMO_err <- (1 - c_rel["HEX_EMO_rel"]) * HEX_EMO_var
+HEX_EXT_err <- (1 - c_rel["HEX_EXT_rel"]) * HEX_EXT_var
+HEX_HOH_err <- (1 - c_rel["HEX_HOH_rel"]) * HEX_HOH_var
+HEX_OPN_err <- (1 - c_rel["HEX_OPN_rel"]) * HEX_OPN_var
+
+HEX_err <- data.frame(
+  err = 
+    c(HEX_HOH_err, 
+      HEX_EMO_err, 
+      HEX_EXT_err, 
+      HEX_AGR_err, 
+      HEX_CNS_err,
+      HEX_OPN_err
+      )
+  ) %>% 
+  round(3)
+
+NFP_err <- data.frame(
+  err = 
+    c(NFP_PSY_err, 
+      NFP_SOC_err, 
+      NFP_PHY_err, 
+      NFP_GOV_err, 
+      NFP_COM_err,
+      NFP_INF_err,
+      NFP_ANO_err,
+      NFP_GEN_err
+      )
+  ) %>% 
+  round(3)
+
+HEX_NFP_err <- rbind(HEX_err, NFP_err)
+```
+
+# Results
 ## Dimensions
 
-Factor or dimensions.
+Let's first look at relations between need for privacy and personality factors.
 
-```{r}
+```{r results-dims}
 model_dim <- "
 # Personality Factors
 HEX_HOH =~ HEX_HOH_SIN + HEX_HOH_FAI + HEX_HOH_GRE + HEX_HOH_MOD
@@ -703,18 +2712,18 @@ HEX_HOH_MOD =~ HEX_HOH_MOD_01 + HEX_HOH_MOD_02 + HEX_HOH_MOD_03 + HEX_HOH_MOD_04
 
 HEX_EMO =~ HEX_EMO_FEA + HEX_EMO_ANX + HEX_EMO_DEP + HEX_EMO_SEN
 HEX_EMO_FEA =~ HEX_EMO_FEA_01 + HEX_EMO_FEA_02 + HEX_EMO_FEA_03 + HEX_EMO_FEA_04
-HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_EMO_ANX_04
+HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_EMO_ANX_04 + HEX_EMO_FEA_04
 HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_EMO_DEP_04
 HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_EMO_SEN_04
 
 HEX_EXT =~ HEX_EXT_SSE + HEX_EXT_BOL + HEX_EXT_SOC + HEX_EXT_LIV
 HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_EXT_SSE_04
 HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_EXT_BOL_04
-HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04
+HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04 + HEX_EXT_BOL_02
 HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_EXT_LIV_04
 
 HEX_AGR =~ HEX_AGR_FOR + HEX_AGR_GEN + HEX_AGR_FLX + HEX_AGR_PAT
-HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04
+HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04 + HEX_AGR_PAT_02
 HEX_AGR_GEN =~ HEX_AGR_GEN_01 + HEX_AGR_GEN_02 + HEX_AGR_GEN_03 + HEX_AGR_GEN_04
 HEX_AGR_FLX =~ HEX_AGR_FLX_01 + HEX_AGR_FLX_02 + HEX_AGR_FLX_03 + HEX_AGR_FLX_04
 HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_AGR_PAT_04
@@ -732,41 +2741,140 @@ HEX_OPN_CRE =~ HEX_OPN_CRE_01 + HEX_OPN_CRE_02 + HEX_OPN_CRE_03 + HEX_OPN_CRE_04
 HEX_OPN_UNC =~ HEX_OPN_UNC_01 + HEX_OPN_UNC_02 + HEX_OPN_UNC_03 + HEX_OPN_UNC_04
 
 # Privacy
-NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04
-NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04
-NFP_SOC =~ NFP_SOC_01 + NFP_SOC_02 + NFP_SOC_03 + NFP_SOC_04
+NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04 + NFP_GEN_01
+NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04 + NFP_GEN_01 + NFP_INF_01
+NFP_SOC =~ NFP_SOC_01 + NFP_SOC_02 + NFP_SOC_03 + NFP_SOC_04 + NFP_GEN_01 + NFP_INF_01
 NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04
 NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04
 NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04
 NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04
 NFP_GEN =~ NFP_GEN_01 + NFP_GEN_02 + NFP_GEN_03 + NFP_GEN_04
+
+# Covariances
+HEX_HOH_SIN_01 ~~ HEX_HOH_SIN_03
+HEX_HOH_SIN_02 ~~ HEX_HOH_SIN_04
+HEX_HOH_GRE_01 ~~ HEX_HOH_GRE_02
+HEX_HOH_GRE_03 ~~ HEX_HOH_GRE_04
+HEX_EMO_DEP_01 ~~ HEX_EMO_DEP_04
+HEX_EMO_DEP_02 ~~ HEX_EMO_DEP_03
+HEX_EMO_SEN_01 ~~ HEX_EMO_SEN_03
+HEX_EMO_SEN_02 ~~ HEX_EMO_SEN_04
+HEX_EXT_SSE_01 ~~ HEX_EXT_SSE_04
+HEX_EXT_SSE_02 ~~ HEX_EXT_SSE_03
+HEX_EXT_BOL_01 ~~ HEX_EXT_BOL_04
+HEX_EXT_BOL_02 ~~ HEX_EXT_BOL_03
+HEX_EXT_LIV_01 ~~ HEX_EXT_LIV_03
+HEX_EXT_LIV_02 ~~ HEX_EXT_LIV_04
+HEX_AGR_PAT_01 ~~ HEX_AGR_PAT_02
+HEX_AGR_PAT_03 ~~ HEX_AGR_PAT_04
+HEX_CNS_ORG_01 ~~ HEX_CNS_ORG_04
+HEX_CNS_ORG_02 ~~ HEX_CNS_ORG_03
+HEX_CNS_DIL_01 ~~ HEX_CNS_DIL_02
+HEX_CNS_DIL_03 ~~ HEX_CNS_DIL_04
+HEX_CNS_PER_01 ~~ HEX_CNS_PER_04
+HEX_CNS_PER_02 ~~ HEX_CNS_PER_03
+HEX_CNS_PRU_01 ~~ HEX_CNS_PRU_04
+HEX_CNS_PRU_02 ~~ HEX_CNS_PRU_03
+HEX_OPN_INQ_01 ~~ HEX_OPN_INQ_04
+HEX_OPN_INQ_02 ~~ HEX_OPN_INQ_03
+HEX_OPN_UNC_01 ~~ HEX_OPN_UNC_04
+HEX_OPN_UNC_02 ~~ HEX_OPN_UNC_03
+HEX_ALT_01 ~~ HEX_ALT_02
+HEX_ALT_03 ~~ HEX_ALT_04
+HEX_AGR_GEN_01	~~	HEX_AGR_FLX_01
+
+NFP_SOC_01 ~~ NFP_SOC_03
+NFP_SOC_02 ~~ NFP_SOC_04
+NFP_GOV_01 ~~ NFP_GOV_03
+NFP_GOV_02 ~~ NFP_GOV_04
+NFP_INF_01 ~~ NFP_INF_04
+NFP_INF_02 ~~ NFP_INF_03
+NFP_ANO_01 ~~ NFP_ANO_04
+NFP_ANO_02 ~~ NFP_ANO_03
 "
 fit_dim <- sem(model_dim, d, estimator = "ML", fixed.x = TRUE)
-summary(fit_dim, standardized = TRUE)
+summary(fit_dim, standardized = TRUE, fit = TRUE)
 
 # get standardized data
 d_dim <- 
   standardizedsolution(fit_dim)
 ```
 
+Doesn't converge. Hence let's use means of observed values for personality and for privacy. Let's specify errors as preregistered.
+
+```{r}
+model_dim_err <- "
+# Personality Factors
+HEX_HOH =~ HEX_HOH_M
+HEX_EMO =~ HEX_EMO_M
+HEX_EXT =~ HEX_EXT_M
+HEX_AGR =~ HEX_AGR_M
+HEX_CNS =~ HEX_CNS_M
+HEX_OPN =~ HEX_OPN_M
+
+# Privacy
+NFP_PHY =~ NFP_PHY_M
+NFP_PSY =~ NFP_PSY_M
+NFP_SOC =~ NFP_SOC_M
+NFP_GOV =~ NFP_GOV_M
+NFP_COM =~ NFP_COM_M
+NFP_INF =~ NFP_INF_M
+NFP_ANO =~ NFP_ANO_M
+NFP_GEN =~ NFP_GEN_M
+
+# Define Error
+HEX_HOH_M ~~ 0.104 * HEX_HOH_M
+HEX_EMO_M ~~ 0.087 * HEX_EMO_M
+HEX_EXT_M ~~ 0.099 * HEX_EXT_M
+HEX_AGR_M ~~ 0.079 * HEX_AGR_M
+HEX_CNS_M ~~ 0.085 * HEX_CNS_M
+HEX_OPN_M ~~ 0.108 * HEX_OPN_M
+NFP_PHY_M ~~ 0.353 * NFP_PHY_M
+NFP_PSY_M ~~ 0.457 * NFP_PSY_M
+NFP_SOC_M ~~ 0.328 * NFP_SOC_M
+NFP_GOV_M ~~ 0.261 * NFP_GOV_M
+NFP_COM_M ~~ 0.331 * NFP_COM_M
+NFP_INF_M ~~ 0.284 * NFP_INF_M
+NFP_ANO_M ~~ 0.603 * NFP_ANO_M
+NFP_GEN_M ~~ 0.207 * NFP_GEN_M
+"
+fit_dim_err <- sem(model_dim_err, d, estimator = "ML", fixed.x = TRUE)
+summary(fit_dim_err, standardized = TRUE, fit = TRUE)
+```
+Throws a warning: "covariance matrix of latent variables is not positive definite." Let's hence look at correlations of observed mean scores. Also do in subsequent analyses (i.e., facets and SES), to maintain comparability.
 
 ```{r}
 # make table
-tab_dim <- 
-  d_dim %>% 
+tab_cor_dim_m <- 
+  d %>% 
+  select(
+    paste0(vars_pers_dim, "_M"),
+    paste0(vars_pri, "_M")
+    ) %>% 
+  cor(use = "pairwise") %>% 
+  round(2) %>% 
   as.data.frame() %>% 
-  filter(op == "~~", lhs %in% vars_pers_dim, rhs %in% vars_pri) %>% 
-  select("Personality dimension" = lhs, "Need for privacy" = rhs, est.std) %>% 
-  mutate(`Need for privacy` = factor(`Need for privacy`, levels = vars_pri, labels = vars_pri_txt)) %>% 
-  pivot_wider(id_cols = "Personality dimension", names_from = "Need for privacy", values_from = "est.std") %>% 
-  mutate(`Personality dimension` = factor(`Personality dimension`, levels = vars_pers_dim, labels = vars_pers_dim_txt)) %>% 
-  as.data.frame()
-tab_dim
+  select(starts_with("NFP")) %>% 
+  head(6) %>% 
+  cbind(
+    `Personality dimension` = factor(
+      vars_pers_dim, 
+      levels = vars_pers_dim, 
+      labels = vars_pers_dim_txt
+      ),
+    .
+    ) %>% 
+  remove_rownames() %>% 
+  set_names(c("Personality factors", vars_pri_txt_abr))
+
+tab_cor_dim_m
 ```
 
 ## Facets
 
-```{r}
+Let's first look at latent model to confirm it's also not converging.
+
+```{r results-facets}
 model_fac <- "
 # Personality
 HEX_HOH_SIN =~ HEX_HOH_SIN_01 + HEX_HOH_SIN_02 + HEX_HOH_SIN_03 + HEX_HOH_SIN_04
@@ -774,14 +2882,14 @@ HEX_HOH_FAI =~ HEX_HOH_FAI_01 + HEX_HOH_FAI_02 + HEX_HOH_FAI_03 + HEX_HOH_FAI_04
 HEX_HOH_GRE =~ HEX_HOH_GRE_01 + HEX_HOH_GRE_02 + HEX_HOH_GRE_03 + HEX_HOH_GRE_04
 HEX_HOH_MOD =~ HEX_HOH_MOD_01 + HEX_HOH_MOD_02 + HEX_HOH_MOD_03 + HEX_HOH_MOD_04
 HEX_EMO_FEA =~ HEX_EMO_FEA_01 + HEX_EMO_FEA_02 + HEX_EMO_FEA_03 + HEX_EMO_FEA_04
-HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_EMO_ANX_04
+HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_EMO_ANX_04 + HEX_EMO_FEA_04
 HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_EMO_DEP_04
 HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_EMO_SEN_04
 HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_EXT_SSE_04
 HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_EXT_BOL_04
-HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04
+HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04 + HEX_EXT_BOL_02
 HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_EXT_LIV_04
-HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04
+HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04 + HEX_AGR_PAT_02
 HEX_AGR_GEN =~ HEX_AGR_GEN_01 + HEX_AGR_GEN_02 + HEX_AGR_GEN_03 + HEX_AGR_GEN_04
 HEX_AGR_FLX =~ HEX_AGR_FLX_01 + HEX_AGR_FLX_02 + HEX_AGR_FLX_03 + HEX_AGR_FLX_04
 HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_AGR_PAT_04
@@ -796,129 +2904,526 @@ HEX_OPN_UNC =~ HEX_OPN_UNC_01 + HEX_OPN_UNC_02 + HEX_OPN_UNC_03 + HEX_OPN_UNC_04
 HEX_ALT =~ HEX_ALT_01 + HEX_ALT_02 + HEX_ALT_03 + HEX_ALT_04
 
 # Privacy
-NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04
-NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04
-NFP_SOC =~ NFP_SOC_01 + NFP_SOC_02 + NFP_SOC_03 + NFP_SOC_04
+NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04 + NFP_GEN_01
+NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04 + NFP_GEN_01 + NFP_INF_01
+NFP_SOC =~ NFP_SOC_01 + NFP_SOC_02 + NFP_SOC_03 + NFP_SOC_04 + NFP_GEN_01 + NFP_INF_01
 NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04
 NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04
 NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04
 NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04
 NFP_GEN =~ NFP_GEN_01 + NFP_GEN_02 + NFP_GEN_03 + NFP_GEN_04
+
+# Covariances
+HEX_HOH_SIN_01 ~~ HEX_HOH_SIN_03
+HEX_HOH_SIN_02 ~~ HEX_HOH_SIN_04
+HEX_HOH_GRE_01 ~~ HEX_HOH_GRE_02
+HEX_HOH_GRE_03 ~~ HEX_HOH_GRE_04
+HEX_EMO_DEP_01 ~~ HEX_EMO_DEP_04
+HEX_EMO_DEP_02 ~~ HEX_EMO_DEP_03
+HEX_EMO_SEN_01 ~~ HEX_EMO_SEN_03
+HEX_EMO_SEN_02 ~~ HEX_EMO_SEN_04
+HEX_EXT_SSE_01 ~~ HEX_EXT_SSE_04
+HEX_EXT_SSE_02 ~~ HEX_EXT_SSE_03
+HEX_EXT_BOL_01 ~~ HEX_EXT_BOL_04
+HEX_EXT_BOL_02 ~~ HEX_EXT_BOL_03
+HEX_EXT_LIV_01 ~~ HEX_EXT_LIV_03
+HEX_EXT_LIV_02 ~~ HEX_EXT_LIV_04
+HEX_AGR_PAT_01 ~~ HEX_AGR_PAT_02
+HEX_AGR_PAT_03 ~~ HEX_AGR_PAT_04
+HEX_CNS_ORG_01 ~~ HEX_CNS_ORG_04
+HEX_CNS_ORG_02 ~~ HEX_CNS_ORG_03
+HEX_CNS_DIL_01 ~~ HEX_CNS_DIL_02
+HEX_CNS_DIL_03 ~~ HEX_CNS_DIL_04
+HEX_CNS_PER_01 ~~ HEX_CNS_PER_04
+HEX_CNS_PER_02 ~~ HEX_CNS_PER_03
+HEX_CNS_PRU_01 ~~ HEX_CNS_PRU_04
+HEX_CNS_PRU_02 ~~ HEX_CNS_PRU_03
+HEX_OPN_INQ_01 ~~ HEX_OPN_INQ_04
+HEX_OPN_INQ_02 ~~ HEX_OPN_INQ_03
+HEX_OPN_UNC_01 ~~ HEX_OPN_UNC_04
+HEX_OPN_UNC_02 ~~ HEX_OPN_UNC_03
+HEX_AGR_GEN_01	~~	HEX_AGR_FLX_01
+
+HEX_ALT_01 ~~ HEX_ALT_02
+HEX_ALT_03 ~~ HEX_ALT_04
+NFP_SOC_01 ~~ NFP_SOC_03
+NFP_SOC_02 ~~ NFP_SOC_04
+NFP_GOV_01 ~~ NFP_GOV_03
+NFP_GOV_02 ~~ NFP_GOV_04
+NFP_INF_01 ~~ NFP_INF_04
+NFP_INF_02 ~~ NFP_INF_03
+NFP_ANO_01 ~~ NFP_ANO_04
+NFP_ANO_02 ~~ NFP_ANO_03
 "
 fit_fac <- sem(model_fac, d, estimator = "ML", fixed.x = TRUE)
-summary(fit_fac, standardized = TRUE)
+summary(fit_fac, standardized = TRUE, fit = TRUE)
 
 # get standardized data
 d_fac <- 
   standardizedsolution(fit_fac)
 ```
 
+As expected, throws the same warning. Let's hence again use correlations of observed mean values.
+
+```{r}
+tab_cor_fac_m <- 
+  d %>% 
+  select(
+    paste0(vars_pers_fac, "_M"),
+    paste0(vars_pri, "_M")
+    ) %>% 
+  cor(use = "pairwise") %>% 
+  round(2) %>% 
+  as.data.frame() %>% 
+  select(starts_with("NFP")) %>% 
+  head(25) %>% 
+  relocate(paste0(vars_pri, "_M")) %>% 
+  rownames_to_column("Facets") %>% 
+  mutate(
+    Facets = factor(
+      x = Facets,
+      levels = paste0(vars_pers_fac, "_M"),
+      labels = vars_pers_fac_txt
+    )
+      ) %>% 
+  arrange(Facets) %>% 
+  set_names(c("Personality factors", vars_pri_txt_abr))
+tab_cor_fac_m
+```
+
+## SES
+
+Let's directly inspect results of correlations between means of observed scores.
 
 ```{r}
 # make table
-tab_fac <- 
-  d_fac %>% 
+tab_cor_ses_m <- 
+  d %>% 
+  select(
+    vars_ses,
+    paste0(vars_pri, "_M")
+    ) %>%
+  cor(use = "pairwise") %>% 
+  round(2) %>% 
   as.data.frame() %>% 
-  filter(op == "~~", lhs %in% vars_pers_fac, rhs %in% vars_pri) %>% 
-  select("Personality facet" = lhs, "Need for privacy" = rhs, est.std) %>% 
-  mutate(`Need for privacy` = factor(`Need for privacy`, levels = vars_pri, labels = vars_pri_txt)) %>% 
-  pivot_wider(id_cols = "Personality facet", names_from = "Need for privacy", values_from = "est.std") %>% 
-  mutate(`Personality facet` = factor(`Personality facet`, levels = vars_pers_fac, labels = vars_pers_fac_txt)) %>% 
-  as.data.frame
-tab_fac
+  select(starts_with("NFP")) %>% 
+  head(7) %>% 
+  cbind(
+    `Sociodemographics` = factor(
+      vars_ses, 
+      levels = vars_ses, 
+      labels = vars_ses_txt
+      ),
+    .
+    ) %>% 
+  remove_rownames() %>% 
+  set_names(c("Sociodemographics", vars_pri_txt_abr))
+  
+tab_cor_ses_m
 ```
 
 ## Regression
 
+As preregistered, also look at multiple regression. Directly begin with means of observed values. Let's analyze in one single path-model.
+
+Let's also look only at dimensions, as facets are strongly correlated with one another, leading to problems of multicollinearity.
+
 ```{r}
 model_reg <- "
-# Personality Factors
-HEX_HOH_SIN =~ HEX_HOH_SIN_01 + HEX_HOH_SIN_02 + HEX_HOH_SIN_03 + HEX_HOH_SIN_04
-HEX_HOH_FAI =~ HEX_HOH_FAI_01 + HEX_HOH_FAI_02 + HEX_HOH_FAI_03 + HEX_HOH_FAI_04
-HEX_HOH_GRE =~ HEX_HOH_GRE_01 + HEX_HOH_GRE_02 + HEX_HOH_GRE_03 + HEX_HOH_GRE_04
-HEX_HOH_MOD =~ HEX_HOH_MOD_01 + HEX_HOH_MOD_02 + HEX_HOH_MOD_03 + HEX_HOH_MOD_04
-
-HEX_EMO_FEA =~ HEX_EMO_FEA_01 + HEX_EMO_FEA_02 + HEX_EMO_FEA_03 + HEX_EMO_FEA_04
-HEX_EMO_ANX =~ HEX_EMO_ANX_01 + HEX_EMO_ANX_02 + HEX_EMO_ANX_03 + HEX_EMO_ANX_04
-HEX_EMO_DEP =~ HEX_EMO_DEP_01 + HEX_EMO_DEP_02 + HEX_EMO_DEP_03 + HEX_EMO_DEP_04
-HEX_EMO_SEN =~ HEX_EMO_SEN_01 + HEX_EMO_SEN_02 + HEX_EMO_SEN_03 + HEX_EMO_SEN_04
-
-HEX_EXT_SSE =~ HEX_EXT_SSE_01 + HEX_EXT_SSE_02 + HEX_EXT_SSE_03 + HEX_EXT_SSE_04
-HEX_EXT_BOL =~ HEX_EXT_BOL_01 + HEX_EXT_BOL_02 + HEX_EXT_BOL_03 + HEX_EXT_BOL_04
-HEX_EXT_SOC =~ HEX_EXT_SOC_01 + HEX_EXT_SOC_02 + HEX_EXT_SOC_03 + HEX_EXT_SOC_04
-HEX_EXT_LIV =~ HEX_EXT_LIV_01 + HEX_EXT_LIV_02 + HEX_EXT_LIV_03 + HEX_EXT_LIV_04
-
-HEX_AGR_FOR =~ HEX_AGR_FOR_01 + HEX_AGR_FOR_02 + HEX_AGR_FOR_03 + HEX_AGR_FOR_04
-HEX_AGR_GEN =~ HEX_AGR_GEN_01 + HEX_AGR_GEN_02 + HEX_AGR_GEN_03 + HEX_AGR_GEN_04
-HEX_AGR_FLX =~ HEX_AGR_FLX_01 + HEX_AGR_FLX_02 + HEX_AGR_FLX_03 + HEX_AGR_FLX_04
-HEX_AGR_PAT =~ HEX_AGR_PAT_01 + HEX_AGR_PAT_02 + HEX_AGR_PAT_03 + HEX_AGR_PAT_04
-
-HEX_CNS_ORG =~ HEX_CNS_ORG_01 + HEX_CNS_ORG_02 + HEX_CNS_ORG_03 + HEX_CNS_ORG_04
-HEX_CNS_DIL =~ HEX_CNS_DIL_01 + HEX_CNS_DIL_02 + HEX_CNS_DIL_03 + HEX_CNS_DIL_04
-HEX_CNS_PER =~ HEX_CNS_PER_01 + HEX_CNS_PER_02 + HEX_CNS_PER_03 + HEX_CNS_PER_04
-HEX_CNS_PRU =~ HEX_CNS_PRU_01 + HEX_CNS_PRU_02 + HEX_CNS_PRU_03 + HEX_CNS_PRU_04
-
-HEX_OPN_AES =~ HEX_OPN_AES_01 + HEX_OPN_AES_02 + HEX_OPN_AES_03 + HEX_OPN_AES_04
-HEX_OPN_INQ =~ HEX_OPN_INQ_01 + HEX_OPN_INQ_02 + HEX_OPN_INQ_03 + HEX_OPN_INQ_04
-HEX_OPN_CRE =~ HEX_OPN_CRE_01 + HEX_OPN_CRE_02 + HEX_OPN_CRE_03 + HEX_OPN_CRE_04
-HEX_OPN_UNC =~ HEX_OPN_UNC_01 + HEX_OPN_UNC_02 + HEX_OPN_UNC_03 + HEX_OPN_UNC_04
-
-# Privacy
-NFP_INF =~ NFP_INF_01 + NFP_INF_02 + NFP_INF_03 + NFP_INF_04
-NFP_PSY =~ NFP_PSY_01 + NFP_PSY_02 + NFP_PSY_03 + NFP_PSY_04
-NFP_PHY =~ NFP_PHY_01 + NFP_PHY_02 + NFP_PHY_03 + NFP_PHY_04
-NFP_SOC =~ NFP_SOC_01 + NFP_SOC_02 + NFP_SOC_03 + NFP_SOC_04
-NFP_GOV =~ NFP_GOV_01 + NFP_GOV_02 + NFP_GOV_03 + NFP_GOV_04
-NFP_COM =~ NFP_COM_01 + NFP_COM_02 + NFP_COM_03 + NFP_COM_04
-NFP_ANO =~ NFP_ANO_01 + NFP_ANO_02 + NFP_ANO_03 + NFP_ANO_04
-NFP_GEN =~ NFP_GEN_01 + NFP_GEN_02 + NFP_GEN_03 + NFP_GEN_04
-
-NFP_INF + NFP_PSY + NFP_PHY + NFP_SOC + NFP_GOV + NFP_COM + NFP_ANO + NFP_GEN ~ HEX_HOH_SIN + HEX_HOH_FAI + HEX_HOH_GRE + HEX_HOH_MOD + HEX_EMO_FEA + HEX_EMO_ANX + HEX_EMO_DEP + HEX_EMO_SEN + HEX_EXT_SSE + HEX_EXT_BOL + HEX_EXT_SOC + HEX_EXT_LIV + HEX_AGR_FOR + HEX_AGR_GEN + HEX_AGR_FLX + HEX_AGR_PAT + HEX_CNS_ORG + HEX_CNS_DIL + HEX_CNS_PER + HEX_CNS_PRU + HEX_OPN_AES + HEX_OPN_INQ + HEX_OPN_CRE + HEX_OPN_UNC + AGE + GEN + ETH + REL + COL + INC + CON
+NFP_INF_M + NFP_PSY_M + NFP_PHY_M + NFP_SOC_M + NFP_GOV_M + NFP_COM_M + NFP_ANO_M + NFP_GEN_M ~ HEX_HOH_M + HEX_EMO_M + HEX_EXT_M + HEX_AGR_M + HEX_CNS_M + HEX_OPN_M +  + age + male + white + relation + college + income + conserv
 "
 fit_reg <- sem(model_reg, d, estimator = "ML", fixed.x = TRUE)
-summary(fit_reg, standardized = TRUE)
-
-# get standardized data
-d_reg <- 
-  standardizedsolution(fit_reg, ci = TRUE)
+summary(fit_reg, standardized = TRUE, fit = TRUE)
 ```
 
+# Tables
+## Descriptives
 
-```{r fig.width=10, fig.height=9}
-# make table
-tab_reg <- 
-  d_reg %>% 
+Let's first make a descriptive table with means and model fit.
+
+```{r cache=F}
+# Extract model fit indices: CFI, TLI, RMSEA, SRMR
+c_cfi <- 
+  c(
+    HEX_ALT_cfi     = fitmeasures(fit_HEX_ALT)["cfi.scaled"],
+    HEX_AGR_FLX_cfi = fitmeasures(fit_HEX_AGR_FLX)["cfi.scaled"],
+    HEX_AGR_FOR_cfi = fitmeasures(fit_HEX_AGR_FOR)["cfi.scaled"],
+    HEX_AGR_GEN_cfi = fitmeasures(fit_HEX_AGR_GEN)["cfi.scaled"],
+    HEX_AGR_PAT_cfi = fitmeasures(fit_HEX_AGR_PAT)["cfi.scaled"],
+    HEX_CNS_DIL_cfi = fitmeasures(fit_HEX_CNS_DIL)["cfi.scaled"],
+    HEX_CNS_ORG_cfi = fitmeasures(fit_HEX_CNS_ORG)["cfi.scaled"],
+    HEX_CNS_PER_cfi = fitmeasures(fit_HEX_CNS_PER)["cfi.scaled"],
+    HEX_CNS_PRU_cfi = fitmeasures(fit_HEX_CNS_PRU)["cfi.scaled"],
+    HEX_EMO_ANX_cfi = fitmeasures(fit_HEX_EMO_ANX)["cfi.scaled"],
+    HEX_EMO_DEP_cfi = fitmeasures(fit_HEX_EMO_DEP)["cfi.scaled"],
+    HEX_EMO_FEA_cfi = fitmeasures(fit_HEX_EMO_FEA)["cfi.scaled"],
+    HEX_EMO_SEN_cfi = fitmeasures(fit_HEX_EMO_SEN)["cfi.scaled"],
+    HEX_EXT_BOL_cfi = fitmeasures(fit_HEX_EXT_BOL)["cfi.scaled"],
+    HEX_EXT_LIV_cfi = fitmeasures(fit_HEX_EXT_LIV)["cfi.scaled"],
+    HEX_EXT_SOC_cfi = fitmeasures(fit_HEX_EXT_SOC)["cfi.scaled"],
+    HEX_EXT_SSE_cfi = fitmeasures(fit_HEX_EXT_SSE)["cfi.scaled"],
+    HEX_HOH_FAI_cfi = fitmeasures(fit_HEX_HOH_FAI)["cfi.scaled"],
+    HEX_HOH_GRE_cfi = fitmeasures(fit_HEX_HOH_GRE)["cfi.scaled"],
+    HEX_HOH_MOD_cfi = fitmeasures(fit_HEX_HOH_MOD)["cfi.scaled"],
+    HEX_HOH_SIN_cfi = fitmeasures(fit_HEX_HOH_SIN)["cfi.scaled"],
+    HEX_OPN_AES_cfi = fitmeasures(fit_HEX_OPN_AES)["cfi.scaled"],
+    HEX_OPN_CRE_cfi = fitmeasures(fit_HEX_OPN_CRE)["cfi.scaled"],
+    HEX_OPN_INQ_cfi = fitmeasures(fit_HEX_OPN_INQ)["cfi.scaled"],
+    HEX_OPN_UNC_cfi = fitmeasures(fit_HEX_OPN_UNC)["cfi.scaled"],
+    NFP_ANO_cfi     = fitmeasures(fit_NFP_ANO)["cfi.scaled"],
+    NFP_COM_cfi     = fitmeasures(fit_NFP_COM)["cfi.scaled"],
+    NFP_GEN_cfi     = fitmeasures(fit_NFP_GEN)["cfi.scaled"],
+    NFP_GOV_cfi     = fitmeasures(fit_NFP_GOV)["cfi.scaled"],
+    NFP_INF_cfi     = fitmeasures(fit_NFP_INF)["cfi.scaled"],
+    NFP_PHY_cfi     = fitmeasures(fit_NFP_PHY)["cfi.scaled"],
+    NFP_PSY_cfi     = fitmeasures(fit_NFP_PSY)["cfi.scaled"],
+    NFP_SOC_cfi     = fitmeasures(fit_NFP_SOC)["cfi.scaled"],
+    HEX_HOH_srmr     = fitmeasures(fit_hex_hoh)["cfi.scaled"],
+    HEX_EMO_srmr     = fitmeasures(fit_hex_emo)["cfi.scaled"],
+    HEX_EXT_srmr     = fitmeasures(fit_hex_ext)["cfi.scaled"],
+    HEX_AGR_srmr     = fitmeasures(fit_hex_agr)["cfi.scaled"],
+    HEX_CNS_srmr     = fitmeasures(fit_hex_cns)["cfi.scaled"],
+    HEX_OPN_srmr     = fitmeasures(fit_hex_opn)["cfi.scaled"]
+  )
+
+c_tli <- 
+  c(
+    HEX_ALT_tli     = fitmeasures(fit_HEX_ALT)["tli.scaled"],
+    HEX_AGR_FLX_tli = fitmeasures(fit_HEX_AGR_FLX)["tli.scaled"],
+    HEX_AGR_FOR_tli = fitmeasures(fit_HEX_AGR_FOR)["tli.scaled"],
+    HEX_AGR_GEN_tli = fitmeasures(fit_HEX_AGR_GEN)["tli.scaled"],
+    HEX_AGR_PAT_tli = fitmeasures(fit_HEX_AGR_PAT)["tli.scaled"],
+    HEX_CNS_DIL_tli = fitmeasures(fit_HEX_CNS_DIL)["tli.scaled"],
+    HEX_CNS_ORG_tli = fitmeasures(fit_HEX_CNS_ORG)["tli.scaled"],
+    HEX_CNS_PER_tli = fitmeasures(fit_HEX_CNS_PER)["tli.scaled"],
+    HEX_CNS_PRU_tli = fitmeasures(fit_HEX_CNS_PRU)["tli.scaled"],
+    HEX_EMO_ANX_tli = fitmeasures(fit_HEX_EMO_ANX)["tli.scaled"],
+    HEX_EMO_DEP_tli = fitmeasures(fit_HEX_EMO_DEP)["tli.scaled"],
+    HEX_EMO_FEA_tli = fitmeasures(fit_HEX_EMO_FEA)["tli.scaled"],
+    HEX_EMO_SEN_tli = fitmeasures(fit_HEX_EMO_SEN)["tli.scaled"],
+    HEX_EXT_BOL_tli = fitmeasures(fit_HEX_EXT_BOL)["tli.scaled"],
+    HEX_EXT_LIV_tli = fitmeasures(fit_HEX_EXT_LIV)["tli.scaled"],
+    HEX_EXT_SOC_tli = fitmeasures(fit_HEX_EXT_SOC)["tli.scaled"],
+    HEX_EXT_SSE_tli = fitmeasures(fit_HEX_EXT_SSE)["tli.scaled"],
+    HEX_HOH_FAI_tli = fitmeasures(fit_HEX_HOH_FAI)["tli.scaled"],
+    HEX_HOH_GRE_tli = fitmeasures(fit_HEX_HOH_GRE)["tli.scaled"],
+    HEX_HOH_MOD_tli = fitmeasures(fit_HEX_HOH_MOD)["tli.scaled"],
+    HEX_HOH_SIN_tli = fitmeasures(fit_HEX_HOH_SIN)["tli.scaled"],
+    HEX_OPN_AES_tli = fitmeasures(fit_HEX_OPN_AES)["tli.scaled"],
+    HEX_OPN_CRE_tli = fitmeasures(fit_HEX_OPN_CRE)["tli.scaled"],
+    HEX_OPN_INQ_tli = fitmeasures(fit_HEX_OPN_INQ)["tli.scaled"],
+    HEX_OPN_UNC_tli = fitmeasures(fit_HEX_OPN_UNC)["tli.scaled"],
+    NFP_ANO_tli     = fitmeasures(fit_NFP_ANO)["tli.scaled"],
+    NFP_COM_tli     = fitmeasures(fit_NFP_COM)["tli.scaled"],
+    NFP_GEN_tli     = fitmeasures(fit_NFP_GEN)["tli.scaled"],
+    NFP_GOV_tli     = fitmeasures(fit_NFP_GOV)["tli.scaled"],
+    NFP_INF_tli     = fitmeasures(fit_NFP_INF)["tli.scaled"],
+    NFP_PHY_tli     = fitmeasures(fit_NFP_PHY)["tli.scaled"],
+    NFP_PSY_tli     = fitmeasures(fit_NFP_PSY)["tli.scaled"],
+    NFP_SOC_tli     = fitmeasures(fit_NFP_SOC)["tli.scaled"],
+    HEX_HOH_srmr     = fitmeasures(fit_hex_hoh)["tli.scaled"],
+    HEX_EMO_srmr     = fitmeasures(fit_hex_emo)["tli.scaled"],
+    HEX_EXT_srmr     = fitmeasures(fit_hex_ext)["tli.scaled"],
+    HEX_AGR_srmr     = fitmeasures(fit_hex_agr)["tli.scaled"],
+    HEX_CNS_srmr     = fitmeasures(fit_hex_cns)["tli.scaled"],
+    HEX_OPN_srmr     = fitmeasures(fit_hex_opn)["tli.scaled"]
+  )
+
+c_rmsea <- 
+  c(
+    HEX_ALT_rmsea     = fitmeasures(fit_HEX_ALT)["rmsea.scaled"],
+    HEX_AGR_FLX_rmsea = fitmeasures(fit_HEX_AGR_FLX)["rmsea.scaled"],
+    HEX_AGR_FOR_rmsea = fitmeasures(fit_HEX_AGR_FOR)["rmsea.scaled"],
+    HEX_AGR_GEN_rmsea = fitmeasures(fit_HEX_AGR_GEN)["rmsea.scaled"],
+    HEX_AGR_PAT_rmsea = fitmeasures(fit_HEX_AGR_PAT)["rmsea.scaled"],
+    HEX_CNS_DIL_rmsea = fitmeasures(fit_HEX_CNS_DIL)["rmsea.scaled"],
+    HEX_CNS_ORG_rmsea = fitmeasures(fit_HEX_CNS_ORG)["rmsea.scaled"],
+    HEX_CNS_PER_rmsea = fitmeasures(fit_HEX_CNS_PER)["rmsea.scaled"],
+    HEX_CNS_PRU_rmsea = fitmeasures(fit_HEX_CNS_PRU)["rmsea.scaled"],
+    HEX_EMO_ANX_rmsea = fitmeasures(fit_HEX_EMO_ANX)["rmsea.scaled"],
+    HEX_EMO_DEP_rmsea = fitmeasures(fit_HEX_EMO_DEP)["rmsea.scaled"],
+    HEX_EMO_FEA_rmsea = fitmeasures(fit_HEX_EMO_FEA)["rmsea.scaled"],
+    HEX_EMO_SEN_rmsea = fitmeasures(fit_HEX_EMO_SEN)["rmsea.scaled"],
+    HEX_EXT_BOL_rmsea = fitmeasures(fit_HEX_EXT_BOL)["rmsea.scaled"],
+    HEX_EXT_LIV_rmsea = fitmeasures(fit_HEX_EXT_LIV)["rmsea.scaled"],
+    HEX_EXT_SOC_rmsea = fitmeasures(fit_HEX_EXT_SOC)["rmsea.scaled"],
+    HEX_EXT_SSE_rmsea = fitmeasures(fit_HEX_EXT_SSE)["rmsea.scaled"],
+    HEX_HOH_FAI_rmsea = fitmeasures(fit_HEX_HOH_FAI)["rmsea.scaled"],
+    HEX_HOH_GRE_rmsea = fitmeasures(fit_HEX_HOH_GRE)["rmsea.scaled"],
+    HEX_HOH_MOD_rmsea = fitmeasures(fit_HEX_HOH_MOD)["rmsea.scaled"],
+    HEX_HOH_SIN_rmsea = fitmeasures(fit_HEX_HOH_SIN)["rmsea.scaled"],
+    HEX_OPN_AES_rmsea = fitmeasures(fit_HEX_OPN_AES)["rmsea.scaled"],
+    HEX_OPN_CRE_rmsea = fitmeasures(fit_HEX_OPN_CRE)["rmsea.scaled"],
+    HEX_OPN_INQ_rmsea = fitmeasures(fit_HEX_OPN_INQ)["rmsea.scaled"],
+    HEX_OPN_UNC_rmsea = fitmeasures(fit_HEX_OPN_UNC)["rmsea.scaled"],
+    NFP_ANO_rmsea     = fitmeasures(fit_NFP_ANO)["rmsea.scaled"],
+    NFP_COM_rmsea     = fitmeasures(fit_NFP_COM)["rmsea.scaled"],
+    NFP_GEN_rmsea     = fitmeasures(fit_NFP_GEN)["rmsea.scaled"],
+    NFP_GOV_rmsea     = fitmeasures(fit_NFP_GOV)["rmsea.scaled"],
+    NFP_INF_rmsea     = fitmeasures(fit_NFP_INF)["rmsea.scaled"],
+    NFP_PHY_rmsea     = fitmeasures(fit_NFP_PHY)["rmsea.scaled"],
+    NFP_PSY_rmsea     = fitmeasures(fit_NFP_PSY)["rmsea.scaled"],
+    NFP_SOC_rmsea     = fitmeasures(fit_NFP_SOC)["rmsea.scaled"],
+    HEX_HOH_srmr     = fitmeasures(fit_hex_hoh)["rmsea.scaled"],
+    HEX_EMO_srmr     = fitmeasures(fit_hex_emo)["rmsea.scaled"],
+    HEX_EXT_srmr     = fitmeasures(fit_hex_ext)["rmsea.scaled"],
+    HEX_AGR_srmr     = fitmeasures(fit_hex_agr)["rmsea.scaled"],
+    HEX_CNS_srmr     = fitmeasures(fit_hex_cns)["rmsea.scaled"],
+    HEX_OPN_srmr     = fitmeasures(fit_hex_opn)["rmsea.scaled"]
+  )
+
+c_srmr <- 
+  c(
+    HEX_ALT_srmr     = fitmeasures(fit_HEX_ALT)["srmr"],
+    HEX_AGR_FLX_srmr = fitmeasures(fit_HEX_AGR_FLX)["srmr"],
+    HEX_AGR_FOR_srmr = fitmeasures(fit_HEX_AGR_FOR)["srmr"],
+    HEX_AGR_GEN_srmr = fitmeasures(fit_HEX_AGR_GEN)["srmr"],
+    HEX_AGR_PAT_srmr = fitmeasures(fit_HEX_AGR_PAT)["srmr"],
+    HEX_CNS_DIL_srmr = fitmeasures(fit_HEX_CNS_DIL)["srmr"],
+    HEX_CNS_ORG_srmr = fitmeasures(fit_HEX_CNS_ORG)["srmr"],
+    HEX_CNS_PER_srmr = fitmeasures(fit_HEX_CNS_PER)["srmr"],
+    HEX_CNS_PRU_srmr = fitmeasures(fit_HEX_CNS_PRU)["srmr"],
+    HEX_EMO_ANX_srmr = fitmeasures(fit_HEX_EMO_ANX)["srmr"],
+    HEX_EMO_DEP_srmr = fitmeasures(fit_HEX_EMO_DEP)["srmr"],
+    HEX_EMO_FEA_srmr = fitmeasures(fit_HEX_EMO_FEA)["srmr"],
+    HEX_EMO_SEN_srmr = fitmeasures(fit_HEX_EMO_SEN)["srmr"],
+    HEX_EXT_BOL_srmr = fitmeasures(fit_HEX_EXT_BOL)["srmr"],
+    HEX_EXT_LIV_srmr = fitmeasures(fit_HEX_EXT_LIV)["srmr"],
+    HEX_EXT_SOC_srmr = fitmeasures(fit_HEX_EXT_SOC)["srmr"],
+    HEX_EXT_SSE_srmr = fitmeasures(fit_HEX_EXT_SSE)["srmr"],
+    HEX_HOH_FAI_srmr = fitmeasures(fit_HEX_HOH_FAI)["srmr"],
+    HEX_HOH_GRE_srmr = fitmeasures(fit_HEX_HOH_GRE)["srmr"],
+    HEX_HOH_MOD_srmr = fitmeasures(fit_HEX_HOH_MOD)["srmr"],
+    HEX_HOH_SIN_srmr = fitmeasures(fit_HEX_HOH_SIN)["srmr"],
+    HEX_OPN_AES_srmr = fitmeasures(fit_HEX_OPN_AES)["srmr"],
+    HEX_OPN_CRE_srmr = fitmeasures(fit_HEX_OPN_CRE)["srmr"],
+    HEX_OPN_INQ_srmr = fitmeasures(fit_HEX_OPN_INQ)["srmr"],
+    HEX_OPN_UNC_srmr = fitmeasures(fit_HEX_OPN_UNC)["srmr"],
+    NFP_ANO_srmr     = fitmeasures(fit_NFP_ANO)["srmr"],
+    NFP_COM_srmr     = fitmeasures(fit_NFP_COM)["srmr"],
+    NFP_GEN_srmr     = fitmeasures(fit_NFP_GEN)["srmr"],
+    NFP_GOV_srmr     = fitmeasures(fit_NFP_GOV)["srmr"],
+    NFP_INF_srmr     = fitmeasures(fit_NFP_INF)["srmr"],
+    NFP_PHY_srmr     = fitmeasures(fit_NFP_PHY)["srmr"],
+    NFP_PSY_srmr     = fitmeasures(fit_NFP_PSY)["srmr"],
+    NFP_SOC_srmr     = fitmeasures(fit_NFP_SOC)["srmr"],
+    HEX_HOH_srmr     = fitmeasures(fit_hex_hoh)["srmr"],
+    HEX_EMO_srmr     = fitmeasures(fit_hex_emo)["srmr"],
+    HEX_EXT_srmr     = fitmeasures(fit_hex_ext)["srmr"],
+    HEX_AGR_srmr     = fitmeasures(fit_hex_agr)["srmr"],
+    HEX_CNS_srmr     = fitmeasures(fit_hex_cns)["srmr"],
+    HEX_OPN_srmr     = fitmeasures(fit_hex_opn)["srmr"]
+  )
+
+tab_des <- 
+  data.frame(
+    Variable = factor(
+      gsub('.{2}$', '', names(c_m)), 
+      levels = c(vars_pers_all, vars_pri),
+      labels = c(vars_pers_all_txt, vars_pri_txt)),
+    M = c_m,
+    SD = c_sd,
+    REL = c_rel,
+    CFI = c_cfi,
+    TLI = c_tli,
+    SRMS = c_srmr,
+    RMSEA = c_rmsea
+  ) %>% 
+  arrange(Variable) %>% 
+  mutate(
+    across(
+      -Variable,
+      ~ round(.x, 2)
+    )
+  ) %>% 
+  remove_rownames()
+tab_des
+```
+
+# Figures
+## Correlation
+
+```{r cache=F, fig.height=6, fig.width=12}
+# First extract data
+tab_cor <- 
+  d %>% 
+  correlation(
+    select = 
+      c(
+        vars_ses, 
+        paste0(
+          c(vars_pers_dim, vars_pers_fac), 
+        "_M"
+        )
+      ),
+    select2 = paste0(vars_pri, "_M"),
+    ci = .90) %>% 
   as.data.frame() %>% 
-  filter(op == "~", lhs %in% vars_pri) %>% 
-  select("Need for privacy" = lhs, "Predictor" = rhs, Estimate = est.std, ci.lower, ci.upper) %>% 
-  mutate(Predictor = factor(Predictor, levels = c(vars_pers_fac, vars_ses), labels = c(vars_pers_fac_txt, vars_ses_txt)),
-         `Need for privacy` = factor(`Need for privacy`, levels = c(vars_pri), labels = c(vars_pri_txt)),
-         Predictor_cat = c(vars_pers_dim_txt %>% rep(each = 4), "Sociodemographics" %>% rep(7)) %>% rep(length(vars_pri_txt)))
+  mutate(
+    across(
+      c(r, CI_low, CI_high),
+      ~ round(.x, 2)
+    )
+  ) %>% 
+  rename(
+    "Need for privacy" = Parameter2,
+    "Predictor" = Parameter1,
+    "Estimate" = r
+  ) %>% 
+  mutate(
+    category = case_when(
+      Predictor %in% vars_ses ~ "Sociodemographics",
+      Predictor %in% paste0(vars_pers_hoh, "_M") ~ "Honesty humility",
+      Predictor %in% paste0(vars_pers_emo, "_M") ~ "Emotionality", 
+      Predictor %in% paste0(vars_pers_ext, "_M") ~ "Extraversion",
+      Predictor %in% paste0(vars_pers_agr, "_M") ~ "Agreeableness", 
+      Predictor %in% paste0(vars_pers_cns, "_M") ~ "Conscientiousness",
+      Predictor %in% paste0(vars_pers_opn, "_M") ~ "Openness",
+      .default = "missing"
+    ),
+    "Need for privacy" = factor(
+      `Need for privacy`,
+      levels = paste0(vars_pri, "_M"),
+      labels = vars_pri_txt
+    ),
+    category = factor(
+      category,
+      levels = c(vars_pers_dim_txt, "Sociodemographics")
+    ), 
+    relevant = case_when(
+      CI_low <= -.1 & CI_high <= -.1 | CI_low >= .1 & CI_high >= .1 ~ "yes",
+      .default = "no"
+    ),
+    Predictor = factor(
+      x = Predictor,
+      levels = c(
+        paste0(vars_pers_all, "_M"),
+        vars_ses),
+      labels = vars_pred_all_txt
+    )
+  ) %>% 
+  select(
+    -Method, -p, -df_error, -t, -CI
+  )
 
-# make figure
-reg_fig <- ggplot(tab_reg, aes(x = Estimate, y = Predictor)) + 
-  coord_cartesian(xlim = c(-.5, .5)) +
-  geom_vline(xintercept = 0, lwd = .75, colour = "darkgrey") + 
-  geom_vline(xintercept = -.1, lwd = .75, colour = "darkgrey", linetype = "dashed") + 
-  geom_vline(xintercept = .1, lwd = .75, colour = "darkgrey", linetype = "dashed") + 
-  geom_errorbarh(aes(xmin = ci.lower, xmax = ci.upper),
-                lwd = .75, height = .2, position = position_dodge(-.7)) +
-  geom_point(size = 1.5, position = position_dodge(-.7)) +
-  scale_x_continuous(breaks = c(-.3, 0, .3)) + 
+fig_reg <- ggplot(
+  tab_reg, aes(x = Estimate, y = Predictor, color = relevant)
+  ) + 
+  coord_cartesian(xlim = c(-.7, .3)) +
+  geom_vline(xintercept = 0, lwd = .5, colour = "darkgrey") + 
+  geom_vline(xintercept = -.1, lwd = .5, colour = "darkgrey", linetype = "dashed") + 
+  geom_vline(xintercept = .1, lwd = .5, colour = "darkgrey", linetype = "dashed") + 
+  geom_errorbarh(
+    aes(xmin = CI_low, xmax = CI_high),
+    lwd = .5, height = .4, position = position_dodge(-.7)
+    ) +
+  geom_point(size = 1, position = position_dodge(-.7)) +
+#   geom_pointrange(aes(xmin = CI_low, xmax = CI_high), size = .2) + 
+  scale_x_continuous(
+    breaks = c(-.6, -.4, -.2, 0, .2, .4),
+    labels = c("-.6", "-.4", "-.2", "0", ".2", ".4")
+    ) + 
+  scale_y_discrete(limits=rev) +
+  scale_color_manual(values = c("grey", "black")) +
+  labs(
+    title = "Predicting the need for privacy",
+    x = "Correlation coefficient"
+    ) +
+  # theme_minimal() +
   theme(
     axis.title.y = element_blank(),
     plot.title = element_text(hjust = .5),
-    # panel.spacing = unit(.9, "lines"),
-    text = element_text(size = 12),
+    text = element_text(size = 14),
     axis.text.y = element_text(hjust = 1),
+    axis.text.x = element_text(size = 10),
     legend.position = "none"
     ) + 
-    facet_grid(Predictor_cat ~ `Need for privacy`, scales = "free_y")
-suppressWarnings(print(reg_fig, warning = F))
+  facet_grid(category ~ `Need for privacy`, scales = "free_y")
 
-ggsave("figures/fig_reg.png", width = 9, height = 10)
+suppressWarnings(print(fig_cor, warning = F))
+
+ggsave("figures/fig_cor.png", width = 10, height = 12)
 ```
 
+## Regression
+
+```{r fig.height=6, fig.width=12}
+tab_reg <- 
+  standardizedsolution(fit_reg, ci = TRUE) %>% 
+  as.data.frame() %>% 
+  filter(
+    op == "~", 
+    lhs %in% paste0(vars_pri, "_M")
+    ) %>% 
+  select(
+    "Need for privacy" = lhs, 
+    "Predictor" = rhs, 
+    Estimate = est.std, 
+    CI_low = ci.lower, 
+    CI_high = ci.upper
+    ) %>% 
+  mutate(
+    Predictor = factor(
+      Predictor, 
+      levels = c(paste0(vars_pers_dim, "_M"), vars_ses), 
+      labels = c(vars_pers_dim_txt, vars_ses_txt)
+      ),
+    `Need for privacy` = factor(
+      `Need for privacy`, 
+      levels = paste0(vars_pri, "_M"), 
+      labels = c(vars_pri_txt)
+      ),
+    category = c(
+      rep("Personality", 6),
+      "Sociodemographics" %>% 
+        rep(7)) %>% 
+      rep(length(vars_pri_txt)),
+    relevant = case_when(
+      CI_low <= -.1 & CI_high <= -.1 | CI_low >= .1 & CI_high >= .1 ~ "yes",
+      .default = "no"
+      )
+    )
+
+fig_reg <- ggplot(
+  tab_reg, aes(x = Estimate, y = Predictor, color = relevant)
+  ) + 
+  coord_cartesian(xlim = c(-.8, .3)) +
+  geom_vline(xintercept = 0, lwd = .5, colour = "darkgrey") + 
+  geom_vline(xintercept = -.1, lwd = .5, colour = "darkgrey", linetype = "dashed") + 
+  geom_vline(xintercept = .1, lwd = .5, colour = "darkgrey", linetype = "dashed") + 
+  geom_errorbarh(
+    aes(xmin = CI_low, xmax = CI_high),
+    lwd = .5, height = .4, position = position_dodge(-.7)
+    ) +
+  geom_point(size = 1, position = position_dodge(-.7)) +
+  scale_x_continuous(
+    breaks = c(-.8, -.6, -.4, -.2, 0, .2, .4),
+    labels = c("-.8", "-.6", "-.4", "-.2", "0", ".2", ".4")
+    ) + 
+  scale_y_discrete(limits=rev) +
+  scale_color_manual(values = c("grey", "black")) +
+  labs(
+    title = "Explaining the need for privacy",
+    x = "Regression coefficient"
+    ) +
+  # theme_minimal() +
+  theme(
+    axis.title.y = element_blank(),
+    plot.title = element_text(hjust = .5),
+    text = element_text(size = 14),
+    axis.text.y = element_text(hjust = 1),
+    axis.text.x = element_text(size = 10),
+    legend.position = "none"
+    ) + 
+  facet_grid(category ~ `Need for privacy`, scales = "free_y")
+
+suppressWarnings(print(fig_reg, warning = F))
+
+ggsave("figures/fig_reg.png", width = 10, height = 5)
+```
+
+# Save Workspace
+
 ```{r cache=F}
-save.image("data/workspace.RData")
+save.image("data/workspace_2.RData")
 ```
