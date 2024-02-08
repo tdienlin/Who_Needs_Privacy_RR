@@ -3306,8 +3306,8 @@ tab_cor <-
     -Method, -p, -df_error, -t, -CI
   )
 
-fig_reg <- ggplot(
-  tab_reg, aes(x = Estimate, y = Predictor, color = relevant)
+fig_cor <- ggplot(
+  tab_cor, aes(x = Estimate, y = Predictor, color = relevant)
   ) + 
   coord_cartesian(xlim = c(-.7, .3)) +
   geom_vline(xintercept = 0, lwd = .5, colour = "darkgrey") + 
