@@ -41,8 +41,8 @@ draft             : no
 
 documentclass     : "apa6"
 # classoption       : "man"
-# output: html_document
-output            : papaja::apa6_pdf
+output: html_document
+# output            : papaja::apa6_pdf
 # output            : papaja::apa6_word
 
 header-includes:
