@@ -21,8 +21,8 @@ affiliation:
 authornote: |
   Tobias Dienlin, Department of Communication, University of Vienna, Austria; Miriam Metzger, Department of Communication, University of California, Santa Barbara, United States of America.
 
-note: |
-  This paper is in-principle-accepted at as a Stage 1 Registered Report at Collabra.
+# note: |
+  # This paper is in-principle-accepted at as a Stage 1 Registered Report at Collabra.
   
 abstract          : "Privacy is defined as a voluntary withdrawal from society. While everyone needs some degree of privacy, we currently know little about who needs how much. In this study, we explored the relations between the need for privacy and personality. Personality was operationalized using the HEXACO personality inventory. Need for privacy was measured in relation to social, psychological, and physical privacy from other individuals (horizontal privacy); need for privacy from government agencies and companies (vertical privacy); as well as need for informational privacy, anonymity, and general privacy (both horizontal and vertical privacy). A sample of 1,550 respondents representative of the U.S. in terms of age, gender, and ethnicity was collected. The results showed several substantial relationships: More extraverted and more agreeable people needed substantially less privacy. People less fair and less altruistic needed more psychological privacy, social privacy, and anonymity, lending some support to the 'nothing to hide-argument'. Emotionality and conscientiousness showed varied relations with need for privacy. More conservative respondents needed more privacy from the government."
 keywords          : "Privacy, need for privacy, personality, HEXACO"
@@ -41,8 +41,8 @@ draft             : no
 
 documentclass     : "apa6"
 # classoption       : "man"
-output: html_document
-# output            : papaja::apa6_pdf
+# output            : html_document
+output            : papaja::apa6_pdf
 # output            : papaja::apa6_word
 
 header-includes:
