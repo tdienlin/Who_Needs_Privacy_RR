@@ -6,7 +6,7 @@ output:
     toc_float:
       collapsed: FALSE
     toc_depth: 2
-    code_folding: hide
+    code_folding: show
     df_print: paged
 ---
 
@@ -55,7 +55,7 @@ power_n_95 <- pwr.r.test(r = sesoi, sig.level = .05, power = .95)$n
 
 A 5% error rate would imply collecting `r power_n_95` participants.
 
-## Detailed: Simple
+## Detailed
 
 ```{r}
 population <- 
@@ -105,8 +105,9 @@ reliability <- simsem::sim(
 summary(reliability)
 power_tab <- getPower(reliability)
 power_80 <- findPower(power_tab, "N", 0.90)
-power_80["HEX_HOH_SIN~~NFP_PHY"]
 ```
+
+A power of 80% would imply collecting `r power_80[["HEX_HOH_SIN~~NFP_PHY"]]` participants.
 
 ```{r}
 save.image("data/workspace_1.RData")

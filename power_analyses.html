@@ -435,8 +435,8 @@ pwr.r.test(r = sesoi, sig.level = 0.05, power = 0.95)</code></pre>
 <pre class="r"><code>power_n_95 &lt;- pwr.r.test(r = sesoi, sig.level = 0.05, power = 0.95)$n</code></pre>
 <p>A 5% error rate would imply collecting 1292.88 participants.</p>
 </div>
-<div id="detailed-simple" class="section level2">
-<h2>Detailed: Simple</h2>
+<div id="detailed" class="section level2">
+<h2>Detailed</h2>
 <pre class="r"><code>population &lt;- 
   &quot;
   # Fix means to 0
@@ -640,10 +640,8 @@ reliability &lt;- simsem::sim(
 ##       (e.g., Heywood case or linear dependency) = 0 
 ## NOTE: The sample size is varying.</code></pre>
 <pre class="r"><code>power_tab &lt;- getPower(reliability)
-power_80 &lt;- findPower(power_tab, &quot;N&quot;, 0.90)
-power_80[&quot;HEX_HOH_SIN~~NFP_PHY&quot;]</code></pre>
-<pre><code>## HEX_HOH_SIN~~NFP_PHY 
-##                 1501</code></pre>
+power_80 &lt;- findPower(power_tab, &quot;N&quot;, 0.90)</code></pre>
+<p>A power of 80% would imply collecting 1501 participants.</p>
 <pre class="r"><code>save.image(&quot;data/workspace_1.RData&quot;)</code></pre>
 </div>
 </div>
@@ -685,7 +683,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
+  window.initializeCodeFolding("show" === "show");
 });
 </script>
 
