@@ -1,0 +1,577 @@
+---
+title: "Data Preparation"
+output:
+  html_document:
+    toc: TRUE
+    toc_float:
+      collapsed: FALSE
+    toc_depth: 2
+    code_folding: show
+    df_print: paged
+bibliography      : 
+  - "bibliography/r-references.bib"
+  - "bibliography/references.bib"
+---
+
+```{r knitr-setup, include=F}
+set.seed(170819)
+
+knitr::opts_chunk$set(
+  warning=F, 
+  echo=T, 
+  error=F, 
+  message=F, 
+  cache = T, 
+  tidy=T, 
+  dev = 'pdf', 
+  cache.extra = knitr::rand_seed,
+  fig.height = 6,
+  fig.width = 8
+  )
+
+options(
+  digits = 3, 
+  width = 150,
+  max.print = 100000000
+  )
+```
+
+Here we outline how we prepared the data for our analyses, including quality checks.
+
+# Data
+
+Please first download the data from [AUSSDA](https://data.aussda.at/dataset.xhtml?persistentId=doi:10.11587/IC66GC) and put it into the folder "data".
+
+# Set-up
+
+We load the packages.
+
+```{r r-setup, include=T, echo=T, results='hide', cache=F}
+# install packages
+# devtools::install_github("https://github.com/tdienlin/td")
+
+library(confintr)
+library(corrplot)
+library(easystats)
+library(ggplot2)
+library(kableExtra)
+library(knitr)
+library(lavaan)
+library(magrittr)
+library(MVN)
+library(naniar)
+library(PerFit)
+library(psych)
+library(sjlabelled)
+library(semTools)
+library(tidyverse)
+library(td)
+
+load("data/workspace_1.RData")
+source("custom_functions.R")
+```
+
+We next load the data.
+
+```{r data-wrangling}
+d_raw <- sjlabelled::read_spss(
+  "data/10849_da_en_v1_0.zsav",
+  convert.factors = FALSE
+  )
+```
+
+# Data Preparation
+
+## Recoding
+
+We need to recode inverted items, rename variables, and recode variables (Age was coded wrongly).
+
+```{r data-inverting}
+vars_invert <- c(
+  "HEX_HOH_SIN_01", "HEX_HOH_SIN_03",
+  "HEX_HOH_FAI_01", "HEX_HOH_FAI_02", "HEX_HOH_FAI_04",
+  "HEX_HOH_GRE_02", "HEX_HOH_GRE_03", "HEX_HOH_GRE_04",
+  "HEX_HOH_MOD_03", "HEX_HOH_MOD_04",
+  "HEX_EMO_FEA_02", "HEX_EMO_FEA_04",
+  "HEX_EMO_ANX_02", "HEX_EMO_ANX_03",
+  "HEX_EMO_DEP_02", "HEX_EMO_DEP_04",
+  "HEX_EMO_SEN_04",
+  "HEX_EXT_SSE_03", "HEX_EXT_SSE_04",
+  "HEX_EXT_BOL_01", "HEX_EXT_BOL_04",
+  "HEX_EXT_SOC_01",
+  "HEX_EXT_LIV_03", "HEX_EXT_LIV_04",
+  "HEX_AGR_FOR_03", "HEX_AGR_FOR_04",
+  "HEX_AGR_GEN_01",
+  "HEX_AGR_FLX_01", "HEX_AGR_FLX_03", "HEX_AGR_FLX_04",
+  "HEX_AGR_PAT_01", "HEX_AGR_PAT_04",
+  "HEX_CNS_ORG_03", "HEX_CNS_ORG_04",
+  "HEX_CNS_DIL_03", "HEX_CNS_DIL_04",
+  "HEX_CNS_PER_02",
+  "HEX_CNS_PRU_01", "HEX_CNS_PRU_02", "HEX_CNS_PRU_04",
+  "HEX_OPN_AES_01", "HEX_OPN_AES_02",
+  "HEX_OPN_INQ_03", "HEX_OPN_INQ_04",
+  "HEX_OPN_CRE_01", "HEX_OPN_CRE_04",
+  "HEX_OPN_UNC_01", "HEX_OPN_UNC_04",
+  "HEX_ALT_03", "HEX_ALT_04",
+  "NFP_COM_02"
+)
+
+d <-
+  d_raw %>% 
+  rename(
+    COL = COL_,
+    REL = REL_
+    ) %>%
+  mutate(
+    across(all_of(vars_invert),
+    ~ 8 - .x
+         ),
+    male = case_match(
+      GEN,
+      c(2, 3) ~ 0,
+      1 ~ 1),
+    # note that age was coded wrongly; needs to be corrected
+    age = case_match(
+      AGE,
+      1 ~ 1,
+      2 ~ 2,
+      3 ~ 3,
+      4 ~ 4,
+      5 ~ 6,
+      6 ~ 7,
+      7 ~ 5),
+    age = set_labels(
+      age, 
+      labels = c(
+        "18-24 years old", 
+        "25-34 years old", 
+        "35-44 years old", 
+        "45-54 years old",
+        "55-64 years old", 
+        "65+ years old"
+      )
+    ),
+    white = case_match(
+      ETH,
+      2 ~ 0,
+      1 ~ 1),
+    relation = case_match(
+      REL,
+      2 ~ 1,
+      1 ~ 0),
+    college = case_match(
+      COL,
+      2 ~ 1,
+      1 ~ 0),
+    conserv = CON,
+    income = INC
+  ) 
+```
+
+## Labels
+
+We define names and labels for categories of variables, so that we can use them later.
+
+```{r data-labels}
+# define vars and labels
+vars_ses <- c("age", "male", "white", "relation", "college", "income", "conserv")
+
+vars_ses_txt <- c("Age", "Male", "White", "Relationship", "College", "Income", "Conservatism")
+
+vars_pers_fac <- c("HEX_HOH_SIN", "HEX_HOH_FAI", "HEX_HOH_GRE", "HEX_HOH_MOD",
+                   "HEX_ALT",
+                   "HEX_EMO_FEA", "HEX_EMO_ANX", "HEX_EMO_DEP", "HEX_EMO_SEN", 
+                   "HEX_EXT_SSE", "HEX_EXT_BOL", "HEX_EXT_SOC", "HEX_EXT_LIV", 
+                   "HEX_AGR_FOR", "HEX_AGR_GEN", "HEX_AGR_FLX", "HEX_AGR_PAT", 
+                   "HEX_CNS_ORG", "HEX_CNS_DIL", "HEX_CNS_PER", "HEX_CNS_PRU", 
+                   "HEX_OPN_AES", "HEX_OPN_INQ", "HEX_OPN_CRE", "HEX_OPN_UNC")
+
+vars_pers_fac_txt <- c("Sincerity", "Fairness", "Greed avoidance", "Modesty", 
+                       "Altruism",
+                       "Fearfulness", "Anxiety", "Dependence", "Sentimentality", 
+                       "Social self-esteem", "Social boldness", "Sociability", "Liveliness",
+                       "Forgiveness", "Gentleness", "Flexibility", "Patience", 
+                       "Organization", "Diligence", "Perfectionism", "Prudence", 
+                       "Aesth. appreciation", "Inquisitiveness", "Creativeness", "Unconventionality")
+
+vars_pers_hoh <- 
+  c("HEX_HOH", "HEX_HOH_SIN", "HEX_HOH_FAI", "HEX_HOH_GRE", "HEX_HOH_MOD", "HEX_ALT")
+
+vars_pers_emo <- 
+  c("HEX_EMO", "HEX_EMO_FEA", "HEX_EMO_ANX", "HEX_EMO_DEP", "HEX_EMO_SEN")
+
+vars_pers_ext <- 
+  c("HEX_EXT", "HEX_EXT_SSE", "HEX_EXT_BOL", "HEX_EXT_SOC", "HEX_EXT_LIV")
+
+vars_pers_agr <- 
+  c("HEX_AGR", "HEX_AGR_FOR", "HEX_AGR_GEN", "HEX_AGR_FLX", "HEX_AGR_PAT")
+
+vars_pers_cns <- 
+  c("HEX_CNS", "HEX_CNS_ORG", "HEX_CNS_DIL", "HEX_CNS_PER", "HEX_CNS_PRU")
+
+vars_pers_opn <- 
+  c("HEX_OPN", "HEX_OPN_AES", "HEX_OPN_INQ", "HEX_OPN_CRE", "HEX_OPN_UNC")
+
+vars_pers_all <- 
+  c(
+    vars_pers_hoh, 
+    vars_pers_emo, 
+    vars_pers_ext, 
+    vars_pers_agr, 
+    vars_pers_cns,
+    vars_pers_opn
+    )
+
+vars_pers_all_txt <- 
+  c("Honesty humility", 
+      "Sincerity", "Fairness", "Greed avoidance", "Modesty", "Altruism",
+    "Emotionality", 
+      "Fearfulness", "Anxiety", "Dependence", "Sentimentality", 
+    "Extraversion",
+      "Social self-esteem", "Social boldness", "Sociability", "Liveliness",
+    "Agreeableness",
+      "Forgiveness", "Gentleness", "Flexibility", "Patience",
+    "Conscientiousness",
+      "Organization", "Diligence", "Perfectionism", "Prudence", 
+    "Openness",
+      "Aesth. appreciation", "Inquisitiveness", "Creativeness", "Unconventionality"
+    )
+
+vars_pred_all_txt <- 
+  c(
+    vars_pers_all_txt,
+    vars_ses_txt
+    )
+
+vars_pers_dim <- c("HEX_HOH", "HEX_EMO", "HEX_EXT", "HEX_AGR", "HEX_CNS", "HEX_OPN")
+
+vars_pers_dim_txt <- c("Honesty humility", "Emotionality", "Extraversion", 
+                       "Agreeableness", "Conscientiousness", "Openness")
+
+vars_pri <- c("NFP_PSY", "NFP_SOC", "NFP_PHY", 
+              "NFP_GOV", "NFP_COM", 
+              "NFP_INF", "NFP_ANO", "NFP_GEN")
+
+vars_pri_txt <- c("Psychological", "Social", "Physical", 
+                  "Government", "Companies", 
+                  "Informational", "Anonymity", "General")
+
+vars_pri_txt_brk <- c("Psycho-\nlogical", "Social", "Physical", 
+                  "Govern-\nment", "Companies", 
+                  "Infor-\nmational", "Anony-\nmity", "General")
+
+vars_pri_txt_abr <- c("Psych.", "Social", "Phys.", 
+                  "Gov.", "Comp.", 
+                  "Inform.", "Anonym.", "General")
+
+vars_pers_pri <- c(vars_pers_fac, vars_pri)
+
+vars_all <- c(
+  vars_pers_all, 
+  vars_pri,
+  vars_ses
+)
+```
+
+## Means
+
+Below we compute the means for scales and items.
+
+```{r}
+# Person means per facet
+d %<>%
+  mutate(
+    HEX_HOH_M = rowMeans(select(., starts_with("HEX_HOH"))),
+    HEX_EMO_M = rowMeans(select(., starts_with("HEX_EMO"))),
+    HEX_EXT_M = rowMeans(select(., starts_with("HEX_EXT"))),
+    HEX_AGR_M = rowMeans(select(., starts_with("HEX_AGR"))),
+    HEX_CNS_M = rowMeans(select(., starts_with("HEX_CNS"))),
+    HEX_OPN_M = rowMeans(select(., starts_with("HEX_OPN"))),
+    HEX_ALT_M = rowMeans(select(., starts_with("HEX_ALT_0"))),
+    HEX_AGR_FLX_M = rowMeans(select(., starts_with("HEX_AGR_FLX_0"))),
+    HEX_AGR_FOR_M = rowMeans(select(., starts_with("HEX_AGR_FOR_0"))),
+    HEX_AGR_GEN_M = rowMeans(select(., starts_with("HEX_AGR_GEN_0"))),
+    HEX_AGR_PAT_M = rowMeans(select(., starts_with("HEX_AGR_PAT_0"))),
+    HEX_CNS_DIL_M = rowMeans(select(., starts_with("HEX_CNS_DIL_0"))),
+    HEX_CNS_ORG_M = rowMeans(select(., starts_with("HEX_CNS_ORG_0"))),
+    HEX_CNS_PER_M = rowMeans(select(., starts_with("HEX_CNS_PER_0"))),
+    HEX_CNS_PRU_M = rowMeans(select(., starts_with("HEX_CNS_PRU_0"))),
+    HEX_EMO_ANX_M = rowMeans(select(., starts_with("HEX_EMO_ANX_0"))),
+    HEX_EMO_DEP_M = rowMeans(select(., starts_with("HEX_EMO_DEP_0"))),
+    HEX_EMO_FEA_M = rowMeans(select(., starts_with("HEX_EMO_FEA_0"))),
+    HEX_EMO_SEN_M = rowMeans(select(., starts_with("HEX_EMO_SEN_0"))),
+    HEX_EXT_BOL_M = rowMeans(select(., starts_with("HEX_EXT_BOL_0"))),
+    HEX_EXT_LIV_M = rowMeans(select(., starts_with("HEX_EXT_LIV_0"))),
+    HEX_EXT_SOC_M = rowMeans(select(., starts_with("HEX_EXT_SOC_0"))),
+    HEX_EXT_SSE_M = rowMeans(select(., starts_with("HEX_EXT_SSE_0"))),
+    HEX_HOH_FAI_M = rowMeans(select(., starts_with("HEX_HOH_FAI_0"))),
+    HEX_HOH_GRE_M = rowMeans(select(., starts_with("HEX_HOH_GRE_0"))),
+    HEX_HOH_MOD_M = rowMeans(select(., starts_with("HEX_HOH_MOD_0"))),
+    HEX_HOH_SIN_M = rowMeans(select(., starts_with("HEX_HOH_SIN_0"))),
+    HEX_OPN_AES_M = rowMeans(select(., starts_with("HEX_OPN_AES_0"))),
+    HEX_OPN_CRE_M = rowMeans(select(., starts_with("HEX_OPN_CRE_0"))),
+    HEX_OPN_INQ_M = rowMeans(select(., starts_with("HEX_OPN_INQ_0"))),
+    HEX_OPN_UNC_M = rowMeans(select(., starts_with("HEX_OPN_UNC_0"))),
+    NFP_ANO_M = rowMeans(select(., starts_with("NFP_ANO_0"))),
+    NFP_COM_M = rowMeans(select(., starts_with("NFP_COM_0"))),
+    NFP_GEN_M = rowMeans(select(., starts_with("NFP_GEN_0"))),
+    NFP_GOV_M = rowMeans(select(., starts_with("NFP_GOV_0"))),
+    NFP_INF_M = rowMeans(select(., starts_with("NFP_INF_0"))),
+    NFP_PHY_M = rowMeans(select(., starts_with("NFP_PHY_0"))),
+    NFP_PSY_M = rowMeans(select(., starts_with("NFP_PSY_0"))),
+    NFP_SOC_M = rowMeans(select(., starts_with("NFP_SOC_0")))
+  )
+
+# item means
+c_m <- 
+  c(
+    HEX_ALT_m     = mean(d$HEX_ALT_M, na.rm = T),
+    HEX_AGR_FLX_m = mean(d$HEX_AGR_FLX_M, na.rm = T),
+    HEX_AGR_FOR_m = mean(d$HEX_AGR_FOR_M, na.rm = T),
+    HEX_AGR_GEN_m = mean(d$HEX_AGR_GEN_M, na.rm = T),
+    HEX_AGR_PAT_m = mean(d$HEX_AGR_PAT_M, na.rm = T),
+    HEX_CNS_DIL_m = mean(d$HEX_CNS_DIL_M, na.rm = T),
+    HEX_CNS_ORG_m = mean(d$HEX_CNS_ORG_M, na.rm = T),
+    HEX_CNS_PER_m = mean(d$HEX_CNS_PER_M, na.rm = T),
+    HEX_CNS_PRU_m = mean(d$HEX_CNS_PRU_M, na.rm = T),
+    HEX_EMO_ANX_m = mean(d$HEX_EMO_ANX_M, na.rm = T),
+    HEX_EMO_DEP_m = mean(d$HEX_EMO_DEP_M, na.rm = T),
+    HEX_EMO_FEA_m = mean(d$HEX_EMO_FEA_M, na.rm = T),
+    HEX_EMO_SEN_m = mean(d$HEX_EMO_SEN_M, na.rm = T),
+    HEX_EXT_BOL_m = mean(d$HEX_EXT_BOL_M, na.rm = T),
+    HEX_EXT_LIV_m = mean(d$HEX_EXT_LIV_M, na.rm = T),
+    HEX_EXT_SOC_m = mean(d$HEX_EXT_SOC_M, na.rm = T),
+    HEX_EXT_SSE_m = mean(d$HEX_EXT_SSE_M, na.rm = T),
+    HEX_HOH_FAI_m = mean(d$HEX_HOH_FAI_M, na.rm = T),
+    HEX_HOH_GRE_m = mean(d$HEX_HOH_GRE_M, na.rm = T),
+    HEX_HOH_MOD_m = mean(d$HEX_HOH_MOD_M, na.rm = T),
+    HEX_HOH_SIN_m = mean(d$HEX_HOH_SIN_M, na.rm = T),
+    HEX_OPN_AES_m = mean(d$HEX_OPN_AES_M, na.rm = T),
+    HEX_OPN_CRE_m = mean(d$HEX_OPN_CRE_M, na.rm = T),
+    HEX_OPN_INQ_m = mean(d$HEX_OPN_INQ_M, na.rm = T),
+    HEX_OPN_UNC_m = mean(d$HEX_OPN_UNC_M, na.rm = T),
+    NFP_ANO_m     = mean(d$NFP_ANO_M, na.rm = T),
+    NFP_COM_m     = mean(d$NFP_COM_M, na.rm = T),
+    NFP_GEN_m     = mean(d$NFP_GEN_M, na.rm = T),
+    NFP_GOV_m     = mean(d$NFP_GOV_M, na.rm = T),
+    NFP_INF_m     = mean(d$NFP_INF_M, na.rm = T),
+    NFP_PHY_m     = mean(d$NFP_PHY_M, na.rm = T),
+    NFP_PSY_m     = mean(d$NFP_PSY_M, na.rm = T),
+    NFP_SOC_m     = mean(d$NFP_SOC_M, na.rm = T),
+    HEX_HOH_m     = mean(d$HEX_HOH_M, na.rm = T),
+    HEX_EMO_m     = mean(d$HEX_EMO_M, na.rm = T),
+    HEX_EXT_m     = mean(d$HEX_EXT_M, na.rm = T),
+    HEX_AGR_m     = mean(d$HEX_AGR_M, na.rm = T),
+    HEX_CNS_m     = mean(d$HEX_CNS_M, na.rm = T),
+    HEX_OPN_m     = mean(d$HEX_OPN_M, na.rm = T)
+  )
+
+# item standard deviation
+c_sd <- 
+  c(
+    HEX_ALT_sd     = sd(d$HEX_ALT_M, na.rm = T),
+    HEX_AGR_FLX_sd = sd(d$HEX_AGR_FLX_M, na.rm = T),
+    HEX_AGR_FOR_sd = sd(d$HEX_AGR_FOR_M, na.rm = T),
+    HEX_AGR_GEN_sd = sd(d$HEX_AGR_GEN_M, na.rm = T),
+    HEX_AGR_PAT_sd = sd(d$HEX_AGR_PAT_M, na.rm = T),
+    HEX_CNS_DIL_sd = sd(d$HEX_CNS_DIL_M, na.rm = T),
+    HEX_CNS_ORG_sd = sd(d$HEX_CNS_ORG_M, na.rm = T),
+    HEX_CNS_PER_sd = sd(d$HEX_CNS_PER_M, na.rm = T),
+    HEX_CNS_PRU_sd = sd(d$HEX_CNS_PRU_M, na.rm = T),
+    HEX_EMO_ANX_sd = sd(d$HEX_EMO_ANX_M, na.rm = T),
+    HEX_EMO_DEP_sd = sd(d$HEX_EMO_DEP_M, na.rm = T),
+    HEX_EMO_FEA_sd = sd(d$HEX_EMO_FEA_M, na.rm = T),
+    HEX_EMO_SEN_sd = sd(d$HEX_EMO_SEN_M, na.rm = T),
+    HEX_EXT_BOL_sd = sd(d$HEX_EXT_BOL_M, na.rm = T),
+    HEX_EXT_LIV_sd = sd(d$HEX_EXT_LIV_M, na.rm = T),
+    HEX_EXT_SOC_sd = sd(d$HEX_EXT_SOC_M, na.rm = T),
+    HEX_EXT_SSE_sd = sd(d$HEX_EXT_SSE_M, na.rm = T),
+    HEX_HOH_FAI_sd = sd(d$HEX_HOH_FAI_M, na.rm = T),
+    HEX_HOH_GRE_sd = sd(d$HEX_HOH_GRE_M, na.rm = T),
+    HEX_HOH_MOD_sd = sd(d$HEX_HOH_MOD_M, na.rm = T),
+    HEX_HOH_SIN_sd = sd(d$HEX_HOH_SIN_M, na.rm = T),
+    HEX_OPN_AES_sd = sd(d$HEX_OPN_AES_M, na.rm = T),
+    HEX_OPN_CRE_sd = sd(d$HEX_OPN_CRE_M, na.rm = T),
+    HEX_OPN_INQ_sd = sd(d$HEX_OPN_INQ_M, na.rm = T),
+    HEX_OPN_UNC_sd = sd(d$HEX_OPN_UNC_M, na.rm = T),
+    NFP_ANO_sd     = sd(d$NFP_ANO_M, na.rm = T),
+    NFP_COM_sd     = sd(d$NFP_COM_M, na.rm = T),
+    NFP_GEN_sd     = sd(d$NFP_GEN_M, na.rm = T),
+    NFP_GOV_sd     = sd(d$NFP_GOV_M, na.rm = T),
+    NFP_INF_sd     = sd(d$NFP_INF_M, na.rm = T),
+    NFP_PHY_sd     = sd(d$NFP_PHY_M, na.rm = T),
+    NFP_PSY_sd     = sd(d$NFP_PSY_M, na.rm = T),
+    NFP_SOC_sd     = sd(d$NFP_SOC_M, na.rm = T),
+    HEX_HOH_sd     = sd(d$HEX_HOH_M, na.rm = T),
+    HEX_EMO_sd     = sd(d$HEX_EMO_M, na.rm = T),
+    HEX_EXT_sd     = sd(d$HEX_EXT_M, na.rm = T),
+    HEX_AGR_sd     = sd(d$HEX_AGR_M, na.rm = T),
+    HEX_CNS_sd     = sd(d$HEX_CNS_M, na.rm = T),
+    HEX_OPN_sd     = sd(d$HEX_OPN_M, na.rm = T)
+  )
+```
+
+# Quality checks
+## Missing data
+
+First we filter those who didn't finish the questionnaire.
+
+```{r}
+d %<>%
+  filter(
+    Progress == 100
+  )
+
+n_finished <- nrow(d)
+```
+
+Let's first inspect missing data.
+
+How many missing do we have?
+
+```{r}
+missing_n <- 
+  d %>% 
+  select(HEX_HOH_SIN_01:CON) %>% 
+  n_miss()
+
+missing_per <- 
+  d %>% 
+  select(HEX_HOH_SIN_01:CON) %>%
+  prop_miss() %>% 
+  as.numeric() * 100
+```
+
+Only `r missing_n` cells are missing -- which is very little. To be precise, `r missing_per %>% round(4)` percent only. 
+
+Which variables are affected?
+
+```{r}
+d %>% 
+  select(HEX_HOH_SIN_01:CON) %>% 
+  miss_var_summary() %>% 
+  head(19)
+```
+
+Missing answers vary randomly across variables.
+
+How about participants?
+
+```{r}
+d %>% 
+  select(HEX_HOH_SIN_01:CON) %>% 
+  miss_case_summary()
+```
+
+Only six participants with missing data, and even then, not much. We hence decided to keep everyone.
+
+## Speeders
+
+We preregistered to remove participants faster than 3 standard deviations than the median response time.
+
+```{r cache=F}
+# Median response time
+time_med <- median(d$Duration__in_seconds_)
+
+# Average response time
+time_m <- mean(d$Duration__in_seconds_) / 60
+
+# Standard deviation
+time_sd <- sd(d$Duration__in_seconds_)
+
+# filter speeders
+time_crit_init <- time_med - (3 * time_sd) # minimum time on survey
+```
+
+However, this made little sense. The median response time was `r time_med` seconds and the standard deviation `r time_sd %>% round(0)` seconds. Hence, three SDs below median was `r time_crit_init %>% round(0)` seconds, hence not informative. 
+
+Instead, we decided to remove respondents who took less than five minutes answering the questionnaire, which we considered unreasonably fast.
+
+```{r cache=F}
+time_crit <- 5 * 60
+
+# count number of speeders
+n_speeding <- 
+  nrow(
+    filter(
+      d, 
+      Duration__in_seconds_ < time_crit
+      )
+    )
+
+# Deletion of fast respondents
+d <- 
+  filter(
+    d, 
+    Duration__in_seconds_ >= time_crit
+    )
+
+n_used <- nrow(d)
+```
+
+Average response time was `r time_m %>% round(0)` minutes. We removed `r n_speeding` because they answered the survey unreasonably fast.
+
+## Response patterns
+
+Let's inspect for potential response patterns. We'll do so looking at influential cases, which we'll then inspect manually.
+
+We'll use raw data, so that inverted items aren't recoded and patterns become more visible. (Note that this data set isn't yet filtered for speeders).
+
+```{r}
+options(mc.cores = 8)
+
+# analyses require complete cases only
+d_raw_compl <- d_raw %>% 
+  select(ID, Duration__in_seconds_, HEX_HOH_SIN_01:PRI_BEH) %>% 
+  .[complete.cases(.), ]
+
+outliers <- 
+  check_outliers(
+    d_raw_compl, 
+    method = "all", 
+    verbose = FALSE
+  )
+
+summary(outliers)
+```
+
+194 outliers were detected. We'll now inspect these outliers manually.
+
+```{r}
+d_outliers_stats <- as.data.frame(outliers)
+
+d_outliers <- 
+  d_raw_compl[d_outliers_stats$Outlier >= 0.5, ] %>%
+  as.data.frame()
+
+d_outliers
+
+patterns <- c(
+  449      # "R_72Kshi80pwPq9Gy"
+  , 6      # "R_5OrhZQwvj9wfJWp"
+  , 705    # "R_5QSPlArm0BtfIrE"
+  , 1422   # "R_3Cv1Tmj5HX4ghJU"
+  , 1401   # "R_5Pld7hbh1ay8sb7"
+  , 1355   # "R_4DuqyujkQ7Hjapj"
+  , 273    # "R_6MqzefRkB3aQdPj"
+  , 747    # "R_7QSq0FbgZfcnJIt"
+  , 1406   # "R_1MrHTg5CZpBLeYw"
+  )
+```
+
+
+The following `r length(patterns) %>% english::english()` cases show clear patterns and will be removed.
+
+```{r}
+d_filtered <- filter(d, ID %in% patterns)
+d_filtered
+
+d <- filter(d, !ID %in% patterns)
+n_final <- nrow(d)
+```
+
+# Save Workspace
+
+```{r cache=F}
+save.image("data/workspace_2.RData")
+```

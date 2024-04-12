@@ -13,7 +13,7 @@
 
 <title>Readability analyses of items</title>
 
-<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -29,15 +29,15 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -68,6 +68,7 @@ if (window.hljs) {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -353,24 +354,40 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="proposal.html">Proposal</a>
+  <a href="manuscript.html">Manuscript</a>
 </li>
 <li>
-  <a href="analyses.html">Analyses</a>
+  <a href="data_prep.html">Data Prep</a>
 </li>
 <li>
-  <a href="items.html">Items</a>
+  <a href="results.html">Results</a>
 </li>
 <li>
-  <a href="items_readability.html">Readability Analyses</a>
+  <a href="power_analyses.html">Power Analyses</a>
+</li>
+<li>
+  <a href="analysis_pipeline.html">Analysis Pipeline</a>
+</li>
+<li>
+  <a href="items.html">Item list</a>
+</li>
+<li>
+  <a href="items_readability.html">Items Readability</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="proposal.pdf">
-    <span class="fa fa-file"></span>
+    <span class="fa fa-newspaper"></span>
      
-    PDF
+    Stage 1 Proposal
+  </a>
+</li>
+<li>
+  <a href="manuscript.pdf">
+    <span class="fa fa-newspaper"></span>
+     
+    Stage 2 Manuscript
   </a>
 </li>
 <li>
@@ -378,6 +395,13 @@ div.tocify {
     <span class="fa fa-lg fa-github"></span>
      
     Source Code
+  </a>
+</li>
+<li>
+  <a href="https://data.aussda.at/citation?persistentId=doi:10.11587/IC66GC">
+    <span class="fa fa-database"></span>
+     
+    Data
   </a>
 </li>
       </ul>
@@ -414,7 +438,7 @@ Powers-Sumner-Kearl Variation of the Dale and Chall Readability formula
 <p>To have a benchmark, we calculated the readability of the HEXACO
 items. It was as follows:</p>
 <pre><code>##   document Flesch.Kincaid  FOG Coleman.Liau.short Dale.Chall.PSK average
-## 1   HEXACO           6.65 8.72               6.93           5.55    6.96</code></pre>
+## 1   HEXACO           6.63 8.72               6.93           5.65    6.98</code></pre>
 <p>Readability was good. The results means that, on average,
 understanding the items requires seven years of schooling.</p>
 </div>
@@ -436,11 +460,11 @@ others.</li>
 (new)</li>
 </ol>
 <pre><code>##   document Flesch.Kincaid  FOG Coleman.Liau.short Dale.Chall.PSK average
-## 1    text1           6.78 8.67               7.31           5.70    7.12
-## 2    text2           4.92 6.80               3.90           4.28    4.98
+## 1    text1           6.78 8.67               7.31           6.47    7.31
+## 2    text2           4.92 6.80               3.90           4.96    5.15
 ## 3    text3           4.82 4.80               7.70           6.87    6.05
 ## 4    text4           5.04 5.60               4.35           5.75    5.18
-## 5   HEXACO           6.65 8.72               6.93           5.55    6.96</code></pre>
+## 5   HEXACO           6.63 8.72               6.93           5.65    6.98</code></pre>
 <p>Readability looks good!</p>
 </div>
 <div id="physical" class="section level3">
@@ -454,11 +478,11 @@ plane.</li>
 <li>I hate it when people enter my personal space uninvited. (new)</li>
 </ol>
 <pre><code>##   document Flesch.Kincaid   FOG Coleman.Liau.short Dale.Chall.PSK average
-## 1    text1           1.57  4.40              3.425           3.92    3.33
-## 2    text2           1.57  4.40              1.822           4.97    3.19
-## 3    text3           2.85  6.00              0.651           4.93    3.61
+## 1    text1           1.57  4.40              3.425           4.97    3.59
+## 2    text2           1.57  4.40              1.822           6.02    3.45
+## 3    text3           2.85  6.00              0.651           5.70    3.80
 ## 4    text4           8.37 12.00              8.288           6.17    8.71
-## 5   HEXACO           6.65  8.72              6.928           5.55    6.96</code></pre>
+## 5   HEXACO           6.63  8.72              6.928           5.65    6.98</code></pre>
 <p>Looks good. (Item 4 not perfect, but it should still work.)</p>
 </div>
 <div id="social-privacy" class="section level3">
@@ -473,10 +497,10 @@ class="citation">(Harrison 1993)</span></li>
 </ol>
 <pre><code>##   document Flesch.Kincaid   FOG Coleman.Liau.short Dale.Chall.PSK average
 ## 1    text1           9.09 13.90               8.07           7.83    9.72
-## 2    text2           1.87  4.80               2.31           3.98    3.24
+## 2    text2           1.87  4.80               2.31           4.94    3.48
 ## 3    text3           5.86  8.04               4.49           4.97    5.84
-## 4    text4           3.65  4.00               4.17           5.02    4.21
-## 5   HEXACO           6.65  8.72               6.93           5.55    6.96</code></pre>
+## 4    text4           3.65  4.00               4.17           6.17    4.50
+## 5   HEXACO           6.63  8.72               6.93           5.65    6.98</code></pre>
 <p>Readability looks good. (Item 1 not perfect, but should still work
 and was already validated.)</p>
 </div>
@@ -498,10 +522,10 @@ communication, even if doing so prevents future terrorist attacks.</li>
 </ul>
 <pre><code>##   document Flesch.Kincaid   FOG Coleman.Liau.short Dale.Chall.PSK average
 ## 1    text1          13.45 18.00              12.71           7.92   13.02
-## 2    text2          12.45 16.27              10.65           6.14   11.38
-## 3    text3          15.69 20.53              16.20           8.83   15.31
+## 2    text2          12.45 16.27              10.65           6.62   11.50
+## 3    text3          15.69 20.53              16.20           9.47   15.47
 ## 4    text4           8.01 15.31               8.24           6.02    9.39
-## 5   HEXACO           6.65  8.72               6.93           5.55    6.96</code></pre>
+## 5   HEXACO           6.63  8.72               6.93           5.65    6.98</code></pre>
 <p>Items 1, 2 and 3 show rather high scores. Try to formulate
 easier.</p>
 <p>New items:</p>
@@ -516,10 +540,10 @@ if that stops terrorist attacks.</li>
 </ol>
 <pre><code>##   document Flesch.Kincaid   FOG Coleman.Liau.short Dale.Chall.PSK average
 ## 1    text1          11.50 16.67              13.19           7.24   12.15
-## 2    text2          10.58 12.21               8.55           5.62    9.24
-## 3    text3          13.07 19.33              14.76           7.24   13.60
+## 2    text2          10.58 12.21               8.55           6.17    9.38
+## 3    text3          13.07 19.33              14.76           8.01   13.80
 ## 4    text4           8.01 15.31               8.24           6.02    9.39
-## 5   HEXACO           6.65  8.72               6.93           5.55    6.96</code></pre>
+## 5   HEXACO           6.63  8.72               6.93           5.65    6.98</code></pre>
 <p>A bit better, but not much. But scale worked pretty well in original
 study, so should be okay.</p>
 </div>
@@ -536,11 +560,11 @@ reduces the quality of their services.</li>
 <li>I feel I need to protect my privacy from companies.</li>
 </ol>
 <pre><code>##   document Flesch.Kincaid   FOG Coleman.Liau.short Dale.Chall.PSK average
-## 1    text1           7.82 11.64               7.38           5.62    8.12
-## 2    text2           8.33 12.21               4.07           5.62    7.56
-## 3    text3          12.41 18.31              10.98           6.27   11.99
+## 1    text1           7.82 11.64               7.38           6.91    8.44
+## 2    text2           8.33 12.21               4.07           6.17    7.70
+## 3    text3          12.41 18.31              10.98           6.91   12.15
 ## 4    text4           6.01 12.00               5.35           5.02    7.09
-## 5   HEXACO           6.65  8.72               6.93           5.55    6.96</code></pre>
+## 5   HEXACO           6.63  8.72               6.93           5.65    6.98</code></pre>
 <p>Items 3 seems to be a bit too difficult. Try to make easier.</p>
 <ol style="list-style-type: decimal">
 <li>I’m willing to pay more for products or services so that companies
@@ -552,11 +576,11 @@ their services worse.</li>
 <li>I feel I need to protect my privacy from companies.</li>
 </ol>
 <pre><code>##   document Flesch.Kincaid   FOG Coleman.Liau.short Dale.Chall.PSK average
-## 1    text1           7.82 11.64               7.38           5.62    8.12
-## 2    text2           8.33 12.21               4.07           5.62    7.56
-## 3    text3           8.35 11.40               8.81           5.66    8.56
+## 1    text1           7.82 11.64               7.38           6.91    8.44
+## 2    text2           8.33 12.21               4.07           6.17    7.70
+## 3    text3           8.35 11.40               8.81           6.39    8.74
 ## 4    text4           6.01 12.00               5.35           5.02    7.09
-## 5   HEXACO           6.65  8.72               6.93           5.55    6.96</code></pre>
+## 5   HEXACO           6.63  8.72               6.93           5.65    6.98</code></pre>
 <p>Readability now much better.</p>
 </div>
 </div>
@@ -575,10 +599,10 @@ Internet. (new)</li>
 </ol>
 <pre><code>##   document Flesch.Kincaid   FOG Coleman.Liau.short Dale.Chall.PSK average
 ## 1    text1           3.65  3.60               4.43           5.09    4.19
-## 2    text2           9.55 16.00               8.29           7.33   10.29
+## 2    text2           9.55 16.00               8.29           8.48   10.58
 ## 3    text3           9.74 14.80              11.13           5.91   10.40
 ## 4    text4          11.26 14.43              10.87           6.71   10.82
-## 5   HEXACO           6.65  8.72               6.93           5.55    6.96</code></pre>
+## 5   HEXACO           6.63  8.72               6.93           5.65    6.98</code></pre>
 <p>Readability looks good.</p>
 </div>
 <div id="privacy-need-anonymity" class="section level3">
@@ -597,7 +621,7 @@ to preserve my privacy.</li>
 ## 2    text2           7.19 12.00               7.11           7.33    8.41
 ## 3    text3           7.97  9.71               4.92           7.44    7.51
 ## 4    text4           8.37 12.00               5.35           7.33    8.26
-## 5   HEXACO           6.65  8.72               6.93           5.55    6.96</code></pre>
+## 5   HEXACO           6.63  8.72               6.93           5.65    6.98</code></pre>
 <p>Readability looks good.</p>
 </div>
 <div id="general-need-for-privacy" class="section level3">
@@ -614,9 +638,10 @@ to preserve my privacy.</li>
 ## 2    text2          8.383 15.73               4.75           5.55    8.60
 ## 3    text3          4.791  8.04               1.82           4.97    4.91
 ## 4    text4          0.805  3.20              -1.86           3.74    1.47
-## 5   HEXACO          6.646  8.72               6.93           5.55    6.96</code></pre>
+## 5   HEXACO          6.629  8.72               6.93           5.65    6.98</code></pre>
 <p>Readability was good.</p>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
 <div id="ref-dienlinWhoNeedsPrivacy2019" class="csl-entry">
 Dienlin, Tobias, and Miriam J. Metzger. 2019. <span>“Who Needs
 Privacy?”</span> <em>Preprint</em>. <a
@@ -625,16 +650,15 @@ href="https://doi.org/10.31219/osf.io/m23bn">https://doi.org/10.31219/osf.io/m23
 <div id="ref-frenerDevelopmentValidationNeed2021" class="csl-entry">
 Frener, Regine, Jana Wagner, and Sabine Trepte. 2021. <span>“Development
 and Validation of the Need for Privacy Scale
-(<span>NFP-S</span>).”</span> In. <span>71st annual conference of the
+(<span>NFP-S</span>).”</span> In. 71st annual conference of the
 International Communication Association (ICA), Denver, CO, digital
-conference</span>.
+conference.
 </div>
 <div id="ref-harrisonDevelopmentDesirePrivacy1993" class="csl-entry">
 Harrison, Claire L. 1993. <span>“The Development of a
 <span>Desire</span> for <span>Privacy Scale</span>.”</span> <em>ProQuest
-Dissertations and Theses</em>. PhD thesis, <span>Ann Arbor</span>:
-<span>University of Connecticut</span>. <a
-href="https://uaccess.univie.ac.at/login?url=https://www.proquest.com/dissertations-theses/development-desire-privacy-scale/docview/304030735/se-2?accountid=14682">https://uaccess.univie.ac.at/login?url=https://www.proquest.com/dissertations-theses/development-desire-privacy-scale/docview/304030735/se-2?accountid=14682</a>.
+Dissertations and Theses</em>. PhD thesis, Ann Arbor: University of
+Connecticut.
 </div>
 <div id="ref-patalayAssessingReadabilitySelfreported2018"
 class="csl-entry">

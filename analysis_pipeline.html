@@ -11,9 +11,9 @@
 
 
 
-<title>Analysis Pipeline</title>
+<title>Preregistered Analysis Pipeline</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -353,7 +353,10 @@ div.tocify {
   <a href="manuscript.html">Manuscript</a>
 </li>
 <li>
-  <a href="analyses.html">Analyses</a>
+  <a href="data_prep.html">Data Prep</a>
+</li>
+<li>
+  <a href="results.html">Results</a>
 </li>
 <li>
   <a href="power_analyses.html">Power Analyses</a>
@@ -362,21 +365,25 @@ div.tocify {
   <a href="analysis_pipeline.html">Analysis Pipeline</a>
 </li>
 <li>
-  <a href="proposal.pdf">Registered Proposal</a>
+  <a href="items.html">Item list</a>
 </li>
 <li>
-  <a href="items.html">Items</a>
-</li>
-<li>
-  <a href="items_readability.html">Readability Analyses</a>
+  <a href="items_readability.html">Items Readability</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="manuscript.pdf">
-    <span class="fa fa-file"></span>
+  <a href="proposal.pdf">
+    <span class="fa fa-newspaper"></span>
      
-    PDF
+    Stage 1 Proposal
+  </a>
+</li>
+<li>
+  <a href="manuscript.pdf">
+    <span class="fa fa-newspaper"></span>
+     
+    Stage 2 Manuscript
   </a>
 </li>
 <li>
@@ -384,6 +391,13 @@ div.tocify {
     <span class="fa fa-lg fa-github"></span>
      
     Source Code
+  </a>
+</li>
+<li>
+  <a href="https://data.aussda.at/citation?persistentId=doi:10.11587/IC66GC">
+    <span class="fa fa-database"></span>
+     
+    Data
   </a>
 </li>
       </ul>
@@ -395,15 +409,17 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Analysis Pipeline</h1>
+<h1 class="title toc-ignore">Preregistered Analysis Pipeline</h1>
 
 </div>
 
 
-<p>Below we state how we plan to analyze the data. To achieve sufficient
-model fit, there’ll likely be several adaptions.</p>
+<p>Below we state how we planned and preregistered to analyze the data
+in more detail.</p>
 <div id="factorial-validity" class="section level1">
 <h1>Factorial validity</h1>
+<div id="preregistered-procedure" class="section level2">
+<h2>Preregistered procedure</h2>
 <p>We will inspect the factorial validity of the privacy and personality
 variables as follows.</p>
 <ul>
@@ -437,8 +453,29 @@ should emerge, we will use a subset of the items to extract a single
 factor with sufficient factorial validity.</li>
 </ul>
 </div>
+<div id="implementation-and-deviation" class="section level2">
+<h2>Implementation and Deviation</h2>
+<p>When analyzed individually, most measures showed satisfactory model
+fit, not requiring any changes. Some measures showed satisfactory model
+fit after small adaptions, such as allowing items to covary. Half a
+dozen measures were then still marginally outside of the preregistered
+thresholds (e.g., liveliness with a RMSEA of .12). We could’ve now
+substantially altered the factor structure to see if this leads to
+sufficient model fit. However, we considered it more cogent to rather
+accept this then to fundamentally alter scales.</p>
+<p>We did not explicate a minimum thresholf of reliability. Most
+measures showed satisfactory results (i.e., reliability above .70).
+However, some measures such as altruism, unconventionality, or anonymity
+showed insufficient reliability. Again, instead of strongly adapting
+measures (as suggested above), we decided to maintain the initial factor
+structure and did not delete any items and we did not introduce
+substantial changes to the factors.</p>
+</div>
+</div>
 <div id="analysis" class="section level1">
 <h1>Analysis</h1>
+<div id="preregistered-procedure-1" class="section level2">
+<h2>Preregistered Procedure</h2>
 <p>Because the analyses are complex, it might be that we need to
 simplify the model. We will proceed as follows.</p>
 <ul>
@@ -457,17 +494,27 @@ multidimensional solution, we will use the model predicted values for
 the general latent factor.</li>
 </ul></li>
 </ul>
+</div>
+<div id="implementation-and-deviation-1" class="section level2">
+<h2>Implementation and Deviation</h2>
+<p>Although individually most of the measures showed good fit, when
+analyzed together fit decreased substantially, below acceptable levels.
+This problem maintained when trying to model the results using single
+indicator of the predictors with factor scores. As a result, we
+conservatively decided to analyze our data using the variables’ observed
+mean scores.</p>
 <div id="refs" class="references csl-bib-body hanging-indent"
 entry-spacing="0">
 <div id="ref-klinePrinciplesPracticeStructural2016" class="csl-entry">
 Kline, Rex B. 2016. <em>Principles and Practice of Structural Equation
-Modeling</em>. 4th ed. Methodology in the Social Sciences. <span>New
-York, NY</span>: <span>The Guilford Press</span>.
+Modeling</em>. 4th ed. Methodology in the Social Sciences. New York, NY:
+The Guilford Press.
 </div>
 <div id="ref-osborneSampleSizeSubject2004" class="csl-entry">
 Osborne, Jason W., and Anna B. Costello. 2004. <span>“Sample Size and
 Subject to Item Ratio in Principal Components Analysis.”</span>
 <em>Practical Assessment, Research &amp; Evaluation</em> 9 (11).
+</div>
 </div>
 </div>
 </div>

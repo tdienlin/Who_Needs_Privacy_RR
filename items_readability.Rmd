@@ -42,10 +42,6 @@ readability = function(data){
 }
 ```
 
-```{r data-wrangling}
-d <- read_spss("data/Need+for+Privacy_August+16%2C+2021_15.33.sav")
-```
-
 Below, we develop several new items for need for privacy. To validate items, we follow the procedure implemented by @patalayAssessingReadabilitySelfreported2018 and calculate the following four reading scores: Flesch–Kincaid reading grade (FK), Gunning Fog Index (GFI), Coleman Liau Index (CLI), and the Powers-Sumner-Kearl Variation of the Dale and Chall Readability formula (DC).
 
 # Personality

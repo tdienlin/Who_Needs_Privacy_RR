@@ -13,7 +13,7 @@
 
 <title>Who needs privacy? Exploring the relations between need for privacy and personality</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -278,24 +278,40 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="proposal.html">Proposal</a>
+  <a href="manuscript.html">Manuscript</a>
 </li>
 <li>
-  <a href="analyses.html">Analyses</a>
+  <a href="data_prep.html">Data Prep</a>
 </li>
 <li>
-  <a href="items.html">Items</a>
+  <a href="results.html">Results</a>
 </li>
 <li>
-  <a href="items_readability.html">Readability Analyses</a>
+  <a href="power_analyses.html">Power Analyses</a>
+</li>
+<li>
+  <a href="analysis_pipeline.html">Analysis Pipeline</a>
+</li>
+<li>
+  <a href="items.html">Item list</a>
+</li>
+<li>
+  <a href="items_readability.html">Items Readability</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="proposal.pdf">
-    <span class="fa fa-file"></span>
+    <span class="fa fa-newspaper"></span>
      
-    PDF
+    Stage 1 Proposal
+  </a>
+</li>
+<li>
+  <a href="manuscript.pdf">
+    <span class="fa fa-newspaper"></span>
+     
+    Stage 2 Manuscript
   </a>
 </li>
 <li>
@@ -303,6 +319,13 @@ $(document).ready(function () {
     <span class="fa fa-lg fa-github"></span>
      
     Source Code
+  </a>
+</li>
+<li>
+  <a href="https://data.aussda.at/citation?persistentId=doi:10.11587/IC66GC">
+    <span class="fa fa-database"></span>
+     
+    Data
   </a>
 </li>
       </ul>
@@ -357,12 +380,12 @@ between privacy and personality <span class="citation">(Masur 2018,
 <!-- Why do some people desire more and some people desire less privacy? -->
 What can we infer about a person if they desire more privacy? Are they
 more introverted, more risk-averse, or more traditional?
-<!-- Or do they have more to hide? --> Asking <strong>these
-questions</strong> seems relevant, not least because people who desire
-more privacy are often regarded with suspicion, having to justify why
-they want to be left alone. Consider the “nothing-to-hide” argument
-<span class="citation">(Solove 2007)</span>, which is that people who
-oppose state surveillance only do so because they have something to
+<!-- Or do they have more to hide? --> Asking these questions seems
+relevant, not least because people who desire more privacy are often
+regarded with suspicion, having to justify why they want to be left
+alone. Consider the “nothing-to-hide” argument <span
+class="citation">(Solove 2007)</span>, which is that people who oppose
+state surveillance only do so because they have something to
 hide—because if you have nothing to hide, you would have nothing to
 fear. Is it true that people who desire more privacy are also more
 dishonest, greedy, or unfair? Or are people simply less extraverted,
@@ -397,36 +420,35 @@ argued that privacy has four more specific dimensions: informational,
 social, psychological, and physical privacy. <span
 class="citation">Pedersen (1979)</span> conducted an empirical factor
 analysis of 94 privacy-related items, finding six dimensions of privacy:
-<strong>reserve (“unwillingness to be with and talk with others,
-especially strangers,” p. 1293); isolation (“desire to be alone and away
-from others,” p. 1293), solitude (“being alone by oneself and free from
+reserve (“unwillingness to be with and talk with others, especially
+strangers,” p. 1293); isolation (“desire to be alone and away from
+others,” p. 1293), solitude (“being alone by oneself and free from
 observation by others,” p. 1293), intimacy with friends (“being alone
 with friends,” p. 1293), intimacy with family (“being alone with members
 of one’s own family,” p. 1293), and anonymity (“wanting to go unnoticed
 in a crowd and not wishing to be the center of group attention,”
-p. 1293).</strong>
+p. 1293).
 <!-- The need for privacy, then, captures "[a]n individual’s need to selectively control the access of others to the individual self with the aim of achieving a desired level of physical or psychological privacy [...]") [@trepteNeedPrivacy2017, p.1].  -->
 <!-- Finally, one can also distinguish between the objective privacy context (e.g., how many users can actually read a post on an SNS?), subjective privacy perceptions (e.g., how many users people _think_ can read a post on an SNS?), and resulting privacy behaviors (e.g., how much do people self-disclose?) [@dienlinPrivacyProcessModel2014]. -->
-<strong>Building on these understandings of privacy,</strong> in this
-study we employ a multifaceted model of need for privacy. We focus on
-<em>vertical</em> privacy with regard to people’s felt need for
-<strong>withdrawal from surveillance by a) the government and b) private
-companies;</strong> <em>horizontal</em> privacy in terms of the
-perceived need for (c) psychological, (d) social and/or (e) physical
-withdrawal from other people; and <em>general</em> privacy as captured
-by people’s felt need for (f) informational privacy, (g) anonymity, and
-(h) privacy in general. <strong>Although all of these dimensions were
-defined and established in prior research, combining these dimensions
-into one single comprehensive measure of privacy represents a novel
-approach.</strong></p>
-<p><strong>Acknowledging that various understandings of personality
-exist, we operationalize personality using the factors and facets of the
-HEXACO inventory of personality <span class="citation">(Lee and Ashton
-2018)</span>.</strong> HEXACO is a large and comprehensive
-operationalization of personality, and thus is less likely to miss
-potentially relevant aspects than other operationalizations. The HEXACO
-model stands in the tradition of the Big Five approach <span
-class="citation">(John and Srivastava 1999)</span>.
+Building on these understandings of privacy, in this study we employ a
+multifaceted model of need for privacy. We focus on <em>vertical</em>
+privacy with regard to people’s felt need for withdrawal from
+surveillance by a) the government and b) private companies;
+<em>horizontal</em> privacy in terms of the perceived need for (c)
+psychological, (d) social and/or (e) physical withdrawal from other
+people; and <em>general</em> privacy as captured by people’s felt need
+for (f) informational privacy, (g) anonymity, and (h) privacy in
+general. Although all of these dimensions were defined and established
+in prior research, combining these dimensions into one single
+comprehensive measure of privacy represents a novel approach.</p>
+<p>Acknowledging that various understandings of personality exist, we
+operationalize personality using the factors and facets of the HEXACO
+inventory of personality <span class="citation">(Lee and Ashton
+2018)</span>. HEXACO is a large and comprehensive operationalization of
+personality, and thus is less likely to miss potentially relevant
+aspects than other operationalizations. The HEXACO model stands in the
+tradition of the Big Five approach <span class="citation">(John and
+Srivastava 1999)</span>.
 <!-- and represents a broad understanding of personality--> It includes
 six factors (discussed below), which have four specific facets each. In
 addition, the HEXACO model includes a sixth factor not present in the
@@ -470,24 +492,22 @@ from others can diminish flourishing, nurture deviant behavior, or
 introduce power asymmetries <span class="citation">(Altman 1975)</span>.
 <!-- The fact that privacy fosters self-disclosure also presents a potential risk, because others might disagree, disapprove, or misuse the information [@petronioCommunicationPrivacyManagement2010].  -->
 And privacy can also help conceal wrongdoing or crime.</p>
-<!-- **To understand why people desire privacy, we can also adopt an evolutionary perspective.** -->
-<p><strong>Privacy also has strong evolutionary roots <span
-class="citation">(Acquisti, Brandimarte, and Hancock
-2022)</span>.</strong> <strong>Confronted with a threat—for example, the
-prototypical a tiger—people are inclined to withdraw.</strong>
-<strong>In the presences of opportunities—for example, the unexpected
-sharing of resources—people open up and approach one another.</strong>
-<strong>Transferred to privacy, we could imagine that if other people,
+<!-- To understand why people desire privacy, we can also adopt an evolutionary perspective. -->
+<p>Privacy also has strong evolutionary roots <span
+class="citation">(Acquisti, Brandimarte, and Hancock 2022)</span>.
+Confronted with a threat—for example, the prototypical a tiger—people
+are inclined to withdraw. In the presences of opportunities—for example,
+the unexpected sharing of resources—people open up and approach one
+another. Transferred to privacy, we could imagine that if other people,
 the government, or companies are considered a threat, people are more
-likely to withdraw and to desire more privacy.</strong>
-<strong>Conversely, if something is considered a resource, people might
-open up, approach others, and desire less privacy <span
-class="citation">(Altman 1976)</span>.</strong> <strong>Privacy also
-affords the opportunity to hide less socially desirable aspects of the
-self from others, which may bestow evolutionary advantages in terms of
-sexual selection or other social benefits and opportunities.</strong>
-<strong>Indeed, the need for privacy may have evolved precisely because
-it offers such advantages.</strong></p>
+likely to withdraw and to desire more privacy. Conversely, if something
+is considered a resource, people might open up, approach others, and
+desire less privacy <span class="citation">(Altman 1976)</span>. Privacy
+also affords the opportunity to hide less socially desirable aspects of
+the self from others, which may bestow evolutionary advantages in terms
+of sexual selection or other social benefits and opportunities. Indeed,
+the need for privacy may have evolved precisely because it offers such
+advantages.</p>
 <p>In what follows, we briefly present each HEXACO factor and how it
 might relate to need for privacy.</p>
 <div id="honesty-humility-altriusm" class="section level3">
@@ -524,20 +544,19 @@ arguably, also less honest and sincere) on their online social network
 profiles (<em>r</em> = -.48). People who needed more privacy were also
 less authentic in their personal relationships (<em>r</em> = -.28).
 <!-- Together, these studies suggest the possibility that lack of honesty may relate to an increased need for privacy, especially when it comes to government surveillance.    --></p>
-<p><strong>We do not mean to suggest that it is only dishonest people
-who feel a need for privacy.</strong> <strong>Everyone, including
-law-abiding citizens, have legitimate reasons to hide specific aspects
-of their lives <span class="citation">(Solove 2007)</span>.</strong>
-<strong>A recent study confirmed this notion, finding that also those
-people who explicitly endorsed the statement that they would have
-nothing to hide still engaged in several privacy protective behaviors
-<span class="citation">(Colnago, Cranor, and Acquisti
-2023)</span>.</strong> <strong>Our argument is rather that people lower
-on the honesty HEXACO factor may feel a greater need for
-privacy.</strong> Considering all the evidence, it seems more plausible
-to us that lack of honesty may indeed relate to an increased need for
-privacy, and perhaps especially when it comes to privacy from
-authorities such as government agencies.
+<p>We do not mean to suggest that it is only dishonest people who feel a
+need for privacy. Everyone, including law-abiding citizens, have
+legitimate reasons to hide specific aspects of their lives <span
+class="citation">(Solove 2007)</span>. A recent study confirmed this
+notion, finding that also those people who explicitly endorsed the
+statement that they would have nothing to hide still engaged in several
+privacy protective behaviors <span class="citation">(Colnago, Cranor,
+and Acquisti 2023)</span>. Our argument is rather that people lower on
+the honesty HEXACO factor may feel a greater need for privacy.
+Considering all the evidence, it seems more plausible to us that lack of
+honesty may indeed relate to an increased need for privacy, and perhaps
+especially when it comes to privacy from authorities such as government
+agencies.
 <!-- , as governments have the legitimate power to prosecute illegal activities.  -->
 <!-- Next, it seems plausible that lack of integrity may relate to an increased need for anonymity, as anonymity makes it more difficult for both government and social agents to identify and address potential wrongdoers.  -->
 <!-- Finally, lack of integrity may also relate to an increased need for privacy from other people, as most other people will disapprove of immoral or illegal activities, and could even reveal those activities to authorities. --></p>
@@ -589,28 +608,28 @@ class="citation">(e.g., Buss 2001)</span>. Given that privacy is a
 voluntary withdrawal from society <span class="citation">(Westin
 1967)</span>, people who are less sociable, more reserved, or more shy
 should have a greater need for privacy from others.</p>
-<p>This <strong>assumption</strong> is supported by several empirical
-studies. People who scored higher on the personality meta-factor
-plasticity, which is a composite of the two personality factors
-extraversion and openness, were found to desire less privacy <span
-class="citation">(Morton 2013)</span>. People who described themselves
-as introverted thinkers were more likely to prefer social isolation
-<span class="citation">(Pedersen 1982)</span>. Introverted people were
-more likely to feel their privacy was invaded when they were asked to
-answer very personal questions <span class="citation">(Stone
-1986)</span>. <span class="citation">Pedersen (1982)</span> reported
-that the need for privacy related to general self-esteem (but not social
-self-esteem), which in turn is a defining part of extraversion <span
+<p>This assumption is supported by several empirical studies. People who
+scored higher on the personality meta-factor plasticity, which is a
+composite of the two personality factors extraversion and openness, were
+found to desire less privacy <span class="citation">(Morton
+2013)</span>. People who described themselves as introverted thinkers
+were more likely to prefer social isolation <span
+class="citation">(Pedersen 1982)</span>. Introverted people were more
+likely to feel their privacy was invaded when they were asked to answer
+very personal questions <span class="citation">(Stone 1986)</span>.
+<span class="citation">Pedersen (1982)</span> reported that the need for
+privacy related to general self-esteem (but not social self-esteem),
+which in turn is a defining part of extraversion <span
 class="citation">(Lee and Ashton 2018)</span>. Specifically, he found
 respondents who held a lower general self-esteem were more reserved
 (<em>r</em> = .29), and needed more anonymity (<em>r</em> = .21) and
 solitude (<em>r</em> = .24). Finally, <span class="citation">Larson and
 Bell (1988)</span> and <span class="citation">Hosman (1991)</span>
 suggested that people who are more shy also need more privacy.</p>
-<p>As a result, we <strong>expect</strong> that people who are more
-extraverted also need less social privacy and less privacy in general.
-Regarding the other dimensions of privacy, such as privacy from
-governments or from companies, we do not expect specific effects.</p>
+<p>As a result, we expect that people who are more extraverted also need
+less social privacy and less privacy in general. Regarding the other
+dimensions of privacy, such as privacy from governments or from
+companies, we do not expect specific effects.</p>
 </div>
 <div id="agreeableness" class="section level3">
 <h3>Agreeableness</h3>
@@ -698,24 +717,22 @@ relationship status corresponds to their expressed need for privacy.</p>
 </div>
 <div id="overview-of-expectations" class="section level3">
 <h3>Overview of expectations</h3>
-<p><strong>The arguments discussed above lead to a number of
-expectations for our data which we delineate below, in order from most
-to least confidence in terms of identifying significant
-effects.</strong> <strong>First, we strongly assume that more
-extraverted people will desire less privacy, especially less social
-privacy.</strong> <strong>We also expect that people who are less honest
-will express greater need for privacy.</strong> <strong>We further
-assume that more conscientious people will desire more privacy and that
-more agreeable people may desire less privacy.</strong> <strong>Yet it
-is largely unclear how privacy needs relate to openness to experience
-and emotionality.</strong> <strong>In terms of the sociodemographic
-variables, we expect females likely need more informational and physical
-privacy, while males will likely report needing more psychological
-privacy.</strong> <strong>Older, more highly educated, and affluent
-people are also expected to need more privacy, and we anticipate that
-people who are ethnic minorities or are politically conservative will
-express greater need for privacy from the government than from other
-people.</strong></p>
+<p>The arguments discussed above lead to a number of expectations for
+our data which we delineate below, in order from most to least
+confidence in terms of identifying significant effects. First, we
+strongly assume that more extraverted people will desire less privacy,
+especially less social privacy. We also expect that people who are less
+honest will express greater need for privacy. We further assume that
+more conscientious people will desire more privacy and that more
+agreeable people may desire less privacy. Yet it is largely unclear how
+privacy needs relate to openness to experience and emotionality. In
+terms of the sociodemographic variables, we expect females likely need
+more informational and physical privacy, while males will likely report
+needing more psychological privacy. Older, more highly educated, and
+affluent people are also expected to need more privacy, and we
+anticipate that people who are ethnic minorities or are politically
+conservative will express greater need for privacy from the government
+than from other people.</p>
 </div>
 </div>
 <div id="method" class="section level1">
@@ -749,56 +766,50 @@ age, gender, and ethnicity. The study received IRB approval from the
 University of Vienna (#20210805_067). We calculated that participation
 will take approximately 15 minutes. We will pay participants $2.00 for
 participation, which equals an hourly wage of $8.00.</p>
-<p><strong>To determine sample size, we ran a priori power analyses
-using the R package <em>simsem</em> <span
-class="citation">(Pornprasertmanit et al. 2021)</span>.</strong> We
-based our power analysis on a smallest effect size of interest (SESOI;
-see also below). We only considered effects at least as great as
-<em>r</em> = .10 as sufficiently relevant to support an effect’s
-existence <span class="citation">(Cohen 1992)</span>.
+<p>To determine sample size, we ran a priori power analyses using the R
+package <em>simsem</em> <span class="citation">(Pornprasertmanit et al.
+2021)</span>. We based our power analysis on a smallest effect size of
+interest (SESOI; see also below). We only considered effects at least as
+great as <em>r</em> = .10 as sufficiently relevant to support an
+effect’s existence <span class="citation">(Cohen 1992)</span>.
 <!-- Note that the final analyses will be conducted using structural equation modeling (SEM), for which exact power analyses are difficult to obtain.  -->
 <!-- We therefore conducted preliminary power analyses using two-sided bivariate correlations.  -->
-<strong>To estimate power, we simulated data.” </strong>We set the
-correlation between two exemplary latent factors of personality and
-privacy variable to be <span class="math inline">\(\Psi\)</span> =
-.10.<strong> </strong>We, furthermore, set the latent factor loadings to
-be <span class="math inline">\(\lambda\)</span> = .85 (the
-SESOI)<strong>
+To estimate power, we simulated data.” We set the correlation between
+two exemplary latent factors of personality and privacy variable to be
+<span class="math inline">\(\Psi\)</span> = .10. We, furthermore, set
+the latent factor loadings to be <span
+class="math inline">\(\lambda\)</span> = .85 (the SESOI)
 <!-- Hence, the following power analyses are not exact but rather a rough guide to get a better idea of the required minimum sample size. -->
 <!-- Oftentimes, researchers opt for an alpha error of 5% and a power of 80% (i.e., beta error of 20%). -->
-</strong>Adopting an exploratory perspective, and not wanting to miss
-actually existing effects, we considered both alpha and beta errors to
-be equally relevant, resulting in balanced/identical alpha and beta
-errors <span class="citation">(Rouder et al. 2016)</span>.<strong>
-</strong>Because balanced alpha and beta errors of 5% are outside of our
-budget, we opted for balanced alpha and beta errors of 10%.<strong>
-</strong>A power analysis with an alpha and beta error of 10% and an
-effect size of <em>r</em> = .10 revealed that we required a sample size
-of <em>N</em> = 1501.<strong> </strong>To account for potential
-attrition (see below), we will oversample by five percent, leading to a
-final sample size of N = 1576.** We obtained sufficient funding to
-collect a sample of this size.
+Adopting an exploratory perspective, and not wanting to miss actually
+existing effects, we considered both alpha and beta errors to be equally
+relevant, resulting in balanced/identical alpha and beta errors <span
+class="citation">(Rouder et al. 2016)</span>. Because balanced alpha and
+beta errors of 5% are outside of our budget, we opted for balanced alpha
+and beta errors of 10%. A power analysis with an alpha and beta error of
+10% and an effect size of <em>r</em> = .10 revealed that we required a
+sample size of <em>N</em> = 1501. To account for potential attrition
+(see below), we will oversample by five percent, leading to a final
+sample size of N = 1576. We obtained sufficient funding to collect a
+sample of this size.
 <!-- Hence, we will use two inference criteria: Effects need to show a _p_-value of below _p_ = 10% and an effect size of at least _r_ = .10.  --></p>
 </div>
 <div id="exclusions-and-imputation" class="section level2">
 <h2>Exclusions and Imputation</h2>
-<p><strong>We will individually check answers for response patterns such
-as straight-lining or missing of inverted items.</strong> <strong>We
-will conservatively remove participants with clear response
-patterns.</strong> <strong>We will automatically exclude participants
-who miss the two attention checks we will implement.</strong>
-<strong>Participants who miss one attention check will be checked
-individually regarding response patterns.</strong> <strong>We will
-remove participants below the minimum participation age of 18
-years.</strong> <strong>We will remove respondents with unrealistically
-fast responses (three standard deviations below the median response
-time).</strong>
+<p>We will individually check answers for response patterns such as
+straight-lining or missing of inverted items. We will conservatively
+remove participants with clear response patterns. We will automatically
+exclude participants who miss the two attention checks we will
+implement. Participants who miss one attention check will be checked
+individually regarding response patterns. We will remove participants
+below the minimum participation age of 18 years. We will remove
+respondents with unrealistically fast responses (three standard
+deviations below the median response time).
 <!-- We will exclude respondents if they answer fewer than 50% of all questions.  --></p>
-<p><strong>Missing responses will be imputed using multiple imputation
-with predictive mean matching (ten datasets, five iterations, using
-variables that correlate at least with <em>r</em> = .10).</strong>
-<strong>The analyses will be run with all ten datasets, and the pooled
-results will be reported.</strong></p>
+<p>Missing responses will be imputed using multiple imputation with
+predictive mean matching (ten datasets, five iterations, using variables
+that correlate at least with <em>r</em> = .10). The analyses will be run
+with all ten datasets, and the pooled results will be reported.</p>
 </div>
 <div id="planned-analyses" class="section level2">
 <h2>Planned Analyses</h2>
@@ -825,18 +836,17 @@ personality factors. Afterward, we will predict privacy using the more
 specific facets. To get a first idea of the variables’ potential causal
 relations, we will also run a multiple structural regression model.
 <!-- We will also test which individual items best predict need for privacy. --></p>
-<p><strong>We will use two measures as inference criteria: statistical
-significance and effect size.</strong> <strong>Regarding statistical
-significance, we will use an alpha value of 10%.</strong>
-<strong>Regarding effect size, we will define a SESOI of <em>r</em> =
-.10, and thereby a null-region ranging from -.10 to .10.</strong>
-<strong>As proposed by <span class="citation">Dienes (2014)</span>, we
+<p>We will use two measures as inference criteria: statistical
+significance and effect size. Regarding statistical significance, we
+will use an alpha value of 10%. Regarding effect size, we will define a
+SESOI of <em>r</em> = .10, and thereby a null-region ranging from -.10
+to .10. As proposed by <span class="citation">Dienes (2014)</span>, we
 will consider effects to be meaningful if the confidence interval falls
-outside of the null region (e.g., .15 to .25 or -.15 to -.25).</strong>
-<strong>We will consider effects irrelevant if the confidence interval
-falls completely within the null region (e.g., .02 to .08).</strong>
-<strong>And we will suspend judgement if the confidence intervals
-partially include the null region (e.g., .05 to .15).</strong></p>
+outside of the null region (e.g., .15 to .25 or -.15 to -.25). We will
+consider effects irrelevant if the confidence interval falls completely
+within the null region (e.g., .02 to .08). And we will suspend judgement
+if the confidence intervals partially include the null region (e.g., .05
+to .15).</p>
 <p>Fully latent SEMs seldom work instantly, often requiring
 modifications to achieve satisfactory model fit. Although we explicate
 our analysis pipeline, there still remain several researcher degrees of
@@ -923,219 +933,204 @@ multiple regressions, the models did not converge, which is why several
 estimates could not be computed (see below).</p>
 <p>In Table @ref(tab:tab-ses), we report how sociodemographics predict
 need for privacy.</p>
-<caption>
-(#tab:tab-ses)
-</caption>
-<div custom-style="Table Caption">
-<em>Predicting the need for privacy dimensions using sociodemographic
-variables.</em>
-</div>
 <table>
+<caption>(#tab:tab-ses) Predicting the need for privacy dimensions using
+sociodemographic variables.</caption>
 <thead>
 <tr class="header">
 <th align="left">Sociodemographics</th>
+<th align="left">Psych.</th>
 <th align="left">Social</th>
 <th align="left">Phys.</th>
-<th align="left">Psych.</th>
-<th align="left">Comp.</th>
 <th align="left">Gov.</th>
-<th align="left">Anonym.</th>
+<th align="left">Comp.</th>
 <th align="left">Inform.</th>
+<th align="left">Anonym.</th>
 <th align="left">General</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">Age</td>
-<td align="left">-0.05</td>
-<td align="left">0.16</td>
+<td align="left">-0.07</td>
+<td align="left">0.04</td>
+<td align="left">0.06</td>
+<td align="left">-0.01</td>
 <td align="left">0.00</td>
-<td align="left">0.02</td>
-<td align="left">-0.29</td>
-<td align="left">0.41</td>
-<td align="left">-0.14</td>
-<td align="left">0.31</td>
+<td align="left">-0.18</td>
+<td align="left">-0.12</td>
+<td align="left">-0.13</td>
 </tr>
 <tr class="even">
 <td align="left">Gender</td>
-<td align="left">0.20</td>
-<td align="left">0.00</td>
+<td align="left">-0.15</td>
+<td align="left">-0.07</td>
 <td align="left">-0.03</td>
-<td align="left">-0.03</td>
-<td align="left">-0.12</td>
-<td align="left">-0.06</td>
-<td align="left">0.04</td>
-<td align="left">-0.51</td>
+<td align="left">-0.13</td>
+<td align="left">0.05</td>
+<td align="left">0.14</td>
+<td align="left">-0.09</td>
+<td align="left">0.05</td>
 </tr>
 <tr class="odd">
 <td align="left">Ethnicity</td>
-<td align="left">0.19</td>
+<td align="left">0.16</td>
 <td align="left">0.05</td>
-<td align="left">-0.01</td>
-<td align="left">-0.01</td>
-<td align="left">0.05</td>
-<td align="left">-0.07</td>
+<td align="left">0.11</td>
 <td align="left">0.01</td>
-<td align="left">-0.47</td>
+<td align="left">0.08</td>
+<td align="left">-0.07</td>
+<td align="left">0.09</td>
+<td align="left">0.01</td>
 </tr>
 <tr class="even">
 <td align="left">Relationship</td>
-<td align="left">0.09</td>
-<td align="left">-0.04</td>
-<td align="left">-0.01</td>
-<td align="left">0.00</td>
-<td align="left">-0.19</td>
-<td align="left">-0.07</td>
+<td align="left">-0.12</td>
+<td align="left">-0.05</td>
 <td align="left">-0.11</td>
-<td align="left">-0.19</td>
+<td align="left">-0.03</td>
+<td align="left">-0.09</td>
+<td align="left">-0.11</td>
+<td align="left">-0.11</td>
+<td align="left">-0.21</td>
 </tr>
 <tr class="odd">
 <td align="left">College</td>
+<td align="left">0.03</td>
+<td align="left">-0.06</td>
 <td align="left">-0.10</td>
-<td align="left">0.07</td>
-<td align="left">-0.03</td>
-<td align="left">-0.03</td>
-<td align="left">-0.07</td>
-<td align="left">0.10</td>
-<td align="left">0.07</td>
-<td align="left">-0.42</td>
+<td align="left">-0.08</td>
+<td align="left">-0.14</td>
+<td align="left">-0.13</td>
+<td align="left">-0.04</td>
+<td align="left">-0.15</td>
 </tr>
 <tr class="even">
 <td align="left">Income</td>
-<td align="left">-0.10</td>
-<td align="left">-0.07</td>
-<td align="left">0.04</td>
-<td align="left">-0.01</td>
-<td align="left">0.12</td>
-<td align="left">-0.13</td>
+<td align="left">-0.03</td>
+<td align="left">-0.04</td>
 <td align="left">-0.08</td>
-<td align="left">-0.22</td>
+<td align="left">-0.04</td>
+<td align="left">-0.13</td>
+<td align="left">-0.20</td>
+<td align="left">-0.08</td>
+<td align="left">-0.25</td>
 </tr>
 <tr class="odd">
 <td align="left">Conservatism</td>
-<td align="left">-0.26</td>
-<td align="left">0.06</td>
-<td align="left">0.12</td>
-<td align="left">0.01</td>
-<td align="left">-0.05</td>
-<td align="left">0.30</td>
-<td align="left">-0.03</td>
-<td align="left">0.48</td>
+<td align="left">0.11</td>
+<td align="left">0.14</td>
+<td align="left">0.13</td>
+<td align="left">0.19</td>
+<td align="left">0.05</td>
+<td align="left">-0.06</td>
+<td align="left">0.04</td>
+<td align="left">-0.13</td>
 </tr>
 </tbody>
 </table>
 <p>In Table @ref(tab:tab-dim), we report how personality factors predict
 need for privacy.</p>
-<caption>
-(#tab:tab-dim)
-</caption>
-<div custom-style="Table Caption">
-<em>Predicting the need for privacy dimensions using personality
-factors.</em>
-</div>
 <table>
+<caption>(#tab:tab-dim) Predicting the need for privacy dimensions using
+personality factors.</caption>
 <thead>
 <tr class="header">
 <th align="left">Personality factors</th>
+<th align="left">Psych.</th>
 <th align="left">Social</th>
 <th align="left">Phys.</th>
-<th align="left">Psych.</th>
-<th align="left">Comp.</th>
 <th align="left">Gov.</th>
-<th align="left">Anonym.</th>
+<th align="left">Comp.</th>
 <th align="left">Inform.</th>
+<th align="left">Anonym.</th>
 <th align="left">General</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">Honesty humility</td>
-<td align="left">-0.31</td>
-<td align="left">0.01</td>
-<td align="left">-0.01</td>
-<td align="left">0.24</td>
-<td align="left">0.26</td>
-<td align="left">-0.85</td>
+<td align="left">-0.04</td>
+<td align="left">-0.15</td>
 <td align="left">-0.03</td>
-<td align="left">-0.28</td>
+<td align="left">0.13</td>
+<td align="left">-0.02</td>
+<td align="left">-0.24</td>
+<td align="left">0.15</td>
+<td align="left">0.10</td>
 </tr>
 <tr class="even">
 <td align="left">Emotionality</td>
-<td align="left">0.94</td>
-<td align="left">-0.02</td>
-<td align="left">0.07</td>
-<td align="left">-0.47</td>
-<td align="left">-0.04</td>
-<td align="left">1.27</td>
-<td align="left">0.05</td>
-<td align="left">0.20</td>
+<td align="left">0.40</td>
+<td align="left">-0.05</td>
+<td align="left">0.24</td>
+<td align="left">-0.07</td>
+<td align="left">-0.12</td>
+<td align="left">-0.10</td>
+<td align="left">0.11</td>
+<td align="left">0.00</td>
 </tr>
 <tr class="odd">
 <td align="left">Extraversion</td>
-<td align="left">-0.99</td>
-<td align="left">-0.03</td>
-<td align="left">0.07</td>
-<td align="left">0.77</td>
-<td align="left">1.78</td>
-<td align="left">-0.10</td>
-<td align="left">0.71</td>
-<td align="left">-2.68</td>
+<td align="left">-0.67</td>
+<td align="left">-0.59</td>
+<td align="left">-1.00</td>
+<td align="left">-0.01</td>
+<td align="left">-0.07</td>
+<td align="left">-0.26</td>
+<td align="left">-0.27</td>
+<td align="left">-0.12</td>
 </tr>
 <tr class="even">
 <td align="left">Agreeableness</td>
-<td align="left">-0.64</td>
-<td align="left">0.04</td>
-<td align="left">-0.12</td>
-<td align="left">-0.52</td>
-<td align="left">0.84</td>
-<td align="left">0.95</td>
-<td align="left">0.08</td>
-<td align="left">2.09</td>
+<td align="left">-0.45</td>
+<td align="left">-0.25</td>
+<td align="left">-0.47</td>
+<td align="left">0.01</td>
+<td align="left">0.00</td>
+<td align="left">-0.17</td>
+<td align="left">-0.09</td>
+<td align="left">0.02</td>
 </tr>
 <tr class="odd">
 <td align="left">Conscientiousness</td>
-<td align="left">0.25</td>
-<td align="left">-0.01</td>
-<td align="left">0.02</td>
+<td align="left">-0.16</td>
+<td align="left">-0.25</td>
+<td align="left">-0.40</td>
+<td align="left">0.13</td>
 <td align="left">0.01</td>
-<td align="left">-0.82</td>
-<td align="left">-0.04</td>
+<td align="left">-0.24</td>
 <td align="left">0.15</td>
-<td align="left">-0.13</td>
+<td align="left">0.16</td>
 </tr>
 <tr class="even">
 <td align="left">Openness</td>
-<td align="left">0.07</td>
-<td align="left">0.01</td>
-<td align="left">-0.07</td>
-<td align="left">-0.56</td>
-<td align="left">0.09</td>
-<td align="left">0.99</td>
-<td align="left">0.11</td>
-<td align="left">-0.21</td>
+<td align="left">-0.14</td>
+<td align="left">-0.17</td>
+<td align="left">-0.16</td>
+<td align="left">0.14</td>
+<td align="left">0.06</td>
+<td align="left">0.05</td>
+<td align="left">0.08</td>
+<td align="left">0.15</td>
 </tr>
 </tbody>
 </table>
 <p>In Table @ref(tab:tab-fac), we report how personality facets predict
 need for privacy.</p>
-<caption>
-(#tab:tab-fac)
-</caption>
-<div custom-style="Table Caption">
-<em>Predicting the need for privacy dimensions using personality
-facets.</em>
-</div>
 <table>
+<caption>(#tab:tab-fac) Predicting the need for privacy dimensions using
+personality facets.</caption>
 <thead>
 <tr class="header">
 <th align="left">Personality facets</th>
+<th align="left">Psych.</th>
 <th align="left">Social</th>
 <th align="left">Phys.</th>
-<th align="left">Psych.</th>
-<th align="left">Comp.</th>
 <th align="left">Gov.</th>
-<th align="left">Anonym.</th>
+<th align="left">Comp.</th>
 <th align="left">Inform.</th>
+<th align="left">Anonym.</th>
 <th align="left">General</th>
 </tr>
 </thead>
@@ -1153,47 +1148,47 @@ facets.</em>
 </tr>
 <tr class="even">
 <td align="left">   Sincerity</td>
-<td align="left">-0.63</td>
-<td align="left">0.01</td>
-<td align="left">-0.87</td>
-<td align="left">0.38</td>
-<td align="left">-0.51</td>
-<td align="left">0.22</td>
-<td align="left">-0.04</td>
-<td align="left">0.44</td>
+<td align="left">-0.07</td>
+<td align="left">-0.05</td>
+<td align="left">-0.02</td>
+<td align="left">0.18</td>
+<td align="left">0.07</td>
+<td align="left">-0.09</td>
+<td align="left">0.13</td>
+<td align="left">0.18</td>
 </tr>
 <tr class="odd">
 <td align="left">   Fairness</td>
-<td align="left">0.05</td>
-<td align="left">0.01</td>
-<td align="left">0.02</td>
+<td align="left">-0.20</td>
+<td align="left">-0.23</td>
 <td align="left">-0.31</td>
-<td align="left">0.50</td>
-<td align="left">1.61</td>
-<td align="left">0.16</td>
-<td align="left">-1.67</td>
+<td align="left">0.12</td>
+<td align="left">-0.04</td>
+<td align="left">-0.22</td>
+<td align="left">0.09</td>
+<td align="left">0.14</td>
 </tr>
 <tr class="even">
 <td align="left">   Greed avoidance</td>
-<td align="left">0.17</td>
-<td align="left">-0.06</td>
-<td align="left">-3.02</td>
-<td align="left">-0.47</td>
-<td align="left">-1.51</td>
-<td align="left">1.03</td>
-<td align="left">2.07</td>
-<td align="left">10.90</td>
+<td align="left">0.04</td>
+<td align="left">-0.05</td>
+<td align="left">0.09</td>
+<td align="left">0.04</td>
+<td align="left">-0.03</td>
+<td align="left">-0.11</td>
+<td align="left">0.02</td>
+<td align="left">-0.03</td>
 </tr>
 <tr class="odd">
 <td align="left">   Modesty</td>
-<td align="left">0.43</td>
-<td align="left">-0.01</td>
-<td align="left">-1.11</td>
-<td align="left">-0.61</td>
-<td align="left">0.57</td>
-<td align="left">1.91</td>
-<td align="left">0.17</td>
-<td align="left">2.28</td>
+<td align="left">0.13</td>
+<td align="left">-0.06</td>
+<td align="left">0.16</td>
+<td align="left">-0.02</td>
+<td align="left">-0.06</td>
+<td align="left">-0.22</td>
+<td align="left">0.14</td>
+<td align="left">-0.05</td>
 </tr>
 <tr class="even">
 <td align="left">Emotionality</td>
@@ -1208,47 +1203,47 @@ facets.</em>
 </tr>
 <tr class="odd">
 <td align="left">   Fearfulness</td>
-<td align="left">0.68</td>
-<td align="left">0.00</td>
-<td align="left">0.62</td>
-<td align="left">0.60</td>
-<td align="left">0.62</td>
-<td align="left">1.46</td>
-<td align="left">0.58</td>
-<td align="left">1.23</td>
+<td align="left">0.36</td>
+<td align="left">0.04</td>
+<td align="left">0.20</td>
+<td align="left">-0.04</td>
+<td align="left">-0.10</td>
+<td align="left">-0.05</td>
+<td align="left">0.16</td>
+<td align="left">0.09</td>
 </tr>
 <tr class="even">
 <td align="left">   Anxiety</td>
-<td align="left">-0.64</td>
-<td align="left">0.03</td>
-<td align="left">-0.21</td>
-<td align="left">-0.05</td>
+<td align="left">0.47</td>
+<td align="left">0.12</td>
 <td align="left">0.42</td>
-<td align="left">-0.83</td>
-<td align="left">-0.05</td>
-<td align="left">-0.32</td>
+<td align="left">-0.07</td>
+<td align="left">-0.06</td>
+<td align="left">-0.07</td>
+<td align="left">0.12</td>
+<td align="left">0.00</td>
 </tr>
 <tr class="odd">
 <td align="left">   Dependence</td>
-<td align="left">-0.39</td>
-<td align="left">0.00</td>
-<td align="left">0.23</td>
+<td align="left">-0.13</td>
+<td align="left">-0.63</td>
+<td align="left">-0.37</td>
+<td align="left">-0.10</td>
+<td align="left">-0.16</td>
 <td align="left">-0.15</td>
-<td align="left">-0.02</td>
-<td align="left">-0.31</td>
-<td align="left">0.26</td>
-<td align="left">1.12</td>
+<td align="left">-0.19</td>
+<td align="left">-0.19</td>
 </tr>
 <tr class="even">
 <td align="left">   Sentimentality</td>
-<td align="left">-0.88</td>
-<td align="left">0.02</td>
-<td align="left">-0.70</td>
-<td align="left">0.44</td>
-<td align="left">0.23</td>
-<td align="left">-0.08</td>
-<td align="left">0.30</td>
-<td align="left">1.65</td>
+<td align="left">-0.03</td>
+<td align="left">-0.35</td>
+<td align="left">-0.24</td>
+<td align="left">0.04</td>
+<td align="left">-0.09</td>
+<td align="left">-0.20</td>
+<td align="left">0.06</td>
+<td align="left">0.04</td>
 </tr>
 <tr class="odd">
 <td align="left">Extraversion</td>
@@ -1263,47 +1258,47 @@ facets.</em>
 </tr>
 <tr class="even">
 <td align="left">   Social self-esteem</td>
-<td align="left">-0.44</td>
-<td align="left">0.02</td>
-<td align="left">0.16</td>
-<td align="left">0.28</td>
-<td align="left">-0.32</td>
-<td align="left">0.85</td>
-<td align="left">-0.49</td>
-<td align="left">-2.70</td>
+<td align="left">-0.48</td>
+<td align="left">-0.46</td>
+<td align="left">-0.74</td>
+<td align="left">-0.02</td>
+<td align="left">-0.07</td>
+<td align="left">-0.30</td>
+<td align="left">-0.13</td>
+<td align="left">-0.03</td>
 </tr>
 <tr class="odd">
 <td align="left">   Social boldness</td>
-<td align="left">-0.91</td>
-<td align="left">-0.03</td>
-<td align="left">-0.21</td>
-<td align="left">-0.25</td>
-<td align="left">0.51</td>
-<td align="left">3.06</td>
-<td align="left">0.36</td>
-<td align="left">-0.07</td>
+<td align="left">-0.56</td>
+<td align="left">-0.49</td>
+<td align="left">-0.82</td>
+<td align="left">0.03</td>
+<td align="left">0.00</td>
+<td align="left">-0.13</td>
+<td align="left">-0.23</td>
+<td align="left">-0.09</td>
 </tr>
 <tr class="even">
 <td align="left">   Sociability</td>
-<td align="left">-0.49</td>
-<td align="left">-0.01</td>
-<td align="left">0.32</td>
-<td align="left">0.36</td>
-<td align="left">0.11</td>
-<td align="left">2.36</td>
-<td align="left">0.02</td>
-<td align="left">-0.07</td>
+<td align="left">-0.66</td>
+<td align="left">-0.51</td>
+<td align="left">-0.95</td>
+<td align="left">0.00</td>
+<td align="left">-0.05</td>
+<td align="left">-0.13</td>
+<td align="left">-0.28</td>
+<td align="left">-0.16</td>
 </tr>
 <tr class="odd">
 <td align="left">   Liveliness</td>
-<td align="left">2.00</td>
-<td align="left">0.00</td>
-<td align="left">-2.64</td>
-<td align="left">-2.49</td>
-<td align="left">-1.39</td>
-<td align="left">9.42</td>
-<td align="left">-4.20</td>
-<td align="left">-6.44</td>
+<td align="left">-0.50</td>
+<td align="left">-0.43</td>
+<td align="left">-0.75</td>
+<td align="left">-0.04</td>
+<td align="left">-0.07</td>
+<td align="left">-0.27</td>
+<td align="left">-0.18</td>
+<td align="left">-0.07</td>
 </tr>
 <tr class="even">
 <td align="left">Agreableness</td>
@@ -1318,47 +1313,47 @@ facets.</em>
 </tr>
 <tr class="odd">
 <td align="left">   Forgiveness</td>
-<td align="left">-0.45</td>
-<td align="left">0.03</td>
-<td align="left">0.26</td>
-<td align="left">-0.50</td>
-<td align="left">-0.17</td>
-<td align="left">0.80</td>
-<td align="left">-0.23</td>
-<td align="left">-0.51</td>
+<td align="left">-0.41</td>
+<td align="left">-0.22</td>
+<td align="left">-0.41</td>
+<td align="left">0.04</td>
+<td align="left">0.02</td>
+<td align="left">-0.08</td>
+<td align="left">-0.10</td>
+<td align="left">-0.02</td>
 </tr>
 <tr class="even">
 <td align="left">   Gentleness</td>
-<td align="left">0.00</td>
-<td align="left">0.00</td>
-<td align="left">0.00</td>
-<td align="left">0.00</td>
-<td align="left">0.00</td>
-<td align="left">0.04</td>
-<td align="left">0.00</td>
-<td align="left">-0.03</td>
+<td align="left">-0.29</td>
+<td align="left">-0.15</td>
+<td align="left">-0.32</td>
+<td align="left">0.03</td>
+<td align="left">0.05</td>
+<td align="left">-0.08</td>
+<td align="left">-0.02</td>
+<td align="left">0.05</td>
 </tr>
 <tr class="odd">
 <td align="left">   Flexibility</td>
-<td align="left">-0.25</td>
-<td align="left">0.01</td>
-<td align="left">0.26</td>
-<td align="left">-0.30</td>
-<td align="left">0.54</td>
-<td align="left">0.09</td>
-<td align="left">0.38</td>
-<td align="left">1.40</td>
+<td align="left">-0.44</td>
+<td align="left">-0.33</td>
+<td align="left">-0.47</td>
+<td align="left">-0.06</td>
+<td align="left">-0.11</td>
+<td align="left">-0.28</td>
+<td align="left">-0.13</td>
+<td align="left">-0.01</td>
 </tr>
 <tr class="even">
 <td align="left">   Patience</td>
-<td align="left">0.33</td>
-<td align="left">-0.01</td>
-<td align="left">0.11</td>
-<td align="left">-0.34</td>
-<td align="left">-0.63</td>
-<td align="left">-3.00</td>
-<td align="left">0.16</td>
-<td align="left">-0.55</td>
+<td align="left">-0.30</td>
+<td align="left">-0.11</td>
+<td align="left">-0.32</td>
+<td align="left">0.01</td>
+<td align="left">0.02</td>
+<td align="left">-0.12</td>
+<td align="left">-0.03</td>
+<td align="left">0.03</td>
 </tr>
 <tr class="odd">
 <td align="left">Conscientiousness</td>
@@ -1373,47 +1368,47 @@ facets.</em>
 </tr>
 <tr class="even">
 <td align="left">   Organization</td>
-<td align="left">-2.04</td>
-<td align="left">0.02</td>
-<td align="left">0.61</td>
-<td align="left">-0.51</td>
-<td align="left">2.55</td>
-<td align="left">1.02</td>
-<td align="left">1.42</td>
-<td align="left">3.58</td>
+<td align="left">-0.12</td>
+<td align="left">-0.18</td>
+<td align="left">-0.32</td>
+<td align="left">0.08</td>
+<td align="left">-0.02</td>
+<td align="left">-0.19</td>
+<td align="left">0.09</td>
+<td align="left">0.12</td>
 </tr>
 <tr class="odd">
 <td align="left">   Diligence</td>
-<td align="left">-0.27</td>
-<td align="left">-0.01</td>
-<td align="left">0.08</td>
-<td align="left">-0.20</td>
-<td align="left">-0.07</td>
-<td align="left">1.10</td>
-<td align="left">0.28</td>
-<td align="left">0.79</td>
+<td align="left">-0.23</td>
+<td align="left">-0.31</td>
+<td align="left">-0.47</td>
+<td align="left">0.13</td>
+<td align="left">0.01</td>
+<td align="left">-0.24</td>
+<td align="left">0.07</td>
+<td align="left">0.11</td>
 </tr>
 <tr class="even">
 <td align="left">   Perfectionism</td>
-<td align="left">-0.41</td>
-<td align="left">0.02</td>
-<td align="left">0.69</td>
-<td align="left">-1.26</td>
-<td align="left">0.53</td>
-<td align="left">0.89</td>
-<td align="left">-0.39</td>
-<td align="left">1.79</td>
+<td align="left">0.08</td>
+<td align="left">-0.09</td>
+<td align="left">-0.12</td>
+<td align="left">0.19</td>
+<td align="left">0.10</td>
+<td align="left">-0.10</td>
+<td align="left">0.30</td>
+<td align="left">0.30</td>
 </tr>
 <tr class="odd">
 <td align="left">   Prudence</td>
-<td align="left">0.54</td>
-<td align="left">-0.02</td>
-<td align="left">-0.50</td>
-<td align="left">-0.04</td>
-<td align="left">-1.17</td>
-<td align="left">-3.01</td>
-<td align="left">-0.69</td>
-<td align="left">1.36</td>
+<td align="left">-0.08</td>
+<td align="left">-0.14</td>
+<td align="left">-0.24</td>
+<td align="left">0.11</td>
+<td align="left">0.00</td>
+<td align="left">-0.23</td>
+<td align="left">0.18</td>
+<td align="left">0.13</td>
 </tr>
 <tr class="even">
 <td align="left">Openness to experiences</td>
@@ -1428,58 +1423,58 @@ facets.</em>
 </tr>
 <tr class="odd">
 <td align="left">   Aesthetic appreciation</td>
-<td align="left">-0.30</td>
-<td align="left">0.00</td>
-<td align="left">-0.94</td>
-<td align="left">-0.07</td>
-<td align="left">-0.44</td>
-<td align="left">-2.01</td>
-<td align="left">-0.35</td>
-<td align="left">0.15</td>
+<td align="left">-0.11</td>
+<td align="left">-0.13</td>
+<td align="left">-0.12</td>
+<td align="left">0.12</td>
+<td align="left">0.03</td>
+<td align="left">-0.01</td>
+<td align="left">0.08</td>
+<td align="left">0.14</td>
 </tr>
 <tr class="even">
 <td align="left">   Inquisitiveness</td>
-<td align="left">-1.49</td>
-<td align="left">-0.03</td>
-<td align="left">-0.14</td>
-<td align="left">0.31</td>
-<td align="left">0.12</td>
-<td align="left">-0.56</td>
-<td align="left">-0.67</td>
-<td align="left">1.11</td>
+<td align="left">-0.19</td>
+<td align="left">-0.09</td>
+<td align="left">-0.15</td>
+<td align="left">0.15</td>
+<td align="left">0.07</td>
+<td align="left">0.10</td>
+<td align="left">0.04</td>
+<td align="left">0.11</td>
 </tr>
 <tr class="odd">
 <td align="left">   Creativeness</td>
-<td align="left">0.19</td>
-<td align="left">0.00</td>
-<td align="left">0.01</td>
-<td align="left">-0.65</td>
 <td align="left">-0.11</td>
-<td align="left">2.46</td>
-<td align="left">0.07</td>
-<td align="left">-0.12</td>
+<td align="left">-0.18</td>
+<td align="left">-0.18</td>
+<td align="left">0.12</td>
+<td align="left">0.09</td>
+<td align="left">0.06</td>
+<td align="left">0.08</td>
+<td align="left">0.15</td>
 </tr>
 <tr class="even">
 <td align="left">   Unconventionality</td>
-<td align="left">-0.82</td>
+<td align="left">-0.05</td>
+<td align="left">-0.16</td>
 <td align="left">-0.02</td>
-<td align="left">0.54</td>
-<td align="left">-0.08</td>
-<td align="left">0.12</td>
-<td align="left">1.51</td>
+<td align="left">0.07</td>
+<td align="left">0.07</td>
+<td align="left">0.08</td>
 <td align="left">0.05</td>
-<td align="left">0.97</td>
+<td align="left">0.09</td>
 </tr>
 <tr class="odd">
 <td align="left">Altruism</td>
-<td align="left">0.56</td>
-<td align="left">0.00</td>
-<td align="left">-0.28</td>
-<td align="left">0.18</td>
-<td align="left">-0.33</td>
-<td align="left">-0.36</td>
-<td align="left">0.36</td>
-<td align="left">0.70</td>
+<td align="left">-0.17</td>
+<td align="left">-0.42</td>
+<td align="left">-0.43</td>
+<td align="left">0.03</td>
+<td align="left">-0.13</td>
+<td align="left">-0.37</td>
+<td align="left">0.09</td>
+<td align="left">0.04</td>
 </tr>
 </tbody>
 </table>
@@ -1512,7 +1507,7 @@ href="https://doi.org/10.1126/science.abj0826">https://doi.org/10.1126/science.a
 </div>
 <div id="ref-altmanEnvironmentSocialBehavior1975" class="csl-entry">
 Altman, Irwin. 1975. <em>The Environment and Social Behavior</em>.
-<span>Monterey, CA</span>: <span>Brooks Cole</span>.
+Monterey, CA: Brooks Cole.
 </div>
 <div id="ref-altmanPrivacyConceptualAnalysis1976" class="csl-entry">
 ———. 1976. <span>“Privacy: <span>A</span> Conceptual Analysis.”</span>
@@ -1543,7 +1538,7 @@ Burgoon, J. K. 1982. <span>“Privacy and Communication.”</span>
 </div>
 <div id="ref-bussPsychologicalDimensionsSelf2001" class="csl-entry">
 Buss, Arnold H. 2001. <em>Psychological Dimensions of the Self</em>.
-<span>Thousand Oaks; Calif</span>: <span>Sage Publications</span>.
+Thousand Oaks; Calif: Sage Publications.
 </div>
 <div id="ref-cohenPowerPrimer1992" class="csl-entry">
 Cohen, Jacob. 1992. <span>“A Power Primer.”</span> <em>Psychological
@@ -1590,8 +1585,7 @@ href="https://doi.org/10.3389/fpsyg.2014.00781">https://doi.org/10.3389/fpsyg.20
 <div id="ref-dienlinPrivacyProcessModel2014" class="csl-entry">
 Dienlin, Tobias. 2014. <span>“The Privacy Process Model.”</span> In
 <em>Medien Und <span>Privatheit</span></em>, edited by S. Garnett, S.
-Halft, M. Herz, and J. M. Mönig, 105–22. <span>Passau, Germany</span>:
-<span>Karl Stutz</span>.
+Halft, M. Herz, and J. M. Mönig, 105–22. Passau, Germany: Karl Stutz.
 </div>
 <div id="ref-dienlinPrivacyDeadLong2023" class="csl-entry">
 Dienlin, Tobias, and Johannes Breuer. 2023. <span>“Privacy Is Dead, Long
@@ -1602,9 +1596,10 @@ href="https://doi.org/10.1027/1864-1105/a000357">https://doi.org/10.1027/1864-11
 </div>
 <div id="ref-dienlinExtendedPrivacyCalculus2016" class="csl-entry">
 Dienlin, Tobias, and Miriam J. Metzger. 2016. <span>“An Extended Privacy
-Calculus Model for <span>SNSs</span> Self-Disclosure and Self-Withdrawal
-in a Representative <span>U</span>.<span>S</span>. Sample.”</span>
-<em>Journal of Computer-Mediated Communication</em> 21 (5): 368–83. <a
+Calculus Model for <span>SNSs</span>—<span>Analyzing</span>
+Self-Disclosure and Self-Withdrawal in a Representative
+<span>U</span>.<span>S</span>. Sample.”</span> <em>Journal of
+Computer-Mediated Communication</em> 21 (5): 368–83. <a
 href="https://doi.org/10.1111/jcc4.12163">https://doi.org/10.1111/jcc4.12163</a>.
 </div>
 <div id="ref-dienlinWhoNeedsPrivacy2019" class="csl-entry">
@@ -1634,8 +1629,7 @@ John, O. P., and S. Srivastava. 1999. <span>“The Big Five Trait
 Taxonomy: <span>History</span>, Measurement, and Theoretical
 Perspectives.”</span> In <em>Handbook of Personality:
 <span>Theory</span> and Research</em>, edited by Lawrence A. Pervin and
-Oliver P. John, 2. ed., 102–38. <span>New York, NY</span>:
-<span>Guilford Press</span>.
+Oliver P. John, 2. ed., 102–38. New York, NY: Guilford Press.
 </div>
 <div id="ref-junglasPersonalityTraitsConcern2008" class="csl-entry">
 Junglas, Iris A., Norman A. Johnson, and Christiane Spitzmüller. 2008.
@@ -1646,8 +1640,8 @@ href="https://doi.org/10.1057/ejis.2008.29">https://doi.org/10.1057/ejis.2008.29
 </div>
 <div id="ref-klinePrinciplesPracticeStructural2016" class="csl-entry">
 Kline, Rex B. 2016. <em>Principles and Practice of Structural Equation
-Modeling</em>. 4th ed. Methodology in the Social Sciences. <span>New
-York, NY</span>: <span>The Guilford Press</span>.
+Modeling</em>. 4th ed. Methodology in the Social Sciences. New York, NY:
+The Guilford Press.
 </div>
 <div id="ref-kochRacialMinoritiesTrust2019" class="csl-entry">
 Koch, Jeffrey W. 2019. <span>“Racial Minorities’ Trust in Government and
@@ -1676,15 +1670,14 @@ href="https://doi.org/10.1207/s15327906mbr0903_1">https://doi.org/10.1207/s15327
 <div id="ref-masurSituationalPrivacySelfdisclosure2018"
 class="csl-entry">
 Masur, Philipp K. 2018. <em>Situational Privacy and Self-Disclosure:
-<span>Communication</span> Processes in Online Environments</em>.
-<span>Cham, Switzerland</span>: <span>Springer</span>.
+<span>Communication</span> Processes in Online Environments</em>. Cham,
+Switzerland: Springer.
 </div>
 <div id="ref-masurPrivatheitOnlineKommunikation2018" class="csl-entry">
 Masur, Philipp K., Doris Teutsch, and Tobias Dienlin. 2018.
 <span>“Privatheit in Der <span>Online-Kommunikation</span>.”</span> In
 <em>Handbuch <span>Online-Kommunikation</span></em>, edited by Wolfgang
-Schweiger and Klaus Beck, 2nd ed. <span>Wiesbaden, Germany</span>:
-<span>Springer VS</span>. <a
+Schweiger and Klaus Beck, 2nd ed. Wiesbaden, Germany: Springer VS. <a
 href="https://doi.org/10.1007/978-3-658-18017-1_16-1">https://doi.org/10.1007/978-3-658-18017-1_16-1</a>.
 </div>
 <div id="ref-mortonMeasuringInherentPrivacy2013" class="csl-entry">
@@ -1783,13 +1776,13 @@ Use. <span>Research</span> Report of a Three-Year Panel Study.”</span>
 Trepte, Sabine, and Philipp K. Masur. 2017. <span>“Need for
 Privacy.”</span> In <em>Encyclopedia of <span>Personality</span> and
 <span>Individual Differences</span></em>, edited by Virgil Zeigler-Hill
-and Todd K. Shackelford, 1–4. <span>Cham</span>: <span>Springer
-International Publishing</span>. <a
+and Todd K. Shackelford, 1–4. Cham: Springer International Publishing.
+<a
 href="https://doi.org/10.1007/978-3-319-28099-8_540-1">https://doi.org/10.1007/978-3-319-28099-8_540-1</a>.
 </div>
 <div id="ref-westinPrivacyFreedom1967" class="csl-entry">
-Westin, A. F. 1967. <em>Privacy and Freedom</em>. <span>New York,
-NY</span>: <span>Atheneum</span>.
+Westin, A. F. 1967. <em>Privacy and Freedom</em>. New York, NY:
+Atheneum.
 </div>
 </div>
 <!-- \endgroup -->

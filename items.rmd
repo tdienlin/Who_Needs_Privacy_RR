@@ -1,21 +1,44 @@
 ---
 title: "Items"
+subtitle: "Data-set: Need for Privacy and Personality"
+author: "Tobias Dienlin & Miriam Metzger"
+date: "2024-04-05"
+# output:
+#   html_document:
+#     toc: TRUE
+#     toc_float:
+#       collapsed: FALSE
+#       toc_depth: 3
 output:
-  html_document:
+  pdf_document:
     toc: TRUE
-    toc_float:
-      collapsed: FALSE
-      toc_depth: 3
-# output: pdf_document
+    toc_depth: 1
 bibliography: 
   - "bibliography/references.bib"
 ---
-  
+
+# Suggested citation
+
+Dienlin, Tobias; Metzger, Miriam, 2024, "Need for Privacy and Personality", https://doi.org/10.11587/IC66GC, AUSSDA.
+
+This document is licenced under a [Creative Commons Attribution 4.0 International Licence](https://creativecommons.org/licenses/by/4.0/).
+
+```{r, out.width = "200px", fig.align='center', echo=F}
+knitr::include_graphics("../Data/license.png")
+```
+
+\newpage
+
+# Overview
+
+ <!-- - For a pdf of all items, click here. -->
+ <!-- - For the actual questionnaire, click here. -->
+
 All items were answered on a 7-point scale with the following options:
   
 "To what extent do you agree or disagree with the following statements?"
 
-(-3) Strongly Disagree, (-2) Disagree, (-1) Slightly Disagree, (0) Neutral, (1) Slightly Agree (2) Agree, (3) Strongly Agree
+(-3) Strongly Disagree, (-2) Disagree, (-1) Somewhat Disagree, (0) Neutral, (1) Somewhat Agree (2) Agree, (3) Strongly Agree
 
 # Personality
 
@@ -328,7 +351,7 @@ About how much money do you have at your disposal each month?
 
  1. < \$1.000
  2. \$1.000 - \$4.000
- 3. > \$4.000
+ 3. \> \$4.000
  
 ## Politics
 

@@ -9,11 +9,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Tobias Dienlin &amp; Miriam Metzger" />
 
+<meta name="date" content="2024-04-05" />
 
 <title>Items</title>
 
-<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -29,14 +31,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -67,6 +66,7 @@ if (window.hljs) {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -246,75 +246,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-.tocify-subheader {
-  display: inline;
-}
-.tocify-subheader .tocify-item {
-  font-size: 0.95em;
-}
-
-</style>
-
-
 
 </head>
 
@@ -322,16 +253,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -349,24 +270,40 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="proposal.html">Proposal</a>
+  <a href="manuscript.html">Manuscript</a>
 </li>
 <li>
-  <a href="analyses.html">Analyses</a>
+  <a href="data_prep.html">Data Prep</a>
 </li>
 <li>
-  <a href="items.html">Items</a>
+  <a href="results.html">Results</a>
 </li>
 <li>
-  <a href="items_readability.html">Readability Analyses</a>
+  <a href="power_analyses.html">Power Analyses</a>
+</li>
+<li>
+  <a href="analysis_pipeline.html">Analysis Pipeline</a>
+</li>
+<li>
+  <a href="items.html">Item list</a>
+</li>
+<li>
+  <a href="items_readability.html">Items Readability</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="proposal.pdf">
-    <span class="fa fa-file"></span>
+    <span class="fa fa-newspaper"></span>
      
-    PDF
+    Stage 1 Proposal
+  </a>
+</li>
+<li>
+  <a href="manuscript.pdf">
+    <span class="fa fa-newspaper"></span>
+     
+    Stage 2 Manuscript
   </a>
 </li>
 <li>
@@ -374,6 +311,13 @@ div.tocify {
     <span class="fa fa-lg fa-github"></span>
      
     Source Code
+  </a>
+</li>
+<li>
+  <a href="https://data.aussda.at/citation?persistentId=doi:10.11587/IC66GC">
+    <span class="fa fa-database"></span>
+     
+    Data
   </a>
 </li>
       </ul>
@@ -386,16 +330,35 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Items</h1>
+<h3 class="subtitle">Data-set: Need for Privacy and Personality</h3>
+<h4 class="author">Tobias Dienlin &amp; Miriam Metzger</h4>
+<h4 class="date">2024-04-05</h4>
 
 </div>
 
 
+<div id="suggested-citation" class="section level1">
+<h1>Suggested citation</h1>
+<p>Dienlin, Tobias; Metzger, Miriam, 2024, “Need for Privacy and
+Personality”, <a href="https://doi.org/10.11587/IC66GC"
+class="uri">https://doi.org/10.11587/IC66GC</a>, AUSSDA.</p>
+<p>This document is licenced under a <a
+href="https://creativecommons.org/licenses/by/4.0/">Creative Commons
+Attribution 4.0 International Licence</a>.</p>
+<p><img src="../Data/license.png" width="200px" style="display: block; margin: auto;" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+<div id="overview" class="section level1">
+<h1>Overview</h1>
+<p><!-- - For a pdf of all items, click here. -->
+<!-- - For the actual questionnaire, click here. --></p>
 <p>All items were answered on a 7-point scale with the following
 options:</p>
 <p>“To what extent do you agree or disagree with the following
 statements?”</p>
-<p>(-3) Strongly Disagree, (-2) Disagree, (-1) Slightly Disagree, (0)
-Neutral, (1) Slightly Agree (2) Agree, (3) Strongly Agree</p>
+<p>(-3) Strongly Disagree, (-2) Disagree, (-1) Somewhat Disagree, (0)
+Neutral, (1) Somewhat Agree (2) Agree, (3) Strongly Agree</p>
+</div>
 <div id="personality" class="section level1">
 <h1>Personality</h1>
 <p><span class="citation">Lee and Ashton (2018)</span></p>
@@ -858,9 +821,7 @@ person?</p>
 <ol style="list-style-type: decimal">
 <li>&lt; $1.000</li>
 <li>$1.000 - $4.000</li>
-<li><blockquote>
-<p>$4.000</p>
-</blockquote></li>
+<li>&gt; $4.000</li>
 </ol>
 </div>
 <div id="politics" class="section level2">
@@ -878,7 +839,8 @@ person?</p>
 </div>
 <div id="literature" class="section level2 unnumbered">
 <h2 class="unnumbered">Literature</h2>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
 <div id="ref-dienlinWhoNeedsPrivacy2019" class="csl-entry">
 Dienlin, Tobias, and Miriam J. Metzger. 2019. <span>“Who Needs
 Privacy?”</span> <em>Preprint</em>. <a
@@ -887,16 +849,15 @@ href="https://doi.org/10.31219/osf.io/m23bn">https://doi.org/10.31219/osf.io/m23
 <div id="ref-frenerDevelopmentValidationNeed2021" class="csl-entry">
 Frener, Regine, Jana Wagner, and Sabine Trepte. 2021. <span>“Development
 and Validation of the Need for Privacy Scale
-(<span>NFP-S</span>).”</span> In. <span>71st annual conference of the
+(<span>NFP-S</span>).”</span> In. 71st annual conference of the
 International Communication Association (ICA), Denver, CO, digital
-conference</span>.
+conference.
 </div>
 <div id="ref-harrisonDevelopmentDesirePrivacy1993" class="csl-entry">
 Harrison, Claire L. 1993. <span>“The Development of a
 <span>Desire</span> for <span>Privacy Scale</span>.”</span> <em>ProQuest
-Dissertations and Theses</em>. PhD thesis, <span>Ann Arbor</span>:
-<span>University of Connecticut</span>. <a
-href="https://uaccess.univie.ac.at/login?url=https://www.proquest.com/dissertations-theses/development-desire-privacy-scale/docview/304030735/se-2?accountid=14682">https://uaccess.univie.ac.at/login?url=https://www.proquest.com/dissertations-theses/development-desire-privacy-scale/docview/304030735/se-2?accountid=14682</a>.
+Dissertations and Theses</em>. PhD thesis, Ann Arbor: University of
+Connecticut.
 </div>
 <div id="ref-leePsychometricPropertiesHEXACO1002018" class="csl-entry">
 Lee, Kibeom, and Michael C. Ashton. 2018. <span>“Psychometric
@@ -910,8 +871,6 @@ href="https://doi.org/10.1177/1073191116659134">https://doi.org/10.1177/10731911
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -944,35 +903,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = false;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

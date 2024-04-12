@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.29)  8 FEB 2024 00:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.29)  12 APR 2024 15:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -395,8 +395,6 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 \TPTL@width=\skip88
 )
 \longtablewidth=\skip89
-Failed to patch abstract.
-Failed to patch title.
 (/Users/dienlin/Library/TinyTeX/texmf-dist/tex/latex/xpatch/xpatch.sty (/Users/dienlin/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
 Package: expl3 2024-01-22 L3 programming layer (loader) 
 (/Users/dienlin/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
@@ -658,53 +656,53 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ] [2] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12{/Users/dienlin/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/dienlin/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}] [13]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 498.
+(Font)              <10> on input line 499.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 498.
+(Font)              <7> on input line 499.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 498.
-[14] [15] [16]
+(Font)              <5> on input line 499.
+[14] [15]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 551.
+(Font)              <10.95> on input line 552.
 
 LaTeX Warning: Float too large for page by 7.22853pt on input line 605.
 
-[17] [18] [19]
-Overfull \hbox (13.02232pt too wide) in paragraph at lines 683--732
+[16] [17]
+Overfull \hbox (11.62363pt too wide) in paragraph at lines 649--697
  [] 
  []
 
-[20] [21]
-<figures/fig_cor.png, id=144, 722.7pt x 867.24pt>
+[18] [19] [20] [21]
+<figures/fig_cor.png, id=142, 722.7pt x 867.24pt>
 File: figures/fig_cor.png Graphic file (type png)
 <use figures/fig_cor.png>
-Package pdftex.def Info: figures/fig_cor.png  used on input line 796.
+Package pdftex.def Info: figures/fig_cor.png  used on input line 785.
 (pdftex.def)             Requested size: 469.76045pt x 563.71257pt.
-[22] [23 <./figures/fig_cor.png>]
-<figures/fig_reg.png, id=155, 722.7pt x 361.35pt>
+[22] [23 <./figures/fig_cor.png>] [24]
+<figures/fig_reg.png, id=160, 722.7pt x 361.35pt>
 File: figures/fig_reg.png Graphic file (type png)
 <use figures/fig_reg.png>
-Package pdftex.def Info: figures/fig_reg.png  used on input line 809.
+Package pdftex.def Info: figures/fig_reg.png  used on input line 811.
 (pdftex.def)             Requested size: 469.76045pt x 234.88023pt.
-[24 <./figures/fig_reg.png>] [25{/Users/dienlin/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [26] [27] [28] [29] [30] [31] [32] [33] [34] AED endfloat: Processing end Figures and Tables [35] (./manuscript.aux)
+[25{/Users/dienlin/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc} <./figures/fig_reg.png>] [26] [27] [28] [29] [30] [31] [32] [33] [34] [35] [36] AED endfloat: Processing end Figures and Tables [37] (./manuscript.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2020/03/25>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 16514 strings out of 476188
- 268752 string characters out of 5794837
- 1958975 words of memory out of 5000000
- 38092 multiletter control sequences out of 15000+600000
+ 16526 strings out of 476188
+ 269181 string characters out of 5794837
+ 1955975 words of memory out of 5000000
+ 38096 multiletter control sequences out of 15000+600000
  641830 words of font info for 110 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 83i,11n,93p,1075b,712s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 83i,11n,93p,2249b,712s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/dienlin/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/dienlin/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></Users/dienlin/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/dienlin/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/dienlin/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/dienlin/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/dienlin/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/dienlin/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb></Users/dienlin/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
-Output written on manuscript.pdf (35 pages, 1220553 bytes).
+Output written on manuscript.pdf (37 pages, 1185153 bytes).
 PDF statistics:
- 466 PDF objects out of 1000 (max. 8388607)
- 403 compressed objects within 5 object streams
- 124 named destinations out of 1000 (max. 500000)
- 243 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 476 PDF objects out of 1000 (max. 8388607)
+ 411 compressed objects within 5 object streams
+ 132 named destinations out of 1000 (max. 500000)
+ 227 words of extra memory for PDF output out of 10000 (max. 10000000)
 

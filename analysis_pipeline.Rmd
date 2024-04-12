@@ -1,5 +1,5 @@
 ---
-title: "Analysis Pipeline"
+title: "Preregistered Analysis Pipeline"
 output:
   html_document:
     toc: TRUE
@@ -11,9 +11,10 @@ bibliography:
   - "bibliography/references.bib"
 ---
 
-Below we state how we plan to analyze the data. To achieve sufficient model fit, there'll likely be several adaptions.
+Below we state how we planned and preregistered to analyze the data in more detail.
 
 # Factorial validity
+## Preregistered procedure
 
 We will inspect the factorial validity of the privacy and personality variables as follows.
 
@@ -34,10 +35,26 @@ Bifactor models are nested within hierarchical models.
 For more information on bifactor models, see @klinePrinciplesPracticeStructural2016, p. 319. 
 Note that we will not specify a bifactor model of all items measuring need for privacy, because we are explicitly interested in the relations between the personality facets and the respective dimensions of need for privacy.
 
+## Implementation and Deviation
+
+When analyzed individually, most measures showed satisfactory model fit, not requiring any changes.
+Some measures showed satisfactory model fit after small adaptions, such as allowing items to covary.
+Half a dozen measures were then still marginally outside of the preregistered thresholds (e.g., liveliness with a RMSEA of .12). We could've now substantially altered the factor structure to see if this leads to sufficient model fit. However, we considered it more cogent to rather accept this then to fundamentally alter scales.
+
+We did not explicate a minimum thresholf of reliability. Most measures showed satisfactory results (i.e., reliability above .70). However, some measures such as altruism, unconventionality, or anonymity showed insufficient reliability. Again, instead of strongly adapting measures (as suggested above), we decided to maintain the initial factor structure and did not delete any items and we did not introduce substantial changes to the factors. 
+
 # Analysis
+## Preregistered Procedure
 
 Because the analyses are complex, it might be that we need to simplify the model. We will proceed as follows.
 
 - Instead of a fully latent structural regression model, we will then conduct a partially latent structural regression model, in which the predictor variables will be modeled as single indicators while controlling for measurement error [@klinePrinciplesPracticeStructural2016, p. 214]. 
     - To get high-quality single indicators of the predictors, we will compute the average of the model predicted values/latent factor scores, which can be extracted from the CFAs. 
     - If the CFAs show a unidimensional solution, we will use the model predicted values for this latent factor; if the CFAs produce a multidimensional solution, we will use the model predicted values for the general latent factor.
+    
+## Implementation and Deviation
+
+Although individually most of the measures showed good fit, when analyzed together fit decreased substantially, below acceptable levels. 
+This problem maintained when trying to model the results using single indicator of the predictors with factor scores. 
+As a result, we conservatively decided to analyze our data using the variables' observed mean scores.
+

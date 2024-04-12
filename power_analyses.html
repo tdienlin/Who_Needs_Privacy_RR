@@ -9,13 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Tobias Dienlin" />
 
-<meta name="date" content="2024-01-14" />
 
-<title>power_analyses</title>
+<title>Power Analyses</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -31,9 +29,15 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
@@ -220,7 +224,79 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
 
 
 
@@ -230,6 +306,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -250,7 +336,10 @@ $(document).ready(function () {
   <a href="manuscript.html">Manuscript</a>
 </li>
 <li>
-  <a href="analyses.html">Analyses</a>
+  <a href="data_prep.html">Data Prep</a>
+</li>
+<li>
+  <a href="results.html">Results</a>
 </li>
 <li>
   <a href="power_analyses.html">Power Analyses</a>
@@ -259,21 +348,25 @@ $(document).ready(function () {
   <a href="analysis_pipeline.html">Analysis Pipeline</a>
 </li>
 <li>
-  <a href="proposal.html">Registered Proposal</a>
+  <a href="items.html">Item list</a>
 </li>
 <li>
-  <a href="items.html">Items</a>
-</li>
-<li>
-  <a href="items_readability.html">Readability Analyses</a>
+  <a href="items_readability.html">Items Readability</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="manuscript.pdf">
-    <span class="fa fa-file"></span>
+  <a href="proposal.pdf">
+    <span class="fa fa-newspaper"></span>
      
-    PDF
+    Stage 1 Proposal
+  </a>
+</li>
+<li>
+  <a href="manuscript.pdf">
+    <span class="fa fa-newspaper"></span>
+     
+    Stage 2 Manuscript
   </a>
 </li>
 <li>
@@ -283,6 +376,13 @@ $(document).ready(function () {
     Source Code
   </a>
 </li>
+<li>
+  <a href="https://data.aussda.at/citation?persistentId=doi:10.11587/IC66GC">
+    <span class="fa fa-database"></span>
+     
+    Data
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -290,38 +390,25 @@ $(document).ready(function () {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
-<h1 class="title toc-ignore">power_analyses</h1>
-<h4 class="author">Tobias Dienlin</h4>
-<h4 class="date">2024-01-14</h4>
+
+<h1 class="title toc-ignore">Power Analyses</h1>
 
 </div>
 
 
-<pre class="r"><code>library(lavaan)</code></pre>
-<pre><code>## This is lavaan 0.6-15
-## lavaan is FREE software! Please report any bugs.</code></pre>
-<pre class="r"><code>library(semTools)</code></pre>
-<pre><code>## </code></pre>
-<pre><code>## ###############################################################################</code></pre>
-<pre><code>## This is semTools 0.5-6</code></pre>
-<pre><code>## All users of R (or SEM) are invited to submit functions or ideas for functions.</code></pre>
-<pre><code>## ###############################################################################</code></pre>
-<pre class="r"><code>library(simsem)</code></pre>
-<pre><code>## </code></pre>
-<pre><code>## #################################################################</code></pre>
-<pre><code>## This is simsem 0.5-16</code></pre>
-<pre><code>## simsem is BETA software! Please report any bugs.</code></pre>
-<pre><code>## simsem was first developed at the University of Kansas Center for</code></pre>
-<pre><code>## Research Methods and Data Analysis, under NSF Grant 1053160.</code></pre>
-<pre><code>## #################################################################</code></pre>
-<pre><code>## 
-## Attaching package: &#39;simsem&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:lavaan&#39;:
-## 
-##     inspect</code></pre>
-<pre class="r"><code>library(pwr)</code></pre>
+<pre class="r"><code>library(lavaan)
+library(semTools)
+library(simsem)
+library(pwr)</code></pre>
 <div id="power-analyses" class="section level1">
 <h1>Power Analyses</h1>
 <div id="rudimentary" class="section level2">
@@ -333,20 +420,20 @@ adopted a balanced alpha and beta error approach. Because we were in
 relaxed alpha. Ideally, we would have wanted to set an error rate of 5%;
 however, this was outside of our budget. Instead, we opted for an error
 rate of 10%.</p>
-<pre class="r"><code>sesoi &lt;- .1
+<pre class="r"><code>sesoi &lt;- 0.1
 
 # a priori power analyses
-pwr.r.test(r = sesoi, sig.level = .05, power = .95)</code></pre>
+pwr.r.test(r = sesoi, sig.level = 0.05, power = 0.95)</code></pre>
 <pre><code>## 
 ##      approximate correlation power calculation (arctangh transformation) 
 ## 
-##               n = 1292.88
+##               n = 1293
 ##               r = 0.1
 ##       sig.level = 0.05
 ##           power = 0.95
 ##     alternative = two.sided</code></pre>
-<pre class="r"><code>power_n_95 &lt;- pwr.r.test(r = sesoi, sig.level = .05, power = .95)$n</code></pre>
-<p>A 5% error rate would imply collecting 1292.879871 participants.</p>
+<pre class="r"><code>power_n_95 &lt;- pwr.r.test(r = sesoi, sig.level = 0.05, power = 0.95)$n</code></pre>
+<p>A 5% error rate would imply collecting 1292.88 participants.</p>
 </div>
 <div id="detailed-simple" class="section level2">
 <h2>Detailed: Simple</h2>
@@ -488,87 +575,50 @@ reliability &lt;- simsem::sim(
 <pre><code>## RESULT OBJECT
 ## Model Type
 ## [1] &quot;lavaan&quot;
-## ========= Fit Indices Cutoffs ============</code></pre>
-<pre><code>## Loading required namespace: quantreg</code></pre>
-<pre><code>##      N  chisq       aic       bic rmsea   cfi   tli  srmr
-## 1  500 27.376  12872.89  12955.20 0.023 0.995 0.992 0.026
-## 2 1625 27.341  41804.30  41895.42 0.019 0.996 0.994 0.022
-## 3 2750 27.307  70735.71  70835.63 0.015 0.997 0.996 0.018
-## 4 3875 27.272  99667.12  99775.85 0.012 0.998 0.998 0.014
-## 5 5000 27.238 128598.52 128716.07 0.008 1.000 0.999 0.010
+## ========= Fit Indices Cutoffs ============
+##      N chisq    aic    bic rmsea   cfi   tli  srmr
+## 1  500  27.4  12873  12955 0.023 0.995 0.992 0.026
+## 2 1625  27.3  41804  41895 0.019 0.996 0.994 0.022
+## 3 2750  27.3  70736  70836 0.015 0.997 0.996 0.018
+## 4 3875  27.3  99667  99776 0.012 0.998 0.998 0.014
+## 5 5000  27.2 128599 128716 0.008 1.000 0.999 0.010
 ## ========= Parameter Estimates and Standard Errors ============
-##                                Estimate Average Estimate SD Average SE
-## HEX_HOH_SIN=~HEX_HOH_SIN_02               1.004       0.044      0.044
-## HEX_HOH_SIN=~HEX_HOH_SIN_03               0.998       0.050      0.043
-## HEX_HOH_SIN=~HEX_HOH_SIN_04               1.005       0.049      0.044
-## NFP_PHY=~NFP_PHY_02                       0.998       0.044      0.043
-## NFP_PHY=~NFP_PHY_03                       0.996       0.047      0.043
-## NFP_PHY=~NFP_PHY_04                       0.999       0.048      0.043
-## HEX_HOH_SIN_01~~HEX_HOH_SIN_01            1.005       0.045      0.041
-## HEX_HOH_SIN_02~~HEX_HOH_SIN_02            1.001       0.043      0.041
-## HEX_HOH_SIN_03~~HEX_HOH_SIN_03            0.998       0.040      0.041
-## HEX_HOH_SIN_04~~HEX_HOH_SIN_04            0.993       0.035      0.041
-## NFP_PHY_01~~NFP_PHY_01                    1.002       0.046      0.041
-## NFP_PHY_02~~NFP_PHY_02                    0.996       0.046      0.041
-## NFP_PHY_03~~NFP_PHY_03                    0.998       0.037      0.041
-## NFP_PHY_04~~NFP_PHY_04                    0.999       0.043      0.041
-## HEX_HOH_SIN~~HEX_HOH_SIN                  0.807       0.057      0.054
-## NFP_PHY~~NFP_PHY                          0.814       0.051      0.054
-## HEX_HOH_SIN~~NFP_PHY                      0.083       0.025      0.023
-##                                Power (Not equal 0) Std Est Std Est SD
-## HEX_HOH_SIN=~HEX_HOH_SIN_02                  1.000   0.669      0.019
-## HEX_HOH_SIN=~HEX_HOH_SIN_03                  1.000   0.667      0.017
-## HEX_HOH_SIN=~HEX_HOH_SIN_04                  1.000   0.671      0.017
-## NFP_PHY=~NFP_PHY_02                          1.000   0.669      0.016
-## NFP_PHY=~NFP_PHY_03                          1.000   0.668      0.016
-## NFP_PHY=~NFP_PHY_04                          1.000   0.669      0.020
-## HEX_HOH_SIN_01~~HEX_HOH_SIN_01               1.000   0.555      0.024
-## HEX_HOH_SIN_02~~HEX_HOH_SIN_02               1.000   0.552      0.025
-## HEX_HOH_SIN_03~~HEX_HOH_SIN_03               1.000   0.555      0.023
-## HEX_HOH_SIN_04~~HEX_HOH_SIN_04               1.000   0.550      0.023
-## NFP_PHY_01~~NFP_PHY_01                       1.000   0.552      0.022
-## NFP_PHY_02~~NFP_PHY_02                       1.000   0.552      0.021
-## NFP_PHY_03~~NFP_PHY_03                       1.000   0.554      0.021
-## NFP_PHY_04~~NFP_PHY_04                       1.000   0.552      0.026
-## HEX_HOH_SIN~~HEX_HOH_SIN                     1.000   1.000      0.000
-## NFP_PHY~~NFP_PHY                             1.000   1.000      0.000
-## HEX_HOH_SIN~~NFP_PHY                         0.934   0.102      0.031
-##                                Std Ave SE Average Param Average Bias Coverage
-## HEX_HOH_SIN=~HEX_HOH_SIN_02         0.017           0.9        0.104    0.242
-## HEX_HOH_SIN=~HEX_HOH_SIN_03         0.017           0.9        0.098    0.396
-## HEX_HOH_SIN=~HEX_HOH_SIN_04         0.017           0.9        0.105    0.231
-## NFP_PHY=~NFP_PHY_02                 0.017           0.9        0.098    0.385
-## NFP_PHY=~NFP_PHY_03                 0.017           0.9        0.096    0.352
-## NFP_PHY=~NFP_PHY_04                 0.017           0.9        0.099    0.275
-## HEX_HOH_SIN_01~~HEX_HOH_SIN_01      0.022           1.0        0.005    0.912
-## HEX_HOH_SIN_02~~HEX_HOH_SIN_02      0.022           1.0        0.001    0.956
-## HEX_HOH_SIN_03~~HEX_HOH_SIN_03      0.022           1.0       -0.002    0.978
-## HEX_HOH_SIN_04~~HEX_HOH_SIN_04      0.022           1.0       -0.007    0.967
-## NFP_PHY_01~~NFP_PHY_01              0.022           1.0        0.002    0.923
-## NFP_PHY_02~~NFP_PHY_02              0.022           1.0       -0.004    0.956
-## NFP_PHY_03~~NFP_PHY_03              0.022           1.0       -0.002    0.978
-## NFP_PHY_04~~NFP_PHY_04              0.022           1.0       -0.001    0.967
-## HEX_HOH_SIN~~HEX_HOH_SIN            0.000           1.0       -0.193    0.088
-## NFP_PHY~~NFP_PHY                    0.000           1.0       -0.186    0.132
-## HEX_HOH_SIN~~NFP_PHY                0.028           0.1       -0.017    0.769
-##                                r_coef.n r_se.n
-## HEX_HOH_SIN=~HEX_HOH_SIN_02      -0.150 -0.888
-## HEX_HOH_SIN=~HEX_HOH_SIN_03      -0.007 -0.874
-## HEX_HOH_SIN=~HEX_HOH_SIN_04      -0.141 -0.874
-## NFP_PHY=~NFP_PHY_02               0.104 -0.877
-## NFP_PHY=~NFP_PHY_03               0.041 -0.862
-## NFP_PHY=~NFP_PHY_04               0.074 -0.879
-## HEX_HOH_SIN_01~~HEX_HOH_SIN_01   -0.064 -0.915
-## HEX_HOH_SIN_02~~HEX_HOH_SIN_02   -0.011 -0.912
-## HEX_HOH_SIN_03~~HEX_HOH_SIN_03    0.186 -0.912
-## HEX_HOH_SIN_04~~HEX_HOH_SIN_04   -0.101 -0.908
-## NFP_PHY_01~~NFP_PHY_01            0.141 -0.902
-## NFP_PHY_02~~NFP_PHY_02           -0.005 -0.901
-## NFP_PHY_03~~NFP_PHY_03            0.148 -0.895
-## NFP_PHY_04~~NFP_PHY_04            0.084 -0.905
-## HEX_HOH_SIN~~HEX_HOH_SIN          0.079 -0.906
-## NFP_PHY~~NFP_PHY                  0.003 -0.913
-## HEX_HOH_SIN~~NFP_PHY             -0.266 -0.912
+##                                Estimate Average Estimate SD Average SE Power (Not equal 0) Std Est Std Est SD Std Ave SE Average Param Average Bias
+## HEX_HOH_SIN=~HEX_HOH_SIN_02               1.004       0.044      0.044               1.000   0.669      0.019      0.017           0.9        0.104
+## HEX_HOH_SIN=~HEX_HOH_SIN_03               0.998       0.050      0.043               1.000   0.667      0.017      0.017           0.9        0.098
+## HEX_HOH_SIN=~HEX_HOH_SIN_04               1.005       0.049      0.044               1.000   0.671      0.017      0.017           0.9        0.105
+## NFP_PHY=~NFP_PHY_02                       0.998       0.044      0.043               1.000   0.669      0.016      0.017           0.9        0.098
+## NFP_PHY=~NFP_PHY_03                       0.996       0.047      0.043               1.000   0.668      0.016      0.017           0.9        0.096
+## NFP_PHY=~NFP_PHY_04                       0.999       0.048      0.043               1.000   0.669      0.020      0.017           0.9        0.099
+## HEX_HOH_SIN_01~~HEX_HOH_SIN_01            1.005       0.045      0.041               1.000   0.555      0.024      0.022           1.0        0.005
+## HEX_HOH_SIN_02~~HEX_HOH_SIN_02            1.001       0.043      0.041               1.000   0.552      0.025      0.022           1.0        0.001
+## HEX_HOH_SIN_03~~HEX_HOH_SIN_03            0.998       0.040      0.041               1.000   0.555      0.023      0.022           1.0       -0.002
+## HEX_HOH_SIN_04~~HEX_HOH_SIN_04            0.993       0.035      0.041               1.000   0.550      0.023      0.022           1.0       -0.007
+## NFP_PHY_01~~NFP_PHY_01                    1.002       0.046      0.041               1.000   0.552      0.022      0.022           1.0        0.002
+## NFP_PHY_02~~NFP_PHY_02                    0.996       0.046      0.041               1.000   0.552      0.021      0.022           1.0       -0.004
+## NFP_PHY_03~~NFP_PHY_03                    0.998       0.037      0.041               1.000   0.554      0.021      0.022           1.0       -0.002
+## NFP_PHY_04~~NFP_PHY_04                    0.999       0.043      0.041               1.000   0.552      0.026      0.022           1.0       -0.001
+## HEX_HOH_SIN~~HEX_HOH_SIN                  0.807       0.057      0.054               1.000   1.000      0.000      0.000           1.0       -0.193
+## NFP_PHY~~NFP_PHY                          0.814       0.051      0.054               1.000   1.000      0.000      0.000           1.0       -0.186
+## HEX_HOH_SIN~~NFP_PHY                      0.083       0.025      0.023               0.934   0.102      0.031      0.028           0.1       -0.017
+##                                Coverage r_coef.n r_se.n
+## HEX_HOH_SIN=~HEX_HOH_SIN_02       0.242   -0.150 -0.888
+## HEX_HOH_SIN=~HEX_HOH_SIN_03       0.396   -0.007 -0.874
+## HEX_HOH_SIN=~HEX_HOH_SIN_04       0.231   -0.141 -0.874
+## NFP_PHY=~NFP_PHY_02               0.385    0.104 -0.877
+## NFP_PHY=~NFP_PHY_03               0.352    0.041 -0.862
+## NFP_PHY=~NFP_PHY_04               0.275    0.074 -0.879
+## HEX_HOH_SIN_01~~HEX_HOH_SIN_01    0.912   -0.064 -0.915
+## HEX_HOH_SIN_02~~HEX_HOH_SIN_02    0.956   -0.011 -0.912
+## HEX_HOH_SIN_03~~HEX_HOH_SIN_03    0.978    0.186 -0.912
+## HEX_HOH_SIN_04~~HEX_HOH_SIN_04    0.967   -0.101 -0.908
+## NFP_PHY_01~~NFP_PHY_01            0.923    0.141 -0.902
+## NFP_PHY_02~~NFP_PHY_02            0.956   -0.005 -0.901
+## NFP_PHY_03~~NFP_PHY_03            0.978    0.148 -0.895
+## NFP_PHY_04~~NFP_PHY_04            0.967    0.084 -0.905
+## HEX_HOH_SIN~~HEX_HOH_SIN          0.088    0.079 -0.906
+## NFP_PHY~~NFP_PHY                  0.132    0.003 -0.913
+## HEX_HOH_SIN~~NFP_PHY              0.769   -0.266 -0.912
 ## ========= Correlation between Fit Indices ============
 ##        chisq    aic    bic  rmsea    cfi    tli   srmr      n
 ## chisq  1.000 -0.100 -0.100  0.819 -0.666 -0.810  0.468 -0.100
@@ -600,6 +650,8 @@ power_80[&quot;HEX_HOH_SIN~~NFP_PHY&quot;]</code></pre>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -631,7 +683,41 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

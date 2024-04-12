@@ -46,11 +46,11 @@ get_res <- function(predictor_var, privacy_var, object = "tab_cor"){
     } else {
       "_r_ = "  
     },
-    my_round(dat$Estimate, "std"),
+    td::my_round(dat$Estimate, "std"),
     ", 90% CI ",
-    my_round(dat$CI_low, "std"),
+    td::my_round(dat$CI_low, "std"),
     ", ",
-    my_round(dat$CI_high, "std"),
+    td::my_round(dat$CI_high, "std"),
     ""
   )
 }
