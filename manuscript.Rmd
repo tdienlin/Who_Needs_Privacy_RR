@@ -41,8 +41,8 @@ draft             : no
 
 documentclass     : "apa6"
 # classoption       : "man"
-# output            : html_document
-output            : papaja::apa6_pdf
+output            : html_document
+# output            : papaja::apa6_pdf
 # output            : papaja::apa6_word
 
 header-includes:
@@ -66,7 +66,7 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed,
 ```
 
 ```{r setup, include=F}
-devtools::install_github("tdienlin/td@v.0.0.2.5")  # uncomment to install
+# devtools::install_github("tdienlin/td@v.0.0.2.5")  # uncomment to install
 library(devtools)
 library(english)
 library(ggplot2)
@@ -335,7 +335,7 @@ We wanted to find out _who_ needs privacy, and not so much _what causes_ the nee
 Hence, to answer our research question, in a joint model combining all variables (including sociodemographic variables) we analyzed the variables' bivariate relations. 
 To predict the need for privacy, we first used the six personality factors.
 Afterward, we predicted privacy using the more specific facets. 
-To get a first idea of the variables' potential causal relations, we also planned to run latent structural regression models.
+To get a first idea of the variables' potential causal relations [@groszTabooExplicitCausal2020a], we also planned to run latent structural regression models.
 However, because model fit was not acceptable, in exploratory analyses we investigated the potential effects in a multiple regression using the mean values of the observed scores. 
 
 We used two measures as inference criteria: statistical significance and effect size. 
@@ -412,8 +412,9 @@ apa_table(
     ),
   align = c("l", rep("r", 8)),
   caption = "Factorial validity of all measures.",
-  font_size = "small",
-  escape = FALSE
+  font_size = "footnotesize",
+  escape = FALSE,
+  note = "REL: Reliability measured via McDonald's Omega; CFI = Comparative Fit Index; TLI = Tucker-Lewis Index; SRMR = Standardized Root Mean Square Residual; RMSEA = Root Mean Square Error of Approximation"
   )
 ```
 
@@ -423,6 +424,48 @@ The only exception was the relation between privacy concerns and the need for so
 If respondents reported higher needs for privacy they also engaged in more privacy behaviors, with coefficients ranging from _r_ = .20 to _r_ = .71
 The only exception was the relation between privacy behavior and the need for social privacy, which was virtually nonexistent (_r_ = .01), and the need for physical privacy, which was very small (_r_ = .09).
 See online supplementary material for all results.
+
+People who reported being less honest and humble needed more anonymity (`r get_res("Honesty humility", "Anonymity")`).
+Looking at facets, more anonymity was needed by people who reported being less fair (`r get_res("Fairness", "Anonymity")`), less modest (`r get_res("Modesty", "Anonymity")`), and less altruistic (`r get_res("Altruism", "Anonymity")`).
+People who reported being less fair needed more psychological (`r get_res("Fairness", "Psychological")`), social (`r get_res("Fairness", "Social")`), and physical privacy (`r get_res("Fairness", "Physical")`). 
+Similarly, people who reported being less altruistic also needed substantially more psychological (`r get_res("Altruism", "Psychological")`), social (`r get_res("Altruism", "Social")`), and physical privacy (`r get_res("Altruism", "Physical")`). 
+However, less sincere people needed less privacy from companies (`r get_res("Sincerity", "Companies")`) and less privacy in general (`r get_res("Sincerity", "General")`).
+Effects were small to medium in size.
+
+Several relations between emotionality and need for privacy were found.
+More emotional people needed less psychological privacy (`r get_res("Emotionality", "Psychological")`), less privacy from the government (`r get_res("Emotionality", "Government")`), less anonymity (`r get_res("Emotionality", "Anonymity")`)---but also needed more physical privacy (`r get_res("Emotionality", "Physical")`).
+More anxious respondents needed substantially more social (`r get_res("Anxiety", "Social")`) and physical privacy (`r get_res("Anxiety", "Physical")`).
+Similarly, more fearful respondents needed more social (`r get_res("Fearfulness", "Social")`) and physical privacy (`r get_res("Fearfulness", "Physical")`).
+More dependent participants generally needed less privacy, including less psychological (`r get_res("Dependence", "Psychological")`) and social privacy (`r get_res("Dependence", "Social")`), less privacy from the government (`r get_res("Dependence", "Government")`), and less informational (`r get_res("Dependence", "Informational")`) and general privacy (`r get_res("Dependence", "General")`).
+A similar picture for more sentimental participants emerged, who needed less psychological (`r get_res("Sentimentality", "Psychological")`) and social privacy (`r get_res("Sentimentality", "Social")`) and less anonymity (`r get_res("Sentimentality", "Anonymity")`).
+
+More extraverted people reported they needed a lot less privacy.
+They wanted less psychological privacy (`r get_res("Extraversion", "Psychological")`), social privacy (`r get_res("Extraversion", "Social")`), and physical privacy (`r get_res("Extraversion", "Physical")`), less informational privacy (`r get_res("Extraversion", "Informational")`) and less anonymity (`r get_res("Extraversion", "Anonymity")`).
+Effect sizes were oftentimes large.
+All facets showed virtually the same relations, with small differences in effect sizes.
+
+More agreeable participants showed a similar pattern.
+They needed less psychological (`r get_res("Agreeableness", "Psychological")`), social (`r get_res("Agreeableness", "Social")`), and physical privacy (`r get_res("Agreeableness", "Physical")`).
+The facets showed virtually the same pattern.
+Effect sizes were substantial, but on the whole smaller than those for extraversion.
+
+Although more conscientious respondents generally needed less privacy, the pattern was varied.
+More conscientious respondents needed less psychological (`r get_res("Conscientiousness", "Psychological")`) and less social privacy (`r get_res("Conscientiousness", "Social")`), as well as less anonymity (`r get_res("Conscientiousness", "Anonymity")`).
+However, when asked about privacy in general more conscientious people responded to need more (`r get_res("Conscientiousness", "General")`).
+More conscientious people also needed more privacy from companies (`r get_res("Conscientiousness", "Companies")`).
+Looking at facets of conscientiousness, more organized people needed less social privacy (`r get_res("Organization", "Social")`) and less anonymity (`r get_res("Organization", "Anonymity")`). 
+More prudent participants needed less anonymity (`r get_res("Prudence", "Anonymity")`).
+More diligent people needed less psychological (`r get_res("Diligence", "Psychological")`), social (`r get_res("Diligence", "Social")`), and physical privacy (`r get_res("Diligence", "Physical")`) as well as less anonymity (`r get_res("Diligence", "Anonymity")`)---but also more privacy from companies (`r get_res("Diligence", "Companies")`)
+At the same time, more perfectionist respondents reported needing more informational (`r get_res("Perfectionism", "Informational")`) privacy, privacy from companies (`r get_res("Perfectionism", "Companies")`), and more general privacy (`r get_res("Perfectionism", "General")`).
+
+Whether or not respondents were open to new experiences was in most cases unrelated to how much privacy they needed.
+People more open to experiences needed more privacy from companies (`r get_res("Openness", "Companies")`) and more privacy in general (`r get_res("Openness", "General")`).
+Three facets showed relevant but still small relations. 
+Respondents who reported being more creative needed less psychological (`r get_res("Creativeness", "Psychological", "tab_cor")`) and less social privacy (`r get_res("Creativeness", "Social")`). 
+More inquisitive respondents needed less physical privacy (`r get_res("Inquisitiveness", "Physical")`) but more privacy from companies (`r get_res("Inquisitiveness", "Companies")`).
+
+In Table \@ref(tab:tab-dim), we report how the personality dimensions predicted need for privacy.
+In Table \@ref(tab:tab-fac), we report how the personality facets predicted need for privacy.
 
 ```{r tab-dim, cache=F, warning=F, message=F, prompt=F}
 apa_table(
@@ -457,44 +500,15 @@ apa_table(
   )
 ```
 
-People who reported being less honest and humble needed more anonymity (`r get_res("Honesty humility", "Anonymity")`).
-Looking at facets, more anonymity was needed by people who reported being less fair (`r get_res("Fairness", "Anonymity")`), less modest (`r get_res("Modesty", "Anonymity")`), and less altruistic (`r get_res("Altruism", "Anonymity")`).
-People who reported being less fair needed more psychological (`r get_res("Fairness", "Psychological")`), social (`r get_res("Fairness", "Social")`), and physical privacy (`r get_res("Fairness", "Physical")`). 
-Similarly, people who reported being less altruistic also needed substantially more psychological (`r get_res("Altruism", "Psychological")`), social (`r get_res("Altruism", "Social")`), and physical privacy (`r get_res("Altruism", "Physical")`). 
-However, less sincere people needed less privacy from companies (`r get_res("Sincerity", "Companies")`) and less privacy in general (`r get_res("Sincerity", "General")`).
-Effects were small to medium in size.
+Not many meaningful relations between sociodemographic variables and need for privacy were found.
+Older participants needed less social (`r get_res("Age", "Social")`) and less physical privacy (`r get_res("Age", "Physical")`). 
+Male participants needed more anonymity (`r get_res("Male", "Anonymity")`). 
+Less social privacy was needed by people in a relationship (`r get_res("Relationship", "Social")`), with a college degree (`r get_res("College", "Social")`), and with higher income (`r get_res("Income", "Social")`). 
+People with higher income also reported needing less physical privacy (`r get_res("Income", "Physical")`). 
+More politically conservative respondents reported needing more privacy from the government (`r get_res("Conservatism", "Government")`).
 
-Several relations between emotionality and need for privacy were found.
-More emotional people needed less psychological privacy (`r get_res("Emotionality", "Psychological")`), less privacy from the government (`r get_res("Emotionality", "Government")`), less anonymity (`r get_res("Emotionality", "Anonymity")`)---but also needed more physical privacy (`r get_res("Emotionality", "Physical")`).
-More anxious respondents needed substantially more social (`r get_res("Anxiety", "Social")`) and physical privacy (`r get_res("Anxiety", "Physical")`).
-Similarly, more fearful respondents needed more social (`r get_res("Fearfulness", "Social")`) and physical privacy (`r get_res("Fearfulness", "Physical")`).
-More dependent participants generally needed less privacy, including less psychological (`r get_res("Dependence", "Psychological")`) and social privacy (`r get_res("Dependence", "Social")`), less privacy from the government (`r get_res("Dependence", "Government")`), and less informational (`r get_res("Dependence", "Informational")`) and general privacy (`r get_res("Dependence", "General")`).
-A similar picture for more sentimental participants emerged, who needed less psychological (`r get_res("Sentimentality", "Psychological")`) and social privacy (`r get_res("Sentimentality", "Social")`) and less anonymity (`r get_res("Sentimentality", "Anonymity")`).
-
-More extraverted people reported they needed a lot less privacy.
-They wanted less psychological privacy (`r get_res("Extraversion", "Psychological")`), social privacy (`r get_res("Extraversion", "Social")`), and physical privacy (`r get_res("Extraversion", "Physical")`), less informational privacy (`r get_res("Extraversion", "Informational")`) and less anonymity (`r get_res("Extraversion", "Anonymity")`).
-Effect sizes were oftentimes large.
-All facets showed virtually the same relations, with small differences in effect sizes.
-
-More agreeable participants showed a similar pattern.
-They needed less psychological (`r get_res("Agreeableness", "Psychological")`), social privacy (`r get_res("Agreeableness", "Social")`), and physical privacy (`r get_res("Agreeableness", "Physical")`).
-The facets showed virtually the same pattern.
-Effect sizes were substantial, but on the whole smaller than those for extraversion.
-
-Although more conscientious respondents generally needed less privacy, the pattern was varied.
-More conscientious respondents needed less psychological (`r get_res("Conscientiousness", "Psychological")`) and less social privacy (`r get_res("Conscientiousness", "Social")`), as well as less anonymity (`r get_res("Conscientiousness", "Anonymity")`).
-However, when asked about privacy in general more conscientious people responded to need more (`r get_res("Conscientiousness", "General")`).
-More conscientious people also needed more privacy from companies (`r get_res("Conscientiousness", "Companies")`).
-Looking at facets of conscientiousness, more organized people needed less social privacy (`r get_res("Organization", "Social")`) and less anonymity (`r get_res("Organization", "Anonymity")`). 
-More prudent participants needed less anonymity (`r get_res("Prudence", "Anonymity")`).
-More diligent people needed less psychological (`r get_res("Diligence", "Psychological")`), social (`r get_res("Diligence", "Social")`), and physical privacy (`r get_res("Diligence", "Physical")`) as well as less anonymity (`r get_res("Diligence", "Anonymity")`)---but also more privacy from companies (`r get_res("Diligence", "Companies")`)
-At the same time, more perfectionist respondents reported needing more informational (`r get_res("Perfectionism", "Informational")`) privacy, privacy from companies (`r get_res("Perfectionism", "Companies")`), and more general privacy (`r get_res("Perfectionism", "General")`).
-
-Whether or not respondents were open to new experiences was in most cases unrelated to how much privacy they needed.
-People more open to experiences needed more privacy from companies (`r get_res("Openness", "Companies")`) and more privacy in general (`r get_res("Openness", "General")`).
-Three facets showed relevant but still small relations. 
-Respondents who reported being more creative needed less psychological (`r get_res("Creativeness", "Psychological", "tab_cor")`) and less social privacy (`r get_res("Creativeness", "Social")`). 
-More inquisitive respondents needed less physical privacy (`r get_res("Inquisitiveness", "Physical")`) but more privacy from companies (`r get_res("Inquisitiveness", "Companies")`).
+In Table \@ref(tab:tab-ses), we report how sociodemographics predicted need for privacy.
+Figure \@ref(fig:fig-cor) summarizes how all of the variables---dimensions, facets, and sociodemographics---predicted the need for privacy.
 
 ```{r tab-ses, cache=F, warning=F, message=F, prompt=F}
 # tab_ses %<>% set_names(c("Sociodemographics", vars_pri_txt_brk))
@@ -511,24 +525,12 @@ apa_table(tab_cor_ses_m,
           )
 ```
 
-Not many meaningful relations between sociodemographic variables and need for privacy were found.
-Older participants needed less social (`r get_res("Age", "Social")`) and less physical privacy (`r get_res("Age", "Physical")`). 
-Male participants needed more anonymity (`r get_res("Male", "Anonymity")`). 
-Less social privacy was needed by people in a relationship (`r get_res("Relationship", "Social")`), with a college degree (`r get_res("College", "Social")`), and with higher income (`r get_res("Income", "Social")`). 
-People with higher income also reported needing less physical privacy (`r get_res("Income", "Physical")`). 
-More politically conservative respondents reported needing more privacy from the government (`r get_res("Conservatism", "Government")`).
-
-In Table \@ref(tab:tab-dim), we report how the personality dimensions predicted need for privacy.
-In Table \@ref(tab:tab-fac), we report how the personality facets predicted need for privacy.
-In Table \@ref(tab:tab-ses), we report how sociodemographics predicted need for privacy.
-Figure \@ref(fig:fig-cor) summarizes how all of the variables---dimensions, facets, and sociodemographics---predicted the need for privacy. 
-
 ```{r fig-cor, fig.cap="Results of bivariate correlations between personality and need for privacy. Bold: Effects that are statistically significant and larger than \\textit{r} = .10 / -.10.", out.width = "\\textwidth", cache=F, warning=F, message=F, prompt=F, fig.pos='H'}
 # fig_desc
 knitr::include_graphics("figures/fig_cor.png")
 ```
 
-In exploratory analyses we analyzed how personality facets might have potentially caused need for privacy.
+In exploratory analyses we analyzed how personality facets might have potentially caused need for privacy, using multiple regressions in which we controlled for all personality dimensions and sociodemographic variables. 
 We found that the need for psychological privacy was explained by two variables: extraversion (`r get_res("Extraversion", "Psychological", "tab_reg")`) and emotionality (`r get_res("Emotionality", "Psychological", "tab_reg")`). 
 The need for social privacy was also potentially affected by extraversion and emotionality.
 Being more extraverted substantially decreased the need for psychological privacy (`r get_res("Extraversion", "Social", "tab_reg")`), as did being more emotional (`r get_res("Emotionality", "Social", "tab_reg")`).
@@ -609,6 +611,7 @@ They, too, might see others as a resource, valuing closer exchanges with people 
 
 In addition, we looked at relations between need for privacy and various sociodemographic variables.
 Contrary to our expectations, older participants desired less privacy from others, both socially and physically. 
+This was surprising, for example given that older people report increased online privacy concern [@kezerAgeDifferencesPrivacy2016].
 It is an open question as to whether this relation represents a developmental mechanism or a difference between cohorts.
 Research suggests that older people have fewer social interactions than younger people [@ortiz-ospinaTimeUse2024], which could result in a lower need for social and physical privacy.
 But it could also be a difference between cohorts. 
@@ -629,8 +632,9 @@ More politically conservative respondents needed more privacy from the governmen
 Finally, no meaningful relations with ethnicity were found.
 For example, contrary to what we expected we did not find that minority groups desired more privacy from the government in our data.
 
-Based on correlations, the results above analyzed the variables' relationships.
-To analyze the potential impact of personality on need for privacy, in exploratory analyses we also ran several multiple regression analyses, in which we controlled for the respective personality variables and sociodemographics.
+The results above are based on correlations and analyzed the variables' relationships.
+To analyze the potential impact of personality on need for privacy, in exploratory analyses we also ran several multiple regression analyses.
+Here, we estimated the relations between each personality and need for privacy dimension while controlling for all other personality dimensions and sociodemographics.
 Results were comparable, in that extraversion turned out to be the major potential cause of need for privacy.
 However, there were also some differences.
 Most notably, results implied that being more conscientious increases the need for physical, informational, and general privacy.
@@ -638,7 +642,7 @@ Similarly, being more open to new experiences might increase the need for privac
 Finally, multiple regression results suggested that being conservative does not only increase the need for privacy from the government but also for privacy in general.
 All other sociodemographic variables ceased to be significant.
 
-Looking at the results more broadly, we make four general observations.
+Looking at the results more broadly, we make five general observations.
 First, it makes sense to differentiate different levels of need for privacy.
 Many personality traits showed meaningful relations with some dimension, yet no or even opposite relations with others.
 To illustrate, whereas more conscientious people desired less psychological privacy and less privacy from other, when asked about privacy in general and privacy from companies they needed more. 
@@ -660,10 +664,17 @@ This leads to our fourth general observation.
 Our main interest was to determine the personality factors predicting the need for privacy. 
 What can we learn about a person given their need for privacy? 
 We first analyzed this question in correlation analyses. 
-But in additionally exploring potential causal effects in a multiple regression, a somewhat different picture emerged. 
-The results suggest that several of the correlations we found might not be the result of a causal processes. 
-At the same time, some causal effects might also be suppressed in correlation analyses.
-More research better suited at uncovering causal relations is needed to address this question.
+However, when we further explored potential causal effects using multiple regression analysis [@groszTabooExplicitCausal2020a], a somewhat different picture emerged. 
+Several of the bivariate relationships we initially observed disappeared. 
+These results suggest that some of the correlations we found might not be due to a direct causal process but could instead be explained by shared variance with a third confounding factor. 
+Additionally, some causal effects that were not apparent in the correlation analyses became significant in the multiple regressions. 
+Specifically, conservatism became more relevant when we included additional control variables, suggesting that an increase in conservatism leads to a greater desire for anonymity and privacy in general.
+
+Finally, our results have significant implications for privacy theory, suggesting new avenues for further research. 
+Given the close relationship between personality and privacy, it is worthwhile to examine how personality traits interact with specific privacy models and theories. 
+For instance, personality could influence the privacy calculus model [@kezerGettingPrivacyCalculus2022]. 
+Extraverted individuals, who tend to view others as resources, might perceive greater benefits in sharing information online and therefore be more open in their sharing behaviors. 
+Conversely, anxious individuals, who are more likely to see others as threats, might have heightened concerns about privacy, leading to a reduced willingness to share information online.
 
 ## Limitations
 
@@ -677,8 +688,16 @@ For this reason, instead of reporting the results from latent structural equatio
 Interested readers can find the results of the latent analyses in our online supplementary material.
 The results are highly comparable, with the major difference that effect sizes in the latent models tended to be larger.
 The results reported here are hence more conservative and likely underestimate the true effect sizes.
-This underscores the need for further optimizing measures of personality and privacy. 
-We hope this study is a catalyst for future work in this area.
+This underscores the need for further optimizing measures of personality and privacy.
+
+In our exploratory analyses, we aimed to investigate the potential causal effects of personality on the need for privacy by controlling for potential confounders, including other personality dimensions and sociodemographic variables. 
+However, it is important to note that this is only a preliminary approach, as there are likely additional variables that could further explain the relationships. 
+Future research should explore the potential causal relationships in a more systematic and comprehensive manner.
+
+Our findings are specific to the U.S. context. 
+Previous research indicates that although privacy is a universal concept, attitudes and practices vary significantly across different cultures and countries [@altmanPrivacyRegulationCulturally1977]. 
+It is possible that the relationship between personality and the need for privacy manifests differently in various settings. 
+We hope this study will serve as a catalyst for future research in this area.
 
 \newpage
 
