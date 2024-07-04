@@ -3,9 +3,9 @@ title: "Results"
 output:
   html_document:
     toc: TRUE
-    toc_float:
-      collapsed: FALSE
-    toc_depth: 2
+    # toc_float:
+    #   collapsed: FALSE
+    toc_depth: 3
     code_folding: hide
     df_print: paged
 bibliography      : 
@@ -3032,7 +3032,7 @@ tab_cor <-
 fig_cor <- ggplot(
   tab_cor, aes(x = Estimate, y = Predictor, color = relevant)
   ) + 
-  coord_cartesian(xlim = c(-.8, .4)) +
+  coord_cartesian(xlim = c(-.7, .3)) +
   geom_vline(xintercept = 0, lwd = .5, colour = "darkgrey") + 
   geom_vline(xintercept = -.1, lwd = .5, colour = "darkgrey", linetype = "dashed") + 
   geom_vline(xintercept = .1, lwd = .5, colour = "darkgrey", linetype = "dashed") + 
@@ -3043,8 +3043,8 @@ fig_cor <- ggplot(
   geom_point(size = 1, position = position_dodge(-.7)) +
 #   geom_pointrange(aes(xmin = CI_low, xmax = CI_high), size = .2) + 
   scale_x_continuous(
-    breaks = c(-.8, -.6, -.4, -.2, 0, .2, .4),
-    labels = c("-.8", "-.6", "-.4", "-.2", "0", ".2", ".4")
+    breaks = c(-.6, -.4, -.2, 0, .2, .4),
+    labels = c("-.6", "-.4", "-.2", "0", ".2", ".4")
     ) + 
   scale_y_discrete(limits=rev) +
   labs(
@@ -3057,7 +3057,7 @@ fig_cor <- ggplot(
     plot.title = element_text(hjust = .5),
     text = element_text(size = 14),
     axis.text.y = element_text(hjust = 1),
-    axis.text.x = element_text(size = 8),
+    axis.text.x = element_text(size = 10),
     legend.position = "none"
     ) + 
   scale_color_manual(values = c("grey", "black")) +
@@ -3120,8 +3120,8 @@ fig_reg <- ggplot(
     ) +
   geom_point(size = 1, position = position_dodge(-.7)) +
   scale_x_continuous(
-    breaks = c(-.8, -.6, -.4, -.2, 0, .2),
-    labels = c("-.8", "-.6", "-.4", "-.2", "0", ".2")
+    breaks = c(-.8, -.6, -.4, -.2, 0, .2, .4),
+    labels = c("-.8", "-.6", "-.4", "-.2", "0", ".2", ".4")
     ) + 
   scale_y_discrete(limits=rev) +
   scale_color_manual(values = c("grey", "black")) +
@@ -3135,7 +3135,7 @@ fig_reg <- ggplot(
     plot.title = element_text(hjust = .5),
     text = element_text(size = 14),
     axis.text.y = element_text(hjust = 1),
-    axis.text.x = element_text(size = 8),
+    axis.text.x = element_text(size = 10),
     legend.position = "none"
     ) + 
   facet_grid(category ~ `Need for privacy`, scales = "free_y")

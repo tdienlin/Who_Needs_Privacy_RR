@@ -6,9 +6,9 @@ date: "2024-04-05"
 output:
   html_document:
     toc: TRUE
-    toc_float:
-      collapsed: FALSE
-      toc_depth: 3
+    # toc_float:
+    #   collapsed: FALSE
+    toc_depth: 2
 # output:
 #   pdf_document:
 #     toc: TRUE

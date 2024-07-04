@@ -3,9 +3,9 @@ title: "Preregistered Analysis Pipeline"
 output:
   html_document:
     toc: TRUE
-    toc_float:
-      collapsed: FALSE
-      toc_depth: 3
+    # toc_float:
+    #   collapsed: FALSE
+    toc_depth: 3
 # output: pdf_document
 bibliography: 
   - "bibliography/references.bib"

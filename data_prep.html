@@ -13,7 +13,7 @@
 
 <title>Data Preparation</title>
 
-<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -29,9 +29,6 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
@@ -230,75 +227,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-.tocify-subheader {
-  display: inline;
-}
-.tocify-subheader .tocify-item {
-  font-size: 0.95em;
-}
-
-</style>
-
-
 
 </head>
 
@@ -306,16 +234,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -404,6 +322,28 @@ div.tocify {
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#data" id="toc-data">Data</a></li>
+<li><a href="#set-up" id="toc-set-up">Set-up</a></li>
+<li><a href="#data-preparation" id="toc-data-preparation">Data
+Preparation</a>
+<ul>
+<li><a href="#recoding" id="toc-recoding">Recoding</a></li>
+<li><a href="#labels" id="toc-labels">Labels</a></li>
+<li><a href="#means" id="toc-means">Means</a></li>
+</ul></li>
+<li><a href="#quality-checks" id="toc-quality-checks">Quality checks</a>
+<ul>
+<li><a href="#missing-data" id="toc-missing-data">Missing data</a></li>
+<li><a href="#speeders" id="toc-speeders">Speeders</a></li>
+<li><a href="#response-patterns" id="toc-response-patterns">Response
+patterns</a></li>
+</ul></li>
+<li><a href="#save-workspace" id="toc-save-workspace">Save
+Workspace</a></li>
+</ul>
+</div>
 
 <p>Here we outline how we prepared the data for our analyses, including
 quality checks.</p>
@@ -438,7 +378,10 @@ library(td)
 load(&quot;data/workspace_1.RData&quot;)
 source(&quot;custom_functions.R&quot;)</code></pre>
 <p>We next load the data.</p>
-<pre class="r"><code>d_raw &lt;- sjlabelled::read_spss(&quot;data/10849_da_en_v1_0.zsav&quot;, convert.factors = FALSE)</code></pre>
+<pre class="r"><code>d_raw &lt;- sjlabelled::read_spss(
+  &quot;data/10849_da_en_v1_0.zsav&quot;,
+  convert.factors = FALSE
+  )</code></pre>
 </div>
 <div id="data-preparation" class="section level1">
 <h1>Data Preparation</h1>
@@ -535,100 +478,234 @@ vars_ses &lt;- c(&quot;age&quot;, &quot;male&quot;, &quot;white&quot;, &quot;rel
 
 vars_ses_txt &lt;- c(&quot;Age&quot;, &quot;Male&quot;, &quot;White&quot;, &quot;Relationship&quot;, &quot;College&quot;, &quot;Income&quot;, &quot;Conservatism&quot;)
 
-vars_pers_fac &lt;- c(&quot;HEX_HOH_SIN&quot;, &quot;HEX_HOH_FAI&quot;, &quot;HEX_HOH_GRE&quot;, &quot;HEX_HOH_MOD&quot;, &quot;HEX_ALT&quot;, &quot;HEX_EMO_FEA&quot;, &quot;HEX_EMO_ANX&quot;, &quot;HEX_EMO_DEP&quot;, &quot;HEX_EMO_SEN&quot;, &quot;HEX_EXT_SSE&quot;,
-    &quot;HEX_EXT_BOL&quot;, &quot;HEX_EXT_SOC&quot;, &quot;HEX_EXT_LIV&quot;, &quot;HEX_AGR_FOR&quot;, &quot;HEX_AGR_GEN&quot;, &quot;HEX_AGR_FLX&quot;, &quot;HEX_AGR_PAT&quot;, &quot;HEX_CNS_ORG&quot;, &quot;HEX_CNS_DIL&quot;, &quot;HEX_CNS_PER&quot;,
-    &quot;HEX_CNS_PRU&quot;, &quot;HEX_OPN_AES&quot;, &quot;HEX_OPN_INQ&quot;, &quot;HEX_OPN_CRE&quot;, &quot;HEX_OPN_UNC&quot;)
+vars_pers_fac &lt;- c(&quot;HEX_HOH_SIN&quot;, &quot;HEX_HOH_FAI&quot;, &quot;HEX_HOH_GRE&quot;, &quot;HEX_HOH_MOD&quot;,
+                   &quot;HEX_ALT&quot;,
+                   &quot;HEX_EMO_FEA&quot;, &quot;HEX_EMO_ANX&quot;, &quot;HEX_EMO_DEP&quot;, &quot;HEX_EMO_SEN&quot;, 
+                   &quot;HEX_EXT_SSE&quot;, &quot;HEX_EXT_BOL&quot;, &quot;HEX_EXT_SOC&quot;, &quot;HEX_EXT_LIV&quot;, 
+                   &quot;HEX_AGR_FOR&quot;, &quot;HEX_AGR_GEN&quot;, &quot;HEX_AGR_FLX&quot;, &quot;HEX_AGR_PAT&quot;, 
+                   &quot;HEX_CNS_ORG&quot;, &quot;HEX_CNS_DIL&quot;, &quot;HEX_CNS_PER&quot;, &quot;HEX_CNS_PRU&quot;, 
+                   &quot;HEX_OPN_AES&quot;, &quot;HEX_OPN_INQ&quot;, &quot;HEX_OPN_CRE&quot;, &quot;HEX_OPN_UNC&quot;)
 
-vars_pers_fac_txt &lt;- c(&quot;Sincerity&quot;, &quot;Fairness&quot;, &quot;Greed avoidance&quot;, &quot;Modesty&quot;, &quot;Altruism&quot;, &quot;Fearfulness&quot;, &quot;Anxiety&quot;, &quot;Dependence&quot;, &quot;Sentimentality&quot;, &quot;Social self-esteem&quot;,
-    &quot;Social boldness&quot;, &quot;Sociability&quot;, &quot;Liveliness&quot;, &quot;Forgiveness&quot;, &quot;Gentleness&quot;, &quot;Flexibility&quot;, &quot;Patience&quot;, &quot;Organization&quot;, &quot;Diligence&quot;, &quot;Perfectionism&quot;,
-    &quot;Prudence&quot;, &quot;Aesth. appreciation&quot;, &quot;Inquisitiveness&quot;, &quot;Creativeness&quot;, &quot;Unconventionality&quot;)
+vars_pers_fac_txt &lt;- c(&quot;Sincerity&quot;, &quot;Fairness&quot;, &quot;Greed avoidance&quot;, &quot;Modesty&quot;, 
+                       &quot;Altruism&quot;,
+                       &quot;Fearfulness&quot;, &quot;Anxiety&quot;, &quot;Dependence&quot;, &quot;Sentimentality&quot;, 
+                       &quot;Social self-esteem&quot;, &quot;Social boldness&quot;, &quot;Sociability&quot;, &quot;Liveliness&quot;,
+                       &quot;Forgiveness&quot;, &quot;Gentleness&quot;, &quot;Flexibility&quot;, &quot;Patience&quot;, 
+                       &quot;Organization&quot;, &quot;Diligence&quot;, &quot;Perfectionism&quot;, &quot;Prudence&quot;, 
+                       &quot;Aesth. appreciation&quot;, &quot;Inquisitiveness&quot;, &quot;Creativeness&quot;, &quot;Unconventionality&quot;)
 
-vars_pers_hoh &lt;- c(&quot;HEX_HOH&quot;, &quot;HEX_HOH_SIN&quot;, &quot;HEX_HOH_FAI&quot;, &quot;HEX_HOH_GRE&quot;, &quot;HEX_HOH_MOD&quot;, &quot;HEX_ALT&quot;)
+vars_pers_hoh &lt;- 
+  c(&quot;HEX_HOH&quot;, &quot;HEX_HOH_SIN&quot;, &quot;HEX_HOH_FAI&quot;, &quot;HEX_HOH_GRE&quot;, &quot;HEX_HOH_MOD&quot;, &quot;HEX_ALT&quot;)
 
-vars_pers_emo &lt;- c(&quot;HEX_EMO&quot;, &quot;HEX_EMO_FEA&quot;, &quot;HEX_EMO_ANX&quot;, &quot;HEX_EMO_DEP&quot;, &quot;HEX_EMO_SEN&quot;)
+vars_pers_emo &lt;- 
+  c(&quot;HEX_EMO&quot;, &quot;HEX_EMO_FEA&quot;, &quot;HEX_EMO_ANX&quot;, &quot;HEX_EMO_DEP&quot;, &quot;HEX_EMO_SEN&quot;)
 
-vars_pers_ext &lt;- c(&quot;HEX_EXT&quot;, &quot;HEX_EXT_SSE&quot;, &quot;HEX_EXT_BOL&quot;, &quot;HEX_EXT_SOC&quot;, &quot;HEX_EXT_LIV&quot;)
+vars_pers_ext &lt;- 
+  c(&quot;HEX_EXT&quot;, &quot;HEX_EXT_SSE&quot;, &quot;HEX_EXT_BOL&quot;, &quot;HEX_EXT_SOC&quot;, &quot;HEX_EXT_LIV&quot;)
 
-vars_pers_agr &lt;- c(&quot;HEX_AGR&quot;, &quot;HEX_AGR_FOR&quot;, &quot;HEX_AGR_GEN&quot;, &quot;HEX_AGR_FLX&quot;, &quot;HEX_AGR_PAT&quot;)
+vars_pers_agr &lt;- 
+  c(&quot;HEX_AGR&quot;, &quot;HEX_AGR_FOR&quot;, &quot;HEX_AGR_GEN&quot;, &quot;HEX_AGR_FLX&quot;, &quot;HEX_AGR_PAT&quot;)
 
-vars_pers_cns &lt;- c(&quot;HEX_CNS&quot;, &quot;HEX_CNS_ORG&quot;, &quot;HEX_CNS_DIL&quot;, &quot;HEX_CNS_PER&quot;, &quot;HEX_CNS_PRU&quot;)
+vars_pers_cns &lt;- 
+  c(&quot;HEX_CNS&quot;, &quot;HEX_CNS_ORG&quot;, &quot;HEX_CNS_DIL&quot;, &quot;HEX_CNS_PER&quot;, &quot;HEX_CNS_PRU&quot;)
 
-vars_pers_opn &lt;- c(&quot;HEX_OPN&quot;, &quot;HEX_OPN_AES&quot;, &quot;HEX_OPN_INQ&quot;, &quot;HEX_OPN_CRE&quot;, &quot;HEX_OPN_UNC&quot;)
+vars_pers_opn &lt;- 
+  c(&quot;HEX_OPN&quot;, &quot;HEX_OPN_AES&quot;, &quot;HEX_OPN_INQ&quot;, &quot;HEX_OPN_CRE&quot;, &quot;HEX_OPN_UNC&quot;)
 
-vars_pers_all &lt;- c(vars_pers_hoh, vars_pers_emo, vars_pers_ext, vars_pers_agr, vars_pers_cns, vars_pers_opn)
+vars_pers_all &lt;- 
+  c(
+    vars_pers_hoh, 
+    vars_pers_emo, 
+    vars_pers_ext, 
+    vars_pers_agr, 
+    vars_pers_cns,
+    vars_pers_opn
+    )
 
-vars_pers_all_txt &lt;- c(&quot;Honesty humility&quot;, &quot;Sincerity&quot;, &quot;Fairness&quot;, &quot;Greed avoidance&quot;, &quot;Modesty&quot;, &quot;Altruism&quot;, &quot;Emotionality&quot;, &quot;Fearfulness&quot;, &quot;Anxiety&quot;,
-    &quot;Dependence&quot;, &quot;Sentimentality&quot;, &quot;Extraversion&quot;, &quot;Social self-esteem&quot;, &quot;Social boldness&quot;, &quot;Sociability&quot;, &quot;Liveliness&quot;, &quot;Agreeableness&quot;, &quot;Forgiveness&quot;,
-    &quot;Gentleness&quot;, &quot;Flexibility&quot;, &quot;Patience&quot;, &quot;Conscientiousness&quot;, &quot;Organization&quot;, &quot;Diligence&quot;, &quot;Perfectionism&quot;, &quot;Prudence&quot;, &quot;Openness&quot;, &quot;Aesth. appreciation&quot;,
-    &quot;Inquisitiveness&quot;, &quot;Creativeness&quot;, &quot;Unconventionality&quot;)
+vars_pers_all_txt &lt;- 
+  c(&quot;Honesty humility&quot;, 
+      &quot;Sincerity&quot;, &quot;Fairness&quot;, &quot;Greed avoidance&quot;, &quot;Modesty&quot;, &quot;Altruism&quot;,
+    &quot;Emotionality&quot;, 
+      &quot;Fearfulness&quot;, &quot;Anxiety&quot;, &quot;Dependence&quot;, &quot;Sentimentality&quot;, 
+    &quot;Extraversion&quot;,
+      &quot;Social self-esteem&quot;, &quot;Social boldness&quot;, &quot;Sociability&quot;, &quot;Liveliness&quot;,
+    &quot;Agreeableness&quot;,
+      &quot;Forgiveness&quot;, &quot;Gentleness&quot;, &quot;Flexibility&quot;, &quot;Patience&quot;,
+    &quot;Conscientiousness&quot;,
+      &quot;Organization&quot;, &quot;Diligence&quot;, &quot;Perfectionism&quot;, &quot;Prudence&quot;, 
+    &quot;Openness&quot;,
+      &quot;Aesth. appreciation&quot;, &quot;Inquisitiveness&quot;, &quot;Creativeness&quot;, &quot;Unconventionality&quot;
+    )
 
-vars_pred_all_txt &lt;- c(vars_pers_all_txt, vars_ses_txt)
+vars_pred_all_txt &lt;- 
+  c(
+    vars_pers_all_txt,
+    vars_ses_txt
+    )
 
 vars_pers_dim &lt;- c(&quot;HEX_HOH&quot;, &quot;HEX_EMO&quot;, &quot;HEX_EXT&quot;, &quot;HEX_AGR&quot;, &quot;HEX_CNS&quot;, &quot;HEX_OPN&quot;)
 
-vars_pers_dim_txt &lt;- c(&quot;Honesty humility&quot;, &quot;Emotionality&quot;, &quot;Extraversion&quot;, &quot;Agreeableness&quot;, &quot;Conscientiousness&quot;, &quot;Openness&quot;)
+vars_pers_dim_txt &lt;- c(&quot;Honesty humility&quot;, &quot;Emotionality&quot;, &quot;Extraversion&quot;, 
+                       &quot;Agreeableness&quot;, &quot;Conscientiousness&quot;, &quot;Openness&quot;)
 
-vars_pri &lt;- c(&quot;NFP_PSY&quot;, &quot;NFP_SOC&quot;, &quot;NFP_PHY&quot;, &quot;NFP_GOV&quot;, &quot;NFP_COM&quot;, &quot;NFP_INF&quot;, &quot;NFP_ANO&quot;, &quot;NFP_GEN&quot;)
+vars_pri &lt;- c(&quot;NFP_PSY&quot;, &quot;NFP_SOC&quot;, &quot;NFP_PHY&quot;, 
+              &quot;NFP_GOV&quot;, &quot;NFP_COM&quot;, 
+              &quot;NFP_INF&quot;, &quot;NFP_ANO&quot;, &quot;NFP_GEN&quot;)
 
-vars_pri_txt &lt;- c(&quot;Psychological&quot;, &quot;Social&quot;, &quot;Physical&quot;, &quot;Government&quot;, &quot;Companies&quot;, &quot;Informational&quot;, &quot;Anonymity&quot;, &quot;General&quot;)
+vars_pri_txt &lt;- c(&quot;Psychological&quot;, &quot;Social&quot;, &quot;Physical&quot;, 
+                  &quot;Government&quot;, &quot;Companies&quot;, 
+                  &quot;Informational&quot;, &quot;Anonymity&quot;, &quot;General&quot;)
 
-vars_pri_txt_brk &lt;- c(&quot;Psycho-\nlogical&quot;, &quot;Social&quot;, &quot;Physical&quot;, &quot;Govern-\nment&quot;, &quot;Companies&quot;, &quot;Infor-\nmational&quot;, &quot;Anony-\nmity&quot;, &quot;General&quot;)
+vars_pri_txt_brk &lt;- c(&quot;Psycho-\nlogical&quot;, &quot;Social&quot;, &quot;Physical&quot;, 
+                  &quot;Govern-\nment&quot;, &quot;Companies&quot;, 
+                  &quot;Infor-\nmational&quot;, &quot;Anony-\nmity&quot;, &quot;General&quot;)
 
-vars_pri_txt_abr &lt;- c(&quot;Psych.&quot;, &quot;Social&quot;, &quot;Phys.&quot;, &quot;Gov.&quot;, &quot;Comp.&quot;, &quot;Inform.&quot;, &quot;Anonym.&quot;, &quot;General&quot;)
+vars_pri_txt_abr &lt;- c(&quot;Psych.&quot;, &quot;Social&quot;, &quot;Phys.&quot;, 
+                  &quot;Gov.&quot;, &quot;Comp.&quot;, 
+                  &quot;Inform.&quot;, &quot;Anonym.&quot;, &quot;General&quot;)
 
 vars_pers_pri &lt;- c(vars_pers_fac, vars_pri)
 
-vars_all &lt;- c(vars_pers_all, vars_pri, vars_ses)</code></pre>
+vars_all &lt;- c(
+  vars_pers_all, 
+  vars_pri,
+  vars_ses
+)</code></pre>
 </div>
 <div id="means" class="section level2">
 <h2>Means</h2>
 <p>Below we compute the means for scales and items.</p>
 <pre class="r"><code># Person means per facet
 d %&lt;&gt;%
-    mutate(HEX_HOH_M = rowMeans(select(., starts_with(&quot;HEX_HOH&quot;))), HEX_EMO_M = rowMeans(select(., starts_with(&quot;HEX_EMO&quot;))), HEX_EXT_M = rowMeans(select(.,
-        starts_with(&quot;HEX_EXT&quot;))), HEX_AGR_M = rowMeans(select(., starts_with(&quot;HEX_AGR&quot;))), HEX_CNS_M = rowMeans(select(., starts_with(&quot;HEX_CNS&quot;))), HEX_OPN_M = rowMeans(select(.,
-        starts_with(&quot;HEX_OPN&quot;))), HEX_ALT_M = rowMeans(select(., starts_with(&quot;HEX_ALT_0&quot;))), HEX_AGR_FLX_M = rowMeans(select(., starts_with(&quot;HEX_AGR_FLX_0&quot;))),
-        HEX_AGR_FOR_M = rowMeans(select(., starts_with(&quot;HEX_AGR_FOR_0&quot;))), HEX_AGR_GEN_M = rowMeans(select(., starts_with(&quot;HEX_AGR_GEN_0&quot;))), HEX_AGR_PAT_M = rowMeans(select(.,
-            starts_with(&quot;HEX_AGR_PAT_0&quot;))), HEX_CNS_DIL_M = rowMeans(select(., starts_with(&quot;HEX_CNS_DIL_0&quot;))), HEX_CNS_ORG_M = rowMeans(select(., starts_with(&quot;HEX_CNS_ORG_0&quot;))),
-        HEX_CNS_PER_M = rowMeans(select(., starts_with(&quot;HEX_CNS_PER_0&quot;))), HEX_CNS_PRU_M = rowMeans(select(., starts_with(&quot;HEX_CNS_PRU_0&quot;))), HEX_EMO_ANX_M = rowMeans(select(.,
-            starts_with(&quot;HEX_EMO_ANX_0&quot;))), HEX_EMO_DEP_M = rowMeans(select(., starts_with(&quot;HEX_EMO_DEP_0&quot;))), HEX_EMO_FEA_M = rowMeans(select(., starts_with(&quot;HEX_EMO_FEA_0&quot;))),
-        HEX_EMO_SEN_M = rowMeans(select(., starts_with(&quot;HEX_EMO_SEN_0&quot;))), HEX_EXT_BOL_M = rowMeans(select(., starts_with(&quot;HEX_EXT_BOL_0&quot;))), HEX_EXT_LIV_M = rowMeans(select(.,
-            starts_with(&quot;HEX_EXT_LIV_0&quot;))), HEX_EXT_SOC_M = rowMeans(select(., starts_with(&quot;HEX_EXT_SOC_0&quot;))), HEX_EXT_SSE_M = rowMeans(select(., starts_with(&quot;HEX_EXT_SSE_0&quot;))),
-        HEX_HOH_FAI_M = rowMeans(select(., starts_with(&quot;HEX_HOH_FAI_0&quot;))), HEX_HOH_GRE_M = rowMeans(select(., starts_with(&quot;HEX_HOH_GRE_0&quot;))), HEX_HOH_MOD_M = rowMeans(select(.,
-            starts_with(&quot;HEX_HOH_MOD_0&quot;))), HEX_HOH_SIN_M = rowMeans(select(., starts_with(&quot;HEX_HOH_SIN_0&quot;))), HEX_OPN_AES_M = rowMeans(select(., starts_with(&quot;HEX_OPN_AES_0&quot;))),
-        HEX_OPN_CRE_M = rowMeans(select(., starts_with(&quot;HEX_OPN_CRE_0&quot;))), HEX_OPN_INQ_M = rowMeans(select(., starts_with(&quot;HEX_OPN_INQ_0&quot;))), HEX_OPN_UNC_M = rowMeans(select(.,
-            starts_with(&quot;HEX_OPN_UNC_0&quot;))), NFP_ANO_M = rowMeans(select(., starts_with(&quot;NFP_ANO_0&quot;))), NFP_COM_M = rowMeans(select(., starts_with(&quot;NFP_COM_0&quot;))),
-        NFP_GEN_M = rowMeans(select(., starts_with(&quot;NFP_GEN_0&quot;))), NFP_GOV_M = rowMeans(select(., starts_with(&quot;NFP_GOV_0&quot;))), NFP_INF_M = rowMeans(select(.,
-            starts_with(&quot;NFP_INF_0&quot;))), NFP_PHY_M = rowMeans(select(., starts_with(&quot;NFP_PHY_0&quot;))), NFP_PSY_M = rowMeans(select(., starts_with(&quot;NFP_PSY_0&quot;))),
-        NFP_SOC_M = rowMeans(select(., starts_with(&quot;NFP_SOC_0&quot;))))
+  mutate(
+    HEX_HOH_M = rowMeans(select(., starts_with(&quot;HEX_HOH&quot;))),
+    HEX_EMO_M = rowMeans(select(., starts_with(&quot;HEX_EMO&quot;))),
+    HEX_EXT_M = rowMeans(select(., starts_with(&quot;HEX_EXT&quot;))),
+    HEX_AGR_M = rowMeans(select(., starts_with(&quot;HEX_AGR&quot;))),
+    HEX_CNS_M = rowMeans(select(., starts_with(&quot;HEX_CNS&quot;))),
+    HEX_OPN_M = rowMeans(select(., starts_with(&quot;HEX_OPN&quot;))),
+    HEX_ALT_M = rowMeans(select(., starts_with(&quot;HEX_ALT_0&quot;))),
+    HEX_AGR_FLX_M = rowMeans(select(., starts_with(&quot;HEX_AGR_FLX_0&quot;))),
+    HEX_AGR_FOR_M = rowMeans(select(., starts_with(&quot;HEX_AGR_FOR_0&quot;))),
+    HEX_AGR_GEN_M = rowMeans(select(., starts_with(&quot;HEX_AGR_GEN_0&quot;))),
+    HEX_AGR_PAT_M = rowMeans(select(., starts_with(&quot;HEX_AGR_PAT_0&quot;))),
+    HEX_CNS_DIL_M = rowMeans(select(., starts_with(&quot;HEX_CNS_DIL_0&quot;))),
+    HEX_CNS_ORG_M = rowMeans(select(., starts_with(&quot;HEX_CNS_ORG_0&quot;))),
+    HEX_CNS_PER_M = rowMeans(select(., starts_with(&quot;HEX_CNS_PER_0&quot;))),
+    HEX_CNS_PRU_M = rowMeans(select(., starts_with(&quot;HEX_CNS_PRU_0&quot;))),
+    HEX_EMO_ANX_M = rowMeans(select(., starts_with(&quot;HEX_EMO_ANX_0&quot;))),
+    HEX_EMO_DEP_M = rowMeans(select(., starts_with(&quot;HEX_EMO_DEP_0&quot;))),
+    HEX_EMO_FEA_M = rowMeans(select(., starts_with(&quot;HEX_EMO_FEA_0&quot;))),
+    HEX_EMO_SEN_M = rowMeans(select(., starts_with(&quot;HEX_EMO_SEN_0&quot;))),
+    HEX_EXT_BOL_M = rowMeans(select(., starts_with(&quot;HEX_EXT_BOL_0&quot;))),
+    HEX_EXT_LIV_M = rowMeans(select(., starts_with(&quot;HEX_EXT_LIV_0&quot;))),
+    HEX_EXT_SOC_M = rowMeans(select(., starts_with(&quot;HEX_EXT_SOC_0&quot;))),
+    HEX_EXT_SSE_M = rowMeans(select(., starts_with(&quot;HEX_EXT_SSE_0&quot;))),
+    HEX_HOH_FAI_M = rowMeans(select(., starts_with(&quot;HEX_HOH_FAI_0&quot;))),
+    HEX_HOH_GRE_M = rowMeans(select(., starts_with(&quot;HEX_HOH_GRE_0&quot;))),
+    HEX_HOH_MOD_M = rowMeans(select(., starts_with(&quot;HEX_HOH_MOD_0&quot;))),
+    HEX_HOH_SIN_M = rowMeans(select(., starts_with(&quot;HEX_HOH_SIN_0&quot;))),
+    HEX_OPN_AES_M = rowMeans(select(., starts_with(&quot;HEX_OPN_AES_0&quot;))),
+    HEX_OPN_CRE_M = rowMeans(select(., starts_with(&quot;HEX_OPN_CRE_0&quot;))),
+    HEX_OPN_INQ_M = rowMeans(select(., starts_with(&quot;HEX_OPN_INQ_0&quot;))),
+    HEX_OPN_UNC_M = rowMeans(select(., starts_with(&quot;HEX_OPN_UNC_0&quot;))),
+    NFP_ANO_M = rowMeans(select(., starts_with(&quot;NFP_ANO_0&quot;))),
+    NFP_COM_M = rowMeans(select(., starts_with(&quot;NFP_COM_0&quot;))),
+    NFP_GEN_M = rowMeans(select(., starts_with(&quot;NFP_GEN_0&quot;))),
+    NFP_GOV_M = rowMeans(select(., starts_with(&quot;NFP_GOV_0&quot;))),
+    NFP_INF_M = rowMeans(select(., starts_with(&quot;NFP_INF_0&quot;))),
+    NFP_PHY_M = rowMeans(select(., starts_with(&quot;NFP_PHY_0&quot;))),
+    NFP_PSY_M = rowMeans(select(., starts_with(&quot;NFP_PSY_0&quot;))),
+    NFP_SOC_M = rowMeans(select(., starts_with(&quot;NFP_SOC_0&quot;)))
+  )
 
 # item means
-c_m &lt;- c(HEX_ALT_m = mean(d$HEX_ALT_M, na.rm = T), HEX_AGR_FLX_m = mean(d$HEX_AGR_FLX_M, na.rm = T), HEX_AGR_FOR_m = mean(d$HEX_AGR_FOR_M, na.rm = T),
-    HEX_AGR_GEN_m = mean(d$HEX_AGR_GEN_M, na.rm = T), HEX_AGR_PAT_m = mean(d$HEX_AGR_PAT_M, na.rm = T), HEX_CNS_DIL_m = mean(d$HEX_CNS_DIL_M, na.rm = T),
-    HEX_CNS_ORG_m = mean(d$HEX_CNS_ORG_M, na.rm = T), HEX_CNS_PER_m = mean(d$HEX_CNS_PER_M, na.rm = T), HEX_CNS_PRU_m = mean(d$HEX_CNS_PRU_M, na.rm = T),
-    HEX_EMO_ANX_m = mean(d$HEX_EMO_ANX_M, na.rm = T), HEX_EMO_DEP_m = mean(d$HEX_EMO_DEP_M, na.rm = T), HEX_EMO_FEA_m = mean(d$HEX_EMO_FEA_M, na.rm = T),
-    HEX_EMO_SEN_m = mean(d$HEX_EMO_SEN_M, na.rm = T), HEX_EXT_BOL_m = mean(d$HEX_EXT_BOL_M, na.rm = T), HEX_EXT_LIV_m = mean(d$HEX_EXT_LIV_M, na.rm = T),
-    HEX_EXT_SOC_m = mean(d$HEX_EXT_SOC_M, na.rm = T), HEX_EXT_SSE_m = mean(d$HEX_EXT_SSE_M, na.rm = T), HEX_HOH_FAI_m = mean(d$HEX_HOH_FAI_M, na.rm = T),
-    HEX_HOH_GRE_m = mean(d$HEX_HOH_GRE_M, na.rm = T), HEX_HOH_MOD_m = mean(d$HEX_HOH_MOD_M, na.rm = T), HEX_HOH_SIN_m = mean(d$HEX_HOH_SIN_M, na.rm = T),
-    HEX_OPN_AES_m = mean(d$HEX_OPN_AES_M, na.rm = T), HEX_OPN_CRE_m = mean(d$HEX_OPN_CRE_M, na.rm = T), HEX_OPN_INQ_m = mean(d$HEX_OPN_INQ_M, na.rm = T),
-    HEX_OPN_UNC_m = mean(d$HEX_OPN_UNC_M, na.rm = T), NFP_ANO_m = mean(d$NFP_ANO_M, na.rm = T), NFP_COM_m = mean(d$NFP_COM_M, na.rm = T), NFP_GEN_m = mean(d$NFP_GEN_M,
-        na.rm = T), NFP_GOV_m = mean(d$NFP_GOV_M, na.rm = T), NFP_INF_m = mean(d$NFP_INF_M, na.rm = T), NFP_PHY_m = mean(d$NFP_PHY_M, na.rm = T), NFP_PSY_m = mean(d$NFP_PSY_M,
-        na.rm = T), NFP_SOC_m = mean(d$NFP_SOC_M, na.rm = T), HEX_HOH_m = mean(d$HEX_HOH_M, na.rm = T), HEX_EMO_m = mean(d$HEX_EMO_M, na.rm = T), HEX_EXT_m = mean(d$HEX_EXT_M,
-        na.rm = T), HEX_AGR_m = mean(d$HEX_AGR_M, na.rm = T), HEX_CNS_m = mean(d$HEX_CNS_M, na.rm = T), HEX_OPN_m = mean(d$HEX_OPN_M, na.rm = T))
+c_m &lt;- 
+  c(
+    HEX_ALT_m     = mean(d$HEX_ALT_M, na.rm = T),
+    HEX_AGR_FLX_m = mean(d$HEX_AGR_FLX_M, na.rm = T),
+    HEX_AGR_FOR_m = mean(d$HEX_AGR_FOR_M, na.rm = T),
+    HEX_AGR_GEN_m = mean(d$HEX_AGR_GEN_M, na.rm = T),
+    HEX_AGR_PAT_m = mean(d$HEX_AGR_PAT_M, na.rm = T),
+    HEX_CNS_DIL_m = mean(d$HEX_CNS_DIL_M, na.rm = T),
+    HEX_CNS_ORG_m = mean(d$HEX_CNS_ORG_M, na.rm = T),
+    HEX_CNS_PER_m = mean(d$HEX_CNS_PER_M, na.rm = T),
+    HEX_CNS_PRU_m = mean(d$HEX_CNS_PRU_M, na.rm = T),
+    HEX_EMO_ANX_m = mean(d$HEX_EMO_ANX_M, na.rm = T),
+    HEX_EMO_DEP_m = mean(d$HEX_EMO_DEP_M, na.rm = T),
+    HEX_EMO_FEA_m = mean(d$HEX_EMO_FEA_M, na.rm = T),
+    HEX_EMO_SEN_m = mean(d$HEX_EMO_SEN_M, na.rm = T),
+    HEX_EXT_BOL_m = mean(d$HEX_EXT_BOL_M, na.rm = T),
+    HEX_EXT_LIV_m = mean(d$HEX_EXT_LIV_M, na.rm = T),
+    HEX_EXT_SOC_m = mean(d$HEX_EXT_SOC_M, na.rm = T),
+    HEX_EXT_SSE_m = mean(d$HEX_EXT_SSE_M, na.rm = T),
+    HEX_HOH_FAI_m = mean(d$HEX_HOH_FAI_M, na.rm = T),
+    HEX_HOH_GRE_m = mean(d$HEX_HOH_GRE_M, na.rm = T),
+    HEX_HOH_MOD_m = mean(d$HEX_HOH_MOD_M, na.rm = T),
+    HEX_HOH_SIN_m = mean(d$HEX_HOH_SIN_M, na.rm = T),
+    HEX_OPN_AES_m = mean(d$HEX_OPN_AES_M, na.rm = T),
+    HEX_OPN_CRE_m = mean(d$HEX_OPN_CRE_M, na.rm = T),
+    HEX_OPN_INQ_m = mean(d$HEX_OPN_INQ_M, na.rm = T),
+    HEX_OPN_UNC_m = mean(d$HEX_OPN_UNC_M, na.rm = T),
+    NFP_ANO_m     = mean(d$NFP_ANO_M, na.rm = T),
+    NFP_COM_m     = mean(d$NFP_COM_M, na.rm = T),
+    NFP_GEN_m     = mean(d$NFP_GEN_M, na.rm = T),
+    NFP_GOV_m     = mean(d$NFP_GOV_M, na.rm = T),
+    NFP_INF_m     = mean(d$NFP_INF_M, na.rm = T),
+    NFP_PHY_m     = mean(d$NFP_PHY_M, na.rm = T),
+    NFP_PSY_m     = mean(d$NFP_PSY_M, na.rm = T),
+    NFP_SOC_m     = mean(d$NFP_SOC_M, na.rm = T),
+    HEX_HOH_m     = mean(d$HEX_HOH_M, na.rm = T),
+    HEX_EMO_m     = mean(d$HEX_EMO_M, na.rm = T),
+    HEX_EXT_m     = mean(d$HEX_EXT_M, na.rm = T),
+    HEX_AGR_m     = mean(d$HEX_AGR_M, na.rm = T),
+    HEX_CNS_m     = mean(d$HEX_CNS_M, na.rm = T),
+    HEX_OPN_m     = mean(d$HEX_OPN_M, na.rm = T)
+  )
 
 # item standard deviation
-c_sd &lt;- c(HEX_ALT_sd = sd(d$HEX_ALT_M, na.rm = T), HEX_AGR_FLX_sd = sd(d$HEX_AGR_FLX_M, na.rm = T), HEX_AGR_FOR_sd = sd(d$HEX_AGR_FOR_M, na.rm = T), HEX_AGR_GEN_sd = sd(d$HEX_AGR_GEN_M,
-    na.rm = T), HEX_AGR_PAT_sd = sd(d$HEX_AGR_PAT_M, na.rm = T), HEX_CNS_DIL_sd = sd(d$HEX_CNS_DIL_M, na.rm = T), HEX_CNS_ORG_sd = sd(d$HEX_CNS_ORG_M,
-    na.rm = T), HEX_CNS_PER_sd = sd(d$HEX_CNS_PER_M, na.rm = T), HEX_CNS_PRU_sd = sd(d$HEX_CNS_PRU_M, na.rm = T), HEX_EMO_ANX_sd = sd(d$HEX_EMO_ANX_M,
-    na.rm = T), HEX_EMO_DEP_sd = sd(d$HEX_EMO_DEP_M, na.rm = T), HEX_EMO_FEA_sd = sd(d$HEX_EMO_FEA_M, na.rm = T), HEX_EMO_SEN_sd = sd(d$HEX_EMO_SEN_M,
-    na.rm = T), HEX_EXT_BOL_sd = sd(d$HEX_EXT_BOL_M, na.rm = T), HEX_EXT_LIV_sd = sd(d$HEX_EXT_LIV_M, na.rm = T), HEX_EXT_SOC_sd = sd(d$HEX_EXT_SOC_M,
-    na.rm = T), HEX_EXT_SSE_sd = sd(d$HEX_EXT_SSE_M, na.rm = T), HEX_HOH_FAI_sd = sd(d$HEX_HOH_FAI_M, na.rm = T), HEX_HOH_GRE_sd = sd(d$HEX_HOH_GRE_M,
-    na.rm = T), HEX_HOH_MOD_sd = sd(d$HEX_HOH_MOD_M, na.rm = T), HEX_HOH_SIN_sd = sd(d$HEX_HOH_SIN_M, na.rm = T), HEX_OPN_AES_sd = sd(d$HEX_OPN_AES_M,
-    na.rm = T), HEX_OPN_CRE_sd = sd(d$HEX_OPN_CRE_M, na.rm = T), HEX_OPN_INQ_sd = sd(d$HEX_OPN_INQ_M, na.rm = T), HEX_OPN_UNC_sd = sd(d$HEX_OPN_UNC_M,
-    na.rm = T), NFP_ANO_sd = sd(d$NFP_ANO_M, na.rm = T), NFP_COM_sd = sd(d$NFP_COM_M, na.rm = T), NFP_GEN_sd = sd(d$NFP_GEN_M, na.rm = T), NFP_GOV_sd = sd(d$NFP_GOV_M,
-    na.rm = T), NFP_INF_sd = sd(d$NFP_INF_M, na.rm = T), NFP_PHY_sd = sd(d$NFP_PHY_M, na.rm = T), NFP_PSY_sd = sd(d$NFP_PSY_M, na.rm = T), NFP_SOC_sd = sd(d$NFP_SOC_M,
-    na.rm = T), HEX_HOH_sd = sd(d$HEX_HOH_M, na.rm = T), HEX_EMO_sd = sd(d$HEX_EMO_M, na.rm = T), HEX_EXT_sd = sd(d$HEX_EXT_M, na.rm = T), HEX_AGR_sd = sd(d$HEX_AGR_M,
-    na.rm = T), HEX_CNS_sd = sd(d$HEX_CNS_M, na.rm = T), HEX_OPN_sd = sd(d$HEX_OPN_M, na.rm = T))</code></pre>
+c_sd &lt;- 
+  c(
+    HEX_ALT_sd     = sd(d$HEX_ALT_M, na.rm = T),
+    HEX_AGR_FLX_sd = sd(d$HEX_AGR_FLX_M, na.rm = T),
+    HEX_AGR_FOR_sd = sd(d$HEX_AGR_FOR_M, na.rm = T),
+    HEX_AGR_GEN_sd = sd(d$HEX_AGR_GEN_M, na.rm = T),
+    HEX_AGR_PAT_sd = sd(d$HEX_AGR_PAT_M, na.rm = T),
+    HEX_CNS_DIL_sd = sd(d$HEX_CNS_DIL_M, na.rm = T),
+    HEX_CNS_ORG_sd = sd(d$HEX_CNS_ORG_M, na.rm = T),
+    HEX_CNS_PER_sd = sd(d$HEX_CNS_PER_M, na.rm = T),
+    HEX_CNS_PRU_sd = sd(d$HEX_CNS_PRU_M, na.rm = T),
+    HEX_EMO_ANX_sd = sd(d$HEX_EMO_ANX_M, na.rm = T),
+    HEX_EMO_DEP_sd = sd(d$HEX_EMO_DEP_M, na.rm = T),
+    HEX_EMO_FEA_sd = sd(d$HEX_EMO_FEA_M, na.rm = T),
+    HEX_EMO_SEN_sd = sd(d$HEX_EMO_SEN_M, na.rm = T),
+    HEX_EXT_BOL_sd = sd(d$HEX_EXT_BOL_M, na.rm = T),
+    HEX_EXT_LIV_sd = sd(d$HEX_EXT_LIV_M, na.rm = T),
+    HEX_EXT_SOC_sd = sd(d$HEX_EXT_SOC_M, na.rm = T),
+    HEX_EXT_SSE_sd = sd(d$HEX_EXT_SSE_M, na.rm = T),
+    HEX_HOH_FAI_sd = sd(d$HEX_HOH_FAI_M, na.rm = T),
+    HEX_HOH_GRE_sd = sd(d$HEX_HOH_GRE_M, na.rm = T),
+    HEX_HOH_MOD_sd = sd(d$HEX_HOH_MOD_M, na.rm = T),
+    HEX_HOH_SIN_sd = sd(d$HEX_HOH_SIN_M, na.rm = T),
+    HEX_OPN_AES_sd = sd(d$HEX_OPN_AES_M, na.rm = T),
+    HEX_OPN_CRE_sd = sd(d$HEX_OPN_CRE_M, na.rm = T),
+    HEX_OPN_INQ_sd = sd(d$HEX_OPN_INQ_M, na.rm = T),
+    HEX_OPN_UNC_sd = sd(d$HEX_OPN_UNC_M, na.rm = T),
+    NFP_ANO_sd     = sd(d$NFP_ANO_M, na.rm = T),
+    NFP_COM_sd     = sd(d$NFP_COM_M, na.rm = T),
+    NFP_GEN_sd     = sd(d$NFP_GEN_M, na.rm = T),
+    NFP_GOV_sd     = sd(d$NFP_GOV_M, na.rm = T),
+    NFP_INF_sd     = sd(d$NFP_INF_M, na.rm = T),
+    NFP_PHY_sd     = sd(d$NFP_PHY_M, na.rm = T),
+    NFP_PSY_sd     = sd(d$NFP_PSY_M, na.rm = T),
+    NFP_SOC_sd     = sd(d$NFP_SOC_M, na.rm = T),
+    HEX_HOH_sd     = sd(d$HEX_HOH_M, na.rm = T),
+    HEX_EMO_sd     = sd(d$HEX_EMO_M, na.rm = T),
+    HEX_EXT_sd     = sd(d$HEX_EXT_M, na.rm = T),
+    HEX_AGR_sd     = sd(d$HEX_AGR_M, na.rm = T),
+    HEX_CNS_sd     = sd(d$HEX_CNS_M, na.rm = T),
+    HEX_OPN_sd     = sd(d$HEX_OPN_M, na.rm = T)
+  )</code></pre>
 </div>
 </div>
 <div id="quality-checks" class="section level1">
@@ -637,26 +714,30 @@ c_sd &lt;- c(HEX_ALT_sd = sd(d$HEX_ALT_M, na.rm = T), HEX_AGR_FLX_sd = sd(d$HEX_
 <h2>Missing data</h2>
 <p>First we filter those who didn’t finish the questionnaire.</p>
 <pre class="r"><code>d %&lt;&gt;%
-    filter(Progress == 100)
+  filter(
+    Progress == 100
+  )
 
 n_finished &lt;- nrow(d)</code></pre>
 <p>Let’s first inspect missing data.</p>
 <p>How many missing do we have?</p>
-<pre class="r"><code>missing_n &lt;- d %&gt;%
-    select(HEX_HOH_SIN_01:CON) %&gt;%
-    n_miss()
+<pre class="r"><code>missing_n &lt;- 
+  d %&gt;% 
+  select(HEX_HOH_SIN_01:CON) %&gt;% 
+  n_miss()
 
-missing_per &lt;- d %&gt;%
-    select(HEX_HOH_SIN_01:CON) %&gt;%
-    prop_miss() %&gt;%
-    as.numeric() * 100</code></pre>
+missing_per &lt;- 
+  d %&gt;% 
+  select(HEX_HOH_SIN_01:CON) %&gt;%
+  prop_miss() %&gt;% 
+  as.numeric() * 100</code></pre>
 <p>Only 11 cells are missing – which is very little. To be precise,
 0.005 percent only.</p>
 <p>Which variables are affected?</p>
-<pre class="r"><code>d %&gt;%
-    select(HEX_HOH_SIN_01:CON) %&gt;%
-    miss_var_summary() %&gt;%
-    head(19)</code></pre>
+<pre class="r"><code>d %&gt;% 
+  select(HEX_HOH_SIN_01:CON) %&gt;% 
+  miss_var_summary() %&gt;% 
+  head(19)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["variable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n_miss"],"name":[2],"type":["int"],"align":["right"]},{"label":["pct_miss"],"name":[3],"type":["num"],"align":["right"]}],"data":[{"1":"INC","2":"2","3":"0.127"},{"1":"CON","2":"2","3":"0.127"},{"1":"HEX_EMO_FEA_01","2":"1","3":"0.0637"},{"1":"HEX_EXT_SSE_02","2":"1","3":"0.0637"},{"1":"HEX_EXT_SSE_03","2":"1","3":"0.0637"},{"1":"HEX_CNS_DIL_04","2":"1","3":"0.0637"},{"1":"HEX_OPN_UNC_03","2":"1","3":"0.0637"},{"1":"NFP_GOV_03","2":"1","3":"0.0637"},{"1":"NFP_GEN_03","2":"1","3":"0.0637"},{"1":"HEX_HOH_SIN_01","2":"0","3":"0"},{"1":"HEX_HOH_SIN_02","2":"0","3":"0"},{"1":"HEX_HOH_SIN_03","2":"0","3":"0"},{"1":"HEX_HOH_SIN_04","2":"0","3":"0"},{"1":"HEX_HOH_FAI_01","2":"0","3":"0"},{"1":"HEX_HOH_FAI_02","2":"0","3":"0"},{"1":"HEX_HOH_FAI_03","2":"0","3":"0"},{"1":"HEX_HOH_FAI_04","2":"0","3":"0"},{"1":"HEX_HOH_GRE_01","2":"0","3":"0"},{"1":"HEX_HOH_GRE_02","2":"0","3":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -664,9 +745,9 @@ missing_per &lt;- d %&gt;%
 </div>
 <p>Missing answers vary randomly across variables.</p>
 <p>How about participants?</p>
-<pre class="r"><code>d %&gt;%
-    select(HEX_HOH_SIN_01:CON) %&gt;%
-    miss_case_summary()</code></pre>
+<pre class="r"><code>d %&gt;% 
+  select(HEX_HOH_SIN_01:CON) %&gt;% 
+  miss_case_summary()</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["case"],"name":[1],"type":["int"],"align":["right"]},{"label":["n_miss"],"name":[2],"type":["int"],"align":["right"]},{"label":["pct_miss"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"22","2":"4","3":"2.797"},{"1":"1383","2":"3","3":"2.098"},{"1":"857","2":"1","3":"0.699"},{"1":"1191","2":"1","3":"0.699"},{"1":"1217","2":"1","3":"0.699"},{"1":"1252","2":"1","3":"0.699"},{"1":"1","2":"0","3":"0.000"},{"1":"2","2":"0","3":"0.000"},{"1":"3","2":"0","3":"0.000"},{"1":"4","2":"0","3":"0.000"},{"1":"5","2":"0","3":"0.000"},{"1":"6","2":"0","3":"0.000"},{"1":"7","2":"0","3":"0.000"},{"1":"8","2":"0","3":"0.000"},{"1":"9","2":"0","3":"0.000"},{"1":"10","2":"0","3":"0.000"},{"1":"11","2":"0","3":"0.000"},{"1":"12","2":"0","3":"0.000"},{"1":"13","2":"0","3":"0.000"},{"1":"14","2":"0","3":"0.000"},{"1":"15","2":"0","3":"0.000"},{"1":"16","2":"0","3":"0.000"},{"1":"17","2":"0","3":"0.000"},{"1":"18","2":"0","3":"0.000"},{"1":"19","2":"0","3":"0.000"},{"1":"20","2":"0","3":"0.000"},{"1":"21","2":"0","3":"0.000"},{"1":"23","2":"0","3":"0.000"},{"1":"24","2":"0","3":"0.000"},{"1":"25","2":"0","3":"0.000"},{"1":"26","2":"0","3":"0.000"},{"1":"27","2":"0","3":"0.000"},{"1":"28","2":"0","3":"0.000"},{"1":"29","2":"0","3":"0.000"},{"1":"30","2":"0","3":"0.000"},{"1":"31","2":"0","3":"0.000"},{"1":"32","2":"0","3":"0.000"},{"1":"33","2":"0","3":"0.000"},{"1":"34","2":"0","3":"0.000"},{"1":"35","2":"0","3":"0.000"},{"1":"36","2":"0","3":"0.000"},{"1":"37","2":"0","3":"0.000"},{"1":"38","2":"0","3":"0.000"},{"1":"39","2":"0","3":"0.000"},{"1":"40","2":"0","3":"0.000"},{"1":"41","2":"0","3":"0.000"},{"1":"42","2":"0","3":"0.000"},{"1":"43","2":"0","3":"0.000"},{"1":"44","2":"0","3":"0.000"},{"1":"45","2":"0","3":"0.000"},{"1":"46","2":"0","3":"0.000"},{"1":"47","2":"0","3":"0.000"},{"1":"48","2":"0","3":"0.000"},{"1":"49","2":"0","3":"0.000"},{"1":"50","2":"0","3":"0.000"},{"1":"51","2":"0","3":"0.000"},{"1":"52","2":"0","3":"0.000"},{"1":"53","2":"0","3":"0.000"},{"1":"54","2":"0","3":"0.000"},{"1":"55","2":"0","3":"0.000"},{"1":"56","2":"0","3":"0.000"},{"1":"57","2":"0","3":"0.000"},{"1":"58","2":"0","3":"0.000"},{"1":"59","2":"0","3":"0.000"},{"1":"60","2":"0","3":"0.000"},{"1":"61","2":"0","3":"0.000"},{"1":"62","2":"0","3":"0.000"},{"1":"63","2":"0","3":"0.000"},{"1":"64","2":"0","3":"0.000"},{"1":"65","2":"0","3":"0.000"},{"1":"66","2":"0","3":"0.000"},{"1":"67","2":"0","3":"0.000"},{"1":"68","2":"0","3":"0.000"},{"1":"69","2":"0","3":"0.000"},{"1":"70","2":"0","3":"0.000"},{"1":"71","2":"0","3":"0.000"},{"1":"72","2":"0","3":"0.000"},{"1":"73","2":"0","3":"0.000"},{"1":"74","2":"0","3":"0.000"},{"1":"75","2":"0","3":"0.000"},{"1":"76","2":"0","3":"0.000"},{"1":"77","2":"0","3":"0.000"},{"1":"78","2":"0","3":"0.000"},{"1":"79","2":"0","3":"0.000"},{"1":"80","2":"0","3":"0.000"},{"1":"81","2":"0","3":"0.000"},{"1":"82","2":"0","3":"0.000"},{"1":"83","2":"0","3":"0.000"},{"1":"84","2":"0","3":"0.000"},{"1":"85","2":"0","3":"0.000"},{"1":"86","2":"0","3":"0.000"},{"1":"87","2":"0","3":"0.000"},{"1":"88","2":"0","3":"0.000"},{"1":"89","2":"0","3":"0.000"},{"1":"90","2":"0","3":"0.000"},{"1":"91","2":"0","3":"0.000"},{"1":"92","2":"0","3":"0.000"},{"1":"93","2":"0","3":"0.000"},{"1":"94","2":"0","3":"0.000"},{"1":"95","2":"0","3":"0.000"},{"1":"96","2":"0","3":"0.000"},{"1":"97","2":"0","3":"0.000"},{"1":"98","2":"0","3":"0.000"},{"1":"99","2":"0","3":"0.000"},{"1":"100","2":"0","3":"0.000"},{"1":"101","2":"0","3":"0.000"},{"1":"102","2":"0","3":"0.000"},{"1":"103","2":"0","3":"0.000"},{"1":"104","2":"0","3":"0.000"},{"1":"105","2":"0","3":"0.000"},{"1":"106","2":"0","3":"0.000"},{"1":"107","2":"0","3":"0.000"},{"1":"108","2":"0","3":"0.000"},{"1":"109","2":"0","3":"0.000"},{"1":"110","2":"0","3":"0.000"},{"1":"111","2":"0","3":"0.000"},{"1":"112","2":"0","3":"0.000"},{"1":"113","2":"0","3":"0.000"},{"1":"114","2":"0","3":"0.000"},{"1":"115","2":"0","3":"0.000"},{"1":"116","2":"0","3":"0.000"},{"1":"117","2":"0","3":"0.000"},{"1":"118","2":"0","3":"0.000"},{"1":"119","2":"0","3":"0.000"},{"1":"120","2":"0","3":"0.000"},{"1":"121","2":"0","3":"0.000"},{"1":"122","2":"0","3":"0.000"},{"1":"123","2":"0","3":"0.000"},{"1":"124","2":"0","3":"0.000"},{"1":"125","2":"0","3":"0.000"},{"1":"126","2":"0","3":"0.000"},{"1":"127","2":"0","3":"0.000"},{"1":"128","2":"0","3":"0.000"},{"1":"129","2":"0","3":"0.000"},{"1":"130","2":"0","3":"0.000"},{"1":"131","2":"0","3":"0.000"},{"1":"132","2":"0","3":"0.000"},{"1":"133","2":"0","3":"0.000"},{"1":"134","2":"0","3":"0.000"},{"1":"135","2":"0","3":"0.000"},{"1":"136","2":"0","3":"0.000"},{"1":"137","2":"0","3":"0.000"},{"1":"138","2":"0","3":"0.000"},{"1":"139","2":"0","3":"0.000"},{"1":"140","2":"0","3":"0.000"},{"1":"141","2":"0","3":"0.000"},{"1":"142","2":"0","3":"0.000"},{"1":"143","2":"0","3":"0.000"},{"1":"144","2":"0","3":"0.000"},{"1":"145","2":"0","3":"0.000"},{"1":"146","2":"0","3":"0.000"},{"1":"147","2":"0","3":"0.000"},{"1":"148","2":"0","3":"0.000"},{"1":"149","2":"0","3":"0.000"},{"1":"150","2":"0","3":"0.000"},{"1":"151","2":"0","3":"0.000"},{"1":"152","2":"0","3":"0.000"},{"1":"153","2":"0","3":"0.000"},{"1":"154","2":"0","3":"0.000"},{"1":"155","2":"0","3":"0.000"},{"1":"156","2":"0","3":"0.000"},{"1":"157","2":"0","3":"0.000"},{"1":"158","2":"0","3":"0.000"},{"1":"159","2":"0","3":"0.000"},{"1":"160","2":"0","3":"0.000"},{"1":"161","2":"0","3":"0.000"},{"1":"162","2":"0","3":"0.000"},{"1":"163","2":"0","3":"0.000"},{"1":"164","2":"0","3":"0.000"},{"1":"165","2":"0","3":"0.000"},{"1":"166","2":"0","3":"0.000"},{"1":"167","2":"0","3":"0.000"},{"1":"168","2":"0","3":"0.000"},{"1":"169","2":"0","3":"0.000"},{"1":"170","2":"0","3":"0.000"},{"1":"171","2":"0","3":"0.000"},{"1":"172","2":"0","3":"0.000"},{"1":"173","2":"0","3":"0.000"},{"1":"174","2":"0","3":"0.000"},{"1":"175","2":"0","3":"0.000"},{"1":"176","2":"0","3":"0.000"},{"1":"177","2":"0","3":"0.000"},{"1":"178","2":"0","3":"0.000"},{"1":"179","2":"0","3":"0.000"},{"1":"180","2":"0","3":"0.000"},{"1":"181","2":"0","3":"0.000"},{"1":"182","2":"0","3":"0.000"},{"1":"183","2":"0","3":"0.000"},{"1":"184","2":"0","3":"0.000"},{"1":"185","2":"0","3":"0.000"},{"1":"186","2":"0","3":"0.000"},{"1":"187","2":"0","3":"0.000"},{"1":"188","2":"0","3":"0.000"},{"1":"189","2":"0","3":"0.000"},{"1":"190","2":"0","3":"0.000"},{"1":"191","2":"0","3":"0.000"},{"1":"192","2":"0","3":"0.000"},{"1":"193","2":"0","3":"0.000"},{"1":"194","2":"0","3":"0.000"},{"1":"195","2":"0","3":"0.000"},{"1":"196","2":"0","3":"0.000"},{"1":"197","2":"0","3":"0.000"},{"1":"198","2":"0","3":"0.000"},{"1":"199","2":"0","3":"0.000"},{"1":"200","2":"0","3":"0.000"},{"1":"201","2":"0","3":"0.000"},{"1":"202","2":"0","3":"0.000"},{"1":"203","2":"0","3":"0.000"},{"1":"204","2":"0","3":"0.000"},{"1":"205","2":"0","3":"0.000"},{"1":"206","2":"0","3":"0.000"},{"1":"207","2":"0","3":"0.000"},{"1":"208","2":"0","3":"0.000"},{"1":"209","2":"0","3":"0.000"},{"1":"210","2":"0","3":"0.000"},{"1":"211","2":"0","3":"0.000"},{"1":"212","2":"0","3":"0.000"},{"1":"213","2":"0","3":"0.000"},{"1":"214","2":"0","3":"0.000"},{"1":"215","2":"0","3":"0.000"},{"1":"216","2":"0","3":"0.000"},{"1":"217","2":"0","3":"0.000"},{"1":"218","2":"0","3":"0.000"},{"1":"219","2":"0","3":"0.000"},{"1":"220","2":"0","3":"0.000"},{"1":"221","2":"0","3":"0.000"},{"1":"222","2":"0","3":"0.000"},{"1":"223","2":"0","3":"0.000"},{"1":"224","2":"0","3":"0.000"},{"1":"225","2":"0","3":"0.000"},{"1":"226","2":"0","3":"0.000"},{"1":"227","2":"0","3":"0.000"},{"1":"228","2":"0","3":"0.000"},{"1":"229","2":"0","3":"0.000"},{"1":"230","2":"0","3":"0.000"},{"1":"231","2":"0","3":"0.000"},{"1":"232","2":"0","3":"0.000"},{"1":"233","2":"0","3":"0.000"},{"1":"234","2":"0","3":"0.000"},{"1":"235","2":"0","3":"0.000"},{"1":"236","2":"0","3":"0.000"},{"1":"237","2":"0","3":"0.000"},{"1":"238","2":"0","3":"0.000"},{"1":"239","2":"0","3":"0.000"},{"1":"240","2":"0","3":"0.000"},{"1":"241","2":"0","3":"0.000"},{"1":"242","2":"0","3":"0.000"},{"1":"243","2":"0","3":"0.000"},{"1":"244","2":"0","3":"0.000"},{"1":"245","2":"0","3":"0.000"},{"1":"246","2":"0","3":"0.000"},{"1":"247","2":"0","3":"0.000"},{"1":"248","2":"0","3":"0.000"},{"1":"249","2":"0","3":"0.000"},{"1":"250","2":"0","3":"0.000"},{"1":"251","2":"0","3":"0.000"},{"1":"252","2":"0","3":"0.000"},{"1":"253","2":"0","3":"0.000"},{"1":"254","2":"0","3":"0.000"},{"1":"255","2":"0","3":"0.000"},{"1":"256","2":"0","3":"0.000"},{"1":"257","2":"0","3":"0.000"},{"1":"258","2":"0","3":"0.000"},{"1":"259","2":"0","3":"0.000"},{"1":"260","2":"0","3":"0.000"},{"1":"261","2":"0","3":"0.000"},{"1":"262","2":"0","3":"0.000"},{"1":"263","2":"0","3":"0.000"},{"1":"264","2":"0","3":"0.000"},{"1":"265","2":"0","3":"0.000"},{"1":"266","2":"0","3":"0.000"},{"1":"267","2":"0","3":"0.000"},{"1":"268","2":"0","3":"0.000"},{"1":"269","2":"0","3":"0.000"},{"1":"270","2":"0","3":"0.000"},{"1":"271","2":"0","3":"0.000"},{"1":"272","2":"0","3":"0.000"},{"1":"273","2":"0","3":"0.000"},{"1":"274","2":"0","3":"0.000"},{"1":"275","2":"0","3":"0.000"},{"1":"276","2":"0","3":"0.000"},{"1":"277","2":"0","3":"0.000"},{"1":"278","2":"0","3":"0.000"},{"1":"279","2":"0","3":"0.000"},{"1":"280","2":"0","3":"0.000"},{"1":"281","2":"0","3":"0.000"},{"1":"282","2":"0","3":"0.000"},{"1":"283","2":"0","3":"0.000"},{"1":"284","2":"0","3":"0.000"},{"1":"285","2":"0","3":"0.000"},{"1":"286","2":"0","3":"0.000"},{"1":"287","2":"0","3":"0.000"},{"1":"288","2":"0","3":"0.000"},{"1":"289","2":"0","3":"0.000"},{"1":"290","2":"0","3":"0.000"},{"1":"291","2":"0","3":"0.000"},{"1":"292","2":"0","3":"0.000"},{"1":"293","2":"0","3":"0.000"},{"1":"294","2":"0","3":"0.000"},{"1":"295","2":"0","3":"0.000"},{"1":"296","2":"0","3":"0.000"},{"1":"297","2":"0","3":"0.000"},{"1":"298","2":"0","3":"0.000"},{"1":"299","2":"0","3":"0.000"},{"1":"300","2":"0","3":"0.000"},{"1":"301","2":"0","3":"0.000"},{"1":"302","2":"0","3":"0.000"},{"1":"303","2":"0","3":"0.000"},{"1":"304","2":"0","3":"0.000"},{"1":"305","2":"0","3":"0.000"},{"1":"306","2":"0","3":"0.000"},{"1":"307","2":"0","3":"0.000"},{"1":"308","2":"0","3":"0.000"},{"1":"309","2":"0","3":"0.000"},{"1":"310","2":"0","3":"0.000"},{"1":"311","2":"0","3":"0.000"},{"1":"312","2":"0","3":"0.000"},{"1":"313","2":"0","3":"0.000"},{"1":"314","2":"0","3":"0.000"},{"1":"315","2":"0","3":"0.000"},{"1":"316","2":"0","3":"0.000"},{"1":"317","2":"0","3":"0.000"},{"1":"318","2":"0","3":"0.000"},{"1":"319","2":"0","3":"0.000"},{"1":"320","2":"0","3":"0.000"},{"1":"321","2":"0","3":"0.000"},{"1":"322","2":"0","3":"0.000"},{"1":"323","2":"0","3":"0.000"},{"1":"324","2":"0","3":"0.000"},{"1":"325","2":"0","3":"0.000"},{"1":"326","2":"0","3":"0.000"},{"1":"327","2":"0","3":"0.000"},{"1":"328","2":"0","3":"0.000"},{"1":"329","2":"0","3":"0.000"},{"1":"330","2":"0","3":"0.000"},{"1":"331","2":"0","3":"0.000"},{"1":"332","2":"0","3":"0.000"},{"1":"333","2":"0","3":"0.000"},{"1":"334","2":"0","3":"0.000"},{"1":"335","2":"0","3":"0.000"},{"1":"336","2":"0","3":"0.000"},{"1":"337","2":"0","3":"0.000"},{"1":"338","2":"0","3":"0.000"},{"1":"339","2":"0","3":"0.000"},{"1":"340","2":"0","3":"0.000"},{"1":"341","2":"0","3":"0.000"},{"1":"342","2":"0","3":"0.000"},{"1":"343","2":"0","3":"0.000"},{"1":"344","2":"0","3":"0.000"},{"1":"345","2":"0","3":"0.000"},{"1":"346","2":"0","3":"0.000"},{"1":"347","2":"0","3":"0.000"},{"1":"348","2":"0","3":"0.000"},{"1":"349","2":"0","3":"0.000"},{"1":"350","2":"0","3":"0.000"},{"1":"351","2":"0","3":"0.000"},{"1":"352","2":"0","3":"0.000"},{"1":"353","2":"0","3":"0.000"},{"1":"354","2":"0","3":"0.000"},{"1":"355","2":"0","3":"0.000"},{"1":"356","2":"0","3":"0.000"},{"1":"357","2":"0","3":"0.000"},{"1":"358","2":"0","3":"0.000"},{"1":"359","2":"0","3":"0.000"},{"1":"360","2":"0","3":"0.000"},{"1":"361","2":"0","3":"0.000"},{"1":"362","2":"0","3":"0.000"},{"1":"363","2":"0","3":"0.000"},{"1":"364","2":"0","3":"0.000"},{"1":"365","2":"0","3":"0.000"},{"1":"366","2":"0","3":"0.000"},{"1":"367","2":"0","3":"0.000"},{"1":"368","2":"0","3":"0.000"},{"1":"369","2":"0","3":"0.000"},{"1":"370","2":"0","3":"0.000"},{"1":"371","2":"0","3":"0.000"},{"1":"372","2":"0","3":"0.000"},{"1":"373","2":"0","3":"0.000"},{"1":"374","2":"0","3":"0.000"},{"1":"375","2":"0","3":"0.000"},{"1":"376","2":"0","3":"0.000"},{"1":"377","2":"0","3":"0.000"},{"1":"378","2":"0","3":"0.000"},{"1":"379","2":"0","3":"0.000"},{"1":"380","2":"0","3":"0.000"},{"1":"381","2":"0","3":"0.000"},{"1":"382","2":"0","3":"0.000"},{"1":"383","2":"0","3":"0.000"},{"1":"384","2":"0","3":"0.000"},{"1":"385","2":"0","3":"0.000"},{"1":"386","2":"0","3":"0.000"},{"1":"387","2":"0","3":"0.000"},{"1":"388","2":"0","3":"0.000"},{"1":"389","2":"0","3":"0.000"},{"1":"390","2":"0","3":"0.000"},{"1":"391","2":"0","3":"0.000"},{"1":"392","2":"0","3":"0.000"},{"1":"393","2":"0","3":"0.000"},{"1":"394","2":"0","3":"0.000"},{"1":"395","2":"0","3":"0.000"},{"1":"396","2":"0","3":"0.000"},{"1":"397","2":"0","3":"0.000"},{"1":"398","2":"0","3":"0.000"},{"1":"399","2":"0","3":"0.000"},{"1":"400","2":"0","3":"0.000"},{"1":"401","2":"0","3":"0.000"},{"1":"402","2":"0","3":"0.000"},{"1":"403","2":"0","3":"0.000"},{"1":"404","2":"0","3":"0.000"},{"1":"405","2":"0","3":"0.000"},{"1":"406","2":"0","3":"0.000"},{"1":"407","2":"0","3":"0.000"},{"1":"408","2":"0","3":"0.000"},{"1":"409","2":"0","3":"0.000"},{"1":"410","2":"0","3":"0.000"},{"1":"411","2":"0","3":"0.000"},{"1":"412","2":"0","3":"0.000"},{"1":"413","2":"0","3":"0.000"},{"1":"414","2":"0","3":"0.000"},{"1":"415","2":"0","3":"0.000"},{"1":"416","2":"0","3":"0.000"},{"1":"417","2":"0","3":"0.000"},{"1":"418","2":"0","3":"0.000"},{"1":"419","2":"0","3":"0.000"},{"1":"420","2":"0","3":"0.000"},{"1":"421","2":"0","3":"0.000"},{"1":"422","2":"0","3":"0.000"},{"1":"423","2":"0","3":"0.000"},{"1":"424","2":"0","3":"0.000"},{"1":"425","2":"0","3":"0.000"},{"1":"426","2":"0","3":"0.000"},{"1":"427","2":"0","3":"0.000"},{"1":"428","2":"0","3":"0.000"},{"1":"429","2":"0","3":"0.000"},{"1":"430","2":"0","3":"0.000"},{"1":"431","2":"0","3":"0.000"},{"1":"432","2":"0","3":"0.000"},{"1":"433","2":"0","3":"0.000"},{"1":"434","2":"0","3":"0.000"},{"1":"435","2":"0","3":"0.000"},{"1":"436","2":"0","3":"0.000"},{"1":"437","2":"0","3":"0.000"},{"1":"438","2":"0","3":"0.000"},{"1":"439","2":"0","3":"0.000"},{"1":"440","2":"0","3":"0.000"},{"1":"441","2":"0","3":"0.000"},{"1":"442","2":"0","3":"0.000"},{"1":"443","2":"0","3":"0.000"},{"1":"444","2":"0","3":"0.000"},{"1":"445","2":"0","3":"0.000"},{"1":"446","2":"0","3":"0.000"},{"1":"447","2":"0","3":"0.000"},{"1":"448","2":"0","3":"0.000"},{"1":"449","2":"0","3":"0.000"},{"1":"450","2":"0","3":"0.000"},{"1":"451","2":"0","3":"0.000"},{"1":"452","2":"0","3":"0.000"},{"1":"453","2":"0","3":"0.000"},{"1":"454","2":"0","3":"0.000"},{"1":"455","2":"0","3":"0.000"},{"1":"456","2":"0","3":"0.000"},{"1":"457","2":"0","3":"0.000"},{"1":"458","2":"0","3":"0.000"},{"1":"459","2":"0","3":"0.000"},{"1":"460","2":"0","3":"0.000"},{"1":"461","2":"0","3":"0.000"},{"1":"462","2":"0","3":"0.000"},{"1":"463","2":"0","3":"0.000"},{"1":"464","2":"0","3":"0.000"},{"1":"465","2":"0","3":"0.000"},{"1":"466","2":"0","3":"0.000"},{"1":"467","2":"0","3":"0.000"},{"1":"468","2":"0","3":"0.000"},{"1":"469","2":"0","3":"0.000"},{"1":"470","2":"0","3":"0.000"},{"1":"471","2":"0","3":"0.000"},{"1":"472","2":"0","3":"0.000"},{"1":"473","2":"0","3":"0.000"},{"1":"474","2":"0","3":"0.000"},{"1":"475","2":"0","3":"0.000"},{"1":"476","2":"0","3":"0.000"},{"1":"477","2":"0","3":"0.000"},{"1":"478","2":"0","3":"0.000"},{"1":"479","2":"0","3":"0.000"},{"1":"480","2":"0","3":"0.000"},{"1":"481","2":"0","3":"0.000"},{"1":"482","2":"0","3":"0.000"},{"1":"483","2":"0","3":"0.000"},{"1":"484","2":"0","3":"0.000"},{"1":"485","2":"0","3":"0.000"},{"1":"486","2":"0","3":"0.000"},{"1":"487","2":"0","3":"0.000"},{"1":"488","2":"0","3":"0.000"},{"1":"489","2":"0","3":"0.000"},{"1":"490","2":"0","3":"0.000"},{"1":"491","2":"0","3":"0.000"},{"1":"492","2":"0","3":"0.000"},{"1":"493","2":"0","3":"0.000"},{"1":"494","2":"0","3":"0.000"},{"1":"495","2":"0","3":"0.000"},{"1":"496","2":"0","3":"0.000"},{"1":"497","2":"0","3":"0.000"},{"1":"498","2":"0","3":"0.000"},{"1":"499","2":"0","3":"0.000"},{"1":"500","2":"0","3":"0.000"},{"1":"501","2":"0","3":"0.000"},{"1":"502","2":"0","3":"0.000"},{"1":"503","2":"0","3":"0.000"},{"1":"504","2":"0","3":"0.000"},{"1":"505","2":"0","3":"0.000"},{"1":"506","2":"0","3":"0.000"},{"1":"507","2":"0","3":"0.000"},{"1":"508","2":"0","3":"0.000"},{"1":"509","2":"0","3":"0.000"},{"1":"510","2":"0","3":"0.000"},{"1":"511","2":"0","3":"0.000"},{"1":"512","2":"0","3":"0.000"},{"1":"513","2":"0","3":"0.000"},{"1":"514","2":"0","3":"0.000"},{"1":"515","2":"0","3":"0.000"},{"1":"516","2":"0","3":"0.000"},{"1":"517","2":"0","3":"0.000"},{"1":"518","2":"0","3":"0.000"},{"1":"519","2":"0","3":"0.000"},{"1":"520","2":"0","3":"0.000"},{"1":"521","2":"0","3":"0.000"},{"1":"522","2":"0","3":"0.000"},{"1":"523","2":"0","3":"0.000"},{"1":"524","2":"0","3":"0.000"},{"1":"525","2":"0","3":"0.000"},{"1":"526","2":"0","3":"0.000"},{"1":"527","2":"0","3":"0.000"},{"1":"528","2":"0","3":"0.000"},{"1":"529","2":"0","3":"0.000"},{"1":"530","2":"0","3":"0.000"},{"1":"531","2":"0","3":"0.000"},{"1":"532","2":"0","3":"0.000"},{"1":"533","2":"0","3":"0.000"},{"1":"534","2":"0","3":"0.000"},{"1":"535","2":"0","3":"0.000"},{"1":"536","2":"0","3":"0.000"},{"1":"537","2":"0","3":"0.000"},{"1":"538","2":"0","3":"0.000"},{"1":"539","2":"0","3":"0.000"},{"1":"540","2":"0","3":"0.000"},{"1":"541","2":"0","3":"0.000"},{"1":"542","2":"0","3":"0.000"},{"1":"543","2":"0","3":"0.000"},{"1":"544","2":"0","3":"0.000"},{"1":"545","2":"0","3":"0.000"},{"1":"546","2":"0","3":"0.000"},{"1":"547","2":"0","3":"0.000"},{"1":"548","2":"0","3":"0.000"},{"1":"549","2":"0","3":"0.000"},{"1":"550","2":"0","3":"0.000"},{"1":"551","2":"0","3":"0.000"},{"1":"552","2":"0","3":"0.000"},{"1":"553","2":"0","3":"0.000"},{"1":"554","2":"0","3":"0.000"},{"1":"555","2":"0","3":"0.000"},{"1":"556","2":"0","3":"0.000"},{"1":"557","2":"0","3":"0.000"},{"1":"558","2":"0","3":"0.000"},{"1":"559","2":"0","3":"0.000"},{"1":"560","2":"0","3":"0.000"},{"1":"561","2":"0","3":"0.000"},{"1":"562","2":"0","3":"0.000"},{"1":"563","2":"0","3":"0.000"},{"1":"564","2":"0","3":"0.000"},{"1":"565","2":"0","3":"0.000"},{"1":"566","2":"0","3":"0.000"},{"1":"567","2":"0","3":"0.000"},{"1":"568","2":"0","3":"0.000"},{"1":"569","2":"0","3":"0.000"},{"1":"570","2":"0","3":"0.000"},{"1":"571","2":"0","3":"0.000"},{"1":"572","2":"0","3":"0.000"},{"1":"573","2":"0","3":"0.000"},{"1":"574","2":"0","3":"0.000"},{"1":"575","2":"0","3":"0.000"},{"1":"576","2":"0","3":"0.000"},{"1":"577","2":"0","3":"0.000"},{"1":"578","2":"0","3":"0.000"},{"1":"579","2":"0","3":"0.000"},{"1":"580","2":"0","3":"0.000"},{"1":"581","2":"0","3":"0.000"},{"1":"582","2":"0","3":"0.000"},{"1":"583","2":"0","3":"0.000"},{"1":"584","2":"0","3":"0.000"},{"1":"585","2":"0","3":"0.000"},{"1":"586","2":"0","3":"0.000"},{"1":"587","2":"0","3":"0.000"},{"1":"588","2":"0","3":"0.000"},{"1":"589","2":"0","3":"0.000"},{"1":"590","2":"0","3":"0.000"},{"1":"591","2":"0","3":"0.000"},{"1":"592","2":"0","3":"0.000"},{"1":"593","2":"0","3":"0.000"},{"1":"594","2":"0","3":"0.000"},{"1":"595","2":"0","3":"0.000"},{"1":"596","2":"0","3":"0.000"},{"1":"597","2":"0","3":"0.000"},{"1":"598","2":"0","3":"0.000"},{"1":"599","2":"0","3":"0.000"},{"1":"600","2":"0","3":"0.000"},{"1":"601","2":"0","3":"0.000"},{"1":"602","2":"0","3":"0.000"},{"1":"603","2":"0","3":"0.000"},{"1":"604","2":"0","3":"0.000"},{"1":"605","2":"0","3":"0.000"},{"1":"606","2":"0","3":"0.000"},{"1":"607","2":"0","3":"0.000"},{"1":"608","2":"0","3":"0.000"},{"1":"609","2":"0","3":"0.000"},{"1":"610","2":"0","3":"0.000"},{"1":"611","2":"0","3":"0.000"},{"1":"612","2":"0","3":"0.000"},{"1":"613","2":"0","3":"0.000"},{"1":"614","2":"0","3":"0.000"},{"1":"615","2":"0","3":"0.000"},{"1":"616","2":"0","3":"0.000"},{"1":"617","2":"0","3":"0.000"},{"1":"618","2":"0","3":"0.000"},{"1":"619","2":"0","3":"0.000"},{"1":"620","2":"0","3":"0.000"},{"1":"621","2":"0","3":"0.000"},{"1":"622","2":"0","3":"0.000"},{"1":"623","2":"0","3":"0.000"},{"1":"624","2":"0","3":"0.000"},{"1":"625","2":"0","3":"0.000"},{"1":"626","2":"0","3":"0.000"},{"1":"627","2":"0","3":"0.000"},{"1":"628","2":"0","3":"0.000"},{"1":"629","2":"0","3":"0.000"},{"1":"630","2":"0","3":"0.000"},{"1":"631","2":"0","3":"0.000"},{"1":"632","2":"0","3":"0.000"},{"1":"633","2":"0","3":"0.000"},{"1":"634","2":"0","3":"0.000"},{"1":"635","2":"0","3":"0.000"},{"1":"636","2":"0","3":"0.000"},{"1":"637","2":"0","3":"0.000"},{"1":"638","2":"0","3":"0.000"},{"1":"639","2":"0","3":"0.000"},{"1":"640","2":"0","3":"0.000"},{"1":"641","2":"0","3":"0.000"},{"1":"642","2":"0","3":"0.000"},{"1":"643","2":"0","3":"0.000"},{"1":"644","2":"0","3":"0.000"},{"1":"645","2":"0","3":"0.000"},{"1":"646","2":"0","3":"0.000"},{"1":"647","2":"0","3":"0.000"},{"1":"648","2":"0","3":"0.000"},{"1":"649","2":"0","3":"0.000"},{"1":"650","2":"0","3":"0.000"},{"1":"651","2":"0","3":"0.000"},{"1":"652","2":"0","3":"0.000"},{"1":"653","2":"0","3":"0.000"},{"1":"654","2":"0","3":"0.000"},{"1":"655","2":"0","3":"0.000"},{"1":"656","2":"0","3":"0.000"},{"1":"657","2":"0","3":"0.000"},{"1":"658","2":"0","3":"0.000"},{"1":"659","2":"0","3":"0.000"},{"1":"660","2":"0","3":"0.000"},{"1":"661","2":"0","3":"0.000"},{"1":"662","2":"0","3":"0.000"},{"1":"663","2":"0","3":"0.000"},{"1":"664","2":"0","3":"0.000"},{"1":"665","2":"0","3":"0.000"},{"1":"666","2":"0","3":"0.000"},{"1":"667","2":"0","3":"0.000"},{"1":"668","2":"0","3":"0.000"},{"1":"669","2":"0","3":"0.000"},{"1":"670","2":"0","3":"0.000"},{"1":"671","2":"0","3":"0.000"},{"1":"672","2":"0","3":"0.000"},{"1":"673","2":"0","3":"0.000"},{"1":"674","2":"0","3":"0.000"},{"1":"675","2":"0","3":"0.000"},{"1":"676","2":"0","3":"0.000"},{"1":"677","2":"0","3":"0.000"},{"1":"678","2":"0","3":"0.000"},{"1":"679","2":"0","3":"0.000"},{"1":"680","2":"0","3":"0.000"},{"1":"681","2":"0","3":"0.000"},{"1":"682","2":"0","3":"0.000"},{"1":"683","2":"0","3":"0.000"},{"1":"684","2":"0","3":"0.000"},{"1":"685","2":"0","3":"0.000"},{"1":"686","2":"0","3":"0.000"},{"1":"687","2":"0","3":"0.000"},{"1":"688","2":"0","3":"0.000"},{"1":"689","2":"0","3":"0.000"},{"1":"690","2":"0","3":"0.000"},{"1":"691","2":"0","3":"0.000"},{"1":"692","2":"0","3":"0.000"},{"1":"693","2":"0","3":"0.000"},{"1":"694","2":"0","3":"0.000"},{"1":"695","2":"0","3":"0.000"},{"1":"696","2":"0","3":"0.000"},{"1":"697","2":"0","3":"0.000"},{"1":"698","2":"0","3":"0.000"},{"1":"699","2":"0","3":"0.000"},{"1":"700","2":"0","3":"0.000"},{"1":"701","2":"0","3":"0.000"},{"1":"702","2":"0","3":"0.000"},{"1":"703","2":"0","3":"0.000"},{"1":"704","2":"0","3":"0.000"},{"1":"705","2":"0","3":"0.000"},{"1":"706","2":"0","3":"0.000"},{"1":"707","2":"0","3":"0.000"},{"1":"708","2":"0","3":"0.000"},{"1":"709","2":"0","3":"0.000"},{"1":"710","2":"0","3":"0.000"},{"1":"711","2":"0","3":"0.000"},{"1":"712","2":"0","3":"0.000"},{"1":"713","2":"0","3":"0.000"},{"1":"714","2":"0","3":"0.000"},{"1":"715","2":"0","3":"0.000"},{"1":"716","2":"0","3":"0.000"},{"1":"717","2":"0","3":"0.000"},{"1":"718","2":"0","3":"0.000"},{"1":"719","2":"0","3":"0.000"},{"1":"720","2":"0","3":"0.000"},{"1":"721","2":"0","3":"0.000"},{"1":"722","2":"0","3":"0.000"},{"1":"723","2":"0","3":"0.000"},{"1":"724","2":"0","3":"0.000"},{"1":"725","2":"0","3":"0.000"},{"1":"726","2":"0","3":"0.000"},{"1":"727","2":"0","3":"0.000"},{"1":"728","2":"0","3":"0.000"},{"1":"729","2":"0","3":"0.000"},{"1":"730","2":"0","3":"0.000"},{"1":"731","2":"0","3":"0.000"},{"1":"732","2":"0","3":"0.000"},{"1":"733","2":"0","3":"0.000"},{"1":"734","2":"0","3":"0.000"},{"1":"735","2":"0","3":"0.000"},{"1":"736","2":"0","3":"0.000"},{"1":"737","2":"0","3":"0.000"},{"1":"738","2":"0","3":"0.000"},{"1":"739","2":"0","3":"0.000"},{"1":"740","2":"0","3":"0.000"},{"1":"741","2":"0","3":"0.000"},{"1":"742","2":"0","3":"0.000"},{"1":"743","2":"0","3":"0.000"},{"1":"744","2":"0","3":"0.000"},{"1":"745","2":"0","3":"0.000"},{"1":"746","2":"0","3":"0.000"},{"1":"747","2":"0","3":"0.000"},{"1":"748","2":"0","3":"0.000"},{"1":"749","2":"0","3":"0.000"},{"1":"750","2":"0","3":"0.000"},{"1":"751","2":"0","3":"0.000"},{"1":"752","2":"0","3":"0.000"},{"1":"753","2":"0","3":"0.000"},{"1":"754","2":"0","3":"0.000"},{"1":"755","2":"0","3":"0.000"},{"1":"756","2":"0","3":"0.000"},{"1":"757","2":"0","3":"0.000"},{"1":"758","2":"0","3":"0.000"},{"1":"759","2":"0","3":"0.000"},{"1":"760","2":"0","3":"0.000"},{"1":"761","2":"0","3":"0.000"},{"1":"762","2":"0","3":"0.000"},{"1":"763","2":"0","3":"0.000"},{"1":"764","2":"0","3":"0.000"},{"1":"765","2":"0","3":"0.000"},{"1":"766","2":"0","3":"0.000"},{"1":"767","2":"0","3":"0.000"},{"1":"768","2":"0","3":"0.000"},{"1":"769","2":"0","3":"0.000"},{"1":"770","2":"0","3":"0.000"},{"1":"771","2":"0","3":"0.000"},{"1":"772","2":"0","3":"0.000"},{"1":"773","2":"0","3":"0.000"},{"1":"774","2":"0","3":"0.000"},{"1":"775","2":"0","3":"0.000"},{"1":"776","2":"0","3":"0.000"},{"1":"777","2":"0","3":"0.000"},{"1":"778","2":"0","3":"0.000"},{"1":"779","2":"0","3":"0.000"},{"1":"780","2":"0","3":"0.000"},{"1":"781","2":"0","3":"0.000"},{"1":"782","2":"0","3":"0.000"},{"1":"783","2":"0","3":"0.000"},{"1":"784","2":"0","3":"0.000"},{"1":"785","2":"0","3":"0.000"},{"1":"786","2":"0","3":"0.000"},{"1":"787","2":"0","3":"0.000"},{"1":"788","2":"0","3":"0.000"},{"1":"789","2":"0","3":"0.000"},{"1":"790","2":"0","3":"0.000"},{"1":"791","2":"0","3":"0.000"},{"1":"792","2":"0","3":"0.000"},{"1":"793","2":"0","3":"0.000"},{"1":"794","2":"0","3":"0.000"},{"1":"795","2":"0","3":"0.000"},{"1":"796","2":"0","3":"0.000"},{"1":"797","2":"0","3":"0.000"},{"1":"798","2":"0","3":"0.000"},{"1":"799","2":"0","3":"0.000"},{"1":"800","2":"0","3":"0.000"},{"1":"801","2":"0","3":"0.000"},{"1":"802","2":"0","3":"0.000"},{"1":"803","2":"0","3":"0.000"},{"1":"804","2":"0","3":"0.000"},{"1":"805","2":"0","3":"0.000"},{"1":"806","2":"0","3":"0.000"},{"1":"807","2":"0","3":"0.000"},{"1":"808","2":"0","3":"0.000"},{"1":"809","2":"0","3":"0.000"},{"1":"810","2":"0","3":"0.000"},{"1":"811","2":"0","3":"0.000"},{"1":"812","2":"0","3":"0.000"},{"1":"813","2":"0","3":"0.000"},{"1":"814","2":"0","3":"0.000"},{"1":"815","2":"0","3":"0.000"},{"1":"816","2":"0","3":"0.000"},{"1":"817","2":"0","3":"0.000"},{"1":"818","2":"0","3":"0.000"},{"1":"819","2":"0","3":"0.000"},{"1":"820","2":"0","3":"0.000"},{"1":"821","2":"0","3":"0.000"},{"1":"822","2":"0","3":"0.000"},{"1":"823","2":"0","3":"0.000"},{"1":"824","2":"0","3":"0.000"},{"1":"825","2":"0","3":"0.000"},{"1":"826","2":"0","3":"0.000"},{"1":"827","2":"0","3":"0.000"},{"1":"828","2":"0","3":"0.000"},{"1":"829","2":"0","3":"0.000"},{"1":"830","2":"0","3":"0.000"},{"1":"831","2":"0","3":"0.000"},{"1":"832","2":"0","3":"0.000"},{"1":"833","2":"0","3":"0.000"},{"1":"834","2":"0","3":"0.000"},{"1":"835","2":"0","3":"0.000"},{"1":"836","2":"0","3":"0.000"},{"1":"837","2":"0","3":"0.000"},{"1":"838","2":"0","3":"0.000"},{"1":"839","2":"0","3":"0.000"},{"1":"840","2":"0","3":"0.000"},{"1":"841","2":"0","3":"0.000"},{"1":"842","2":"0","3":"0.000"},{"1":"843","2":"0","3":"0.000"},{"1":"844","2":"0","3":"0.000"},{"1":"845","2":"0","3":"0.000"},{"1":"846","2":"0","3":"0.000"},{"1":"847","2":"0","3":"0.000"},{"1":"848","2":"0","3":"0.000"},{"1":"849","2":"0","3":"0.000"},{"1":"850","2":"0","3":"0.000"},{"1":"851","2":"0","3":"0.000"},{"1":"852","2":"0","3":"0.000"},{"1":"853","2":"0","3":"0.000"},{"1":"854","2":"0","3":"0.000"},{"1":"855","2":"0","3":"0.000"},{"1":"856","2":"0","3":"0.000"},{"1":"858","2":"0","3":"0.000"},{"1":"859","2":"0","3":"0.000"},{"1":"860","2":"0","3":"0.000"},{"1":"861","2":"0","3":"0.000"},{"1":"862","2":"0","3":"0.000"},{"1":"863","2":"0","3":"0.000"},{"1":"864","2":"0","3":"0.000"},{"1":"865","2":"0","3":"0.000"},{"1":"866","2":"0","3":"0.000"},{"1":"867","2":"0","3":"0.000"},{"1":"868","2":"0","3":"0.000"},{"1":"869","2":"0","3":"0.000"},{"1":"870","2":"0","3":"0.000"},{"1":"871","2":"0","3":"0.000"},{"1":"872","2":"0","3":"0.000"},{"1":"873","2":"0","3":"0.000"},{"1":"874","2":"0","3":"0.000"},{"1":"875","2":"0","3":"0.000"},{"1":"876","2":"0","3":"0.000"},{"1":"877","2":"0","3":"0.000"},{"1":"878","2":"0","3":"0.000"},{"1":"879","2":"0","3":"0.000"},{"1":"880","2":"0","3":"0.000"},{"1":"881","2":"0","3":"0.000"},{"1":"882","2":"0","3":"0.000"},{"1":"883","2":"0","3":"0.000"},{"1":"884","2":"0","3":"0.000"},{"1":"885","2":"0","3":"0.000"},{"1":"886","2":"0","3":"0.000"},{"1":"887","2":"0","3":"0.000"},{"1":"888","2":"0","3":"0.000"},{"1":"889","2":"0","3":"0.000"},{"1":"890","2":"0","3":"0.000"},{"1":"891","2":"0","3":"0.000"},{"1":"892","2":"0","3":"0.000"},{"1":"893","2":"0","3":"0.000"},{"1":"894","2":"0","3":"0.000"},{"1":"895","2":"0","3":"0.000"},{"1":"896","2":"0","3":"0.000"},{"1":"897","2":"0","3":"0.000"},{"1":"898","2":"0","3":"0.000"},{"1":"899","2":"0","3":"0.000"},{"1":"900","2":"0","3":"0.000"},{"1":"901","2":"0","3":"0.000"},{"1":"902","2":"0","3":"0.000"},{"1":"903","2":"0","3":"0.000"},{"1":"904","2":"0","3":"0.000"},{"1":"905","2":"0","3":"0.000"},{"1":"906","2":"0","3":"0.000"},{"1":"907","2":"0","3":"0.000"},{"1":"908","2":"0","3":"0.000"},{"1":"909","2":"0","3":"0.000"},{"1":"910","2":"0","3":"0.000"},{"1":"911","2":"0","3":"0.000"},{"1":"912","2":"0","3":"0.000"},{"1":"913","2":"0","3":"0.000"},{"1":"914","2":"0","3":"0.000"},{"1":"915","2":"0","3":"0.000"},{"1":"916","2":"0","3":"0.000"},{"1":"917","2":"0","3":"0.000"},{"1":"918","2":"0","3":"0.000"},{"1":"919","2":"0","3":"0.000"},{"1":"920","2":"0","3":"0.000"},{"1":"921","2":"0","3":"0.000"},{"1":"922","2":"0","3":"0.000"},{"1":"923","2":"0","3":"0.000"},{"1":"924","2":"0","3":"0.000"},{"1":"925","2":"0","3":"0.000"},{"1":"926","2":"0","3":"0.000"},{"1":"927","2":"0","3":"0.000"},{"1":"928","2":"0","3":"0.000"},{"1":"929","2":"0","3":"0.000"},{"1":"930","2":"0","3":"0.000"},{"1":"931","2":"0","3":"0.000"},{"1":"932","2":"0","3":"0.000"},{"1":"933","2":"0","3":"0.000"},{"1":"934","2":"0","3":"0.000"},{"1":"935","2":"0","3":"0.000"},{"1":"936","2":"0","3":"0.000"},{"1":"937","2":"0","3":"0.000"},{"1":"938","2":"0","3":"0.000"},{"1":"939","2":"0","3":"0.000"},{"1":"940","2":"0","3":"0.000"},{"1":"941","2":"0","3":"0.000"},{"1":"942","2":"0","3":"0.000"},{"1":"943","2":"0","3":"0.000"},{"1":"944","2":"0","3":"0.000"},{"1":"945","2":"0","3":"0.000"},{"1":"946","2":"0","3":"0.000"},{"1":"947","2":"0","3":"0.000"},{"1":"948","2":"0","3":"0.000"},{"1":"949","2":"0","3":"0.000"},{"1":"950","2":"0","3":"0.000"},{"1":"951","2":"0","3":"0.000"},{"1":"952","2":"0","3":"0.000"},{"1":"953","2":"0","3":"0.000"},{"1":"954","2":"0","3":"0.000"},{"1":"955","2":"0","3":"0.000"},{"1":"956","2":"0","3":"0.000"},{"1":"957","2":"0","3":"0.000"},{"1":"958","2":"0","3":"0.000"},{"1":"959","2":"0","3":"0.000"},{"1":"960","2":"0","3":"0.000"},{"1":"961","2":"0","3":"0.000"},{"1":"962","2":"0","3":"0.000"},{"1":"963","2":"0","3":"0.000"},{"1":"964","2":"0","3":"0.000"},{"1":"965","2":"0","3":"0.000"},{"1":"966","2":"0","3":"0.000"},{"1":"967","2":"0","3":"0.000"},{"1":"968","2":"0","3":"0.000"},{"1":"969","2":"0","3":"0.000"},{"1":"970","2":"0","3":"0.000"},{"1":"971","2":"0","3":"0.000"},{"1":"972","2":"0","3":"0.000"},{"1":"973","2":"0","3":"0.000"},{"1":"974","2":"0","3":"0.000"},{"1":"975","2":"0","3":"0.000"},{"1":"976","2":"0","3":"0.000"},{"1":"977","2":"0","3":"0.000"},{"1":"978","2":"0","3":"0.000"},{"1":"979","2":"0","3":"0.000"},{"1":"980","2":"0","3":"0.000"},{"1":"981","2":"0","3":"0.000"},{"1":"982","2":"0","3":"0.000"},{"1":"983","2":"0","3":"0.000"},{"1":"984","2":"0","3":"0.000"},{"1":"985","2":"0","3":"0.000"},{"1":"986","2":"0","3":"0.000"},{"1":"987","2":"0","3":"0.000"},{"1":"988","2":"0","3":"0.000"},{"1":"989","2":"0","3":"0.000"},{"1":"990","2":"0","3":"0.000"},{"1":"991","2":"0","3":"0.000"},{"1":"992","2":"0","3":"0.000"},{"1":"993","2":"0","3":"0.000"},{"1":"994","2":"0","3":"0.000"},{"1":"995","2":"0","3":"0.000"},{"1":"996","2":"0","3":"0.000"},{"1":"997","2":"0","3":"0.000"},{"1":"998","2":"0","3":"0.000"},{"1":"999","2":"0","3":"0.000"},{"1":"1000","2":"0","3":"0.000"},{"1":"1001","2":"0","3":"0.000"},{"1":"1002","2":"0","3":"0.000"},{"1":"1003","2":"0","3":"0.000"},{"1":"1004","2":"0","3":"0.000"},{"1":"1005","2":"0","3":"0.000"},{"1":"1006","2":"0","3":"0.000"},{"1":"1007","2":"0","3":"0.000"},{"1":"1008","2":"0","3":"0.000"},{"1":"1009","2":"0","3":"0.000"},{"1":"1010","2":"0","3":"0.000"},{"1":"1011","2":"0","3":"0.000"},{"1":"1012","2":"0","3":"0.000"},{"1":"1013","2":"0","3":"0.000"},{"1":"1014","2":"0","3":"0.000"},{"1":"1015","2":"0","3":"0.000"},{"1":"1016","2":"0","3":"0.000"},{"1":"1017","2":"0","3":"0.000"},{"1":"1018","2":"0","3":"0.000"},{"1":"1019","2":"0","3":"0.000"},{"1":"1020","2":"0","3":"0.000"},{"1":"1021","2":"0","3":"0.000"},{"1":"1022","2":"0","3":"0.000"},{"1":"1023","2":"0","3":"0.000"},{"1":"1024","2":"0","3":"0.000"},{"1":"1025","2":"0","3":"0.000"},{"1":"1026","2":"0","3":"0.000"},{"1":"1027","2":"0","3":"0.000"},{"1":"1028","2":"0","3":"0.000"},{"1":"1029","2":"0","3":"0.000"},{"1":"1030","2":"0","3":"0.000"},{"1":"1031","2":"0","3":"0.000"},{"1":"1032","2":"0","3":"0.000"},{"1":"1033","2":"0","3":"0.000"},{"1":"1034","2":"0","3":"0.000"},{"1":"1035","2":"0","3":"0.000"},{"1":"1036","2":"0","3":"0.000"},{"1":"1037","2":"0","3":"0.000"},{"1":"1038","2":"0","3":"0.000"},{"1":"1039","2":"0","3":"0.000"},{"1":"1040","2":"0","3":"0.000"},{"1":"1041","2":"0","3":"0.000"},{"1":"1042","2":"0","3":"0.000"},{"1":"1043","2":"0","3":"0.000"},{"1":"1044","2":"0","3":"0.000"},{"1":"1045","2":"0","3":"0.000"},{"1":"1046","2":"0","3":"0.000"},{"1":"1047","2":"0","3":"0.000"},{"1":"1048","2":"0","3":"0.000"},{"1":"1049","2":"0","3":"0.000"},{"1":"1050","2":"0","3":"0.000"},{"1":"1051","2":"0","3":"0.000"},{"1":"1052","2":"0","3":"0.000"},{"1":"1053","2":"0","3":"0.000"},{"1":"1054","2":"0","3":"0.000"},{"1":"1055","2":"0","3":"0.000"},{"1":"1056","2":"0","3":"0.000"},{"1":"1057","2":"0","3":"0.000"},{"1":"1058","2":"0","3":"0.000"},{"1":"1059","2":"0","3":"0.000"},{"1":"1060","2":"0","3":"0.000"},{"1":"1061","2":"0","3":"0.000"},{"1":"1062","2":"0","3":"0.000"},{"1":"1063","2":"0","3":"0.000"},{"1":"1064","2":"0","3":"0.000"},{"1":"1065","2":"0","3":"0.000"},{"1":"1066","2":"0","3":"0.000"},{"1":"1067","2":"0","3":"0.000"},{"1":"1068","2":"0","3":"0.000"},{"1":"1069","2":"0","3":"0.000"},{"1":"1070","2":"0","3":"0.000"},{"1":"1071","2":"0","3":"0.000"},{"1":"1072","2":"0","3":"0.000"},{"1":"1073","2":"0","3":"0.000"},{"1":"1074","2":"0","3":"0.000"},{"1":"1075","2":"0","3":"0.000"},{"1":"1076","2":"0","3":"0.000"},{"1":"1077","2":"0","3":"0.000"},{"1":"1078","2":"0","3":"0.000"},{"1":"1079","2":"0","3":"0.000"},{"1":"1080","2":"0","3":"0.000"},{"1":"1081","2":"0","3":"0.000"},{"1":"1082","2":"0","3":"0.000"},{"1":"1083","2":"0","3":"0.000"},{"1":"1084","2":"0","3":"0.000"},{"1":"1085","2":"0","3":"0.000"},{"1":"1086","2":"0","3":"0.000"},{"1":"1087","2":"0","3":"0.000"},{"1":"1088","2":"0","3":"0.000"},{"1":"1089","2":"0","3":"0.000"},{"1":"1090","2":"0","3":"0.000"},{"1":"1091","2":"0","3":"0.000"},{"1":"1092","2":"0","3":"0.000"},{"1":"1093","2":"0","3":"0.000"},{"1":"1094","2":"0","3":"0.000"},{"1":"1095","2":"0","3":"0.000"},{"1":"1096","2":"0","3":"0.000"},{"1":"1097","2":"0","3":"0.000"},{"1":"1098","2":"0","3":"0.000"},{"1":"1099","2":"0","3":"0.000"},{"1":"1100","2":"0","3":"0.000"},{"1":"1101","2":"0","3":"0.000"},{"1":"1102","2":"0","3":"0.000"},{"1":"1103","2":"0","3":"0.000"},{"1":"1104","2":"0","3":"0.000"},{"1":"1105","2":"0","3":"0.000"},{"1":"1106","2":"0","3":"0.000"},{"1":"1107","2":"0","3":"0.000"},{"1":"1108","2":"0","3":"0.000"},{"1":"1109","2":"0","3":"0.000"},{"1":"1110","2":"0","3":"0.000"},{"1":"1111","2":"0","3":"0.000"},{"1":"1112","2":"0","3":"0.000"},{"1":"1113","2":"0","3":"0.000"},{"1":"1114","2":"0","3":"0.000"},{"1":"1115","2":"0","3":"0.000"},{"1":"1116","2":"0","3":"0.000"},{"1":"1117","2":"0","3":"0.000"},{"1":"1118","2":"0","3":"0.000"},{"1":"1119","2":"0","3":"0.000"},{"1":"1120","2":"0","3":"0.000"},{"1":"1121","2":"0","3":"0.000"},{"1":"1122","2":"0","3":"0.000"},{"1":"1123","2":"0","3":"0.000"},{"1":"1124","2":"0","3":"0.000"},{"1":"1125","2":"0","3":"0.000"},{"1":"1126","2":"0","3":"0.000"},{"1":"1127","2":"0","3":"0.000"},{"1":"1128","2":"0","3":"0.000"},{"1":"1129","2":"0","3":"0.000"},{"1":"1130","2":"0","3":"0.000"},{"1":"1131","2":"0","3":"0.000"},{"1":"1132","2":"0","3":"0.000"},{"1":"1133","2":"0","3":"0.000"},{"1":"1134","2":"0","3":"0.000"},{"1":"1135","2":"0","3":"0.000"},{"1":"1136","2":"0","3":"0.000"},{"1":"1137","2":"0","3":"0.000"},{"1":"1138","2":"0","3":"0.000"},{"1":"1139","2":"0","3":"0.000"},{"1":"1140","2":"0","3":"0.000"},{"1":"1141","2":"0","3":"0.000"},{"1":"1142","2":"0","3":"0.000"},{"1":"1143","2":"0","3":"0.000"},{"1":"1144","2":"0","3":"0.000"},{"1":"1145","2":"0","3":"0.000"},{"1":"1146","2":"0","3":"0.000"},{"1":"1147","2":"0","3":"0.000"},{"1":"1148","2":"0","3":"0.000"},{"1":"1149","2":"0","3":"0.000"},{"1":"1150","2":"0","3":"0.000"},{"1":"1151","2":"0","3":"0.000"},{"1":"1152","2":"0","3":"0.000"},{"1":"1153","2":"0","3":"0.000"},{"1":"1154","2":"0","3":"0.000"},{"1":"1155","2":"0","3":"0.000"},{"1":"1156","2":"0","3":"0.000"},{"1":"1157","2":"0","3":"0.000"},{"1":"1158","2":"0","3":"0.000"},{"1":"1159","2":"0","3":"0.000"},{"1":"1160","2":"0","3":"0.000"},{"1":"1161","2":"0","3":"0.000"},{"1":"1162","2":"0","3":"0.000"},{"1":"1163","2":"0","3":"0.000"},{"1":"1164","2":"0","3":"0.000"},{"1":"1165","2":"0","3":"0.000"},{"1":"1166","2":"0","3":"0.000"},{"1":"1167","2":"0","3":"0.000"},{"1":"1168","2":"0","3":"0.000"},{"1":"1169","2":"0","3":"0.000"},{"1":"1170","2":"0","3":"0.000"},{"1":"1171","2":"0","3":"0.000"},{"1":"1172","2":"0","3":"0.000"},{"1":"1173","2":"0","3":"0.000"},{"1":"1174","2":"0","3":"0.000"},{"1":"1175","2":"0","3":"0.000"},{"1":"1176","2":"0","3":"0.000"},{"1":"1177","2":"0","3":"0.000"},{"1":"1178","2":"0","3":"0.000"},{"1":"1179","2":"0","3":"0.000"},{"1":"1180","2":"0","3":"0.000"},{"1":"1181","2":"0","3":"0.000"},{"1":"1182","2":"0","3":"0.000"},{"1":"1183","2":"0","3":"0.000"},{"1":"1184","2":"0","3":"0.000"},{"1":"1185","2":"0","3":"0.000"},{"1":"1186","2":"0","3":"0.000"},{"1":"1187","2":"0","3":"0.000"},{"1":"1188","2":"0","3":"0.000"},{"1":"1189","2":"0","3":"0.000"},{"1":"1190","2":"0","3":"0.000"},{"1":"1192","2":"0","3":"0.000"},{"1":"1193","2":"0","3":"0.000"},{"1":"1194","2":"0","3":"0.000"},{"1":"1195","2":"0","3":"0.000"},{"1":"1196","2":"0","3":"0.000"},{"1":"1197","2":"0","3":"0.000"},{"1":"1198","2":"0","3":"0.000"},{"1":"1199","2":"0","3":"0.000"},{"1":"1200","2":"0","3":"0.000"},{"1":"1201","2":"0","3":"0.000"},{"1":"1202","2":"0","3":"0.000"},{"1":"1203","2":"0","3":"0.000"},{"1":"1204","2":"0","3":"0.000"},{"1":"1205","2":"0","3":"0.000"},{"1":"1206","2":"0","3":"0.000"},{"1":"1207","2":"0","3":"0.000"},{"1":"1208","2":"0","3":"0.000"},{"1":"1209","2":"0","3":"0.000"},{"1":"1210","2":"0","3":"0.000"},{"1":"1211","2":"0","3":"0.000"},{"1":"1212","2":"0","3":"0.000"},{"1":"1213","2":"0","3":"0.000"},{"1":"1214","2":"0","3":"0.000"},{"1":"1215","2":"0","3":"0.000"},{"1":"1216","2":"0","3":"0.000"},{"1":"1218","2":"0","3":"0.000"},{"1":"1219","2":"0","3":"0.000"},{"1":"1220","2":"0","3":"0.000"},{"1":"1221","2":"0","3":"0.000"},{"1":"1222","2":"0","3":"0.000"},{"1":"1223","2":"0","3":"0.000"},{"1":"1224","2":"0","3":"0.000"},{"1":"1225","2":"0","3":"0.000"},{"1":"1226","2":"0","3":"0.000"},{"1":"1227","2":"0","3":"0.000"},{"1":"1228","2":"0","3":"0.000"},{"1":"1229","2":"0","3":"0.000"},{"1":"1230","2":"0","3":"0.000"},{"1":"1231","2":"0","3":"0.000"},{"1":"1232","2":"0","3":"0.000"},{"1":"1233","2":"0","3":"0.000"},{"1":"1234","2":"0","3":"0.000"},{"1":"1235","2":"0","3":"0.000"},{"1":"1236","2":"0","3":"0.000"},{"1":"1237","2":"0","3":"0.000"},{"1":"1238","2":"0","3":"0.000"},{"1":"1239","2":"0","3":"0.000"},{"1":"1240","2":"0","3":"0.000"},{"1":"1241","2":"0","3":"0.000"},{"1":"1242","2":"0","3":"0.000"},{"1":"1243","2":"0","3":"0.000"},{"1":"1244","2":"0","3":"0.000"},{"1":"1245","2":"0","3":"0.000"},{"1":"1246","2":"0","3":"0.000"},{"1":"1247","2":"0","3":"0.000"},{"1":"1248","2":"0","3":"0.000"},{"1":"1249","2":"0","3":"0.000"},{"1":"1250","2":"0","3":"0.000"},{"1":"1251","2":"0","3":"0.000"},{"1":"1253","2":"0","3":"0.000"},{"1":"1254","2":"0","3":"0.000"},{"1":"1255","2":"0","3":"0.000"},{"1":"1256","2":"0","3":"0.000"},{"1":"1257","2":"0","3":"0.000"},{"1":"1258","2":"0","3":"0.000"},{"1":"1259","2":"0","3":"0.000"},{"1":"1260","2":"0","3":"0.000"},{"1":"1261","2":"0","3":"0.000"},{"1":"1262","2":"0","3":"0.000"},{"1":"1263","2":"0","3":"0.000"},{"1":"1264","2":"0","3":"0.000"},{"1":"1265","2":"0","3":"0.000"},{"1":"1266","2":"0","3":"0.000"},{"1":"1267","2":"0","3":"0.000"},{"1":"1268","2":"0","3":"0.000"},{"1":"1269","2":"0","3":"0.000"},{"1":"1270","2":"0","3":"0.000"},{"1":"1271","2":"0","3":"0.000"},{"1":"1272","2":"0","3":"0.000"},{"1":"1273","2":"0","3":"0.000"},{"1":"1274","2":"0","3":"0.000"},{"1":"1275","2":"0","3":"0.000"},{"1":"1276","2":"0","3":"0.000"},{"1":"1277","2":"0","3":"0.000"},{"1":"1278","2":"0","3":"0.000"},{"1":"1279","2":"0","3":"0.000"},{"1":"1280","2":"0","3":"0.000"},{"1":"1281","2":"0","3":"0.000"},{"1":"1282","2":"0","3":"0.000"},{"1":"1283","2":"0","3":"0.000"},{"1":"1284","2":"0","3":"0.000"},{"1":"1285","2":"0","3":"0.000"},{"1":"1286","2":"0","3":"0.000"},{"1":"1287","2":"0","3":"0.000"},{"1":"1288","2":"0","3":"0.000"},{"1":"1289","2":"0","3":"0.000"},{"1":"1290","2":"0","3":"0.000"},{"1":"1291","2":"0","3":"0.000"},{"1":"1292","2":"0","3":"0.000"},{"1":"1293","2":"0","3":"0.000"},{"1":"1294","2":"0","3":"0.000"},{"1":"1295","2":"0","3":"0.000"},{"1":"1296","2":"0","3":"0.000"},{"1":"1297","2":"0","3":"0.000"},{"1":"1298","2":"0","3":"0.000"},{"1":"1299","2":"0","3":"0.000"},{"1":"1300","2":"0","3":"0.000"},{"1":"1301","2":"0","3":"0.000"},{"1":"1302","2":"0","3":"0.000"},{"1":"1303","2":"0","3":"0.000"},{"1":"1304","2":"0","3":"0.000"},{"1":"1305","2":"0","3":"0.000"},{"1":"1306","2":"0","3":"0.000"},{"1":"1307","2":"0","3":"0.000"},{"1":"1308","2":"0","3":"0.000"},{"1":"1309","2":"0","3":"0.000"},{"1":"1310","2":"0","3":"0.000"},{"1":"1311","2":"0","3":"0.000"},{"1":"1312","2":"0","3":"0.000"},{"1":"1313","2":"0","3":"0.000"},{"1":"1314","2":"0","3":"0.000"},{"1":"1315","2":"0","3":"0.000"},{"1":"1316","2":"0","3":"0.000"},{"1":"1317","2":"0","3":"0.000"},{"1":"1318","2":"0","3":"0.000"},{"1":"1319","2":"0","3":"0.000"},{"1":"1320","2":"0","3":"0.000"},{"1":"1321","2":"0","3":"0.000"},{"1":"1322","2":"0","3":"0.000"},{"1":"1323","2":"0","3":"0.000"},{"1":"1324","2":"0","3":"0.000"},{"1":"1325","2":"0","3":"0.000"},{"1":"1326","2":"0","3":"0.000"},{"1":"1327","2":"0","3":"0.000"},{"1":"1328","2":"0","3":"0.000"},{"1":"1329","2":"0","3":"0.000"},{"1":"1330","2":"0","3":"0.000"},{"1":"1331","2":"0","3":"0.000"},{"1":"1332","2":"0","3":"0.000"},{"1":"1333","2":"0","3":"0.000"},{"1":"1334","2":"0","3":"0.000"},{"1":"1335","2":"0","3":"0.000"},{"1":"1336","2":"0","3":"0.000"},{"1":"1337","2":"0","3":"0.000"},{"1":"1338","2":"0","3":"0.000"},{"1":"1339","2":"0","3":"0.000"},{"1":"1340","2":"0","3":"0.000"},{"1":"1341","2":"0","3":"0.000"},{"1":"1342","2":"0","3":"0.000"},{"1":"1343","2":"0","3":"0.000"},{"1":"1344","2":"0","3":"0.000"},{"1":"1345","2":"0","3":"0.000"},{"1":"1346","2":"0","3":"0.000"},{"1":"1347","2":"0","3":"0.000"},{"1":"1348","2":"0","3":"0.000"},{"1":"1349","2":"0","3":"0.000"},{"1":"1350","2":"0","3":"0.000"},{"1":"1351","2":"0","3":"0.000"},{"1":"1352","2":"0","3":"0.000"},{"1":"1353","2":"0","3":"0.000"},{"1":"1354","2":"0","3":"0.000"},{"1":"1355","2":"0","3":"0.000"},{"1":"1356","2":"0","3":"0.000"},{"1":"1357","2":"0","3":"0.000"},{"1":"1358","2":"0","3":"0.000"},{"1":"1359","2":"0","3":"0.000"},{"1":"1360","2":"0","3":"0.000"},{"1":"1361","2":"0","3":"0.000"},{"1":"1362","2":"0","3":"0.000"},{"1":"1363","2":"0","3":"0.000"},{"1":"1364","2":"0","3":"0.000"},{"1":"1365","2":"0","3":"0.000"},{"1":"1366","2":"0","3":"0.000"},{"1":"1367","2":"0","3":"0.000"},{"1":"1368","2":"0","3":"0.000"},{"1":"1369","2":"0","3":"0.000"},{"1":"1370","2":"0","3":"0.000"},{"1":"1371","2":"0","3":"0.000"},{"1":"1372","2":"0","3":"0.000"},{"1":"1373","2":"0","3":"0.000"},{"1":"1374","2":"0","3":"0.000"},{"1":"1375","2":"0","3":"0.000"},{"1":"1376","2":"0","3":"0.000"},{"1":"1377","2":"0","3":"0.000"},{"1":"1378","2":"0","3":"0.000"},{"1":"1379","2":"0","3":"0.000"},{"1":"1380","2":"0","3":"0.000"},{"1":"1381","2":"0","3":"0.000"},{"1":"1382","2":"0","3":"0.000"},{"1":"1384","2":"0","3":"0.000"},{"1":"1385","2":"0","3":"0.000"},{"1":"1386","2":"0","3":"0.000"},{"1":"1387","2":"0","3":"0.000"},{"1":"1388","2":"0","3":"0.000"},{"1":"1389","2":"0","3":"0.000"},{"1":"1390","2":"0","3":"0.000"},{"1":"1391","2":"0","3":"0.000"},{"1":"1392","2":"0","3":"0.000"},{"1":"1393","2":"0","3":"0.000"},{"1":"1394","2":"0","3":"0.000"},{"1":"1395","2":"0","3":"0.000"},{"1":"1396","2":"0","3":"0.000"},{"1":"1397","2":"0","3":"0.000"},{"1":"1398","2":"0","3":"0.000"},{"1":"1399","2":"0","3":"0.000"},{"1":"1400","2":"0","3":"0.000"},{"1":"1401","2":"0","3":"0.000"},{"1":"1402","2":"0","3":"0.000"},{"1":"1403","2":"0","3":"0.000"},{"1":"1404","2":"0","3":"0.000"},{"1":"1405","2":"0","3":"0.000"},{"1":"1406","2":"0","3":"0.000"},{"1":"1407","2":"0","3":"0.000"},{"1":"1408","2":"0","3":"0.000"},{"1":"1409","2":"0","3":"0.000"},{"1":"1410","2":"0","3":"0.000"},{"1":"1411","2":"0","3":"0.000"},{"1":"1412","2":"0","3":"0.000"},{"1":"1413","2":"0","3":"0.000"},{"1":"1414","2":"0","3":"0.000"},{"1":"1415","2":"0","3":"0.000"},{"1":"1416","2":"0","3":"0.000"},{"1":"1417","2":"0","3":"0.000"},{"1":"1418","2":"0","3":"0.000"},{"1":"1419","2":"0","3":"0.000"},{"1":"1420","2":"0","3":"0.000"},{"1":"1421","2":"0","3":"0.000"},{"1":"1422","2":"0","3":"0.000"},{"1":"1423","2":"0","3":"0.000"},{"1":"1424","2":"0","3":"0.000"},{"1":"1425","2":"0","3":"0.000"},{"1":"1426","2":"0","3":"0.000"},{"1":"1427","2":"0","3":"0.000"},{"1":"1428","2":"0","3":"0.000"},{"1":"1429","2":"0","3":"0.000"},{"1":"1430","2":"0","3":"0.000"},{"1":"1431","2":"0","3":"0.000"},{"1":"1432","2":"0","3":"0.000"},{"1":"1433","2":"0","3":"0.000"},{"1":"1434","2":"0","3":"0.000"},{"1":"1435","2":"0","3":"0.000"},{"1":"1436","2":"0","3":"0.000"},{"1":"1437","2":"0","3":"0.000"},{"1":"1438","2":"0","3":"0.000"},{"1":"1439","2":"0","3":"0.000"},{"1":"1440","2":"0","3":"0.000"},{"1":"1441","2":"0","3":"0.000"},{"1":"1442","2":"0","3":"0.000"},{"1":"1443","2":"0","3":"0.000"},{"1":"1444","2":"0","3":"0.000"},{"1":"1445","2":"0","3":"0.000"},{"1":"1446","2":"0","3":"0.000"},{"1":"1447","2":"0","3":"0.000"},{"1":"1448","2":"0","3":"0.000"},{"1":"1449","2":"0","3":"0.000"},{"1":"1450","2":"0","3":"0.000"},{"1":"1451","2":"0","3":"0.000"},{"1":"1452","2":"0","3":"0.000"},{"1":"1453","2":"0","3":"0.000"},{"1":"1454","2":"0","3":"0.000"},{"1":"1455","2":"0","3":"0.000"},{"1":"1456","2":"0","3":"0.000"},{"1":"1457","2":"0","3":"0.000"},{"1":"1458","2":"0","3":"0.000"},{"1":"1459","2":"0","3":"0.000"},{"1":"1460","2":"0","3":"0.000"},{"1":"1461","2":"0","3":"0.000"},{"1":"1462","2":"0","3":"0.000"},{"1":"1463","2":"0","3":"0.000"},{"1":"1464","2":"0","3":"0.000"},{"1":"1465","2":"0","3":"0.000"},{"1":"1466","2":"0","3":"0.000"},{"1":"1467","2":"0","3":"0.000"},{"1":"1468","2":"0","3":"0.000"},{"1":"1469","2":"0","3":"0.000"},{"1":"1470","2":"0","3":"0.000"},{"1":"1471","2":"0","3":"0.000"},{"1":"1472","2":"0","3":"0.000"},{"1":"1473","2":"0","3":"0.000"},{"1":"1474","2":"0","3":"0.000"},{"1":"1475","2":"0","3":"0.000"},{"1":"1476","2":"0","3":"0.000"},{"1":"1477","2":"0","3":"0.000"},{"1":"1478","2":"0","3":"0.000"},{"1":"1479","2":"0","3":"0.000"},{"1":"1480","2":"0","3":"0.000"},{"1":"1481","2":"0","3":"0.000"},{"1":"1482","2":"0","3":"0.000"},{"1":"1483","2":"0","3":"0.000"},{"1":"1484","2":"0","3":"0.000"},{"1":"1485","2":"0","3":"0.000"},{"1":"1486","2":"0","3":"0.000"},{"1":"1487","2":"0","3":"0.000"},{"1":"1488","2":"0","3":"0.000"},{"1":"1489","2":"0","3":"0.000"},{"1":"1490","2":"0","3":"0.000"},{"1":"1491","2":"0","3":"0.000"},{"1":"1492","2":"0","3":"0.000"},{"1":"1493","2":"0","3":"0.000"},{"1":"1494","2":"0","3":"0.000"},{"1":"1495","2":"0","3":"0.000"},{"1":"1496","2":"0","3":"0.000"},{"1":"1497","2":"0","3":"0.000"},{"1":"1498","2":"0","3":"0.000"},{"1":"1499","2":"0","3":"0.000"},{"1":"1500","2":"0","3":"0.000"},{"1":"1501","2":"0","3":"0.000"},{"1":"1502","2":"0","3":"0.000"},{"1":"1503","2":"0","3":"0.000"},{"1":"1504","2":"0","3":"0.000"},{"1":"1505","2":"0","3":"0.000"},{"1":"1506","2":"0","3":"0.000"},{"1":"1507","2":"0","3":"0.000"},{"1":"1508","2":"0","3":"0.000"},{"1":"1509","2":"0","3":"0.000"},{"1":"1510","2":"0","3":"0.000"},{"1":"1511","2":"0","3":"0.000"},{"1":"1512","2":"0","3":"0.000"},{"1":"1513","2":"0","3":"0.000"},{"1":"1514","2":"0","3":"0.000"},{"1":"1515","2":"0","3":"0.000"},{"1":"1516","2":"0","3":"0.000"},{"1":"1517","2":"0","3":"0.000"},{"1":"1518","2":"0","3":"0.000"},{"1":"1519","2":"0","3":"0.000"},{"1":"1520","2":"0","3":"0.000"},{"1":"1521","2":"0","3":"0.000"},{"1":"1522","2":"0","3":"0.000"},{"1":"1523","2":"0","3":"0.000"},{"1":"1524","2":"0","3":"0.000"},{"1":"1525","2":"0","3":"0.000"},{"1":"1526","2":"0","3":"0.000"},{"1":"1527","2":"0","3":"0.000"},{"1":"1528","2":"0","3":"0.000"},{"1":"1529","2":"0","3":"0.000"},{"1":"1530","2":"0","3":"0.000"},{"1":"1531","2":"0","3":"0.000"},{"1":"1532","2":"0","3":"0.000"},{"1":"1533","2":"0","3":"0.000"},{"1":"1534","2":"0","3":"0.000"},{"1":"1535","2":"0","3":"0.000"},{"1":"1536","2":"0","3":"0.000"},{"1":"1537","2":"0","3":"0.000"},{"1":"1538","2":"0","3":"0.000"},{"1":"1539","2":"0","3":"0.000"},{"1":"1540","2":"0","3":"0.000"},{"1":"1541","2":"0","3":"0.000"},{"1":"1542","2":"0","3":"0.000"},{"1":"1543","2":"0","3":"0.000"},{"1":"1544","2":"0","3":"0.000"},{"1":"1545","2":"0","3":"0.000"},{"1":"1546","2":"0","3":"0.000"},{"1":"1547","2":"0","3":"0.000"},{"1":"1548","2":"0","3":"0.000"},{"1":"1549","2":"0","3":"0.000"},{"1":"1550","2":"0","3":"0.000"},{"1":"1551","2":"0","3":"0.000"},{"1":"1552","2":"0","3":"0.000"},{"1":"1553","2":"0","3":"0.000"},{"1":"1554","2":"0","3":"0.000"},{"1":"1555","2":"0","3":"0.000"},{"1":"1556","2":"0","3":"0.000"},{"1":"1557","2":"0","3":"0.000"},{"1":"1558","2":"0","3":"0.000"},{"1":"1559","2":"0","3":"0.000"},{"1":"1560","2":"0","3":"0.000"},{"1":"1561","2":"0","3":"0.000"},{"1":"1562","2":"0","3":"0.000"},{"1":"1563","2":"0","3":"0.000"},{"1":"1564","2":"0","3":"0.000"},{"1":"1565","2":"0","3":"0.000"},{"1":"1566","2":"0","3":"0.000"},{"1":"1567","2":"0","3":"0.000"},{"1":"1568","2":"0","3":"0.000"},{"1":"1569","2":"0","3":"0.000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -769,8 +850,6 @@ n_final &lt;- nrow(d)</code></pre>
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -808,35 +887,6 @@ $(document).ready(function () {
 });
 </script>
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = false;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

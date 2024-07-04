@@ -10,3 +10,5 @@ items_readability_cache/html/*
 archive/*
 data/*
 results_cache/*
+power_analyses_cache/*
+data_prep_cache/*

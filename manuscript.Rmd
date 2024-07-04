@@ -41,8 +41,8 @@ draft             : no
 
 documentclass     : "apa6"
 # classoption       : "man"
-output            : html_document
-# output            : papaja::apa6_pdf
+# output            : html_document
+output            : papaja::apa6_pdf
 # output            : papaja::apa6_word
 
 header-includes:
@@ -355,7 +355,7 @@ In the online supplementary material, we also share the results of alternative a
 ## Measures
 
 All items were answered on a 7-point Likert scale ranging from 1 (_strongly disagree_) to 7 (_strongly agree_).[^2] 
-A list of all items that we were used are reported in the online supplementary material. 
+A list of all items that we used are reported in the online supplementary material. 
 The personality and privacy items were presented in random order, and the sociodemographic questions were asked at the end.
 In the online supplementary material we also report all item statistics and their distribution plots.
 
@@ -647,7 +647,7 @@ First, it makes sense to differentiate different levels of need for privacy.
 Many personality traits showed meaningful relations with some dimension, yet no or even opposite relations with others.
 To illustrate, whereas more conscientious people desired less psychological privacy and less privacy from other, when asked about privacy in general and privacy from companies they needed more. 
 General need for privacy may rather represent a cognitive appraisal, whereas social or psychological privacy might be more experienced-based and psychological. 
-In any case, our results argue for a more rather than less nuanced strategy for measuring privacy attitudes.
+In any case, our results argue for a more rather than less nuanced strategy for measuring privacy attitudes.y
 
 Second, the need for privacy from companies and the government, both vertical forms of privacy, showed only a couple of meaningful relations with personality.
 The most notable relation was that conservative people needed substantially more privacy from the government.
@@ -727,4 +727,4 @@ All the stimuli, presentation materials, analysis scripts, and a reproducible ve
 
 # Data Accessibility Statement
 
-The data are shared as a scientific use file on AUSSDA [@dienlinNeedPrivacyPersonality2024].
+The data are shared as a scientific use file on AUSSDA at https://doi.org/10.11587/IC66GC [@dienlinNeedPrivacyPersonality2024].

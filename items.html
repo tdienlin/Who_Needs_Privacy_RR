@@ -15,7 +15,7 @@
 
 <title>Items</title>
 
-<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -31,9 +31,6 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -249,75 +246,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-.tocify-subheader {
-  display: inline;
-}
-.tocify-subheader .tocify-item {
-  font-size: 0.95em;
-}
-
-</style>
-
-
 
 </head>
 
@@ -325,16 +253,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -418,6 +336,52 @@ div.tocify {
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#overview" id="toc-overview">Overview</a></li>
+<li><a href="#personality" id="toc-personality">Personality</a>
+<ul>
+<li><a href="#honesty-humility" id="toc-honesty-humility">Honesty
+Humility</a></li>
+<li><a href="#emotionality" id="toc-emotionality">Emotionality</a></li>
+<li><a href="#extraversion" id="toc-extraversion">Extraversion</a></li>
+<li><a href="#agreeableness"
+id="toc-agreeableness">Agreeableness</a></li>
+<li><a href="#conscientiousness"
+id="toc-conscientiousness">Conscientiousness</a></li>
+<li><a href="#openness" id="toc-openness">Openness</a></li>
+<li><a href="#altruism" id="toc-altruism">Altruism</a></li>
+</ul></li>
+<li><a href="#need-for-privacy" id="toc-need-for-privacy">Need for
+privacy</a>
+<ul>
+<li><a href="#horizontal-privacy" id="toc-horizontal-privacy">Horizontal
+privacy</a></li>
+<li><a href="#vertical-privacy" id="toc-vertical-privacy">Vertical
+privacy</a></li>
+<li><a href="#general-privacy" id="toc-general-privacy">General
+privacy</a></li>
+</ul></li>
+<li><a href="#privacy-other" id="toc-privacy-other">Privacy other</a>
+<ul>
+<li><a href="#concerns" id="toc-concerns">Concerns</a></li>
+<li><a href="#behavior" id="toc-behavior">Behavior</a></li>
+</ul></li>
+<li><a href="#sociodemographics"
+id="toc-sociodemographics">Sociodemographics</a>
+<ul>
+<li><a href="#age" id="toc-age">Age</a></li>
+<li><a href="#gender" id="toc-gender">Gender</a></li>
+<li><a href="#ethnicity" id="toc-ethnicity">Ethnicity</a></li>
+<li><a href="#relationship-status"
+id="toc-relationship-status">Relationship status</a></li>
+<li><a href="#college" id="toc-college">College</a></li>
+<li><a href="#income" id="toc-income">Income</a></li>
+<li><a href="#politics" id="toc-politics">Politics</a></li>
+<li><a href="#literature" id="toc-literature">Literature</a></li>
+</ul></li>
+</ul>
+</div>
 
 <div id="overview" class="section level1">
 <h1>Overview</h1>
@@ -928,7 +892,8 @@ conference.
 Harrison, Claire L. 1993. <span>“The Development of a
 <span>Desire</span> for <span>Privacy Scale</span>.”</span> <em>ProQuest
 Dissertations and Theses</em>. PhD thesis, Ann Arbor: University of
-Connecticut.
+Connecticut. <a
+href="https://uaccess.univie.ac.at/login?url=https://www.proquest.com/dissertations-theses/development-desire-privacy-scale/docview/304030735/se-2?accountid=14682">https://uaccess.univie.ac.at/login?url=https://www.proquest.com/dissertations-theses/development-desire-privacy-scale/docview/304030735/se-2?accountid=14682</a>.
 </div>
 <div id="ref-leePsychometricPropertiesHEXACO1002018" class="csl-entry">
 Lee, Kibeom, and Michael C. Ashton. 2018. <span>“Psychometric
@@ -942,8 +907,6 @@ href="https://doi.org/10.1177/1073191116659134">https://doi.org/10.1177/10731911
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -976,35 +939,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = false;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

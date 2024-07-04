@@ -13,7 +13,7 @@
 
 <title>Readability analyses of items</title>
 
-<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -29,9 +29,6 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
@@ -251,75 +248,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-.tocify-subheader {
-  display: inline;
-}
-.tocify-subheader .tocify-item {
-  font-size: 0.95em;
-}
-
-</style>
-
-
 
 </head>
 
@@ -327,16 +255,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -425,6 +343,38 @@ div.tocify {
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#personality" id="toc-personality">Personality</a></li>
+<li><a href="#privacy" id="toc-privacy">Privacy</a>
+<ul>
+<li><a href="#horizontal" id="toc-horizontal">Horizontal</a>
+<ul>
+<li><a href="#psychological"
+id="toc-psychological">Psychological</a></li>
+<li><a href="#physical" id="toc-physical">Physical</a></li>
+<li><a href="#social-privacy" id="toc-social-privacy">Social
+Privacy</a></li>
+</ul></li>
+<li><a href="#vertical" id="toc-vertical">Vertical</a>
+<ul>
+<li><a href="#privacy-from-government"
+id="toc-privacy-from-government">Privacy from Government</a></li>
+<li><a href="#privacy-from-companies"
+id="toc-privacy-from-companies">Privacy from Companies</a></li>
+</ul></li>
+<li><a href="#general" id="toc-general">General</a>
+<ul>
+<li><a href="#informational"
+id="toc-informational">Informational</a></li>
+<li><a href="#privacy-need-anonymity"
+id="toc-privacy-need-anonymity">Privacy need anonymity</a></li>
+<li><a href="#general-need-for-privacy"
+id="toc-general-need-for-privacy">General Need for privacy</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
 
 <p>Below, we develop several new items for need for privacy. To validate
 items, we follow the procedure implemented by <span
@@ -658,7 +608,8 @@ conference.
 Harrison, Claire L. 1993. <span>“The Development of a
 <span>Desire</span> for <span>Privacy Scale</span>.”</span> <em>ProQuest
 Dissertations and Theses</em>. PhD thesis, Ann Arbor: University of
-Connecticut.
+Connecticut. <a
+href="https://uaccess.univie.ac.at/login?url=https://www.proquest.com/dissertations-theses/development-desire-privacy-scale/docview/304030735/se-2?accountid=14682">https://uaccess.univie.ac.at/login?url=https://www.proquest.com/dissertations-theses/development-desire-privacy-scale/docview/304030735/se-2?accountid=14682</a>.
 </div>
 <div id="ref-patalayAssessingReadabilitySelfreported2018"
 class="csl-entry">
@@ -675,8 +626,6 @@ href="https://doi.org/10.1192/bjo.2017.13">https://doi.org/10.1192/bjo.2017.13</
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -714,35 +663,6 @@ $(document).ready(function () {
 });
 </script>
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = false;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
